@@ -1,0 +1,4 @@
+/assets
+.htaccess
+/node_modules
+/vendor

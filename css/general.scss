@@ -1,0 +1,100 @@
+// media queries
+// Media Query Breakpoints
+$xs: 0;
+$sm-small-break: '(min-width: 568px)';
+$sm-break: '(min-width: 576px)';
+$md-break: '(min-width: 768px)';
+$lg-break: '(min-width: 992px)';
+$xl-break: '(min-width: 1200px)';
+$xll-break: '(min-width: 1400px)';
+$sm-break-max: '(max-width: 576px)';
+$md-break-max: '(max-width: 767px)';
+$lg-break-max: '(max-width: 991px)';
+$xl-break-max: '(max-width: 1199px)';
+$largephones: '(min-width: 400px)';
+$bangers: "font-family: 'Bangers', cursive";
+$ranchers: "font-family: 'Ranchers', cursive";
+$barrio: "font-family: 'Barrio', cursive";
+@mixin respond-to($media) {
+	 @media only screen and #{$media}{
+		@content;
+	}
+}
+
+.animated {
+  -webkit-animation-duration: 3s;
+  animation-duration: 3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated2 {
+  -webkit-animation-duration: 8s;
+  animation-duration: 8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+
+.title{
+    padding: 0 0 10px 20px;
+    position: relative;
+    top: 30px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+// colours
+
+$white: #F2F2F2;
+$darkblue: #001C26;
+$coldblue: #425183;
+// #01363F;
+$artic2: #416B71;
+$artic: #001C26;
+$freshblue: #8CA1A4;
+
+.inpFields{
+    border-radius: 10px;
+    border: 1px solid grey;
+    padding: 5px;
+    width: 80%;
+    margin: 0 0 20px auto;
+    outline: none;
+}
+
+.btn-primary{
+	// background-color: lighten(darkred, 10%);
+	background-color: $artic;
+	border: 2px solid #f2f2f2;
+	box-shadow: 0 2px 332px #e5e5e5;
+
+	&:hover{
+		cursor: pointer;
+		background-color: #fff;
+		// color: lighten(darkred, 10%);
+		color: $artic;
+		border: 2px solid $darkblue;
+	}
+}
+
+.btn-info{
+	background-color: #384E5B;
+	border: 2px solid #f2f2f2;
+	&:hover{
+        cursor: pointer;
+		background-color: #fff;
+		color: #384E5B;
+		border: 2px solid #384E5B;
+        a{
+            color: #384E5B;
+        }
+	}
+
+    a{
+        color: #fff;
+    	&:hover{
+    		color: #384E5B;
+    	}
+    }
+}
