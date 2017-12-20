@@ -11,9 +11,9 @@
 
       $charge = \Stripe\Charge::create(array(
           'customer' => $customer->id,
-          'amount'   => 5000,
+          'amount'   => 20000,
           'currency' => 'gbp'
       ));
 
-      echo '<h1>Successfully charged £50.00!</h1>';
+      echo '<h1>Successfully charged £'. number_format($charge['amount'],2) . '!</h1>';
 ?>

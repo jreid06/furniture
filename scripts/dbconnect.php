@@ -24,30 +24,19 @@
 		'debug' => true
 	));
 	$twig->addExtension(new Twig_Extension_Debug());
-
-	$twig->addFilter( new Twig_SimpleFilter('cast_to_array', function ($stdClassObject) {
-	    $response = array();
-	    foreach ($stdClassObject as $key => $value) {
-	        $response[] = array($key, $value);
-	    }
-	    return $response;
-	}));
-
 	$twig->addFilter(new Twig_SimpleFilter('start_case', function ($input) {
 	   	return ucwords($input);
 	}));
 
 	$includes = array(
 		'classes/connect.php',
-		'classes/database.php',
-		'classes/login.php',
-		'classes/logout.php'
+		'classes/database.php'
 	);
 	foreach($includes as $file) {
      	include_once ROOT_PATH . $file;
 	};
 
-	Connect::checkConnection();
+	// Connect::checkConnection();
 	/**
 	 *
 	 */

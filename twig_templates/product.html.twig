@@ -1,35 +1,29 @@
-<div class="container products-container home">
+<div class="container-fluid products-container home">
     <div class="row">
-        <div class="col-12 breadcrumb">
-            {{test}}
+        <div class="col-12 breadcrumb-container">
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{product.product_name |start_case}}</li>
+              </ol>
+            </nav>
         </div>
-        <div class="col-12 col-md-7 d-flex flex-row flex-wrap" id="product-page-image">
+        <div class="col-12 col-md-8 d-flex flex-row flex-wrap" id="product-page-image">
 
-            {% for image in product.product_image %}
-                {% if loop.index == 1 %}
-                    <div class="p-2 product-image-main">
-                        <img src="{{image}}" id="main" alt="product image {{loop.index}}">
-                    </div>
-                {% elseif loop.index == 2 %}
-                    <div class="p-2 product-image-small">
-                        <img src="{{image}}" alt="product image {{loop.index}}">
-                    </div>
-                {% elseif loop.index == 3 %}
-                    <div class="p-2 product-image-small">
-                        <img src="{{image}}" alt="product image {{loop.index}}">
-                    </div>
-                {% else %}
-                    <div class="p-2 product-image-small">
-                        <img src="{{image}}" alt="product image {{loop.index}}">
-                    </div>
-                {% endif %}
-
-            {% endfor %}
+            <div class="p-2 product-image-main">
+                <img src="{{product.product_image.image1}}" id="main" alt="product image 1">
+            </div>
+            <div class="p-2 prodimg-box">
+                <img src="{{product.product_image.image1}}" alt="product image 2">
+                <img src="{{product.product_image.image3}}" alt="product image 2">
+                <img src="{{product.product_image.image2}}" alt="product image 2">
+            </div>
             <!--  -->
 
         </div>
-        <div class="col-12 col-md-5 d-flex flex-row flex-wrap" id="product-page-ifno">
-            <div class="p-2 product-heading">
+        <div class="col-12 col-md-4 d-flex flex-row flex-wrap" id="product-page-ifno">
+            <div class="p-2 product-info-sp">
 
                 <ul>
                     <li><h4>{{product.product_name|start_case}}</h4></li>
@@ -45,17 +39,14 @@
                 </ul>
 
             </div>
-            <div class="p-2">
-
 
             <!-- this is the how we will get product id when user clicks view product -->
                 <!-- <button class="btn btn-info" name="button" data-product-id="" v-on:click="updateSelected">View Product</button> -->
-            </div>
-            <div class="p-2">
+            <!-- <div class="p-2">
                 <pre>
-                    {{dump(product)}}
+                    {#{dump(product)}#}
                 </pre>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

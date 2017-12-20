@@ -1,7 +1,10 @@
 <?php
     include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    // define('ROOT_PATH', dirname(__DIR__).'/furniture/');
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
+
+    Connect::checkConnection();
 ?>
 
 <div class="container home">
@@ -86,8 +89,9 @@
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="<?= $stripe['publishable_key']?>"
               data-description="Access for a year"
-              data-amount="5000"
-              data-locale="auto"></script>
+              data-amount="20000"
+              data-locale="auto"
+              data-currency="GBP"></script>
     </form>
 </div>
 

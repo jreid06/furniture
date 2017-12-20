@@ -15,7 +15,7 @@
 				self::$connection = new mysqli("db713719409.db.1and1.com", "dbo713719409", "76O8wVzBEx8E%", "db713719409");
 			}
 			if ($environment === "LOCAL") {
-				self::$connection = new mysqli("furniture.local", "root", "root", "furniture");
+				self::$connection = new mysqli("127.0.0.1", "root", "root", "furniture");
 			}
 
 		}
