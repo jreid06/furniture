@@ -16,5 +16,8 @@
     "node-sass": "^4.7.2"
   },
   "author": "jason reid",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "popper.js": "^1.12.9"
+  }
 }

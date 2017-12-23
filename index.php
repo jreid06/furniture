@@ -7,9 +7,9 @@
     Connect::checkConnection();
 ?>
 
-<div class="container home">
+<div class="container-fluid home">
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 slider-column">
 
             <template v-if="slidesActive">
                 <div class="home-slide">
@@ -36,11 +36,7 @@
             </div>
 
             <div class="row">
-
-            </div>
-
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center align-items-center">
+                <div class="col-12 button-box d-flex justify-content-center align-items-center">
                     <a href="https://google.co.uk" class="btn btn-primary">
                         SHOP NOW
                     </a>
@@ -84,16 +80,16 @@
     </div>
 
 </div>
-<div class="">
+<!-- <div class="">
     <form action="/charge" method="post">
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="<?= $stripe['publishable_key']?>"
+              data-key="//$stripe['publishable_key']"
               data-description="Access for a year"
               data-amount="20000"
               data-locale="auto"
               data-currency="GBP"></script>
     </form>
-</div>
+</div> -->
 
 <?php
 	include ROOT_PATH.'templates/footer.php';

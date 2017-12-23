@@ -39,8 +39,9 @@ $(document).ready(function(){
 
         localStorage.setItem('basket', JSON.stringify(arr));
 
-    */
+        alert('basket set');
 
+    */
 
     /*
         OLD BASKET ITEMS DATA

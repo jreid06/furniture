@@ -1,14 +1,103 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.11/vue.js" charset="utf-8"></script>
-<script type="text/javascript">
-	// Vue.config.devtools = true;
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<footer class="nav-vue">
+	<div id="accordion" role="tablist">
+		<!-- <div class="card">
+		    <div class="card-header ch-footer" role="tab" id="headingOne">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapse-link">
+		          About
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseOne" class="collapse show footer-collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+		      <div class="card-body">
+		        <ul>
+		        	<li>Our Story</li>
+					<li id="footer-search">Search</li>
+		        </ul>
+		      </div>
+		    </div>
+	  	</div> -->
+	  	<div class="card">
+		    <div class="card-header ch-footer" role="tab" id="headingTwo">
+		      <h5 class="mb-0">
+		        <a class="collapsed collapse-link" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		          Customer Service
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapseTwo" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+		      <div class="card-body">
+		        <ul>
+		        	<li>Help</li>
+					<li>Shipping</li>
+					<li>Returns</li>
+					<li>Payments</li>
+					<li>Your Order</li>
+		        </ul>
+		      </div>
+		    </div>
+	  	</div>
+	  	<div class="card">
+		    <div class="card-header ch-footer" role="tab" id="headingThree">
+		      <h5 class="mb-0">
+		        <a class="collapsed collapse-link" data-toggle="collapse" href="#contact-info" aria-expanded="false" aria-controls="collapseThree" class="collapse-link">
+		          Contact Us
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="contact-info" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+		      <div class="card-body">
+		        <ul>
+		        	<li> <a href="tel:02086541456">+44 (0)2086541456</a> </li>
+					<li> <a href="mailto:info@nordicidyl.com">info@nordicidyl.com</a></li>
+					<li>
+
+					</li>
+		        </ul>
+		      </div>
+		    </div>
+	  	</div>
+		<!--  -->
+		<!-- <div class="card">
+			<div class="card-header ch-footer" role="tab" id="headingFour">
+			  <h5 class="mb-0">
+				<a class="collapsed collapse-link" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree" class="collapse-link">
+				  Sign up to our newsletter
+				</a>
+			  </h5>
+			</div>
+			<div id="collapseFour" class="collapse footer-collapse show" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+			  <div class="card-body">
+				  <form id="signup">
+					  <input class="inpFields" type="email" name="signup-email" placeholder="Please enter your email">
+					  <a href="#" class="btn btn-primary">Sign Up</a>
+				  </form>
+			  </div>
+			</div>
+		</div> -->
+
+	</div>
+</footer>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.11/vue.js" charset="utf-8"></script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script> -->
+<script src="/js/plugins/popper.min.js"></script>
+
+<!-- ONLINE BS js -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+
+<!-- OFFLINE BS js -->
+<!-- <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script> -->
+<script src="/bootstrap-4.0.0-alpha.6-dist/js/tether.min.js"></script>
+<script src="/bootstrap-4.0.0-alpha.6-dist/js/bootstrap.min.js"></script>
 <script src="/js/jquery-mousewheel/jquery.mousewheel.min.js" charset="utf-8"></script>
 
 <!-- font awsome -->
-<script src="https://use.fontawesome.com/7c0f3e2f67.js"></script>
+<!-- <script src="https://use.fontawesome.com/7c0f3e2f67.js"></script> -->
+
 <script src="/js/plugins/velocity.js"></script>
 <script src="/js/plugins/notify.min.js"></script>
 <script src="/js/plugins/jqueryrotate.js"></script>

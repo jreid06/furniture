@@ -2,3 +2,6 @@
 .htaccess
 /node_modules
 /vendor
+/bootstrap-4.0.0-alpha.6-dist
+/font-awesome-4.7.0
+/slick-1.8.0

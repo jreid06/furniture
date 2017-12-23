@@ -25,7 +25,8 @@
 	));
 	$twig->addExtension(new Twig_Extension_Debug());
 	$twig->addFilter(new Twig_SimpleFilter('start_case', function ($input) {
-	   	return ucwords($input);
+	   	// return ucwords($input);
+		return strtoupper($input);
 	}));
 
 	$includes = array(

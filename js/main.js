@@ -9,6 +9,37 @@
 
 $(document).ready(function(){
 
+    function removeCollapseClass() {
+        if ($(window).width() > 767) {
+            if ($('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').removeClass('collapse');
+            }
+
+            $('.collapse-link').attr('data-toggle', 'false');
+        }
+    }
+
+    removeCollapseClass();
+
+    $(window).resize(function(){
+        if ($(window).width() < 768) {
+            if (!$('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').addClass('collapse');
+            }
+
+            // reset the tabs to toggle on click
+            $('.collapse-link').attr('data-toggle', 'collapse');
+        }
+
+        if ($(window).width() > 768) {
+            if ($('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').removeClass('collapse');
+            }
+
+            $('.collapse-link').attr('data-toggle', 'false');
+        }
+    })
+
     function shakeShoppingIcon() {
         let shoppingIcon = $('.search-basket-nav').find('.fa-shopping-cart');
         shoppingIcon.addClass('animated3 tada');
@@ -25,7 +56,14 @@ $(document).ready(function(){
                 status: 'component works'
             };
         },
-        template: `<div v-bind:style="{background: 'url(' + image + ')'}"></div>`,
+        template: `<div class="slideshow-div justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
+
+                <h2>HOME ESSENTIALS</h2>
+                <h4>RECLAIM YOUR HOME</h4>
+                <a class="btn btn-primary" href="#">SHOP NOW</a>
+
+
+        </div>`,
         props:['image']
     });
 
@@ -35,13 +73,12 @@ $(document).ready(function(){
                 status: 'component works'
             }
         },
-        template: `<div class="col-6 col-lg-3">
+        template: `<div class="col-6 col-md-3 col-lg-3">
                     <a v-bind:href="categorylink">
                     <div class="card category-card" v-bind:id="'cat-'+num">
-                    <div class="card-img-bgrnd" v-bind:style="{background: 'url(' + image + ')'}"></div>
-                      <div class="card-body">
+                    <div class="card-img-bgrnd d-flex justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
                         <p class="card-text">{{capitalizeFirstLetter(categoryname)}}</p>
-                      </div>
+                    </div>
                     </div></a></div>`,
         props: ['categoryname', 'image', 'num', 'categorylink'],
         methods: {
@@ -159,7 +196,7 @@ $(document).ready(function(){
 
 
     let $nav_vue = new Vue({
-        el: '#nav',
+        el: '.nav-vue',
         components: {
             'basket-item':basketItem
         },
@@ -633,16 +670,12 @@ $(document).ready(function(){
             },
             addToBasket: function(e){
                 console.log('item added successfully');
-
-
-
                 /*
                     1. check if the item is already in the basket
                         - if(true): * add to quantity +1 per click
                                     * add to price + prdct price
                         - else: add item to basket as new row
                 */
-
 
                 // CLASS BASKET ITEM args:
                 // id, prod_name, prod_desc, price, prod_image, quantity, category
@@ -713,5 +746,10 @@ $(document).ready(function(){
     console.log(item);
     console.log(item.totalPrice);
 
+    // plain html template js that updates vue instances
+    $('#footer-search').on('click', function(){
+        console.log('footer search clicked');
+        $nav_vue.searchToggle();
+    })
 
 })

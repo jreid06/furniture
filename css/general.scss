@@ -200,6 +200,14 @@ $barrio: "font-family: 'Barrio', cursive";
 
 // animated classes end
 
+.fa-close{
+	cursor: pointer;
+	transition: all .3s;
+	&:hover{
+		color: lighten(darkred, 4%);
+	}
+}
+
 
 .title{
     padding: 0 0 10px 20px;
@@ -230,16 +238,16 @@ $freshblue: #8CA1A4;
 
 .btn-primary{
 	// background-color: lighten(darkred, 10%);
-	background-color: $artic;
+	background-color: #222;
 	border: 2px solid #f2f2f2;
 	box-shadow: 0 2px 332px #e5e5e5;
 
 	&:hover{
 		cursor: pointer;
-		background-color: #fff;
+		background-color: #EFEFEF;
 		// color: lighten(darkred, 10%);
-		color: $artic;
-		border: 2px solid $darkblue;
+		color: #222;
+		border: 2px solid darken(#222, 4%);
 	}
 }
 

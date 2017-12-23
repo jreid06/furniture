@@ -11,6 +11,58 @@ body, html{
 	background-color: #fff;
 }
 
+// footer scss code
+
+footer{
+	position: relative;
+	text-align: center;
+	top: 50px;
+	background-color: #222;
+
+	@include respond-to($md-break){
+		padding-top: 40px;
+		text-align: left;
+	};
+
+	a{
+		color: #f2f2f2;
+	}
+
+	.card{
+		border-radius: 0;
+		border: 0px;
+
+		@include respond-to($md-break){
+			display: inline-flex;
+		};
+	}
+
+	.card-header{
+		background-color: #222;
+		border-radius: 0px !important;
+		@include respond-to($md-break){
+			border-bottom: 0px;
+		};
+	}
+}
+
+.footer-collapse{
+	background-color: #222;
+
+	li{
+		padding: 5px;
+		color: #f2f2f2;
+		text-transform: uppercase;
+	}
+}
+
+#contact-info{
+	li{
+		text-transform: lowercase !important;
+	}
+}
+// footer scss code
+
 .active-nav-link{
     border-bottom: 2px solid;
 }
@@ -26,7 +78,12 @@ nav{
 #nav-main{
     position: relative;
     z-index: 101;
-    background-color: #fff;
+    background-color: #EFEFEF;
+
+	@include respond-to('(max-width: 768px)'){
+		background-color: #222;
+		color: #f2f2f2;
+	};
 
     .p-2{
         max-height: 100px;
@@ -54,7 +111,7 @@ nav{
                 width: 100%;
                 // border: 1px solid green;
                 max-height: 65px;
-                background-color: #f2f2f2;
+                background-color: #222;
             }
             &:nth-child(2){
                 display: none;
@@ -63,7 +120,7 @@ nav{
                 // border: 1px solid dodgerblue;
                 display: flex;
                 width: 100%;
-                font-size: 1.2em;
+				font-weight: 600;
             }
             &:nth-child(4){
                 display: none;
@@ -79,6 +136,7 @@ nav{
     justify-content: center;
     align-content: center;
     position: relative;
+	order: 2;
 
     ul{
         width: 80%;
@@ -94,6 +152,10 @@ nav{
             a{
                 color: #010101;
             }
+
+			@include respond-to($md-break){
+
+			};
         }
     }
 
@@ -104,22 +166,44 @@ nav{
         left: auto;
         right: 0;
         font-size: 1.5em;
+		color: #222;
+
+		@include respond-to('(max-width: 767px)'){
+			color: #fff;
+		};
         // border: 1px solid pink;
 
     }
 }
 
+.menu-nav{
+	order: 1;
+}
+
 .logo-nav{
+	order: 2;
+	@include respond-to($md-break){
+		order: 1;
+	};
+
     img{
-        width: 80%;
+        width: 27%;
+		position: relative;
         max-height: 80px;
+		top: 6px;
 
         @include respond-to($sm-break){
-            max-width: 120px;
+            max-width: 72px;
         }
 
         @include respond-to($md-break){
-            max-width: 120px;
+            // max-width: 120px;
+			top: 6px;
+        }
+
+		@include respond-to($md-break){
+            max-width: 62px;
+			top: 6px;
         }
     }
 }
@@ -152,7 +236,7 @@ nav{
     max-width: 100%;
     transform: scale(0.6) translate(-30%, 0);
     position: relative;
-    top: 0.8px;
+    top: 8px;
     left: 5px;
 
     .bar{
@@ -160,7 +244,7 @@ nav{
         margin: 5px auto;
         height: 5px;
         // border: 1px solid #d2d2d2;
-        background-color: #010101;
+        background-color: #f2f2f2;
     }
 }
 
@@ -169,7 +253,7 @@ nav{
 .menu-closed{
     // display: none;
     // top: -100%;
-    transform:translate(0, -113%);
+    transform:translate(0, -160%);
     transition: all 1s;
 }
 
@@ -285,10 +369,14 @@ nav{
 // search bar open & closed css styles
 
 .search-bar{
-    border: 1px solid darken(#f2f2f2, 3%);
-    background-color: darken(#f2f2f2, 5%);
+    border-top: 1px solid #222;
+    background-color: #EFEFEF;
     position: relative;
     z-index: 101;
+
+	@include respond-to($md-break){
+		border-top: 1px solid #EFEFEF;
+	};
 }
 
 
@@ -351,6 +439,7 @@ nav{
 }
 
 .search-basket-nav{
+	order: 3;
 
 	@include respond-to('(max-width: 340px)'){
 		font-size: 1.05em;
@@ -391,10 +480,12 @@ nav{
 
 	@include respond-to($md-break){
 		width: 40%;
+		height: 450px;
 	};
 
 	@include respond-to($lg-break){
 		width: 30%;
+		height: 500px;
 	};
 
 	@include respond-to($xl-break){
@@ -426,8 +517,9 @@ nav{
 		}
 
 		&.basket-info{
-			height: 52px;
-			background-color: #010101;
+			height: 77px;
+			padding: 15px !important;
+			background-color: #222;
 			color: #fff;
 		}
 	}
@@ -505,7 +597,7 @@ nav{
 }
 
 .basket-closed{
-	transform: translate(0, -120%);
+	transform: translate(0, -160%);
 }
 
 .basket-open{
@@ -514,34 +606,77 @@ nav{
 
 
 // home page slide show styles
+.slideshow-div{
+	text-align: center;
+
+	h2{
+		margin-top: 50px;
+		font-weight: bold;
+		padding: 5px 0 5px 0;
+
+		@include respond-to('(max-width:767px)'){
+			font-size: 1.6em;
+		};
+
+		@include respond-to($sm-break){
+			margin-top: 120px;
+		};
+
+		@include respond-to($md-break){
+			margin-top: 230px;
+		};
+
+
+
+	}
+	h4{
+		padding: 5px 0 5px 0;
+		@include respond-to('(max-width:767px)'){
+			font-size: 1.1em;
+		};
+
+	}
+	a{
+		margin-top: 10px;
+		font-size: 0.8em;
+	}
+}
+
+.slider-column{
+	padding-left: 0px;
+	padding-right: 0px;
+}
 
 .home{
 	position: relative;
-	top: 50px;
+	top: 68px;
 
 	@include respond-to($md-break){
-		top: 110px;
+		top: 105px;
 	};
 }
 
 .home-slide{
-    margin-top: 20px;
     div{
         width: 100%;
         height: 200px;
         background-size: cover !important;
         background-position: center !important;
 
+		@include respond-to($sm-break){
+            height: 450px;
+        };
+
         @include respond-to($md-break){
-            height: 300px;
+            height: 550px;
         };
 
         @include respond-to($lg-break){
-            height: 427px;
+            // height: 427px;
         };
 
         @include respond-to($xl-break){
-            height: 517px;
+            height: 630px;
         };
     }
 }
@@ -551,19 +686,37 @@ nav{
     margin: 10px auto;
 	border-radius: 0px;
 	border: 0px solid;
+	color: #fff;
+	font-size: 1.1em;
+	text-shadow: 2px 0px #010101;
 
 	.card-img-bgrnd{
-	    height: 120px;
+	    height: 163px;
+		width: 100%;
+		margin: 0 auto;
 	    background-position: center !important;
 	    background-size: cover !important;
 
+		@include respond-to($sm-break){
+			height: 215px;
+			font-size: 1.3em;
+		};
+
 		@include respond-to($md-break){
+			height: 140px;
+			width: 100%;
+		};
+
+		@include respond-to($lg-break){
 			height: 190px;
+			width: 100%;
 		};
 	}
-	.card-body{
-		text-align: center;
-	}
+
+}
+
+.button-box{
+	padding-top: 15px;
 }
 
 .custom-separate{
@@ -578,6 +731,8 @@ nav{
     width: 100%;
     margin: 10px auto;
 	border-radius: 0px;
+	border: 0px;
+
 	.card-img-bgrnd{
 	    height: 210px;
 	    background-position: center !important;
@@ -614,6 +769,10 @@ nav{
 			top: 51px;
 		};
 
+		@include respond-to($sm-break){
+			top: 62px;
+		};
+
 		@include respond-to($md-break){
 			top: 117px;
 		};
@@ -638,6 +797,7 @@ nav{
 	position: relative;
 	top: 98px;
 	// border: 1px solid black;
+	margin-bottom: 80px;
 
 	img{
 		width: 100%;
@@ -645,6 +805,7 @@ nav{
 	}
 
 	.breadcrumb{
+		font-size: 0.7em;
 		padding-left: 1.4rem;
 		@include respond-to($md-break){
 			padding-left: 2.5rem;
@@ -654,8 +815,12 @@ nav{
 		};
 	}
 
+	@include respond-to($sm-break){
+		top: 115px;
+	};
+
 	@include respond-to($md-break){
-		top: 170px;
+		top: 185px;
 	};
 
 }
@@ -690,7 +855,7 @@ nav{
 	text-align: center;
 	// border: 1px solid red;
 	img{
-		width: calc(97.2%/3);
+		width: calc(97%/3);
 		// display: inline-flex;
 
 		@include respond-to('(max-width: 340px)'){

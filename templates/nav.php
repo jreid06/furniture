@@ -1,9 +1,9 @@
 <?php  ?>
-<nav id="nav">
+<nav id="nav" class="nav-vue">
     <div class="d-flex flex-row flex-wrap align-items-center" id="nav-main">
         <div class="p-2 logo-nav order-2 order-md-1">
-            <!-- <img src="assets/general/logo-placeholder.png" alt="logo"> -->
-            <h2>LOGO</h2>
+            <img src="/assets/general/idyl_original_logo_white.png" alt="logo">
+            <!-- <h2>LOGO</h2> -->
         </div>
         <div class="p-2 menu-nav order-1">
             <div class="menu-btn" v-on:click="menuToggle">
@@ -11,13 +11,15 @@
                 <div class="bar" id="b2"></div>
                 <div class="bar" id="b3"></div>
             </div>
+            <div class="p-2">
 
+            </div>
         </div>
         <div class="p-2 links-nav order-md-2">
             <ul>
                 <template v-for="(nav, index) in navHeader">
                     <li v-bind:id="'nav-link-' + index">
-                        <a v-bind:href="nav.address">{{ capitalizeFirstLetter(nav.title) }}</a>
+                        <a v-bind:href="nav.address" @click.prevent>{{ nav.title.toUpperCase() }}</a>
                     </li>
                 </template>
 
@@ -70,9 +72,6 @@
             </template>
             <template v-else>
                 <p class="empty-message">BASKET IS CURRENTLY EMPTY</p>
-                <!-- <pre>
-                    {{[{"id":1,"category":"livingroom","prod_name":"Kitchen Item 1","description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.","price":{"gbp":29},"prod_image":"/assets/products/k1.jpg","quantity":1},{"id":2,"category":"kitchen","prod_name":"Kitchen Item 2","description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.","price":{"gbp":65},"prod_image":"/assets/products/k2.jpg","quantity":1},{"id":3,"category":"bath","prod_name":"Kitchen Item 3","description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.","price":{"gbp":34},"prod_image":"/assets/products/k3.jpg","quantity":2},{"id":4,"category":"kitchen","prod_name":"Kitchen Item 4","description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.","price":{"gbp":12},"prod_image":"/assets/products/k4.jpg","quantity":4}]}}
-                </pre> -->
             </template>
 
 
