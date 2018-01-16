@@ -7,8 +7,6 @@
             1. function retrieves data from database base on input parameters
         */
 
-
-
         public static function getData($fields, $tbl, $field2, $value, $all=false)
         {
             parent::checkConnection();

@@ -11,7 +11,7 @@
 
       $charge = \Stripe\Charge::create(array(
           'customer' => $customer->id,
-          'amount'   => 20000,
+          'amount'   => 2000,
           'currency' => 'gbp'
       ));
 

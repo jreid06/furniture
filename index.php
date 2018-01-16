@@ -22,7 +22,7 @@
             </template>
 
         </div>
-        <div class="col-12">
+        <div class="col-12 home-main">
 
             <!--  -->
             <div class="row" id="shop">
@@ -45,9 +45,28 @@
             </div>
             <!--  -->
 
+            <div class="row">
+                <div class="custom-separate"></div>
+                <div class="col-12">
+                    <h5 class="text-center">FEATURED PRODUCTS</h5>
+                </div>
+                <featured
+                        v-for="(featured, index) in featuredProducts"
+                        v-bind:key="index"
+                        v-bind:indexkey="index"
+                        v-bind:productid="featured.id"
+                        v-bind:productimage="featured.product_image.image1"
+                        v-bind:producttitle="featured.product_name"
+                        v-bind:productprice="featured.price">
+                </featured>
+            </div>
+
             <!--  -->
             <div class="row" id="stories-blog">
                 <div class="custom-separate"></div>
+                <div class="col-12">
+                    <h5 class="text-center">STORIES</h5>
+                </div>
                 <blog-post
                         v-for="(post, index) in blogStories"
                         v-bind:key="post.id"

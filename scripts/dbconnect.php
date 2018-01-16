@@ -12,7 +12,7 @@
 	  "publishable_key" => "pk_test_o1lkn4I74t5tIEB8rdzKbCtp"
 	);
 
-	\Stripe\Stripe::setApiKey($stripe['secret_key']);
+	// \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
 
 	require_once ROOT_PATH.'vendor/twig/twig/lib/Twig/Autoloader.php';
@@ -27,6 +27,10 @@
 	$twig->addFilter(new Twig_SimpleFilter('start_case', function ($input) {
 	   	// return ucwords($input);
 		return strtoupper($input);
+	}));
+
+	$twig->addFilter(new Twig_SimpleFilter('camel_case', function ($input) {
+		return ucwords($input);
 	}));
 
 	$includes = array(

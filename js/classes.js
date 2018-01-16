@@ -3,10 +3,13 @@
     // this function is strict...
 }());
 
+
 class BasketItem {
-    constructor(id, prod_name, prod_desc, price, prod_image, quantity, category) {
+    constructor(id, stripe_id, prod_name, prod_tags, prod_desc, price, prod_image, quantity, category) {
         this.id = id;
+        this.stripe_id = stripe_id;
         this.prod_name = prod_name;
+        this.prod_tags = prod_tags;
         this.prod_desc = prod_desc;
         this.price = price;
         this.prod_image = prod_image;
@@ -22,6 +25,16 @@ class BasketItem {
     //methods
     calculateTotal(){
         return parseInt((this.price * this.quantity));
+    }
+}
+
+class User {
+    constructor(title, fname, lname, email, password) {
+        this.title = title;
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.password = password;
     }
 }
 

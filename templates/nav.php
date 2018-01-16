@@ -1,9 +1,17 @@
 <?php  ?>
 <nav id="nav" class="nav-vue">
+    <div class="mobile-login-help d-lg-none">
+        <a href="#">help</a>
+        <a href="#">signup/login</a>
+    </div>
     <div class="d-flex flex-row flex-wrap align-items-center" id="nav-main">
         <div class="p-2 logo-nav order-2 order-md-1">
             <img src="/assets/general/idyl_original_logo_white.png" alt="logo">
             <!-- <h2>LOGO</h2> -->
+            <div class="desktop-login-help d-none d-lg-block">
+                <a href="#">help</a>
+                <a href="#">signup/login</a>
+            </div>
         </div>
         <div class="p-2 menu-nav order-1">
             <div class="menu-btn" v-on:click="menuToggle">
@@ -19,7 +27,7 @@
             <ul>
                 <template v-for="(nav, index) in navHeader">
                     <li v-bind:id="'nav-link-' + index">
-                        <a v-bind:href="nav.address" @click.prevent>{{ nav.title.toUpperCase() }}</a>
+                        <a :href="nav.address" >{{ nav.title.toUpperCase() }}</a>
                     </li>
                 </template>
 
@@ -67,7 +75,8 @@
                             v-bind:productimage="item.prod_image"
                             v-bind:itemname="item.prod_name"
                             v-bind:price="item.price"
-                            v-bind:index="index">
+                            v-bind:index="index"
+                            v-bind:stripeid="item.stripe_id">
                 </basket-item>
             </template>
             <template v-else>
@@ -99,17 +108,87 @@
     <div class="menu-box d-flex flex-row flex-wrap menu-closed">
 
         <div class="p-2 main-menu">
-            <h4 class="d-md-none">COLLECTIONS</h4>
-            <div class="nav flex-column flex-md-row nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;" class="d-md-none">
+
+            <div class="mobile-collection-links d-md-none">
+                <h4 class="d-md-none text-center">COLLECTIONS</h4>
+                <a href="#" class="btn btn-menu-link">
+                    living room
+                </a>
+
+                <a href="#" class="btn btn-menu-link">
+                    kitchen
+                </a>
+
+                <a href="#" class="btn btn-menu-link">
+                    bedroom
+                </a>
+
+                <a href="#" class="btn btn-menu-link">
+                    bath
+                </a>
+
+                <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                <h4 class="d-md-none text-center">MORE</h4>
+
+                <a href="#" class="btn btn-menu-link">
+                    brands
+                </a>
+
+                <a href="#" class="btn btn-menu-link">
+                    gifts
+                </a>
+
+                <a href="#" class="btn btn-menu-link">
+                    our story
+                </a>
+
+                <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+
+                <h4 class="d-md-none text-center">INFO</h4>
+                <div class="d-flex flex-wrap flex-row">
+                    <div class="p-2 social1">
+
+                    </div>
+                    <div class="p-2 social2">
+
+                    </div>
+                    <div class="p-2 social3">
+
+                    </div>
+                </div>
+
+                <p><a href="mailto:info@nordicidyl.com">info@nordicidyl.com</a> </p>
+                <p><a href="tel:02086541456">+44 (0)2086541456</a></p>
+
+            </div>
+
+            <div class="category-list">
+                <template v-if="">
+
+                    <div v-if="">
+                        <a href="#">SHOP ALL LIVING ROOM PRODUCTS</a>
+                    </div>
+
+
+
+
+
+                </template>
+
+
+            </div>
+            <!-- <div class="d-none d-md-block nav flex-column flex-md-row nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="vue-livingroom-tab" data-toggle="pill" href="#vue-livingroom" role="tab" aria-controls="vue-livingroom" aria-selected="true">Living Room</a>
                 <a class="nav-link" id="vue-kitchen-tab" data-toggle="pill" href="#vue-kitchen" role="tab" aria-controls="vue-kitchen" aria-selected="false">Kitchen</a>
                 <a class="nav-link" id="vue-bedroom-tab" data-toggle="pill" href="#vue-bedroom" role="tab" aria-controls="vue-bedroom" aria-selected="false">Bedroom</a>
                 <a class="nav-link" id="vue-bath-tab" data-toggle="pill" href="#vue-bath" role="tab" aria-controls="vue-bath" aria-selected="false">Bath</a>
-            </div>
+            </div> -->
         </div>
-        <div class="p-2 sub-menu">
-            <div class="tab-content" id="v-pills-tabContent">
-                <!--  -->
+
+        <div class="p-2 sub-menu d-none d-md-block">
+            <!-- <div class="tab-content" id="v-pills-tabContent">
+
                 <div class="tab-pane fade show active" id="vue-livingroom" role="tabpanel" aria-labelledby="vue-livingroom-tab">
                     <template  v-for="livingroom in products.livingroom">
                         <div class="menu-link" v-bind:data-test="livingroom.image">
@@ -118,7 +197,7 @@
                     </template>
 
                 </div>
-                <!--  -->
+
                 <div class="tab-pane fade" id="vue-kitchen" role="tabpanel" aria-labelledby="vue-kitchen-tab">
                     <template  v-for="kitchen in products.kitchen">
                         <div class="menu-link">
@@ -126,7 +205,7 @@
                         </div>
                     </template>
                 </div>
-                <!--  -->
+
                 <div class="tab-pane fade" id="vue-bedroom" role="tabpanel" aria-labelledby="vue-bedroom-tab">
                     <template  v-for="bedroom in products.bedroom">
                         <div class="menu-link">
@@ -134,7 +213,7 @@
                         </div>
                     </template>
                 </div>
-                <!--  -->
+
                 <div class="tab-pane fade" id="vue-bath" role="tabpanel" aria-labelledby="vue-bath-tab">
                     <template  v-for="bath in products.bath">
                         <div class="menu-link">
@@ -142,7 +221,8 @@
                         </div>
                     </template>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
+
 </nav>

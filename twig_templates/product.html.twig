@@ -7,9 +7,10 @@
                 <li class="breadcrumb-item"><a href="/products">Products</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{product.product_name |start_case}}</li>
               </ol>
+              <!--  -->
             </nav>
         </div>
-        <div class="col-12 col-md-8 d-flex flex-row flex-wrap" id="product-page-image">
+        <div class="col-12 col-md-6 d-flex flex-row flex-wrap" id="product-page-image">
 
             <div class="p-2 product-image-main">
                 <img src="{{product.product_image.image1}}" id="main" alt="product image 1">
@@ -18,35 +19,166 @@
                 <img src="{{product.product_image.image1}}" alt="product image 2">
                 <img src="{{product.product_image.image3}}" alt="product image 2">
                 <img src="{{product.product_image.image2}}" alt="product image 2">
+                <img src="{{product.product_image.image3}}" alt="product image 2">
             </div>
             <!--  -->
 
         </div>
-        <div class="col-12 col-md-4 d-flex flex-row flex-wrap" id="product-page-ifno">
-            <div class="p-2 product-info-sp">
 
-                <ul>
-                    <li><h4>{{product.product_name|start_case}}</h4></li>
-                    <li>£{{product.price|number_format(2)}}</li>
+        <div class="col-12 col-md-6">
+            <div class="row d-flex flex-row flex-wrap">
+                <div class="p-2 product-info-sp">
 
-                    <li>
-                        <p> <strong>Description:</strong> </p>
-                        <p>{{product.product_description}}</p>
-                    </li>
-                    <li>
-                        <button class="btn btn-primary" v-on:click="addToBasket" data-product-info="{{product|json_encode()}}">Add to Basket</button>
-                    </li>
-                </ul>
+                    <ul>
+                        <li><h4>{{product.product_name|start_case}}</h4></li>
+                        <li>£&nbsp;{{product.price|number_format(2)}}</li>
 
+                        <li>
+                            <div class="addBasket-row">
+                                <div class="box">
+                                    <p id="quantity-count">1</p>
+                                </div>
+                                <div class="box">
+                                    <p @click="addtoQuant"><span class="fa fa-plus" ></span></p>
+                                    <p @click="minustoQuant"><span class="fa fa-minus" ></span></p>
+                                </div>
+                                <div class="box" data-product-info="{{product|json_encode()}}" v-on:click="addToBasket">
+                                    &plus;&nbsp;Add to Bag
+                                </div>
+                                <div class="box">
+                                    <p><span class="fa fa-heart-o"></span></p>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <!-- // NOTE -->
+                    <!--
+                    this is the how we will get product id when user clicks view product
+                        <button class="btn btn-info" name="button" data-product-id="" v-on:click="updateSelected">View Product</button>
+                <div class="p-2">
+                        <pre>
+                            {#{dump(product)}#}
+                        </pre>
+                    </div> -->
+
+                </div>
             </div>
 
-            <!-- this is the how we will get product id when user clicks view product -->
-                <!-- <button class="btn btn-info" name="button" data-product-id="" v-on:click="updateSelected">View Product</button> -->
-            <!-- <div class="p-2">
-                <pre>
-                    {#{dump(product)}#}
-                </pre>
+
+            <div id="accordion" role="tablist">
+
+                    <!--
+                        cards will be used for the accordion in products description, shipping and returns information
+
+                        quantity for item must be selected
+
+                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in)
+
+                    -->
+                    <!--  -->
+                    <div class="card pr-info-card">
+                        <div class="card-header" role="tab" id="pr_description">
+                            <h5 class="mb-0">
+                                <a class="pr-info-link" data-toggle="collapse" href="#prod-description" role="button" aria-expanded="true" aria-control="prod_description">
+                                    description
+                                    <span class="fa fa-minus open-accordion" id="desc"></span>
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="prod-description" class="collapse show" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
+                            <div class="card-body">
+                                {{product.product_description}}
+
+                                <ul>
+                                    <li>&nbsp;{{'foax fur'| camel_case()}}</li>
+                                    <li>&nbsp;{{'made with cotton'| camel_case()}}</li>
+                                    <li>&nbsp;{{'designed in london'| camel_case()}}</li>
+
+                                    {% for item in seq %}
+                                        <li>test</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+
+                    <!--  -->
+                    <div class="card pr-info-card">
+                        <div class="card-header" role="tab" id="pr_shipping">
+                            <h5 class="mb-0">
+                                <a class="pr-info-link" data-toggle="collapse" href="#prod-shipping" role="button" aria-expanded="true" aria-control="prod_description">
+                                    shipping
+                                    <span class="fa fa-plus closed-accordion" id="shipping"></span>
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="prod-shipping" class="collapse" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+                                <pre>
+                                    {{ basket }}
+                                </pre>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+
+                    <!--  -->
+                    <div class="card pr-info-card">
+                        <div class="card-header" role="tab" id="pr_returns">
+                            <h5 class="mb-0">
+                                <a class="pr-info-link"data-toggle="collapse" href="#prod-returns" role="button" aria-expanded="true" aria-control="prod_description">
+                                    returns
+                                    <span class="fa fa-plus closed-accordion" id="return"></span>
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="prod-returns" class="collapse" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
+                            <div class="card-body">
+                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+                                <button class="btn btn-info payOrder" v-on:click="payment" data-customer="{{customer_details}}" data-shipping-address="true">Confirm order & pay order</button>
+
+                                <pre>
+
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                </div>
+
+        </div>
+        <div class="col-12">
+            <div class="">
+
+            </div>
+            <!-- <div class="">
+                <button class="btn btn-success">pay for order</button>
             </div> -->
+        </div>
+
+        <div class="col-12 related-products">
+            <hr style="background-color: #222">
+            <h5 class="text-center">you might also like</h5>
+
+            <div class="row related-products-row">
+                <featured
+                        v-for="(featured, index) in featuredProducts"
+                        v-bind:key="index"
+                        v-bind:indexkey="index"
+                        v-bind:productid="featured.id"
+                        v-bind:productimage="featured.product_image.image1"
+                        v-bind:producttitle="featured.product_name"
+                        v-bind:productprice="featured.price">
+                </featured>
+            </div>
         </div>
     </div>
 </div>
