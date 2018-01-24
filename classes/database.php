@@ -41,47 +41,19 @@
             }
         }
 
-        public static function getGalleryImages($tbl, $fields, $ordField, $sortOrder, $limit=false, $offset=false)
+        public static function getOrderData($fields, $tbl, $criteria)
         {
             parent::checkConnection();
-            if ($limit && !$offset) {
-                $query = "SELECT $fields FROM $tbl ORDER BY $ordField $sortOrder LIMIT $limit";
 
-                $result = parent::returnConnection()->query($query);
-
-                // this will update images array with all rows returned from query
-                while ($row = $result->fetch_assoc()) {
-                    $images[] = $row;
-                }
-
-                parent::returnConnection()->close();
-                // return array($images, 'first IF');
-                return $images;
-            }else if ($limit && $offset) {
-
-                $query = "SELECT $fields FROM $tbl ORDER BY $ordField $sortOrder LIMIT $limit OFFSET $offset";
-
-                $result = parent::returnConnection()->query($query);
-
-                while ($row = $result->fetch_assoc()) {
-                    $images[] = $row;
-                }
-
-                parent::returnConnection()->close();
-                return array($images, 'SECOND IF');
-            }
-        }
-
-        public static function getOrderedData($fields, $tbl, $orderOption, $sortorder)
-        {
-            $query = "SELECT $fields FROM $tbl ORDER BY $orderOption $sortorder";
+            $query = "SELECT $fields FROM $tbl WHERE cus_id='$criteria'";
             $result = parent::returnConnection()->query($query);
+            $orders = array();
 
             while ($row = $result->fetch_assoc()) {
-                $galleryImages[] = $row;
+                $orders[] = $row;
             }
 
-            return $galleryImages;
+            return $orders;
         }
 
         public static function deleteInfo($tbl, $value)
@@ -125,44 +97,41 @@
             }
         }
 
-        public static function updateMultipleFields($tbl,$fields, $values, $field2, $value2, $usersUpdate)
+        public static function updateMultipleFields($tbl,$fields, $values, $field2, $value2)
         {
+            parent::checkConnection();
+            // $fields = array e.g ['id', 'fname', 'lname']
+            // $values = array e.g ['3', 'jason', 'reid']
+
 			$setString = '';
 
-            if ($usersUpdate) {
-                for ($i=0; $i < count($fields); $i++) {
-    				if ($i === count($fields)-1) {
-    					$setString .= "$fields[$i]='$values[$i]'";
-    				}else {
-    					$setString .= "$fields[$i]='$values[$i]',";
-    				}
-    			}
-            }else {
-            	for ($i=0; $i < count($fields); $i++) {
-                    // check if its the last value in array so we can remove the "," from the query
-    				if ($i === count($fields)-1) {
-    					$setString .= "$fields[$i]='$values[$i]'";
-    				}else {
-    					$setString .= "$fields[$i]='$values[$i]',";
-    				}
-    			}
-            }
+        	for ($i=0; $i < count($fields); $i++) {
+                // check if its the last value in array so we can remove the "," from the query
+				if ($i === count($fields)-1) {
+					$setString .= "$fields[$i]='$values[$i]'";
+				}else {
+					$setString .= "$fields[$i]='$values[$i]',";
+				}
+			}
 
             // return array($setString);
 
             $query = "UPDATE $tbl SET $setString WHERE $field2='$value2'";
 
             if (parent::returnConnection()->query($query)) {
-                return true;
+                parent::returnConnection()->close();
+                return array(true, $query);
             } else {
-                return false;
+                parent::returnConnection()->close();
+                return array(false, $query);
             }
         }
 
         public static function updateDatabase($fields, $tbl, $field2, $value, $value2, $ckcode)
         {
+            parent::checkConnection();
+
             $query = "UPDATE $tbl SET $fields='$value' WHERE $field2='$value2'";
-            $res = parent::returnConnection()->query($query);
 
             if (parent::returnConnection()->query($query)) {
 
@@ -194,9 +163,27 @@
             return $result;
         }
 
-        public static function getDetails($email)
+        public static function getDetailsLogin($email)
         {
-            $query = "SELECT firstName, password, role FROM users WHERE email='$email'";
+            parent::checkConnection();
+
+            $query = "SELECT * FROM customers WHERE email='$email'";
+            $result = parent::returnConnection()->query($query);
+
+            if ($result->num_rows > 0) {
+                parent::returnConnection()->close();
+                return $result;
+            } else {
+                parent::returnConnection()->close();
+                return false;
+            }
+        }
+
+        public static function getLoggedInUser($email)
+        {
+            parent::checkConnection();
+
+            $query = "SELECT cus_id, title, fname, lname, dob, email, basket_id ,address FROM customers WHERE email='$email'";
             $result = parent::returnConnection()->query($query);
 
             if ($result->num_rows > 0) {
@@ -210,133 +197,104 @@
 
         public static function checkExists($email)
         {
-            $query = "SELECT email FROM users WHERE email='$email'";
+            // open connection to database
+            parent::checkConnection();
+
+            $query = "SELECT * FROM customers WHERE email='$email'";
 
             $result = parent::returnConnection()->query($query);
 
             if ($result->num_rows > 0) {
+                parent::returnConnection()->close();
                 return true;
+
             } else {
-                false;
+                parent::returnConnection()->close();
+                return false;
+
             }
         }
 
-        public static function getUserEmails()
-        {
-            $query = "SELECT email FROM test";
-            $emailList = parent::returnConnection()->query($query);
-
-            /* NOTES-- dont fetch_assoc here as when we want to print out results it will only display 1 value */
-
-            return $emailList;
-        }
-
-        public static function getSlideInfo()
-        {
-            $sql = "SELECT slides.id, posts.title, posts.description ,images.image_address, categories.catName\n"
-
-    . "FROM posts\n"
-
-    . "INNER JOIN slides ON posts.id = slides.post_id\n"
-
-    . "INNER JOIN images ON posts.img_id = images.id\n"
-
-    . "INNER JOIN categories ON posts.cat_id = categories.id\n"
-
-    . "ORDER BY slides.id";
-
-            parent::checkConnection();
-            $result = parent::returnConnection()->query($sql);
-            // var_dump($result);
-            // $result1 = $result->fetch_assoc();
-            // var_dump($arr);
-            if ($result->num_rows > 0) {
-
-                // allows us to return multiple values
-                // iterate through array until no rows left to obtain
-                while ($row = $result->fetch_assoc()) {
-                    $slides[] = $row;
-                }
-
-                return $slides;
-            } else {
-                return "error with request. Reload page";
-            }
-        }
-
-        public static function getDummyNews()
-        {
-            $query = "SELECT posts.id, posts.title, posts.description, posts.date, images.image_address, categories.catName \n"
-
-    . "FROM posts \n"
-
-    . "INNER JOIN images ON posts.img_id = images.id \n"
-
-    . "INNER JOIN categories ON posts.cat_id = categories.id \n"
-
-    . "WHERE posts.id=6\n"
-
-    . "ORDER BY posts.date";
-
-
-            $result = Parent::returnConnection()->query($query);
-
-            if ($result->num_rows > 0) {
-                return $result->fetch_assoc();
-            } else {
-                return json_decode([false, "error with request"]);
-            }
-        }
 
 		// function is used when user logs out. it deletes cookie an/or session variables.
-        public static function deleteData()
+        public static function destroyLoggedInData()
         {
-            // checks to see if user name is set and if tkn is not set
-            // this is set if user updates name and has not clicked remember me when logging in
-            if (isset($_COOKIE['_unm']) && !isset($_COOKIE['tkn'])) {
-                setcookie('_unm', "", time() - 86400, "/");
-            }
-
-
-            if (isset($_COOKIE['tkn']) && isset($_COOKIE['_unm']) && isset($_COOKIE['_qni'])) {
-                setcookie('tkn', "", time() - 86400, "/");
-                setcookie('_unm', "", time() - 86400, "/");
-                setcookie('_uem', "", time() - 86400, "/");
+            if (isset($_COOKIE['idyl_tkn'])) {
                 // echo "cookies deleted <br>";
+                $tkn = $_COOKIE['idyl_tkn'];
+                $deleteQuery = "DELETE FROM cookietable WHERE cookieID='$tkn'";
 
-                $qni = $_COOKIE['_qni'];
-                $deleteQuery = "DELETE FROM cookielogin WHERE cus_id='$qni'";
-                Connect::checkConnection();
-                if (Connect::returnConnection()->query($deleteQuery)) {
-                    Connect::returnConnection()->close();
+                parent::checkConnection();
+                if (parent::returnConnection()->query($deleteQuery)) {
+                    parent::returnConnection()->close();
+
+                    // delete cookie data if cookie data is deleted from the database
+                    setcookie('idyl_qni', "", time() - 86400, "/");
+                    setcookie('idyl_tkn', "", time() - 86400, "/");
+                    setcookie('idyl_unm', "", time() - 86400, "/");
+                    setcookie('idyl_uem', "", time() - 86400, "/");
+
+
+                    // exit(json_encode($msg));
+                    $message = array(
+                        'status'=>true,
+                        'cookieCode'=>$tkn
+                    );
+
+                    $final = json_encode($message, true);
+                    return $final;
+
+                }else {
+                    $message = array(
+                        'status'=>true,
+                        'cookieCode'=>$tkn
+                    );
+
+                    $final = json_encode($message, true);
+                    return;
                 }
-                setcookie('_qni', "", time() - 86400, "/");
-                echo json_encode(array("C-DELETED","cookies deleted"));
+
+
             } elseif (isset($_SESSION)) {
                 session_unset();
                 session_destroy();
 
                 // header('location: /');
-                echo json_encode(array("S-DELETED","sessions deleted"));
-            } else {
-                echo "NOTHING works";
+                $msg = array(
+                    'status'=>array(
+    					'code'=> 101,
+                        'code_status'=>'success'
+                    ),
+                    'data'=>array(
+                        'msg'=>'session data destroyed successfully'
+                    )
+                );
+
+                return json_encode($msg);
+
             }
         }
 
-        public static function createUser($tbl, $value1, $value2, $value3, $value4, $value5, $value6)
+        public static function createUser($tbl, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8)
         {
-            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (firstName, lastName, email, age, role, password) VALUES (?,?,?,?,?,?)");
+            parent::checkConnection();
 
-            $query->bind_param("ssssss", $value1, $value2, $value3, $value4, $value5, $value6);
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (title, fname, lname, dob, email, password, basket_id, address) VALUES (?,?,?,?,?,?,?,?)");
 
+            $query->bind_param("ssssssss", $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8);
+
+            // hash password for security
             $value6 = password_hash($value6, PASSWORD_DEFAULT);
 
             $query->execute();
 
+            // close query
             $query->close();
+
+            // close db connection
             parent::returnConnection()->close();
 
-            return "User Created Successfully";
+            return true;
         }
 
         public static function addGalleryImages($tbl, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9)
@@ -355,11 +313,13 @@
             // return "User Created Successfully";
         }
 
-        public static function addData($tbl, $value1, $value2)
+        public static function createRow($tbl, $fields, $value1, $value2, $value3)
         {
-            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (image_address, cat_id) VALUES (?,?)");
+            Connect::checkConnection();
 
-            $query->bind_param('ss',$value1, $value2);
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl $fields VALUES (?,?,?)");
+
+            $query->bind_param('sss',$value1, $value2, $value3);
             $query->execute();
 
             $query->close();

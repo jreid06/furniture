@@ -10,7 +10,7 @@
 
         // create customer at this stage
 
-        
+
         // $cus_order = \Stripe\Order::create(array(
         //     "items" => array(
         //         array(
@@ -60,7 +60,7 @@
         }else {
             $msg = array(
                 'order'=> $cus_order,
-                'error'=>'order success error. No Token sent'
+                'error'=>'order error. No Token sent'
             );
 
             exit(json_encode($msg));

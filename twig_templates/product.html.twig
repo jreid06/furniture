@@ -46,7 +46,7 @@
                                     &plus;&nbsp;Add to Bag
                                 </div>
                                 <div class="box">
-                                    <p><span class="fa fa-heart-o"></span></p>
+                                    <p id="wishlist-heart" data-product-info="{{product|json_encode()}}" v-on:click="addToWishlist"><span data-product-info="{{product|json_encode()}}"class="wishlist-heart-icon fa fa-heart-o"></span></p>
                                 </div>
                             </div>
                         </li>

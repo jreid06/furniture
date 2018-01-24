@@ -4,7 +4,7 @@
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
-    Connect::checkConnection();
+    // Connect::checkConnection();
 ?>
 
 <div class="container-fluid home">
@@ -41,6 +41,7 @@
                         SHOP NOW
                     </a>
                     <hr>
+                    <!-- <p><?php // var_dump($_COOKIE); ?> </p> -->
                 </div>
             </div>
             <!--  -->

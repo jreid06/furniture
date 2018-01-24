@@ -29,41 +29,6 @@
         return array($readable_date, $time, $date_now, $month, $weekday, $month_digit);
     }
 
-    function set_bind_parameters($total, $typetxt, $type, $inputs=false){
-        $bind_param;
-        if ($typetxt === 'bind') {
-            for($i = 0; $i < $total; $i++){
-                $bind_param[] = $type;
-            }
-        }elseif($typetxt === 'values'){
-            for($i = 0; $i < $total; $i++){
-                if ($i===0) {
-                    $bind_param[] = '('.$type.',';
-                }
-                if ($i === ($total -1)) {
-                    $bind_param[] = $type.')';
-                    break;
-                }
-
-                $bind_param[] = $type.',';
-            }
-        }elseif ($typetxt === 'inputs') {
-            for($i = 0; $i < $total; $i++){
-
-                if ($i === ($total-1)) {
-                    $bind_param[] = "'".$inputs[$i]."'";
-                    break;
-                }else {
-                    $bind_param[] = "'".$inputs[$i]."'".$type;
-                }
-
-            }
-        }
-
-        $bind_param = implode('',$bind_param);
-        return $bind_param;
-     }
-
     function add_size_suffix($size_length, $img_size)
     {
         if ($size_length === 5) {
@@ -79,9 +44,9 @@
     }
 
 
-	function checkEmail($con, $email){
+	function checkEmail($con, $email, $table){
 		// echo "checkEmail runs";
-		$query = "SELECT email FROM users WHERE email = '$email'";
+		$query = "SELECT email FROM $table WHERE email = '$email'";
 		$result = $con->query($query);
 
 		// use num rows function to check if any rows are returned
@@ -102,31 +67,58 @@
 		$con->close();
 	}
 
-	function generatecookieToken($length, $email, $name, $id ,$con, $role){
+	function generatecookieToken($length, $email, $name, $id, $address){
+		Connect::checkConnection();
+		$con = Connect::returnConnection();
+
 		$cookieCode = bin2hex(random_bytes($length));
 
         // sessions are set here temporarily to be used to set cookie in external script
-		$_SESSION['tkn'] = $cookieCode;
-		$_SESSION['_unm'] = $name;
-		$_SESSION['_qni'] = $id;
-		$_SESSION['_uem'] = $email;
-        $_SESSION['_rle'] = $role;
+		// $_SESSION['idyl_tkn'] = $cookieCode;
+		// $_SESSION['idyl_unm'] = $name;
+		// $_SESSION['idyl_qni'] = $id;
+		// $_SESSION['idyl_uem'] = $email;
+
+		setcookie('idyl_tkn', $cookieCode, time() + 86400, "/");
+		setcookie('idyl_unm', $name, time() + 86400, "/");
+		setcookie('idyl_qni', $id, time() + 86400, "/");
+		setcookie('idyl_uem', $email, time() + 86400, "/");
+		setcookie('idyl_uaddrs', $address, time() + 86400, "/");
 
 		// echo "\n COOKIE CREATED \n ";
 		// prepare query and the table for values to be inserted as a statement
-		$stmt = $con->prepare("INSERT into cookielogin (cookieID, cmail, cus_id) VALUES (?, ?, ?)");
-
-		// bind paremeters to the insert statement in order of the fields specified above
-		$stmt->bind_param('sss', $cookieCode, $email, $id);
-
-		/* execute prepared statement */
+		$stmt = $con->prepare("INSERT into cookietable (cookieID, cus_id, cus_email) VALUES (?, ?, ?)");
+        //
+		// // bind paremeters to the insert statement in order of the fields specified above
+		$stmt->bind_param('sss', $cookieCode, $id, $email);
+        //
+		// /* execute prepared statement */
 		$stmt->execute();
-
-		/* close statement and connection */
+        //
+		// /* close statement and connection */
 		$stmt->close();
 
-		echo "1";
+		return true;
 
+	}
+
+	function format_timestamp($timestamp){
+	    $ts = $timestamp;
+	    $date = new DateTime();
+
+	    $date->setTimestamp($ts);
+	    $year = $date->format('Y');
+	    $time = $date->format('H:i:s');
+
+	    $timeArray = array(
+	        'year'=> $date->format('Y'),
+	        'month'=> $date->format('m'),
+	        'day'=> $date->format('d'),
+	        'time'=> $date->format('H:i:s'),
+			'full_date'=>$date->format('d-m-Y')
+	    );
+
+	    return $timeArray;
 	}
 
 	// function generateSessionToken($length, $email, $name, $status, $con){

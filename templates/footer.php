@@ -100,6 +100,7 @@
 <script src="/js/plugins/velocity.js"></script>
 <script src="/js/plugins/notify.min.js"></script>
 <script src="/js/plugins/jqueryrotate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
 <!-- Compiled and minified JavaScript -->
 

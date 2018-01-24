@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="edit-details myDetails">
+            <h4>About me</h4>
+            <hr>
+            <form id="myDetails" data-uid="{{current_details.cus_id}}">
+                <div class="form-group">
+                    <label for="inputTitleUpdate">Title</label>
+                    <select class="inputTitleUpdate" name="user-title" required>
+                        <option value="default" {% if current_details.title == 'default' %}selected{% endif %}>Please select option</option>
+                        <option value="Mr." {% if current_details.title == 'Mr.' %}selected{% endif %}>Mr.</option>
+                        <option value="Miss." {% if current_details.title == 'Miss.' %}selected{% endif %}>Miss.</option>
+                        <option value="Mrs." {% if current_details.title == 'Mrs.' %}selected{% endif %}>Mrs.</option>
+                        <option value="Ms." {% if current_details.title == 'Ms.' %}selected{% endif %}>Ms.</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputFnameUpdate">First name</label>
+                    <input type="text" class="form-control" id="inputFnameUpdate" value="{{current_details.fname}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputLnameUpdate">Last name</label>
+                    <input type="text" class="form-control" id="inputLnameUpdate" value="{{current_details.lname}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputDateUpdate">D.O.B</label>
+                    <input type="date" class="form-control" id="inputDateUpdate" value="{{current_details.dob}}" required>
+                </div>
+
+                <input type="submit" class="btn btn-primary btn-block btn-large update-user-details" value="Update details" v-on:click.prevent="updateDetails">
+                <p class="text-center"><small id="details-success"></small></p>
+
+
+            </form>
+
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="edit-details loginDetails">
+            <h4>Login details</h4>
+            <hr>
+            <h5>Current Email: <strong><span id="user-email">{{current_details.email}}</span> </strong></h5>
+            <hr>
+            <form id="loginDetails" data-uid="{{current_details.cus_id}}">
+                <div class="form-group">
+                    <label for="inputEmailUpdate">Email address</label>
+                    <input type="email" class="form-control" id="inputEmailUpdate" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputreEmailUpdate">Re-enter email address</label>
+                    <input type="email" class="form-control" id="inputreEmailUpdate" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <p class="text-center"><small id="email-check"></small></p>
+                </div>
+                <div class="form-group">
+                    <label for="inputPasswordUpdate">Password</label>
+                    <input type="password" class="form-control" id="inputPasswordUpdate" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputrePasswordUpdate">Re-enter Password</label>
+                    <input type="password" class="form-control" id="inputrePasswordUpdate" placeholder="Password" required>
+                    <p class="text-center"><small id="pass-check"></small></p>
+                </div>
+
+                <input type="submit" class="btn btn-primary btn-block btn-large update-user-login" value="Save changes" v-on:click.prevent="updateLoginDetails">
+                <p class="text-center"><small id="login-details-message"></small></p>
+            </form>
+        </div>
+    </div>
+</div>

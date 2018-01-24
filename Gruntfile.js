@@ -17,13 +17,30 @@ module.exports = function(grunt){
         target: {
             files: {
               //configuring our plugin to take in two files, put them both together and make one css file called app.css
-              'css/main.min.css': ['css/main.css']
+              'css/main.min.css': ['/css/main.css']
             }
         }
     },
-    sass: {
-        
-    }
+    postcss: {
+        options: {
+          map: true, // inline sourcemaps
+
+          // or
+          map: {
+              inline: false, // save all sourcemaps as separate files...
+              annotation: 'dist/css/maps/' // ...to the specified directory
+          },
+          processors: [
+            require('pixrem')(), // add fallbacks for rem units
+            require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+            require('cssnano')() // minify the result
+          ]
+        },
+        dist: {
+          src: 'css/*.css'
+        }
+      }
+
 
   });
 
@@ -38,6 +55,7 @@ module.exports = function(grunt){
 
   grunt.registerTask('cssminify', ['cssmin']);
   grunt.registerTask('scss', ['sass']);
+  grunt.registerTask('prefix', ['postcss:dist']);
   // grunt.registerTask('scss', ['sass', 'postcss:dist']);
 
 

@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <br>
+        <a href="/myaccount/addaddress" class="btn btn-primary">Add Delivery Address</a>
+    </div>
+    {% for address in user_details.address %}
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card" style="width: 100%; margin-top: 50px;">
+          <div class="card-body" data-index="{{loop.index-1}}">
+            <h5 class="card-title">{{address.title}} {{address.first_name}} {{address.last_name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Address {{loop.index}}</h6>
+            <p class="card-text">{{address.address1}}, {{address.city_town}}, {{address.post_code}}, {{address.country}}</p>
+            <a href="/myaccount/editaddress/{{address.address_id}}" class="card-link" @click.prevent="editaddressDirect">Edit address</a>
+            <a href="" class="card-link" @click.prevent="deleteAddress">Delete Address</a>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="col-12">
+        <!-- <pre>
+            {{dump(user_details)}}
+        </pre> -->
+    </div>
+
+</div>

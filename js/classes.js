@@ -29,12 +29,57 @@ class BasketItem {
 }
 
 class User {
-    constructor(title, fname, lname, email, password) {
+    constructor(title, fname, lname, dob, email, password) {
         this.title = title;
         this.fname = fname;
         this.lname = lname;
+        this.dob = dob;
         this.email = email;
         this.password = password;
+    }
+}
+
+class UpdateUserDetails {
+    constructor(id, title, fname, lname, dob) {
+        this.id = id;
+        this.title = title;
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+    }
+}
+
+class UpdateLoginDetails {
+    constructor(id, email, email_confirm, password, password_confirm) {
+        this.id = id;
+        this.email = email;
+        this.email_confirm = email_confirm;
+        this.password = password;
+        this.password_confirm = password_confirm;
+
+    }
+}
+
+class LoginUser {
+    constructor(email, password, rememberMe) {
+        this.email = email;
+        this.password = password;
+        this.rememberMe = rememberMe;
+    }
+}
+
+class Address {
+    constructor(title, fname, lname, phone, address1, address2, address3, city_town, post_code, country) {
+        this.title = title;
+        this.fname = fname;
+        this.lname = lname;
+        this.phone = phone;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.address3 = address3;
+        this.city_town = city_town;
+        this.post_code = post_code;
+        this.country = country;
     }
 }
 

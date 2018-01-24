@@ -24,6 +24,9 @@
 		'debug' => true
 	));
 	$twig->addExtension(new Twig_Extension_Debug());
+
+	// create twig filters
+
 	$twig->addFilter(new Twig_SimpleFilter('start_case', function ($input) {
 	   	// return ucwords($input);
 		return strtoupper($input);
@@ -33,9 +36,17 @@
 		return ucwords($input);
 	}));
 
+	$twig->addFilter(new Twig_SimpleFilter('timestamp_format', function ($input) {
+		return format_timestamp($input);
+	}));
+
+	// include necessary files
+
 	$includes = array(
 		'classes/connect.php',
-		'classes/database.php'
+		'classes/database.php',
+		'classes/logout.php',
+		'classes/address.php'
 	);
 	foreach($includes as $file) {
      	include_once ROOT_PATH . $file;

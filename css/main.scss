@@ -2,6 +2,7 @@
 @import "reset";
 @import "loader";
 @import "login";
+@import "account";
 
 body, html{
 	// overflow: hidden;
@@ -92,12 +93,131 @@ footer{
     border-bottom: 2px solid;
 }
 
+
+.dropdown-user-account{
+	width: 85px;
+	max-width:105px;
+
+	a{
+		position: relative;
+		span{
+			&:nth-child(1){
+				position: absolute;
+				top: 4px;
+			}
+			&:nth-child(2){
+				position: absolute;
+				right: 0;
+				top: 6px;
+
+			}
+		}
+	}
+
+	@include respond-to($lg-break){
+
+	};
+}
+
+.desktop-login-help{
+	width: 190px;
+
+	.dropdown-toggle::after {
+	    position: absolute;
+	    top: 8px;
+	    right: 13px;
+		display: none;
+	}
+
+	a{
+		// width: 50%;
+		// display: inline-flex;
+	}
+
+	.dropdown-menu{
+		top: 10px !important;
+		background-color: #222;
+		border: 2px solid lighten(#222, 3%);
+		width: 50%;
+		// display: inline-flex;
+
+		a{
+			display: flex;
+			justify-content: end;
+		}
+
+	}
+
+}
+
+.loggedin-btns{
+	// border: 1px solid gold;
+
+	.lg-box{
+		width: 50% !important;
+		&:nth-child(2){
+			display: inline-block !important;
+		}
+	}
+}
+
+.custom-menu-open{
+	right: 0;
+	transition: all .6s;
+}
+
+.custom-menu-closed{
+	right: -250px;
+	transition: all .4s;
+}
+
 nav{
     // border: 1px solid red !important;
-    box-shadow: 0 0 20px #e5e5e5;
+    // box-shadow: 0 0 20px #e5e5e5;
 	position: fixed;
 	width: 100%;
 	z-index: 99;
+}
+
+.desktop-login-help{
+	position: absolute;
+	top: 0;
+	right: 0;
+	// display: flex !important;
+	// height: 100%;
+	// align-items: center;
+
+	.custom-menu{
+		position: absolute;
+		background-color: #222;
+		top: 30px;
+		transition: all .6s;
+		z-index: 999999;
+
+	}
+
+	a{
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 0.6em;
+	}
+
+}
+
+.dsktp-a{
+	width: 50%;
+	position: absolute;
+	padding-top: 5px;
+
+	&:nth-child(1){
+		right: 100px;
+		text-align: right;
+	}
+
+	&:nth-child(2){
+		right: 0;
+	}
+
 }
 
 .mobile-login-help{
@@ -105,10 +225,18 @@ nav{
 	background-color: #222;
 	width: 100%;
 	position: relative;
-	z-index: 101;
+	z-index: 102;
 	display: flex;
 	justify-content: flex-end;
 	border-bottom: 0px;
+
+	.custom-menu{
+		position: absolute;
+		background-color: #222;
+		top: 20px;
+		transition: all .6s;
+
+	}
 
 	a{
 		color: #fff;
@@ -267,22 +395,6 @@ nav{
     }
 }
 
-.desktop-login-help{
-	position: absolute;
-	top: 0;
-	right: 0;
-
-	a{
-		color: #fff;
-		text-transform: uppercase;
-		font-size: 0.6em;
-
-		&:nth-child(2){
-			padding-right: 10px;
-		}
-	}
-}
-
 .vue-hidden{
     visibility: hidden;
 }
@@ -345,8 +457,6 @@ nav{
     // top: auto;
     transition: all 1s;
 }
-
-
 
 //
 
@@ -487,10 +597,10 @@ nav{
     border-top: 1px solid #222;
     background-color: #EFEFEF;
     position: relative;
-    z-index: 101;
+    // z-index: 101;
 
 	@include respond-to($md-break){
-		border-top: 1px solid #EFEFEF;
+		border-top: 1px solid #D2D2D2;
 	};
 }
 
@@ -916,9 +1026,9 @@ nav{
 		z-index: 1;
 		box-shadow: 0 0 0;
 
-		@include respond-to('(max-width: 340px)'){
-			top: 51px;
-		};
+		// @include respond-to('(max-width: 340px)'){
+		// 	top: 91px;
+		// };
 
 		@include respond-to($sm-break){
 			top: 85px;

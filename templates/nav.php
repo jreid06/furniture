@@ -1,16 +1,49 @@
-<?php  ?>
 <nav id="nav" class="nav-vue">
     <div class="mobile-login-help d-lg-none">
         <a href="#">help</a>
-        <a href="#">signup/login</a>
+
+        <template v-model="loggedInStatus" v-if="!loggedInStatus">
+            <a href="/login">signup/login</a>
+        </template>
+        <template v-else>
+            <a href="#" v-on:click="toggleAccountMenu">my account&nbsp;<span class="fa fa-user-o"></span>&nbsp; <span class="fa fa-caret-down"></span> </a>
+            <div class="custom-menu custom-menu-closed" aria-labelledby="dropdownMenuLink" v-on:mouseleave="toggleAccountMenu">
+                <a class="dropdown-item" href="/myaccount/home">dashboard</a>
+                <a class="dropdown-item" href="/myaccount/details">my details</a>
+                <a class="dropdown-item" href="/myaccount/addressbook">Address book</a>
+                <a class="dropdown-item" href="/myaccount/orders">orders</a>
+                <a class="dropdown-item" href="/basket">basket</a>
+                <a class="dropdown-item" href="/myaccount/wishlist">wishlist</a>
+                <a class="dropdown-item" href="" v-on:click.prevent="logout">sign out</a>
+            </div>
+        </template>
+
     </div>
     <div class="d-flex flex-row flex-wrap align-items-center" id="nav-main">
         <div class="p-2 logo-nav order-2 order-md-1">
             <img src="/assets/general/idyl_original_logo_white.png" alt="logo">
             <!-- <h2>LOGO</h2> -->
             <div class="desktop-login-help d-none d-lg-block">
-                <a href="#">help</a>
-                <a href="#">signup/login</a>
+
+                <template v-model="loggedInStatus" v-if="!loggedInStatus">
+                    <a class="dsktp-a" href="#">help</a>
+                    <a class="dsktp-a" href="/login">signup/login</a>
+                </template>
+                <template v-else>
+                    <a class="dsktp-a" href="#">help</a>
+                    <a class="dsktp-a" href="#" v-on:mouseover="toggleAccountMenu">my account&nbsp;<span class="fa fa-user-o"></span>&nbsp; <span class="fa fa-caret-down"></span> </a>
+
+                    <div class="custom-menu custom-menu-closed" aria-labelledby="dropdownMenuLink" v-on:mouseleave="toggleAccountMenu">
+                        <a class="dropdown-item" href="/myaccount/home">dashboard</a>
+                        <a class="dropdown-item" href="/myaccount/details">my details</a>
+                        <a class="dropdown-item" href="/myaccount/addressbook">address book</a>
+                        <a class="dropdown-item" href="/myaccount/orders">orders</a>
+                        <a class="dropdown-item" href="/basket">basket</a>
+                        <a class="dropdown-item" href="/myaccount/wishlist">wishlist</a>
+                        <a class="dropdown-item" href="" v-on:click.prevent="logout">sign out</a>
+                    </div>
+                </template>
+
             </div>
         </div>
         <div class="p-2 menu-nav order-1">
@@ -169,10 +202,6 @@
                     <div v-if="">
                         <a href="#">SHOP ALL LIVING ROOM PRODUCTS</a>
                     </div>
-
-
-
-
 
                 </template>
 

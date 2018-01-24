@@ -1,0 +1,35 @@
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Order #No.</th>
+                  <th scope="col">Items</th>
+                  <th scope="col">Created</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date Paid</th>
+                  <th scope="col" colspan="2">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orderSQL %}
+                    <tr>
+                        <th scope="row" style="vertical-align: middle;">{{order.real_json.id}}</th>
+                        <td>{{itemCount |length}}</td>
+                        <td>{{order.real_json.created |timestamp_format()['full_date']}}</td>
+                        <td>{{order.real_json.status}}</td>
+                        <td>{{order.real_json.status_transitions.paid |timestamp_format()['full_date']}}</td>
+                        <td>£{{order.real_json.amount / 100}}</td>
+                        <td class="text-center"><button class="btn btn-primary" @click.prevent>View</button> </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-12">
+    <!-- <pre>
+        {{dump(orderSQL)}}
+    </pre> -->
+</div>

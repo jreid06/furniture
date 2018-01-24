@@ -196,8 +196,6 @@ $barrio: "font-family: 'Barrio', cursive";
 }
 
 
-
-
 // animated classes end
 
 .fa-close{
@@ -216,6 +214,7 @@ $barrio: "font-family: 'Barrio', cursive";
     margin-bottom: 20px;
     border-bottom: 1px solid #e5e5e5;
 }
+
 
 // colours
 
@@ -236,18 +235,24 @@ $freshblue: #8CA1A4;
     outline: none;
 }
 
+.table td{
+	vertical-align: middle;
+	text-align: center;
+
+}
+
 .btn-primary{
 	// background-color: lighten(darkred, 10%);
-	background-color: #222;
+	background-color: lighten(#222, 10%);
 	border: 2px solid #f2f2f2;
-	box-shadow: 0 2px 332px #e5e5e5;
+	// box-shadow: 0 2px 332px #e5e5e5;
 
 	&:hover{
 		cursor: pointer;
 		background-color: #EFEFEF;
 		// color: lighten(darkred, 10%);
 		color: #222;
-		border: 2px solid darken(#222, 4%);
+		border: 2px solid #222;
 	}
 }
 
