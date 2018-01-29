@@ -11,21 +11,25 @@ $(document).ready(function() {
         console.log('true');
         $('footer').addClass('d-none');
     }
-    var handler = StripeCheckout.configure({
-        key: 'pk_test_o1lkn4I74t5tIEB8rdzKbCtp',
-        image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-        locale: 'auto',
-        token: function(token, args) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log('test');
-            console.log(token.id);
-            console.log(token.email);
-            console.log(args);
 
-            paymentPromise(token.id);
-        }
-    });
+    if (window.location.pathname === '/basket' || window.location.pathname.split('/')[1] === 'product') {
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_o1lkn4I74t5tIEB8rdzKbCtp',
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: function(token, args) {
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+                console.log('test');
+                console.log(token.id);
+                console.log(token.email);
+                console.log(args);
+
+                paymentPromise(token.id);
+            }
+        });
+    }
+
 
     // Close Checkout on page navigation:
     window.addEventListener('popstate', function() {
@@ -176,10 +180,10 @@ $(document).ready(function() {
             }
         },
         template: `<div class="p-2" v-bind:id="'basket-item-'+index">
-                <div class="item" v-bind:data-item-id="itemid" v-bind:data-s-id="stripeid">
+                <div class="item" v-bind:data-item-id="itemid" v-bind:data-s-id="itemid">
                     <img v-bind:src="productimage" class="item-image" alt="product image">
                     <div id="item-details">
-                        <h4>{{itemname}}</h4>
+                        <h4>{{itemname}} - {{capitalizeFirstLetter(prodcolor)}} - {{capitalizeFirstLetter(prodsize)}}</h4>
                         <p>Quantity: <span>{{quantity}}</span> </p>
                         <p>Price: <span>£{{price.toFixed(2)}}</span> </p>
                         <p class="acc-total" v-if="quantity > 1">Accumilated total: <span>£{{price*quantity.toFixed(2)}}</span></p>
@@ -190,13 +194,25 @@ $(document).ready(function() {
                 </div>
             </div>`,
         methods: {
+            capitalizeFirstLetter: function(string) {
+                let splitStr = string.split(' ');
+                if (splitStr.length > 1) {
+                    for (var i = 0; i < splitStr.length; i++) {
+                        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
+                    }
+                    return splitStr.join(' ');
+                } else {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+            },
             removeItem: function(e) {
                 console.log('item removed');
                 console.log(e.target);
 
                 // getting the correct items details from the basket array
                 let itemID = parseInt($(e.target).parent().attr('data-position-id'))
-                itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
+                    itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
                     selectedItem = $nav_vue.basket.items[itemID];
 
                 console.log(selectedItem.total_price);
@@ -245,7 +261,7 @@ $(document).ready(function() {
                 // update local storage basket object
             }
         },
-        props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'accprice', 'index', 'stripeid']
+        props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'index', 'prodcolor', 'prodsize']
     };
 
     Vue.component('blog-post', {
@@ -275,16 +291,34 @@ $(document).ready(function() {
                 status: 'component works'
             }
         },
-        template: `<div class="col-6 col-sm-3 col-lg-2" v-bind:id="'featuredproduct-'+indexkey">
+        template: `<div class="col-6 col-sm-3 col-lg-2" :data-product-link="'/product/'+productcat+'/'+productcattype+'/'+productnameslug+'-'+productcolorslug+'-'+productsizeslug+'/'+productid+'/'+productskuid" v-bind:id="'featuredproduct-'+indexkey" @click="gotoProduct">
                 <div class="card featured-prod-card" :data-product-id="productid">
                 <div class="card-img-bgrnd" :style="{background: 'url(' + productimage + ')'}"></div>
                   <div class="card-body">
-                    <h4 class="card-title">{{producttitle}}</h4>
-                    <p class="card-text">£{{parseInt(productprice).toFixed(2)}}</p>
+                    <h4 class="card-title"><a :href="'/product/'+productcat+'/'+productcattype+'/'+productnameslug+'-'+productcolorslug+'-'+productsizeslug+'/'+productid+'/'+productskuid">{{producttitle}} - {{capitalizeFirstLetter(productcolorslug)}}-{{capitalizeFirstLetter(productsizeslug)}}</a></h4>
+                    <p class="card-text">£{{(productprice/100).toFixed(2)}}</p>
                   </div>
                 </div>
             </div>`,
-        props: ['productid', 'productimage', 'producttitle', 'productprice', 'indexkey']
+        props: ['productid', 'productskuid','productimage', 'producttitle', 'productprice', 'indexkey', 'productcattype', 'productcat', 'productnameslug', 'productcolorslug', 'productsizeslug'],
+        methods:{
+            gotoProduct: function(e){
+                let eventTrigger = $(e.target);
+                console.log(eventTrigger);
+            },
+            capitalizeFirstLetter: function(string) {
+                let splitStr = string.split(' ');
+                if (splitStr.length > 1) {
+                    for (var i = 0; i < splitStr.length; i++) {
+                        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
+                    }
+                    return splitStr.join(' ');
+                } else {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+            }
+        }
     })
 
     let $nav_vue = new Vue({
@@ -294,7 +328,15 @@ $(document).ready(function() {
         },
         data: {
             testData: 'work',
-            menuStatus: false,
+            menuStatus: {
+                open: false,
+                mobile: false,
+                livingroom: false,
+                kitchen: false,
+                bedroom: false,
+                bath: false,
+                menuName: ''
+            },
             searchStatus: false,
             basketStatus: false,
             basketHasItems: false,
@@ -302,30 +344,34 @@ $(document).ready(function() {
             basketTotal: 0,
             navHeader: [{
                     address: '#',
-                    title: 'living room'
+                    title: 'living room',
+                    slug: 'livingroom'
                 },
                 {
                     address: '#',
-                    title: 'kitchen'
+                    title: 'kitchen',
+                    slug: 'kitchen'
                 },
                 {
                     address: '#',
-                    title: 'bedroom'
+                    title: 'bedroom',
+                    slug: 'bedroom',
                 },
                 {
                     address: '#',
-                    title: 'bath'
+                    title: 'bath',
+                    slug: 'bath'
                 },
                 {
-                    address: '#',
+                    address: '/brands',
                     title: 'brands'
                 },
                 {
-                    address: '/products/1',
+                    address: '/product/livingroom/sofas/3-seater-clic-clac-sofa-bed-in-turquoise-blue/7573f9a381d51775LIV#',
                     title: 'gifts'
                 },
                 {
-                    address: '/',
+                    address: '/our-story',
                     title: 'our story'
                 }
             ],
@@ -343,40 +389,125 @@ $(document).ready(function() {
             products: {
                 livingroom: [{
                         name: 'candle holders',
+                        slug: 'candle-holders',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'plaids',
+                        slug: 'plaids',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'cushions',
+                        slug: 'cushions',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'lamps',
+                        slug: 'lamps',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'nips',
+                        slug: 'nips',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'posters',
+                        slug: 'posters',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'shelves',
+                        slug: 'shelves',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
                         name: 'pots',
+                        slug: 'pots',
+                        cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
                     }
                 ],
-                kitchen: ['kitchen textiles', 'dining', 'cook'],
-                bedroom: ['bed linen', 'cushions', 'lamps', 'nips', 'poster'],
-                bath: ['towel', 'shower curtains', 'accessories']
+                kitchen: [
+                    {
+                        name: 'kitchen textiles',
+                        slug: 'kitchen-textiles',
+                        cat: 'kitchen',
+                        image: ''
+                    },
+                    {
+                        name: 'dining',
+                        slug: 'dining',
+                        cat: 'kitchen',
+                        image: ''
+                    },
+                    {
+                        name: 'cook',
+                        slug: 'cook',
+                        cat: 'kitchen',
+                        image: ''
+                    }
+                ],
+                bedroom: [
+                    {
+                        name: 'bed linen',
+                        slug: 'bed-linen',
+                        cat: 'bedroom',
+                        image: ''
+                    },
+                    {
+                        name: 'Bedroom cushions',
+                        slug: 'bedroom-cushions',
+                        cat: 'bedroom',
+                        image: ''
+                    },
+                    {
+                        name: 'lamps',
+                        slug: 'lamp',
+                        cat: 'bedroom',
+                        image: ''
+                    },
+                    {
+                        name: 'nips',
+                        slug: 'nips',
+                        cat: 'bedroom',
+                        image: ''
+                    },
+                    {
+                        name: 'poster',
+                        slug: 'poster',
+                        cat: 'bedroom',
+                        image: ''
+                    }
+                ],
+                bath: [
+                    {
+                        name: 'towel',
+                        slug: 'towel',
+                        cat: 'bath',
+                        image: ''
+                    },
+                    {
+                        name: 'shower curtains',
+                        slug: 'shower-curtains',
+                        cat: 'bath',
+                        image: ''
+                    },
+                    {
+                        name: 'accessories',
+                        slug: 'accessories',
+                        cat: 'bath',
+                        image: ''
+                    }
+                ]
             }
         },
         mounted: function() {
@@ -396,15 +527,15 @@ $(document).ready(function() {
                 });
             }
 
-            $('#nav-link-0').on('click', function() {
-                console.log('clicked collection link');
-                $vm.menuToggle();
-                if ($vm.menuStatus) {
-                    $(this).addClass('active-nav-link');
-                } else {
-                    $(this).removeClass('active-nav-link');
-                }
-            })
+            // $('#nav-link-0').on('click', function() {
+            //     console.log('clicked collection link');
+            //     $vm.menuToggle();
+            //     if ($vm.menuStatus) {
+            //         $(this).addClass('active-nav-link');
+            //     } else {
+            //         $(this).removeClass('active-nav-link');
+            //     }
+            // })
 
 
             this.checkBasketSession();
@@ -441,52 +572,52 @@ $(document).ready(function() {
                 }
 
             },
-            menuStatus: function(value) {
-                if (!value) {
-                    console.log('MENU IS CLOSING');
-                    $('#b2').animate({
-                        opacity: 1
-                    }, 300);
-
-                    $('#b1').rotate({
-                        angle: 43.5,
-                        center: ["10%", "50%"],
-                        animateTo: 0
-                    });
-
-                    $('#b3').rotate({
-                        angle: -42,
-                        center: ["10%", "70%"],
-                        animateTo: 0
-                    });
-
-                    $('.menu-box').removeClass('menu-open').addClass('menu-closed');
-                } else if (value) {
-                    console.log('MENU IS OPENING');
-                    $('#b2').animate({
-                        opacity: 0
-                    }, 200);
-
-                    $('#b1').rotate({
-                        angle: 0,
-                        center: ["10%", "50%"],
-                        animateTo: 43.5
-                    });
-
-                    $('#b3').rotate({
-                        angle: 0,
-                        center: ["10%", "70%"],
-                        animateTo: -42
-                    });
-
-                    $('.menu-box').removeClass('menu-closed').addClass('menu-open');
-
-                    let basketStatus = this.basketStatus;
-                    if (basketStatus) {
-                        this.basketStatus = !this.basketStatus;
-                    }
-                }
-            },
+            // menuStatus: function(value) {
+                // if (!value) {
+                //     console.log('MENU IS CLOSING');
+                //     $('#b2').animate({
+                //         opacity: 1
+                //     }, 300);
+                //
+                //     $('#b1').rotate({
+                //         angle: 43.5,
+                //         center: ["10%", "50%"],
+                //         animateTo: 0
+                //     });
+                //
+                //     $('#b3').rotate({
+                //         angle: -42,
+                //         center: ["10%", "70%"],
+                //         animateTo: 0
+                //     });
+                //
+                //     $('.menu-box').removeClass('menu-open').addClass('menu-closed');
+                // } else if (value) {
+                //     console.log('MENU IS OPENING');
+                //     $('#b2').animate({
+                //         opacity: 0
+                //     }, 200);
+                //
+                //     $('#b1').rotate({
+                //         angle: 0,
+                //         center: ["10%", "50%"],
+                //         animateTo: 43.5
+                //     });
+                //
+                //     $('#b3').rotate({
+                //         angle: 0,
+                //         center: ["10%", "70%"],
+                //         animateTo: -42
+                //     });
+                //
+                //     $('.menu-box').removeClass('menu-closed').addClass('menu-open');
+                //
+                //     let basketStatus = this.basketStatus;
+                //     if (basketStatus) {
+                //         this.basketStatus = !this.basketStatus;
+                //     }
+                // }
+            // },
             searchStatus: function(value) {
                 if (!value) {
                     $('.search-bar').removeClass('search-open').addClass('search-hidden');
@@ -507,6 +638,7 @@ $(document).ready(function() {
             },
             basketStatus: function(value) {
                 let $vm = this;
+
                 if (!value) {
                     $('.basket-box').removeClass('basket-open').addClass('basket-closed');
                     $('.fa-shopping-cart').removeClass('f-bskt-active');
@@ -514,7 +646,8 @@ $(document).ready(function() {
                     $('#basket-container').animate({
                         opacity: 0
                     }, 300);
-                } else if (value) {
+                }
+                else if (value) {
                     $vm.checkBasketSession();
                     $('#basket-container').animate({
                         opacity: 1
@@ -523,11 +656,19 @@ $(document).ready(function() {
                     $('.basket-box').removeClass('basket-closed').addClass('basket-open');
                     $('.fa-shopping-cart').addClass('f-bskt-active');
 
-                    console.log("Menu Status: " + this.menuStatus);
-                    let menuStatus = this.menuStatus;
+                    console.log("Menu Status: " + this.menuStatus.open);
+                    let menuStatus = this.menuStatus.open;
                     if (menuStatus) {
-                        this.menuStatus = !this.menuStatus;
-                        console.log("Current Menu Status: " + this.menuStatus);
+                        this.menuStatus.open = !this.menuStatus.open;
+
+                        switch (this.menuStatus.menuName) {
+                            case 'mobile':
+                                this.menuStatus.mobile = !this.menuStatus.mobile
+                                break;
+                            default:
+
+                        }
+                        console.log("Current Menu Status: " + this.menuStatus.open);
                         $('#nav-link-0').removeClass('active-nav-link');
                     }
                 }
@@ -537,6 +678,9 @@ $(document).ready(function() {
 
         },
         methods: {
+            goHome: function(){
+                window.location = '/';
+            },
             toggleAccountMenu: function(){
                 console.log('item toggled');
                 this.accountMenu = !this.accountMenu;
@@ -546,12 +690,12 @@ $(document).ready(function() {
                 console.log(bsktItms);
                 for (var i = 0; i < bsktItms.length; i++) {
                     console.log(bsktItms[i]);
-                    if (newItem.id === bsktItms[i].id) {
+                    if (newItem.stripesku_id === bsktItms[i].stripesku_id) {
                         return [true, bsktItms[i], i];
                     }
                 }
 
-                return false;
+                return [false];
             },
             initializeWishlist: function(){
                 // get basket items from local storage
@@ -561,12 +705,13 @@ $(document).ready(function() {
                 if (wishListExists && this.loggedInStatus) {
                     let wishlistItems = JSON.parse(localStorage.getItem('idyl-wishlist'));
 
-                    if (window.location.pathname.split('/')[1] === 'products') {
-                        let productid = parseInt(window.location.pathname.split('/')[2]);
-                        if (typeof productid === 'number') {
+                    if (window.location.pathname.split('/')[1] === 'product') {
+                        let productid = window.location.pathname.split('/')[5];
+
+                        if (typeof productid === 'string') {
                             for (var i = 0; i < wishlistItems.length; i++) {
                                 // if an item in wishlist matches current item add class to heart
-                                if (parseInt(wishlistItems[i].id) === productid) {
+                                if (wishlistItems[i].product_id === productid) {
                                     console.log('THIS ITEM IS IN WISHLIST. HEART SHOULD BE BLACK');
 
                                     $('.wishlist-heart-icon').removeClass('fa-heart-o').addClass('fa-heart');
@@ -742,7 +887,8 @@ $(document).ready(function() {
                     let option = {
                         action: 'init'
                     }
-                    $vm.initializeBasket(option)
+                    $vm.initializeBasket(option);
+                    // return false;
                 }
             },
             initializeBasket: function(option) {
@@ -793,8 +939,190 @@ $(document).ready(function() {
                 }
 
             },
+            closeMenu: function(e){
+                let target = $(e.target)[0].attributes[0].nodeValue,
+                    $vm = this;
+
+                console.log(target);
+                switch (target) {
+                    case 'livingroom':
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        setTimeout(function(){
+                            $vm.menuStatus.livingroom = false;
+                        }, 500);
+                        break;
+                    case 'bedroom':
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        setTimeout(function(){
+                            $vm.menuStatus.bedroom = false;
+                        }, 500);
+                        break;
+                    case 'bath':
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        setTimeout(function(){
+                            $vm.menuStatus.bath = false;
+                        }, 500);
+                        break;
+                    case 'kitchen':
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        setTimeout(function(){
+                            $vm.menuStatus.kitchen = false;
+                        }, 500);
+                        break;
+                    default:
+
+                }
+            },
             menuToggle: function(e) {
-                this.menuStatus = !this.menuStatus;
+                let menuLinkClicked = $(e.target),
+                    menuLinkName = menuLinkClicked[0].attributes['data-menu-target'].nodeValue,
+                    $vm = this;
+
+                console.log(menuLinkName);
+                this.menuStatus.menuName = menuLinkName;
+                switch (menuLinkName) {
+                    case 'mobile':
+                        if (!$vm.menuStatus.mobile) {
+                            // open menu
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            // set menu content to be mobile
+                            $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
+
+
+                           // open menu js
+
+                        }
+                        else {
+                            // close menu
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
+
+                        }
+
+                        break;
+                    case 'livingroom':
+                        console.log('livingroom toggled');
+                        // open menu if its not already open
+                        if (!$vm.menuStatus.open) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+                        }
+
+                        // reset all other menu status values
+                        $vm.menuStatus.mobile = false;
+                        $vm.menuStatus.kitchen = false;
+                        $vm.menuStatus.bath = false;
+                        $vm.menuStatus.bedroom = false;
+
+                        // show living room menu information
+                        if ($vm.menuStatus.livingroom) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            // stops menu info disappearing before menu has closed fully
+                            setTimeout(function(){
+                                $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
+                            }, 500);
+                        }else {
+                            $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
+                        }
+
+
+                        break;
+                    case 'kitchen':
+
+                        console.log('kitchen toggled');
+                        // open menu if its not already open
+                        if (!$vm.menuStatus.open) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        }
+
+                        // reset all other menu status values
+                        $vm.menuStatus.mobile = false;
+                        $vm.menuStatus.livingroom = false;
+                        $vm.menuStatus.bath = false;
+                        $vm.menuStatus.bedroom = false;
+
+                        // show living room menu information
+                        if ($vm.menuStatus.kitchen) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            // stops menu info disappearing before menu has closed fully
+                            setTimeout(function(){
+                                $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
+                            }, 500);
+
+                        }else {
+                            $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
+                        }
+
+                        break;
+                    case 'bedroom':
+
+                        console.log('bedroom toggled');
+                        // open menu if its not already open
+                        if (!$vm.menuStatus.open) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        }
+
+                        // reset all other menu status values
+                        $vm.menuStatus.mobile = false;
+                        $vm.menuStatus.livingroom = false;
+                        $vm.menuStatus.bath = false;
+                        $vm.menuStatus.kitchen = false;
+
+                        // show living room menu information
+                        if ($vm.menuStatus.bedroom) {
+
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            // stops menu info disappearing before menu has closed fully
+                            setTimeout(function(){
+                                $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
+                            }, 500)
+
+                        }else {
+                            $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
+                        }
+
+                        break;
+                    case 'bath':
+                        console.log('bath toggled');
+                        // open menu if its not already open
+                        if (!$vm.menuStatus.open) {
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                        }
+
+                        // reset all other menu status values
+                        $vm.menuStatus.mobile = false;
+                        $vm.menuStatus.livingroom = false;
+                        $vm.menuStatus.kitchen = false;
+                        $vm.menuStatus.bedroom = false;
+
+                        // show living room menu information
+                        if ($vm.menuStatus.bath) {
+                            // closes menu if link is pressed again
+                            $vm.menuStatus.open = !$vm.menuStatus.open;
+
+                            // stops menu info disappearing before menu has closed fully
+                            setTimeout(function(){
+                                $vm.menuStatus.bath = !$vm.menuStatus.bath;
+                            }, 500)
+
+                        }else {
+                            $vm.menuStatus.bath = !$vm.menuStatus.bath;
+                        }
+                        break;
+                    default:
+
+                }
             },
             searchToggle: function(e) {
                 this.searchStatus = !this.searchStatus;
@@ -809,9 +1137,24 @@ $(document).ready(function() {
                     console.log($('#wishlist-heart'));
 
                     // create a new basketItem
-                    let item = new BasketItem(productInfo.id, productInfo.stripe_id, productInfo.product_name, productInfo.product_tags, productInfo.product_description, productInfo.price, productInfo.product_image.image1, 0, 'livingroom');
+                    productInfo.price = productInfo.price/100;
+
+                    // create a new basketItem
+                    let item = new BasketItem(productInfo.product, productInfo.id, productInfo.prod_name, productInfo.attributes.size, productInfo.attributes.color, productInfo.prod_slug, productInfo.prod_desc, productInfo.price, productInfo.image, this.prodQuantity, productInfo.attributes.category, productInfo.attributes.type);
                     //
                     console.log(item);
+
+                    //check item wishlist exists in localStorage
+                    let wishListStorage = (localStorage.getItem('idyl-wishlist'))?true:false;
+
+                    if (!wishListStorage) {
+                        console.log('WISHLIST localStorage DOESNT EXIST');
+                        this.wishlist.items.splice(0, this.wishlist.items.length);
+
+                    }else {
+                        console.log('WISHLIST localStorage EXISTS ');
+                        this.wishlist.items = JSON.parse(localStorage.getItem('idyl-wishlist'));
+                    }
 
                     let exists = this.checkItemExists(this.wishlist.items, item),
                         $vm = this;
@@ -847,6 +1190,55 @@ $(document).ready(function() {
         }
     })
 
+    $nav_vue.$watch('menuStatus.open', function(newVal, oldVal){
+        if (newVal) {
+            // open menu
+            $('.menu-box').removeClass('menu-closed').addClass('menu-open');
+        }else {
+            $('.menu-box').removeClass('menu-open').addClass('menu-closed');
+        }
+    });
+
+    $nav_vue.$watch('menuStatus.mobile', function(newVal, oldVal){
+        if (newVal) {
+            console.log('MENU IS OPENING');
+           $('#b2').animate({
+               opacity: 0
+           }, 200);
+
+           $('#b1').rotate({
+               angle: 0,
+               center: ["10%", "50%"],
+               animateTo: 43.5
+           });
+
+           $('#b3').rotate({
+               angle: 0,
+               center: ["10%", "70%"],
+               animateTo: -42
+           });
+
+       }else {
+           $('#b2').animate({
+                 opacity: 1
+            }, 300);
+
+           $('#b1').rotate({
+              angle: 43.5,
+              center: ["10%", "50%"],
+              animateTo: 0
+           });
+
+           $('#b3').rotate({
+              angle: -42,
+              center: ["10%", "70%"],
+              animateTo: 0
+           });
+           // close menu js
+       }
+
+    });
+
     // updates wishlist storage information for user
     $nav_vue.$watch('wishlist.items', function(newVal, oldVal) {
         console.log('wishlist array changed');
@@ -867,6 +1259,8 @@ $(document).ready(function() {
             el: '.user-vue',
             components: {},
             data: {
+                // used for wishlist
+                inBasket: false,
                 status: 'connected',
                 basketCount: 0,
                 postcodeVerify: {
@@ -881,6 +1275,71 @@ $(document).ready(function() {
                 }
             },
             methods: {
+                // NOTE: VOID function. No longer adding to basket in wishlist
+                addToBasket: function(e){
+                    // $nav_vue.addToBasket(e);
+                    console.log('ADD TO BASKET USER VUE');
+                    console.log($(e.target));
+                    let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
+                    console.log(productInfo);
+
+                    // create a new basketItem
+                    // let item = new BasketItem(productInfo.id, productInfo.stripe_id, productInfo.prod_name, productInfo.prod_tags, productInfo.prod_desc, productInfo.price, productInfo.prod_image, productInfo.quantity, productInfo.category);
+
+
+                    // check if basket exist in local Storage
+                    $nav_vue.checkBasketSession();
+                    //
+                    let exists = this.checkItemExists(productInfo);
+                    console.log(exists);
+
+                    if(!exists){
+                        // update basket with new item
+                        if (productInfo.quantity < 1) {
+                            productInfo.quantity+=1;
+                        }
+
+                        $nav_vue.basketCount += 1;
+                        $nav_vue.basket.items.push(productInfo);
+                        $nav_vue.basketTotal += productInfo.price;
+
+                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                        shakeShoppingIcon();
+                    }
+
+                },
+                removeFromWishlist: function(e){
+                    console.log($(e.target));
+                    let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
+                    console.log(productInfo);
+
+                    for (var i = 0; i < $nav_vue.wishlist.items.length; i++) {
+                        if ($nav_vue.wishlist.items[i].id === productInfo.id) {
+                            $nav_vue.wishlist.items.splice(i,1);
+
+                            $.notify('item removed from wish list', 'error');
+
+                            $nav_vue.wishlist.totalItems -= 1;
+                        }
+                    }
+
+                },
+                checkItemExists: function(itm){
+                    console.log('clicked');
+                    console.log(itm);
+                    // this.item = itm;
+                    let exists = $nav_vue.checkItemExists($nav_vue.basket.items, itm);
+
+                    if (exists[0]) {
+                        // this.inBasket = true;
+                        return true;
+                    }else {
+                        // this.inBasket = false;
+                        return false;
+
+                    }
+                },
                 updateDetails: function(e){
                     let eventTrigger = $(e.target).parent(),
                         $userID = eventTrigger[0].attributes[1].nodeValue,
@@ -1405,8 +1864,63 @@ $(document).ready(function() {
     console.log(window.location.pathname);
     if (window.location.pathname.split('/')[1] !== 'myaccount') {
         console.log('home visible');
+        let basketItem2 = {
+            data: function(){
+                return{
+                    status: 'component works'
+                }
+            },
+            props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'accprice', 'index', 'stripeid'],
+            template: `<div class="card basket-card" :id="'basket-checkout-item-'+index">
+                <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <h5 class="card-title">{{itemname}}</h5> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span><strong>Size:</strong>N/A</span>&nbsp; <span><strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"><strong>Total: £{{accprice.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> <hr> </div>
+                </div>`,
+            methods: {
+                removeItem: function(e){
+                    // getting the correct items details from the basket array
+                    let itemID = parseInt($(e.target).parent().attr('data-position-id'))
+                        itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
+                        selectedItem = $nav_vue.basket.items[itemID];
+
+
+                    if (selectedItem.quantity > 1) {
+
+                        selectedItem.quantity -= 1;
+                        selectedItem.total_price -= selectedItem.price;
+                        $nav_vue.basketTotal -= selectedItem.price;
+
+                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                    } else {
+
+                        if ($nav_vue.basketCount === 1) {
+                            $nav_vue.emptyBasket();
+                            $home_vue.basketHasItems = false;
+                            return;
+                        }
+                        $nav_vue.basketCount -= 1;
+                        $nav_vue.basketTotal -= selectedItem.total_price;
+
+                        console.log(itemrowID);
+                        console.log(itemID);
+
+                        $(itemrowID).fadeOut().remove();
+
+                        // delete from array
+                        console.log($nav_vue.basket.items);
+                        $nav_vue.basket.items.splice(itemID, 1);
+                        console.log($nav_vue.basket.items);
+
+                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+                    }
+                }
+            }
+        };
+
         let $home_vue = new Vue({
             el: '.home',
+            components:{
+                'basket-item-checkout': basketItem2
+            },
             data: {
                 slidesActive: true,
                 selectedProduct: false,
@@ -1414,6 +1928,11 @@ $(document).ready(function() {
                 product: '',
                 featuredProducts: [],
                 createUserSuccess: '',
+                basketHasItems: false,
+                filterStatus: false,
+                basket:{
+
+                },
                 slides: [{
                         id: 1,
                         image: '/assets/main/davide-cantelli-240809.jpg'
@@ -1508,6 +2027,10 @@ $(document).ready(function() {
                 ]
             },
             methods: {
+                toggleFilter: function(e){
+                    // console.log('filter toggled');
+                    this.filterStatus = !this.filterStatus;
+                },
                 dummyAdd: function() {
                     let randomData = {
                         cookieid: 'xbdgwt538196vd',
@@ -1575,13 +2098,15 @@ $(document).ready(function() {
                         success: function(data) {
                             let $data = JSON.parse(data);
 
+                            console.log($data);
+
                             for (var i = 0; i < $data.product.length; i++) {
-                                $data.product[i].product_image = JSON.parse($data.product[i].product_image);
+                                // $data.product[i].product_image = JSON.parse($data.product[i].product_image);
 
                                 $vm.featuredProducts.push($data.product[i]);
                             }
-                            console.log('-----');
-                            console.log($vm.featuredProducts);
+                            // console.log('-----');
+                            // console.log($vm.featuredProducts);
                         },
                         error: function() {
                             console.log('log error with ajax ');
@@ -1636,12 +2161,22 @@ $(document).ready(function() {
                 },
                 checkItemExists: function(bsktItms, newItem) {
                     for (var i = 0; i < bsktItms.length; i++) {
-                        if (newItem.id === bsktItms[i].id) {
+                        if (newItem.stripesku_id === bsktItms[i].stripesku_id) {
                             return [true, bsktItms[i], i];
                         }
                     }
 
-                    return false;
+                    return [false];
+                },
+                getBasketInfo: function() {
+                    this.basket = $nav_vue.basket;
+                    if (this.basket.items.length < 1) {
+                        this.basketHasItems = false;
+                        $('.basket-home').addClass('empty-basket');
+                    }else {
+                        this.basketHasItems = true;
+                        $('.basket-home').removeClass('empty-basket');
+                    }
                 },
                 addToBasket: function(e) {
                     console.log('item added successfully');
@@ -1654,20 +2189,22 @@ $(document).ready(function() {
 
                     // CLASS BASKET ITEM args:
                     // id, prod_name, prod_desc, price, prod_image, quantity, category
-                    console.log($(e.target));
                     let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
                     console.log(productInfo);
 
+                    productInfo.price = productInfo.price/100;
+
                     // create a new basketItem
-                    let item = new BasketItem(productInfo.id, productInfo.stripe_id, productInfo.product_name, productInfo.product_tags, productInfo.product_description, productInfo.price, productInfo.product_image.image1, this.prodQuantity, 'livingroom');
+                    let item = new BasketItem(productInfo.product, productInfo.id, productInfo.prod_name, productInfo.attributes.size, productInfo.attributes.color, productInfo.prod_slug, productInfo.prod_desc, productInfo.price, productInfo.image, this.prodQuantity, productInfo.attributes.category, productInfo.attributes.type);
 
                     console.log(item);
-
-                    // check if basket exist in local Storage
+                    //
+                    // // check if basket exist in local Storage
                     $nav_vue.checkBasketSession();
 
                     let exists = this.checkItemExists($nav_vue.basket.items, item);
                     console.log(exists);
+
                     if (exists[0]) {
                         console.log('item exists in basket');
                         // update quantity and price for exsisting item
@@ -1688,7 +2225,8 @@ $(document).ready(function() {
                         localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
 
                         shakeShoppingIcon();
-                    } else {
+                    }
+                    else {
                         // update basket with new item
                         $nav_vue.basketCount += 1;
                         $nav_vue.basket.items.push(item);
@@ -1891,6 +2429,18 @@ $(document).ready(function() {
 
             },
             watch: {
+                filterStatus: function(value){
+                    if (value) {
+                        if ($('.filter-mobile').hasClass('closed-filter')) {
+                            $('.filter-mobile').removeClass('closed-filter').addClass('open-filter');
+                        }
+
+                    }else {
+                        if ($('.filter-mobile').hasClass('open-filter')) {
+                            $('.filter-mobile').removeClass('open-filter').addClass('closed-filter');
+                        }
+                    }
+                },
                 prodQuantity: function(value) {
                     $('#quantity-count').html(value);
                 },
@@ -1940,6 +2490,7 @@ $(document).ready(function() {
                 })
 
                 this.getFeaturedProducts();
+                this.getBasketInfo();
 
                 // this.ajaxFunctions();
             },

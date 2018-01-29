@@ -5,16 +5,21 @@
 
 
 class BasketItem {
-    constructor(id, stripe_id, prod_name, prod_tags, prod_desc, price, prod_image, quantity, category) {
-        this.id = id;
-        this.stripe_id = stripe_id;
+    constructor(product_id, stripesku_id, prod_name, prod_size, prod_color, name_slug, prod_desc, price, prod_image, quantity, category, prod_type) {
+        this.product_id = product_id;
+        this.stripesku_id = stripesku_id;
         this.prod_name = prod_name;
-        this.prod_tags = prod_tags;
+        this.name_slug = name_slug;
+        this.prod_tags = {
+            size: prod_size,
+            color: prod_color
+        };
         this.prod_desc = prod_desc;
         this.price = price;
         this.prod_image = prod_image;
         this.quantity = quantity;
         this.category = category;
+        this.prod_type = prod_type;
         this.total_price = this.calculateTotal();
     }
     //getters - written as foo.totalPrice //NOTE doesn't have to be written as foo.totalPrice()
@@ -24,7 +29,7 @@ class BasketItem {
 
     //methods
     calculateTotal(){
-        return parseInt((this.price * this.quantity));
+        return (this.price * this.quantity);
     }
 }
 

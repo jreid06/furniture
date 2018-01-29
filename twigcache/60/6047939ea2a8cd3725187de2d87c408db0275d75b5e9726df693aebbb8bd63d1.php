@@ -23,41 +23,64 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
               <ol class=\"breadcrumb\">
                 <li class=\"breadcrumb-item\"><a href=\"/\">Home</a></li>
                 <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
-                <li class=\"breadcrumb-item active\" aria-current=\"page\">";
+                <li class=\"breadcrumb-item\"><a href=\"/products/";
         // line 8
-        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute(($context["product"] ?? null), "product_name", array()))), "html", null, true);
+        echo twig_escape_filter($this->env, ($context["category"] ?? null), "html", null, true);
+        echo "\">";
+        echo twig_escape_filter($this->env, ($context["category"] ?? null), "html", null, true);
+        echo "</a></li>
+                <li class=\"breadcrumb-item\"><a href=\"/products/";
+        // line 9
+        echo twig_escape_filter($this->env, ($context["category"] ?? null), "html", null, true);
+        echo "/";
+        echo twig_escape_filter($this->env, ($context["type"] ?? null), "html", null, true);
+        echo "\">";
+        echo twig_escape_filter($this->env, ($context["type"] ?? null), "html", null, true);
+        echo "</a></li>
+                <li class=\"breadcrumb-item active\" aria-current=\"page\">";
+        // line 10
+        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute(($context["product"] ?? null), "name", array()))), "html", null, true);
+        echo " - ";
+        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "color", array()))), "html", null, true);
+        echo " - ";
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "size", array()), "html", null, true);
         echo "</li>
               </ol>
               <!--  -->
             </nav>
         </div>
         <div class=\"col-12 col-md-6 d-flex flex-row flex-wrap\" id=\"product-page-image\">
-
+            <!-- <pre>
+                ";
+        // line 17
+        echo twig_escape_filter($this->env, twig_var_dump($this->env, $context, ($context["skuprod"] ?? null)), "html", null, true);
+        echo "
+            </pre> -->
             <div class=\"p-2 product-image-main\">
                 <img src=\"";
-        // line 16
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["product"] ?? null), "product_image", array()), "image1", array()), "html", null, true);
+        // line 20
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
         echo "\" id=\"main\" alt=\"product image 1\">
             </div>
             <div class=\"p-2 prodimg-box\">
                 <img src=\"";
-        // line 19
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["product"] ?? null), "product_image", array()), "image1", array()), "html", null, true);
+        // line 23
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
         echo "\" alt=\"product image 2\">
                 <img src=\"";
-        // line 20
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["product"] ?? null), "product_image", array()), "image3", array()), "html", null, true);
+        // line 24
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
         echo "\" alt=\"product image 2\">
                 <img src=\"";
-        // line 21
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["product"] ?? null), "product_image", array()), "image2", array()), "html", null, true);
+        // line 25
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
         echo "\" alt=\"product image 2\">
                 <img src=\"";
-        // line 22
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["product"] ?? null), "product_image", array()), "image3", array()), "html", null, true);
+        // line 26
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
         echo "\" alt=\"product image 2\">
             </div>
-            <!--  -->
+
 
         </div>
 
@@ -67,12 +90,16 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                     <ul>
                         <li><h4>";
-        // line 33
-        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute(($context["product"] ?? null), "product_name", array()))), "html", null, true);
+        // line 37
+        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute(($context["product"] ?? null), "name", array()))), "html", null, true);
+        echo " - ";
+        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "color", array()))), "html", null, true);
+        echo " - ";
+        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "size", array()))), "html", null, true);
         echo "</h4></li>
                         <li>£&nbsp;";
-        // line 34
-        echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute(($context["product"] ?? null), "price", array()), 2), "html", null, true);
+        // line 38
+        echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute(($context["skuprod"] ?? null), "price", array()) / 100), 2), "html", null, true);
         echo "</li>
 
                         <li>
@@ -85,17 +112,17 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                                     <p @click=\"minustoQuant\"><span class=\"fa fa-minus\" ></span></p>
                                 </div>
                                 <div class=\"box\" data-product-info=\"";
-        // line 45
-        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["product"] ?? null)), "html", null, true);
+        // line 49
+        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
         echo "\" v-on:click=\"addToBasket\">
                                     &plus;&nbsp;Add to Bag
                                 </div>
                                 <div class=\"box\">
                                     <p id=\"wishlist-heart\" data-product-info=\"";
-        // line 49
-        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["product"] ?? null)), "html", null, true);
+        // line 53
+        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
         echo "\" v-on:click=\"addToWishlist\"><span data-product-info=\"";
-        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["product"] ?? null)), "html", null, true);
+        echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
         echo "\"class=\"wishlist-heart-icon fa fa-heart-o\"></span></p>
                                 </div>
                             </div>
@@ -103,16 +130,6 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                     </ul>
 
-                    <!-- // NOTE -->
-                    <!--
-                    this is the how we will get product id when user clicks view product
-                        <button class=\"btn btn-info\" name=\"button\" data-product-id=\"\" v-on:click=\"updateSelected\">View Product</button>
-                <div class=\"p-2\">
-                        <pre>
-                            ";
-        // line 63
-        echo "                        </pre>
-                    </div> -->
 
                 </div>
             </div>
@@ -120,15 +137,15 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
             <div id=\"accordion\" role=\"tablist\">
 
-                    <!--
-                        cards will be used for the accordion in products description, shipping and returns information
+
+                        <!-- cards will be used for the accordion in products description, shipping and returns information
 
                         quantity for item must be selected
 
-                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in)
+                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in) -->
 
-                    -->
-                    <!--  -->
+
+
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_description\">
                             <h5 class=\"mb-0\">
@@ -142,44 +159,43 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         <div id=\"prod-description\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
                                 ";
-        // line 93
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["product"] ?? null), "product_description", array()), "html", null, true);
+        // line 88
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["product"] ?? null), "description", array()), "html", null, true);
         echo "
 
                                 <ul>
                                     <li>&nbsp;";
-        // line 96
+        // line 91
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("foax fur")), "html", null, true);
         echo "</li>
                                     <li>&nbsp;";
-        // line 97
+        // line 92
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("made with cotton")), "html", null, true);
         echo "</li>
                                     <li>&nbsp;";
-        // line 98
+        // line 93
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("designed in london")), "html", null, true);
         echo "</li>
 
                                     ";
-        // line 100
+        // line 95
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["seq"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
-            // line 101
+            // line 96
             echo "                                        <li>test</li>
                                     ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 103
+        // line 98
         echo "                                </ul>
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
+
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_shipping\">
                             <h5 class=\"mb-0\">
@@ -192,10 +208,10 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-shipping\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+
                                 <pre>
                                     ";
-        // line 124
+        // line 118
         echo twig_escape_filter($this->env, ($context["basket"] ?? null), "html", null, true);
         echo "
                                 </pre>
@@ -203,9 +219,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_returns\">
                             <h5 class=\"mb-0\">
@@ -218,11 +232,8 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-returns\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
-                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"";
-        // line 146
-        echo twig_escape_filter($this->env, ($context["customer_details"] ?? null), "html", null, true);
-        echo "\" data-shipping-address=\"true\">Confirm order & pay order</button>
+
+                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button>
 
                                 <pre>
 
@@ -230,18 +241,17 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                             </div>
                         </div>
                     </div>
-                    <!--  -->
+
                 </div>
 
         </div>
-        <div class=\"col-12\">
+
+        <!-- <div class=\"col-12\">
             <div class=\"\">
 
             </div>
-            <!-- <div class=\"\">
-                <button class=\"btn btn-success\">pay for order</button>
-            </div> -->
-        </div>
+
+        </div> -->
 
         <div class=\"col-12 related-products\">
             <hr style=\"background-color: #222\">
@@ -253,10 +263,29 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
                         v-bind:productid=\"featured.id\"
+                        v-bind:productskuid=\"featured.skus.data[index].id\"
+                        v-bind:productimage=\"featured.images[index]\"
+                        v-bind:producttitle=\"featured.name\"
+                        v-bind:productnameslug=\"featured.metadata.slug\"
+                        v-bind:productcolorslug=\"featured.skus.data[index].attributes.color\"
+                        v-bind:productsizeslug=\"featured.skus.data[index].attributes.size\"
+                        v-bind:productprice=\"featured.skus.data[index].price\"
+                        v-bind:productcat = \"featured.skus.data[index].attributes.category\"
+                        v-bind:productcattype=\"featured.skus.data[index].attributes.type\">
+                </featured>
+                <!-- <featured
+                        v-for=\"(featured, index) in featuredProducts\"
+                        v-bind:key=\"index\"
+                        v-bind:indexkey=\"index\"
+                        v-bind:productdbid=\"featured.id\"
+                        v-bind:productid=\"featured.product_id\"
                         v-bind:productimage=\"featured.product_image.image1\"
                         v-bind:producttitle=\"featured.product_name\"
-                        v-bind:productprice=\"featured.price\">
-                </featured>
+                        v-bind:productnameslug=\"featured.name_slug\"
+                        v-bind:productprice=\"featured.price\"
+                        v-bind:productcat=\"featured.product_category\"
+                        v-bind:productcattype=\"featured.inner_cat_slug\">
+                </featured> -->
             </div>
         </div>
     </div>
@@ -276,7 +305,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
     public function getDebugInfo()
     {
-        return array (  224 => 146,  199 => 124,  176 => 103,  169 => 101,  165 => 100,  160 => 98,  156 => 97,  152 => 96,  146 => 93,  114 => 63,  96 => 49,  89 => 45,  75 => 34,  71 => 33,  57 => 22,  53 => 21,  49 => 20,  45 => 19,  39 => 16,  28 => 8,  19 => 1,);
+        return array (  215 => 118,  193 => 98,  186 => 96,  182 => 95,  177 => 93,  173 => 92,  169 => 91,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -296,23 +325,27 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
               <ol class=\"breadcrumb\">
                 <li class=\"breadcrumb-item\"><a href=\"/\">Home</a></li>
                 <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
-                <li class=\"breadcrumb-item active\" aria-current=\"page\">{{product.product_name |start_case}}</li>
+                <li class=\"breadcrumb-item\"><a href=\"/products/{{category}}\">{{category}}</a></li>
+                <li class=\"breadcrumb-item\"><a href=\"/products/{{category}}/{{type}}\">{{type}}</a></li>
+                <li class=\"breadcrumb-item active\" aria-current=\"page\">{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size}}</li>
               </ol>
               <!--  -->
             </nav>
         </div>
         <div class=\"col-12 col-md-6 d-flex flex-row flex-wrap\" id=\"product-page-image\">
-
+            <!-- <pre>
+                {{dump(skuprod)}}
+            </pre> -->
             <div class=\"p-2 product-image-main\">
-                <img src=\"{{product.product_image.image1}}\" id=\"main\" alt=\"product image 1\">
+                <img src=\"{{skuprod.image}}\" id=\"main\" alt=\"product image 1\">
             </div>
             <div class=\"p-2 prodimg-box\">
-                <img src=\"{{product.product_image.image1}}\" alt=\"product image 2\">
-                <img src=\"{{product.product_image.image3}}\" alt=\"product image 2\">
-                <img src=\"{{product.product_image.image2}}\" alt=\"product image 2\">
-                <img src=\"{{product.product_image.image3}}\" alt=\"product image 2\">
+                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
+                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
+                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
+                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
             </div>
-            <!--  -->
+
 
         </div>
 
@@ -321,8 +354,8 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                 <div class=\"p-2 product-info-sp\">
 
                     <ul>
-                        <li><h4>{{product.product_name|start_case}}</h4></li>
-                        <li>£&nbsp;{{product.price|number_format(2)}}</li>
+                        <li><h4>{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size |start_case()}}</h4></li>
+                        <li>£&nbsp;{{(skuprod.price/100)|number_format(2)}}</li>
 
                         <li>
                             <div class=\"addBasket-row\">
@@ -333,26 +366,17 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                                     <p @click=\"addtoQuant\"><span class=\"fa fa-plus\" ></span></p>
                                     <p @click=\"minustoQuant\"><span class=\"fa fa-minus\" ></span></p>
                                 </div>
-                                <div class=\"box\" data-product-info=\"{{product|json_encode()}}\" v-on:click=\"addToBasket\">
+                                <div class=\"box\" data-product-info=\"{{skuprod|json_encode()}}\" v-on:click=\"addToBasket\">
                                     &plus;&nbsp;Add to Bag
                                 </div>
                                 <div class=\"box\">
-                                    <p id=\"wishlist-heart\" data-product-info=\"{{product|json_encode()}}\" v-on:click=\"addToWishlist\"><span data-product-info=\"{{product|json_encode()}}\"class=\"wishlist-heart-icon fa fa-heart-o\"></span></p>
+                                    <p id=\"wishlist-heart\" data-product-info=\"{{skuprod|json_encode()}}\" v-on:click=\"addToWishlist\"><span data-product-info=\"{{skuprod|json_encode()}}\"class=\"wishlist-heart-icon fa fa-heart-o\"></span></p>
                                 </div>
                             </div>
                         </li>
 
                     </ul>
 
-                    <!-- // NOTE -->
-                    <!--
-                    this is the how we will get product id when user clicks view product
-                        <button class=\"btn btn-info\" name=\"button\" data-product-id=\"\" v-on:click=\"updateSelected\">View Product</button>
-                <div class=\"p-2\">
-                        <pre>
-                            {#{dump(product)}#}
-                        </pre>
-                    </div> -->
 
                 </div>
             </div>
@@ -360,15 +384,15 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
             <div id=\"accordion\" role=\"tablist\">
 
-                    <!--
-                        cards will be used for the accordion in products description, shipping and returns information
+
+                        <!-- cards will be used for the accordion in products description, shipping and returns information
 
                         quantity for item must be selected
 
-                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in)
+                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in) -->
 
-                    -->
-                    <!--  -->
+
+
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_description\">
                             <h5 class=\"mb-0\">
@@ -381,7 +405,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-description\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                {{product.product_description}}
+                                {{product.description}}
 
                                 <ul>
                                     <li>&nbsp;{{'foax fur'| camel_case()}}</li>
@@ -395,9 +419,8 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
+
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_shipping\">
                             <h5 class=\"mb-0\">
@@ -410,7 +433,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-shipping\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+
                                 <pre>
                                     {{ basket }}
                                 </pre>
@@ -418,9 +441,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
                     <div class=\"card pr-info-card\">
                         <div class=\"card-header\" role=\"tab\" id=\"pr_returns\">
                             <h5 class=\"mb-0\">
@@ -433,8 +454,8 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-returns\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
-                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"{{customer_details}}\" data-shipping-address=\"true\">Confirm order & pay order</button>
+
+                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button>
 
                                 <pre>
 
@@ -442,18 +463,17 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                             </div>
                         </div>
                     </div>
-                    <!--  -->
+
                 </div>
 
         </div>
-        <div class=\"col-12\">
+
+        <!-- <div class=\"col-12\">
             <div class=\"\">
 
             </div>
-            <!-- <div class=\"\">
-                <button class=\"btn btn-success\">pay for order</button>
-            </div> -->
-        </div>
+
+        </div> -->
 
         <div class=\"col-12 related-products\">
             <hr style=\"background-color: #222\">
@@ -465,10 +485,29 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
                         v-bind:productid=\"featured.id\"
+                        v-bind:productskuid=\"featured.skus.data[index].id\"
+                        v-bind:productimage=\"featured.images[index]\"
+                        v-bind:producttitle=\"featured.name\"
+                        v-bind:productnameslug=\"featured.metadata.slug\"
+                        v-bind:productcolorslug=\"featured.skus.data[index].attributes.color\"
+                        v-bind:productsizeslug=\"featured.skus.data[index].attributes.size\"
+                        v-bind:productprice=\"featured.skus.data[index].price\"
+                        v-bind:productcat = \"featured.skus.data[index].attributes.category\"
+                        v-bind:productcattype=\"featured.skus.data[index].attributes.type\">
+                </featured>
+                <!-- <featured
+                        v-for=\"(featured, index) in featuredProducts\"
+                        v-bind:key=\"index\"
+                        v-bind:indexkey=\"index\"
+                        v-bind:productdbid=\"featured.id\"
+                        v-bind:productid=\"featured.product_id\"
                         v-bind:productimage=\"featured.product_image.image1\"
                         v-bind:producttitle=\"featured.product_name\"
-                        v-bind:productprice=\"featured.price\">
-                </featured>
+                        v-bind:productnameslug=\"featured.name_slug\"
+                        v-bind:productprice=\"featured.price\"
+                        v-bind:productcat=\"featured.product_category\"
+                        v-bind:productcattype=\"featured.inner_cat_slug\">
+                </featured> -->
             </div>
         </div>
     </div>

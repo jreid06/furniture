@@ -41,7 +41,6 @@
                         SHOP NOW
                     </a>
                     <hr>
-                    <!-- <p><?php // var_dump($_COOKIE); ?> </p> -->
                 </div>
             </div>
             <!--  -->
@@ -56,9 +55,15 @@
                         v-bind:key="index"
                         v-bind:indexkey="index"
                         v-bind:productid="featured.id"
-                        v-bind:productimage="featured.product_image.image1"
-                        v-bind:producttitle="featured.product_name"
-                        v-bind:productprice="featured.price">
+                        v-bind:productskuid="featured.skus.data[index].id"
+                        v-bind:productimage="featured.images[index]"
+                        v-bind:producttitle="featured.name"
+                        v-bind:productnameslug="featured.metadata.slug"
+                        v-bind:productcolorslug="featured.skus.data[index].attributes.color"
+                        v-bind:productsizeslug="featured.skus.data[index].attributes.size"
+                        v-bind:productprice="featured.skus.data[index].price"
+                        v-bind:productcat = "featured.skus.data[index].attributes.category"
+                        v-bind:productcattype="featured.skus.data[index].attributes.type">
                 </featured>
             </div>
 

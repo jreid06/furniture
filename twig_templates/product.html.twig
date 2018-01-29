@@ -5,23 +5,27 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item"><a href="/products">Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{product.product_name |start_case}}</li>
+                <li class="breadcrumb-item"><a href="/products/{{category}}">{{category}}</a></li>
+                <li class="breadcrumb-item"><a href="/products/{{category}}/{{type}}">{{type}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size}}</li>
               </ol>
               <!--  -->
             </nav>
         </div>
         <div class="col-12 col-md-6 d-flex flex-row flex-wrap" id="product-page-image">
-
+            <!-- <pre>
+                {{dump(skuprod)}}
+            </pre> -->
             <div class="p-2 product-image-main">
-                <img src="{{product.product_image.image1}}" id="main" alt="product image 1">
+                <img src="{{skuprod.image}}" id="main" alt="product image 1">
             </div>
             <div class="p-2 prodimg-box">
-                <img src="{{product.product_image.image1}}" alt="product image 2">
-                <img src="{{product.product_image.image3}}" alt="product image 2">
-                <img src="{{product.product_image.image2}}" alt="product image 2">
-                <img src="{{product.product_image.image3}}" alt="product image 2">
+                <img src="{{skuprod.image}}" alt="product image 2">
+                <img src="{{skuprod.image}}" alt="product image 2">
+                <img src="{{skuprod.image}}" alt="product image 2">
+                <img src="{{skuprod.image}}" alt="product image 2">
             </div>
-            <!--  -->
+
 
         </div>
 
@@ -30,8 +34,8 @@
                 <div class="p-2 product-info-sp">
 
                     <ul>
-                        <li><h4>{{product.product_name|start_case}}</h4></li>
-                        <li>£&nbsp;{{product.price|number_format(2)}}</li>
+                        <li><h4>{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size |start_case()}}</h4></li>
+                        <li>£&nbsp;{{(skuprod.price/100)|number_format(2)}}</li>
 
                         <li>
                             <div class="addBasket-row">
@@ -42,26 +46,17 @@
                                     <p @click="addtoQuant"><span class="fa fa-plus" ></span></p>
                                     <p @click="minustoQuant"><span class="fa fa-minus" ></span></p>
                                 </div>
-                                <div class="box" data-product-info="{{product|json_encode()}}" v-on:click="addToBasket">
+                                <div class="box" data-product-info="{{skuprod|json_encode()}}" v-on:click="addToBasket">
                                     &plus;&nbsp;Add to Bag
                                 </div>
                                 <div class="box">
-                                    <p id="wishlist-heart" data-product-info="{{product|json_encode()}}" v-on:click="addToWishlist"><span data-product-info="{{product|json_encode()}}"class="wishlist-heart-icon fa fa-heart-o"></span></p>
+                                    <p id="wishlist-heart" data-product-info="{{skuprod|json_encode()}}" v-on:click="addToWishlist"><span data-product-info="{{skuprod|json_encode()}}"class="wishlist-heart-icon fa fa-heart-o"></span></p>
                                 </div>
                             </div>
                         </li>
 
                     </ul>
 
-                    <!-- // NOTE -->
-                    <!--
-                    this is the how we will get product id when user clicks view product
-                        <button class="btn btn-info" name="button" data-product-id="" v-on:click="updateSelected">View Product</button>
-                <div class="p-2">
-                        <pre>
-                            {#{dump(product)}#}
-                        </pre>
-                    </div> -->
 
                 </div>
             </div>
@@ -69,15 +64,15 @@
 
             <div id="accordion" role="tablist">
 
-                    <!--
-                        cards will be used for the accordion in products description, shipping and returns information
+
+                        <!-- cards will be used for the accordion in products description, shipping and returns information
 
                         quantity for item must be selected
 
-                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in)
+                        add items to wishlist heart must be visible. (Only in use if user has account e.g logged in) -->
 
-                    -->
-                    <!--  -->
+
+
                     <div class="card pr-info-card">
                         <div class="card-header" role="tab" id="pr_description">
                             <h5 class="mb-0">
@@ -90,7 +85,7 @@
 
                         <div id="prod-description" class="collapse show" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
                             <div class="card-body">
-                                {{product.product_description}}
+                                {{product.description}}
 
                                 <ul>
                                     <li>&nbsp;{{'foax fur'| camel_case()}}</li>
@@ -104,9 +99,8 @@
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
+
                     <div class="card pr-info-card">
                         <div class="card-header" role="tab" id="pr_shipping">
                             <h5 class="mb-0">
@@ -119,7 +113,7 @@
 
                         <div id="prod-shipping" class="collapse" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
                             <div class="card-body">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+
                                 <pre>
                                     {{ basket }}
                                 </pre>
@@ -127,9 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--  -->
 
-                    <!--  -->
                     <div class="card pr-info-card">
                         <div class="card-header" role="tab" id="pr_returns">
                             <h5 class="mb-0">
@@ -142,8 +134,8 @@
 
                         <div id="prod-returns" class="collapse" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
                             <div class="card-body">
-                                <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
-                                <button class="btn btn-info payOrder" v-on:click="payment" data-customer="{{customer_details}}" data-shipping-address="true">Confirm order & pay order</button>
+
+                                <button class="btn btn-info payOrder" v-on:click="payment" data-customer="" data-shipping-address="true">Confirm order & pay order</button>
 
                                 <pre>
 
@@ -151,18 +143,17 @@
                             </div>
                         </div>
                     </div>
-                    <!--  -->
+
                 </div>
 
         </div>
-        <div class="col-12">
+
+        <!-- <div class="col-12">
             <div class="">
 
             </div>
-            <!-- <div class="">
-                <button class="btn btn-success">pay for order</button>
-            </div> -->
-        </div>
+
+        </div> -->
 
         <div class="col-12 related-products">
             <hr style="background-color: #222">
@@ -174,10 +165,29 @@
                         v-bind:key="index"
                         v-bind:indexkey="index"
                         v-bind:productid="featured.id"
+                        v-bind:productskuid="featured.skus.data[index].id"
+                        v-bind:productimage="featured.images[index]"
+                        v-bind:producttitle="featured.name"
+                        v-bind:productnameslug="featured.metadata.slug"
+                        v-bind:productcolorslug="featured.skus.data[index].attributes.color"
+                        v-bind:productsizeslug="featured.skus.data[index].attributes.size"
+                        v-bind:productprice="featured.skus.data[index].price"
+                        v-bind:productcat = "featured.skus.data[index].attributes.category"
+                        v-bind:productcattype="featured.skus.data[index].attributes.type">
+                </featured>
+                <!-- <featured
+                        v-for="(featured, index) in featuredProducts"
+                        v-bind:key="index"
+                        v-bind:indexkey="index"
+                        v-bind:productdbid="featured.id"
+                        v-bind:productid="featured.product_id"
                         v-bind:productimage="featured.product_image.image1"
                         v-bind:producttitle="featured.product_name"
-                        v-bind:productprice="featured.price">
-                </featured>
+                        v-bind:productnameslug="featured.name_slug"
+                        v-bind:productprice="featured.price"
+                        v-bind:productcat="featured.product_category"
+                        v-bind:productcattype="featured.inner_cat_slug">
+                </featured> -->
             </div>
         </div>
     </div>

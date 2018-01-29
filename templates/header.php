@@ -1,11 +1,3 @@
-<?php
-   $root_dir = '';
-    if ($_SERVER['PHP_SELF'] === '/athlete/profile.php'){
-        $add_dots = '../';
-    }else {
-        $add_dots = '';
-    }
- ?>
 
 <!DOCTYPE html>
 <html style="overflow-x: hidden">
@@ -41,8 +33,8 @@
 
         <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
 	    <!-- Custom CSS -->
-		<link rel="stylesheet" href="<?=$add_dots?>/css/main.css">
-	    <link rel="stylesheet" href="<?=$add_dots?>/css/hover-min.css">
+		<link rel="stylesheet" href="/css/main.css">
+	    <link rel="stylesheet" href="/css/hover-min.css">
 
         <!-- ONLINE JQUERY-->
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -60,7 +52,12 @@
         <!-- ONLINE SLICK -->
         <script src="/slick-1.8.0/slick/slick.min.js"></script>
         <!-- <script src="https://js.stripe.com/v3/"></script> -->
-        <script src="https://checkout.stripe.com/checkout.js"></script>
+
+        <!-- NOTE: allow script to work in basket only -->
+        <!-- $_SERVER['REQUEST_URI'] === "/basket" -->
+        <?php if (true): ?>
+            <script src="https://checkout.stripe.com/checkout.js"></script>
+        <?php endif; ?>
 
 	</head>
 

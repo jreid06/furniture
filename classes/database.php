@@ -22,7 +22,9 @@
                     $data[] = $row;
                 }
 
-                return $data;
+
+
+                return array(true, $data);
             }else {
                 $val = 1;
                 $query = "SELECT $fields FROM $tbl WHERE $field2='$value'";
@@ -35,10 +37,45 @@
             // turn results into an associative array
             if ($result->num_rows > 0) {
                 $result = $result->fetch_assoc();
-                return $result;
+                return array(true,$result);
             } else {
-                return false;
+                return array(false);
             }
+        }
+
+
+        public static function getProductData($tbl1, $tbl2, $field, $value, $one=false)
+        {
+            parent::checkConnection();
+            //  livingroom.*, product_type.inner_cat_slug, product_type.cat_code FROM livingroom INNER JOIN product_type ON livingroom.product_type = product_type.id
+            if ($one) {
+                $query = "SELECT $tbl1.*, product_type.inner_cat_slug, product_type.cat_code FROM $tbl1 INNER JOIN product_type ON livingroom.product_type = product_type.id WHERE $tbl1.product_id='$value'";
+
+                $result = parent::returnConnection()->query($query);
+                
+                if (!$result) {
+                    return array(false);
+                }
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+
+                return array(true, $data);
+            }else {
+                $query = "SELECT $tbl1.*, product_type.inner_cat_slug, product_type.cat_code FROM $tbl1 INNER JOIN product_type ON livingroom.product_type = product_type.id";
+
+                $result = parent::returnConnection()->query($query);
+                if (!$result) {
+                    return array(false);
+                }
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+
+                return array(true, $data);
+            }
+
         }
 
         public static function getOrderData($fields, $tbl, $criteria)

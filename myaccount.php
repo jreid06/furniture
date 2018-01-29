@@ -110,8 +110,6 @@
         $user_details =  DatabaseFunctions::getLoggedInUser($user_email)->fetch_assoc();
         $user_details['address'] = json_decode($user_details['address'], true);
 
-
-        // NOTE: i've used sessions to stop requests going into the database
         $select_address = ((int) $_COOKIE['idyl-address-pos']);
         $address_info = $user_details['address'];
     }
@@ -280,14 +278,16 @@
                                     <td style="width: 600px;">{{wishlistItem.prod_desc}}</td>
                                     <td class="">
                                         <div class="poc-upsl d-flex flex-wrap flex-row">
+
+                                            <!-- checkitemexists func if false shows add cart btn -->
+                                            <template v-if="!inBasket">
+                                                <div class="p-2">
+                                                    <div class="" :data-product-info="JSON.stringify(wishlistItem)"><a :href="'/product/'+wishlistItem.category+'/'+wishlistItem.prod_type+'/'+wishlistItem.name_slug+'-'+wishlistItem.prod_tags.color+'-'+wishlistItem.prod_tags.size+'/'+wishlistItem.product_id+'/'+wishlistItem.stripesku_id">SHOP NOW</a> </div>
+                                                </div>
+                                            </template>
+
                                             <div class="p-2">
-                                                <a href="#">SHOP NOW</a>
-                                            </div>
-                                            <div class="p-2">
-                                                <button class="btn btn-info"><span class="fa fa-shopping-cart" style="width: 80px;"></span> </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button class="btn btn-danger"><span class="fa fa-tra" style="width: 80px;"></span> </button>
+                                                <div class="btn btn-danger" :data-product-info="JSON.stringify(wishlistItem)" @click="removeFromWishlist"><span class="fa fa-trash-o" :data-product-info="JSON.stringify(wishlistItem)" style="width: 80px;"></span></div>
                                             </div>
                                         </div>
                                     </td>

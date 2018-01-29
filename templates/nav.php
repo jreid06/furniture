@@ -21,7 +21,7 @@
     </div>
     <div class="d-flex flex-row flex-wrap align-items-center" id="nav-main">
         <div class="p-2 logo-nav order-2 order-md-1">
-            <img src="/assets/general/idyl_original_logo_white.png" alt="logo">
+            <img src="/assets/general/idyl_original_logo_white.png" alt="logo" @click="goHome">
             <!-- <h2>LOGO</h2> -->
             <div class="desktop-login-help d-none d-lg-block">
 
@@ -47,10 +47,10 @@
             </div>
         </div>
         <div class="p-2 menu-nav order-1">
-            <div class="menu-btn" v-on:click="menuToggle">
-                <div class="bar" id="b1"></div>
-                <div class="bar" id="b2"></div>
-                <div class="bar" id="b3"></div>
+            <div class="menu-btn" data-menu-target="mobile" v-on:click="menuToggle">
+                <div class="bar" data-menu-target="mobile" id="b1"></div>
+                <div class="bar" data-menu-target="mobile" id="b2"></div>
+                <div class="bar" data-menu-target="mobile" id="b3"></div>
             </div>
             <div class="p-2">
 
@@ -59,9 +59,17 @@
         <div class="p-2 links-nav order-md-2">
             <ul>
                 <template v-for="(nav, index) in navHeader">
-                    <li v-bind:id="'nav-link-' + index">
-                        <a :href="nav.address" >{{ nav.title.toUpperCase() }}</a>
-                    </li>
+                    <template v-if="nav.slug">
+                        <li v-bind:id="'nav-link-' + index" @click="menuToggle" :data-menu-target="nav.slug">
+                            <a href="#" :data-menu-target="nav.slug" @click.prevent>{{ nav.title.toUpperCase() }}</a>
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li v-bind:id="'nav-link-' + index">
+                            <a :href="nav.address">{{ nav.title.toUpperCase() }}</a>
+                        </li>
+                    </template>
+
                 </template>
 
             </ul>
@@ -102,14 +110,15 @@
             <template v-if="basketHasItems">
                 <basket-item
                             v-for="(item, index) in basket.items"
-                            v-bind:key="item.id"
-                            v-bind:itemid="item.id"
+                            v-bind:key="item.stripesku_id"
+                            v-bind:itemid="item.stripesku_id"
                             v-bind:quantity="item.quantity"
                             v-bind:productimage="item.prod_image"
                             v-bind:itemname="item.prod_name"
                             v-bind:price="item.price"
                             v-bind:index="index"
-                            v-bind:stripeid="item.stripe_id">
+                            v-bind:prodcolor="item.prod_tags.color"
+                            v-bind:prodsize="item.prod_tags.size">
                 </basket-item>
             </template>
             <template v-else>
@@ -143,28 +152,28 @@
         <div class="p-2 main-menu">
             <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;" class="d-md-none">
 
-            <div class="mobile-collection-links d-md-none">
+            <div class="mobile-collection-links d-lg-none">
                 <h4 class="d-md-none text-center">COLLECTIONS</h4>
-                <a href="#" class="btn btn-menu-link">
+                <a href="/products/livingroom" class="btn btn-menu-link">
                     living room
                 </a>
 
-                <a href="#" class="btn btn-menu-link">
+                <a href="/products/kitchen" class="btn btn-menu-link">
                     kitchen
                 </a>
 
-                <a href="#" class="btn btn-menu-link">
+                <a href="/products/bedroom" class="btn btn-menu-link">
                     bedroom
                 </a>
 
-                <a href="#" class="btn btn-menu-link">
+                <a href="/products/bath" class="btn btn-menu-link">
                     bath
                 </a>
 
                 <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;">
                 <h4 class="d-md-none text-center">MORE</h4>
 
-                <a href="#" class="btn btn-menu-link">
+                <a href="/brands" class="btn btn-menu-link">
                     brands
                 </a>
 
@@ -172,7 +181,7 @@
                     gifts
                 </a>
 
-                <a href="#" class="btn btn-menu-link">
+                <a href="/our-story" class="btn btn-menu-link">
                     our story
                 </a>
 
@@ -196,61 +205,186 @@
 
             </div>
 
-            <div class="category-list">
-                <template v-if="">
+            <!-- NOTE: living room -->
 
-                    <div v-if="">
-                        <a href="#">SHOP ALL LIVING ROOM PRODUCTS</a>
+            <template v-if="menuStatus.livingroom">
+                <div class="category-list d-none d-lg-block">
+                    <div class="content-livingroom-nav d-flex flex-wrap flex-row">
+                        <div class="p-2">
+                            <dl class="dl-box-nav">
+                                <div class="dl-box-content-nav">
+                                    <h4>SHOP BY PRODUCT</h4>
+                                    <ul>
+                                        <template v-for="(product, index) in products.livingroom">
+                                            <li class="nav-menu-link" :id="'link'+(index+1)">
+                                                <a :href="'/products/'+product.cat+'/'+product.slug">{{capitalizeFirstLetter(product.name)}}</a>
+                                            </li>
+                                        </template>
+
+                                    </ul>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="p-2">
+
+                            <div class="nav-box box-1">
+
+                            </div>
+
+                            <div class="nav-box box-2">
+
+                            </div>
+
+                            <div class="nav-box box-3">
+
+                            </div>
+
+                            <div class="close-menu" data-menu-target="livingroom" v-on:click="closeMenu">
+                                <span class="fa fa-close" data-menu-target="livingroom"></span>
+                            </div>
+                        </div>
                     </div>
 
-                </template>
-
-
-            </div>
-            <!-- <div class="d-none d-md-block nav flex-column flex-md-row nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="vue-livingroom-tab" data-toggle="pill" href="#vue-livingroom" role="tab" aria-controls="vue-livingroom" aria-selected="true">Living Room</a>
-                <a class="nav-link" id="vue-kitchen-tab" data-toggle="pill" href="#vue-kitchen" role="tab" aria-controls="vue-kitchen" aria-selected="false">Kitchen</a>
-                <a class="nav-link" id="vue-bedroom-tab" data-toggle="pill" href="#vue-bedroom" role="tab" aria-controls="vue-bedroom" aria-selected="false">Bedroom</a>
-                <a class="nav-link" id="vue-bath-tab" data-toggle="pill" href="#vue-bath" role="tab" aria-controls="vue-bath" aria-selected="false">Bath</a>
-            </div> -->
-        </div>
-
-        <div class="p-2 sub-menu d-none d-md-block">
-            <!-- <div class="tab-content" id="v-pills-tabContent">
-
-                <div class="tab-pane fade show active" id="vue-livingroom" role="tabpanel" aria-labelledby="vue-livingroom-tab">
-                    <template  v-for="livingroom in products.livingroom">
-                        <div class="menu-link" v-bind:data-test="livingroom.image">
-                            <div>{{capitalizeFirstLetter(livingroom.name)}}</div> <span class="fa fa-chevron-right"></span>
-                        </div>
-                    </template>
 
                 </div>
+            </template>
 
-                <div class="tab-pane fade" id="vue-kitchen" role="tabpanel" aria-labelledby="vue-kitchen-tab">
-                    <template  v-for="kitchen in products.kitchen">
-                        <div class="menu-link">
-                            <div>{{capitalizeFirstLetter(kitchen)}}</div> <span class="fa fa-chevron-right"></span>
-                        </div>
-                    </template>
-                </div>
+            <!-- NOTE: kitchen -->
 
-                <div class="tab-pane fade" id="vue-bedroom" role="tabpanel" aria-labelledby="vue-bedroom-tab">
-                    <template  v-for="bedroom in products.bedroom">
-                        <div class="menu-link">
-                            <div>{{capitalizeFirstLetter(bedroom)}}</div> <span class="fa fa-chevron-right"></span>
-                        </div>
-                    </template>
-                </div>
+            <template v-else-if="menuStatus.kitchen">
+                <div class="category-list d-none d-lg-block">
+                    <div class="content-livingroom-nav d-flex flex-wrap flex-row">
+                        <div class="p-2">
+                            <dl class="dl-box-nav">
+                                <div class="dl-box-content-nav">
+                                    <h4>SHOP BY PRODUCT</h4>
+                                    <ul>
+                                        <template v-for="(product, index) in products.kitchen">
+                                            <li class="nav-menu-link" :id="'link'+(index+1)">
+                                                <a :href="'/products/'+product.cat+'/'+product.slug">{{capitalizeFirstLetter(product.name)}}</a>
+                                            </li>
+                                        </template>
 
-                <div class="tab-pane fade" id="vue-bath" role="tabpanel" aria-labelledby="vue-bath-tab">
-                    <template  v-for="bath in products.bath">
-                        <div class="menu-link">
-                            <div>{{capitalizeFirstLetter(bath)}}</div> <span class="fa fa-chevron-right"></span>
+                                    </ul>
+                                </div>
+                            </dl>
                         </div>
-                    </template>
+
+                        <div class="p-2">
+
+                            <div class="nav-box box-1">
+
+                            </div>
+
+                            <div class="nav-box box-2">
+
+                            </div>
+
+                            <div class="nav-box box-3">
+
+                            </div>
+
+                            <div class="close-menu" data-menu-target="kitchen" v-on:click="closeMenu">
+                                <span class="fa fa-close" data-menu-target="kitchen"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-            </div> -->
+            </template>
+
+            <!-- NOTE: bedroom -->
+
+            <template v-else-if="menuStatus.bedroom">
+                <div class="category-list d-none d-lg-block">
+                    <div class="content-livingroom-nav d-flex flex-wrap flex-row">
+                        <div class="p-2">
+                            <dl class="dl-box-nav">
+                                <div class="dl-box-content-nav">
+                                    <h4>SHOP BY PRODUCT</h4>
+                                    <ul>
+                                        <template v-for="(product, index) in products.bedroom">
+                                            <li class="nav-menu-link" :id="'link'+(index+1)">
+                                                <a :href="'/products/'+product.cat+'/'+product.slug">{{capitalizeFirstLetter(product.name)}}</a>
+                                            </li>
+                                        </template>
+
+                                    </ul>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="p-2">
+
+                            <div class="nav-box box-1">
+
+                            </div>
+
+                            <div class="nav-box box-2">
+
+                            </div>
+
+                            <div class="nav-box box-3">
+
+                            </div>
+
+                            <div class="close-menu" data-menu-target="bedroom" v-on:click="closeMenu">
+                                <span class="fa fa-close" data-menu-target="bedroom"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </template>
+
+            <!-- NOTE: bath -->
+
+            <template v-else-if="menuStatus.bath">
+                <div class="category-list d-none d-lg-block">
+                    <div class="content-livingroom-nav d-flex flex-wrap flex-row">
+                        <div class="p-2">
+                            <dl class="dl-box-nav">
+                                <div class="dl-box-content-nav">
+                                    <h4>SHOP BY PRODUCT</h4>
+                                    <ul>
+                                        <template v-for="(product, index) in products.bath">
+                                            <li class="nav-menu-link" :id="'link'+(index+1)">
+                                                <a :href="'/products/'+product.cat+'/'+product.slug">{{capitalizeFirstLetter(product.name)}}</a>
+                                            </li>
+                                        </template>
+
+                                    </ul>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="p-2">
+
+                            <div class="nav-box box-1">
+
+                            </div>
+
+                            <div class="nav-box box-2">
+
+                            </div>
+
+                            <div class="nav-box box-3">
+
+                            </div>
+
+                            <div class="close-menu" data-menu-target="bath" v-on:click="closeMenu">
+                                <span class="fa fa-close" data-menu-target="bath"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </template>
+
         </div>
     </div>
 

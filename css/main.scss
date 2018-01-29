@@ -3,6 +3,8 @@
 @import "loader";
 @import "login";
 @import "account";
+@import "basket";
+@import "products";
 
 body, html{
 	// overflow: hidden;
@@ -401,7 +403,7 @@ nav{
 
 .main-menu{
     padding: 0 !important;
-
+	width: 100%;
     h4{
         font-size: 1.2em;
         text-align: center;
@@ -471,8 +473,9 @@ nav{
 	height: 500px;
 	overflow-y: scroll;
 
-	@include respond-to($md-break){
-		height: 352px;
+	@include respond-to($lg-break){
+		height: 300px;
+		overflow-y: hidden;
 	};
 
     .nav-link{
@@ -499,21 +502,80 @@ nav{
         };
     }
 
-    .p-2{
-		width: 100%;
-        // &:nth-child(1){
-        //     width: 40%;
-        // }
-        // width: 60%;
-        //
-        @include respond-to($md-break){
-            &:nth-child(1){
-                width: 30%;
-            }
-            width: 70%;
-        };
-    }
+    // .p-2{
+	// 	width: 100%;
+    //     // &:nth-child(1){
+    //     //     width: 40%;
+    //     // }
+    //
+    //     @include respond-to($md-break){
+    //
+    //         width: 100%;
+    //     };
+    // }
 
+}
+
+.content-livingroom-nav{
+	.p-2{
+		// border: 1px solid green;
+		height: 300px;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+
+		&:nth-child(1){
+			width: 25%;
+			border-right: 1px solid #d2d2d2;
+		}
+
+		&:nth-child(2){
+			width: 75%;
+			position: relative;
+		}
+	}
+
+	.nav-box{
+		height: 200px;
+		border: 1px solid #d2d2d2;
+		width: calc(96%/3);
+		padding: 10px;
+		display: inline-flex;
+		background: url('/assets/main/e1-dark.jpeg');
+		background-size: cover;
+		background-position: center;
+		margin-right: 15px;
+
+		&:nth-child(1){
+			margin-left: 12px;
+		}
+	}
+
+	.close-menu{
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		font-size: 1.2em;
+		// border: 1px solid red;
+		// background-color: gold;
+	}
+}
+
+.dl-box-content-nav{
+	width: 100%;
+
+	ul{
+		// border: 1px solid black;
+		padding-left: 30px;
+
+	}
+}
+
+.nav-menu-link{
+	// padding: 10px 0 10px 0;
+	// background-color: gold;
+	margin: 5px auto;
+	// margin: 10px auto 10px auto;
 }
 
 .mobile-collection-links{
@@ -532,6 +594,10 @@ nav{
 			// background-color: gold;
 			margin-top: 30px;
 		}
+
+		@include respond-to($md-break){
+				padding: 35px 0 35px 0;
+		};
 	}
 
 	p{
@@ -676,6 +742,11 @@ nav{
     span{
         padding: 5px;
         cursor: pointer;
+		color: #fff;
+
+		@include respond-to($lg-break){
+			color: #222;
+		};
 
         &:nth-child(1){
             &:hover{
@@ -805,7 +876,7 @@ nav{
 }
 
 .hasItems{
-	color: lighten(forestgreen, 10%);
+	color: lighten(forestgreen, 10%) !important;
 }
 
 .checkout-info{
@@ -876,9 +947,10 @@ nav{
 .home{
 	position: relative;
 	top: 88px;
+	min-height: 50%;
 
-	@include respond-to($md-break){
-		// top: 105px;
+	@include respond-to($lg-break){
+		top: 118px;
 	};
 }
 
@@ -1035,12 +1107,12 @@ nav{
 		};
 
 		@include respond-to($md-break){
-			top: 118px;
+			top: 87px;
 			height: 43px;
 		};
 
 		@include respond-to($lg-break){
-			// top: 119px;
+			top: 118px;
 		};
 	}
 }
@@ -1053,6 +1125,30 @@ nav{
 
 	a{
 		color: #010101;
+	}
+}
+
+.breadcrumb{
+	background-color: #fff;
+	font-size: 0.7em;
+	padding-left: 1.4rem;
+	text-transform: uppercase;
+
+	@include respond-to($md-break){
+		padding-left: 2.5rem;
+		font-size: 0.9em;
+	};
+	@include respond-to($lg-break){
+		padding-left: 7rem;
+	};
+
+	li{
+		&:nth-child(1n+2){
+			&::before{
+				content: '>'
+			}
+		}
+
 	}
 }
 
@@ -1070,29 +1166,6 @@ nav{
 		height: auto;
 	}
 
-	.breadcrumb{
-		background-color: #fff;
-		font-size: 0.7em;
-		padding-left: 1.4rem;
-		text-transform: uppercase;
-
-		@include respond-to($md-break){
-			padding-left: 2.5rem;
-			font-size: 0.9em;
-		};
-		@include respond-to($lg-break){
-			padding-left: 7rem;
-		};
-
-		li{
-			&:nth-child(1n+2){
-				&::before{
-					content: '>'
-				}
-			}
-
-		}
-	}
 
 	@include respond-to($sm-break){
 		top: 125px;
