@@ -23,10 +23,62 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
             <nav aria-label=\"breadcrumb\" role=\"navigation\">
               <ol class=\"breadcrumb\">
                 <!-- render list items dynamically based on \$_GET parameters set on products.php -->
+
                 <li class=\"breadcrumb-item\"><a href=\"/\">Home</a></li>
-                <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
-                <li class=\"breadcrumb-item\"><a href=\"/products\">cushions</a></li>
-                <li class=\"breadcrumb-item active\" aria-current=\"page\">livingroom</li>
+
+                ";
+        // line 11
+        if (( !$this->getAttribute(($context["breadcrumb"] ?? null), "one", array()) &&  !$this->getAttribute(($context["breadcrumb"] ?? null), "two", array()))) {
+            // line 12
+            echo "                    <li class=\"breadcrumb-item active\">Products</li>
+                ";
+        } else {
+            // line 14
+            echo "                    <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
+                ";
+        }
+        // line 16
+        echo "
+                ";
+        // line 17
+        if (($this->getAttribute(($context["breadcrumb"] ?? null), "one", array(), "any", true, true) &&  !$this->getAttribute(($context["breadcrumb"] ?? null), "two", array(), "any", true, true))) {
+            // line 18
+            echo "                    <li class=\"breadcrumb-item active\">";
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
+            echo "</li>
+
+                ";
+        }
+        // line 21
+        echo "
+                ";
+        // line 22
+        if (($this->getAttribute(($context["breadcrumb"] ?? null), "one", array(), "any", true, true) && $this->getAttribute(($context["breadcrumb"] ?? null), "two", array(), "any", true, true))) {
+            // line 23
+            echo "                    <li class=\"breadcrumb-item \">
+                        <a href=\"/products/";
+            // line 24
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
+            echo "\">";
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
+            echo "</a>
+                    </li>
+                ";
+        }
+        // line 27
+        echo "
+                ";
+        // line 28
+        if ($this->getAttribute(($context["breadcrumb"] ?? null), "two", array(), "any", true, true)) {
+            // line 29
+            echo "                    <li class=\"breadcrumb-item active\" aria-current=\"page\">";
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "two", array()), "html", null, true);
+            echo "</li>
+                ";
+        }
+        // line 31
+        echo "
+
               </ol>
               <!--  -->
             </nav>
@@ -193,11 +245,11 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
                         <div class=\"col-12\">
                             <p class=\"text-center\"><small>";
-        // line 177
+        // line 198
         echo twig_escape_filter($this->env, ($context["msg"] ?? null), "html", null, true);
         echo "</small></p>
                             <h4 class=\"text-center\">Showing all ";
-        // line 178
+        // line 199
         if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array(), "any", true, true) && $this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true))) {
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "category", array()), "html", null, true);
@@ -213,17 +265,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         }
         echo "</h4>
                             <br>
-                            ";
-        // line 180
-        if ($this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true)) {
-            // line 181
-            echo "                                <p>Type is: ";
-            echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "type", array()), "html", null, true);
-            echo "</p>
-                            ";
-        }
-        // line 183
-        echo "
+
                         </div>
                         <div class=\"col-6 col-md-4 col-lg-3\">
 
@@ -273,7 +315,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
     public function getDebugInfo()
     {
-        return array (  226 => 183,  220 => 181,  218 => 180,  201 => 178,  197 => 177,  19 => 1,);
+        return array (  253 => 199,  249 => 198,  80 => 31,  74 => 29,  72 => 28,  69 => 27,  61 => 24,  58 => 23,  56 => 22,  53 => 21,  46 => 18,  44 => 17,  41 => 16,  37 => 14,  33 => 12,  31 => 11,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -293,10 +335,31 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
             <nav aria-label=\"breadcrumb\" role=\"navigation\">
               <ol class=\"breadcrumb\">
                 <!-- render list items dynamically based on \$_GET parameters set on products.php -->
+
                 <li class=\"breadcrumb-item\"><a href=\"/\">Home</a></li>
-                <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
-                <li class=\"breadcrumb-item\"><a href=\"/products\">cushions</a></li>
-                <li class=\"breadcrumb-item active\" aria-current=\"page\">livingroom</li>
+
+                {% if not breadcrumb.one and not breadcrumb.two %}
+                    <li class=\"breadcrumb-item active\">Products</li>
+                {% else %}
+                    <li class=\"breadcrumb-item\"><a href=\"/products\">Products</a></li>
+                {% endif %}
+
+                {% if breadcrumb.one is defined and not breadcrumb.two is defined %}
+                    <li class=\"breadcrumb-item active\">{{breadcrumb.one}}</li>
+
+                {% endif %}
+
+                {% if breadcrumb.one is defined and breadcrumb.two is defined %}
+                    <li class=\"breadcrumb-item \">
+                        <a href=\"/products/{{breadcrumb.one}}\">{{breadcrumb.one}}</a>
+                    </li>
+                {% endif %}
+
+                {% if breadcrumb.two is defined %}
+                    <li class=\"breadcrumb-item active\" aria-current=\"page\">{{breadcrumb.two}}</li>
+                {% endif %}
+
+
               </ol>
               <!--  -->
             </nav>
@@ -465,9 +528,6 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <p class=\"text-center\"><small>{{msg}}</small></p>
                             <h4 class=\"text-center\">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
                             <br>
-                            {% if queryDetails.type is defined %}
-                                <p>Type is: {{queryDetails.type}}</p>
-                            {% endif %}
 
                         </div>
                         <div class=\"col-6 col-md-4 col-lg-3\">

@@ -693,7 +693,7 @@ input:focus {
 
 .products-page-main-container {
   margin-bottom: 90px;
-  top: 118px !important; }
+  top: 130px !important; }
 
 .mobile-filter-ctrl .p-2 {
   width: 100%; }
@@ -727,6 +727,7 @@ input:focus {
   height: 100%;
   overflow-y: scroll;
   background-color: #d2d2d2;
+  border: 1px solid #bbbbbb;
   padding: 0 !important;
   z-index: 100; }
   .filter-mobile .p-2:nth-child(1) {

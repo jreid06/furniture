@@ -1,6 +1,6 @@
 .products-page-main-container{
     margin-bottom: 90px;
-    top: 118px !important;
+    top: 130px !important;
 }
 
 .mobile-filter-ctrl{
@@ -55,6 +55,7 @@
     overflow-y: scroll;
     // background-color: forestgreen;
     background-color: #d2d2d2;
+    border: 1px solid darken(#d2d2d2, 9%);
     padding: 0 !important;
     z-index: 100;
 

@@ -4,14 +4,15 @@
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
-    // Connect::checkConnection();
+    // turn query paremeters into an assosiative array
     parse_str($_SERVER['QUERY_STRING'], $output);
 
-    var_dump($output);
+    // check whart paremeters have been added to determine what product data to get
     if (!isset($_GET['cat']) || !$_GET['cat']) {
         $data = 'show all products';
 
         $details = array();
+        $breadcrumbs = array();
     }
     elseif ($output['cat'] && isset($output['prodtype']) && !empty($output['prodtype'])) {
         $data = 'show specific type of product in a certain category e.g all cushions';
@@ -23,6 +24,11 @@
             'type' => $prod_type
         );
 
+        $breadcrumbs = array(
+            'one'=>$category,
+            'two'=>$prod_type
+        );
+
 
     }
     else if ($output['cat']) {
@@ -32,12 +38,16 @@
         $details = array(
             'category' => $category
         );
+
+        $breadcrumbs = array(
+            'one'=> $category
+        );
     }
 
     $template = $twig->load('products.html.twig');
     echo $template->render(array(
-        'status' => 'template works',
         'msg' => $data,
+        'breadcrumb'=>$breadcrumbs,
         'queryDetails'=> isset($details)?$details:false
     ));
 

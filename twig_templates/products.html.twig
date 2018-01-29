@@ -5,10 +5,30 @@
             <nav aria-label="breadcrumb" role="navigation">
               <ol class="breadcrumb">
                 <!-- render list items dynamically based on $_GET parameters set on products.php -->
+
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/products">Products</a></li>
-                <li class="breadcrumb-item"><a href="/products">cushions</a></li>
-                <li class="breadcrumb-item active" aria-current="page">livingroom</li>
+
+                {% if not breadcrumb.one and not breadcrumb.two %}
+                    <li class="breadcrumb-item active">Products</li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                {% endif %}
+
+                {% if breadcrumb.one is defined and not breadcrumb.two is defined %}
+                    <li class="breadcrumb-item active">{{breadcrumb.one}}</li>
+                {% endif %}
+
+                {% if breadcrumb.one is defined and breadcrumb.two is defined %}
+                    <li class="breadcrumb-item ">
+                        <a href="/products/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
+                    </li>
+                {% endif %}
+
+                {% if breadcrumb.two is defined %}
+                    <li class="breadcrumb-item active" aria-current="page">{{breadcrumb.two}}</li>
+                {% endif %}
+
+
               </ol>
               <!--  -->
             </nav>
@@ -177,9 +197,6 @@
                             <p class="text-center"><small>{{msg}}</small></p>
                             <h4 class="text-center">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
                             <br>
-                            {% if queryDetails.type is defined %}
-                                <p>Type is: {{queryDetails.type}}</p>
-                            {% endif %}
 
                         </div>
                         <div class="col-6 col-md-4 col-lg-3">
