@@ -46,18 +46,17 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
             echo "                    <li class=\"breadcrumb-item active\">";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
             echo "</li>
-
                 ";
         }
-        // line 21
+        // line 20
         echo "
                 ";
-        // line 22
+        // line 21
         if (($this->getAttribute(($context["breadcrumb"] ?? null), "one", array(), "any", true, true) && $this->getAttribute(($context["breadcrumb"] ?? null), "two", array(), "any", true, true))) {
-            // line 23
+            // line 22
             echo "                    <li class=\"breadcrumb-item \">
                         <a href=\"/products/";
-            // line 24
+            // line 23
             echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "one", array()), "html", null, true);
@@ -65,24 +64,37 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     </li>
                 ";
         }
-        // line 27
+        // line 26
         echo "
                 ";
-        // line 28
+        // line 27
         if ($this->getAttribute(($context["breadcrumb"] ?? null), "two", array(), "any", true, true)) {
-            // line 29
+            // line 28
             echo "                    <li class=\"breadcrumb-item active\" aria-current=\"page\">";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["breadcrumb"] ?? null), "two", array()), "html", null, true);
             echo "</li>
                 ";
         }
-        // line 31
+        // line 30
         echo "
-
               </ol>
               <!--  -->
             </nav>
         </div>
+    </div>
+    <div class=\"row\">
+        <div class=\"col-12\">
+            ";
+        // line 38
+        if ($this->getAttribute(($context["queryDetails"] ?? null), "products", array(), "any", true, true)) {
+            // line 39
+            echo "                <!-- <pre>";
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "html", null, true);
+            echo "</pre> -->
+            ";
+        }
+        // line 41
+        echo "        </div>
     </div>
 
     <div class=\"row\">
@@ -245,11 +257,11 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
                         <div class=\"col-12\">
                             <p class=\"text-center\"><small>";
-        // line 198
+        // line 203
         echo twig_escape_filter($this->env, ($context["msg"] ?? null), "html", null, true);
         echo "</small></p>
                             <h4 class=\"text-center\">Showing all ";
-        // line 199
+        // line 204
         if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array(), "any", true, true) && $this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true))) {
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "category", array()), "html", null, true);
@@ -267,35 +279,285 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <br>
 
                         </div>
-                        <div class=\"col-6 col-md-4 col-lg-3\">
 
-                            <div class=\"card product-card\" style=\"\">
-                                <img class=\"card-img-top\" src=\"/assets/livingroom/cushion3.jpg\" alt=\"Card image cap\">
-                                <div class=\"card-body\">
-                                    <h5 class=\"card-title\">Card title</h5>
-                                    <h6 class=\"card-subtitle mb-2 text-muted\">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
+                        ";
+        // line 209
+        if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "all")) {
+            // line 210
+            echo "
+                            ";
+            // line 211
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
+            foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
+                // line 212
+                echo "
+                                ";
+                // line 213
+                $context['_parent'] = $context;
+                $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
+                foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
+                    // line 214
+                    echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"";
+                    // line 217
+                    echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
+                    echo "\" alt=\"";
+                    echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
+                    echo "\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/";
+                    // line 221
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
+                    echo "/";
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
+                    echo "/";
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["product"], "metadata", array()), "slug", array()), "html", null, true);
+                    echo "-";
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array()), "html", null, true);
+                    echo "-";
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()), "html", null, true);
+                    echo "/";
+                    echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "id", array()), "html", null, true);
+                    echo "/";
+                    echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
+                    echo "\">";
+                    echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
+                    echo "</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">";
+                    // line 223
+                    echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
+                    echo " - ";
+                    echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                    echo "</h6>
+                                                <h6 class=\"\">";
+                    // line 224
+                    echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()))), "html", null, true);
+                    echo "</h6>
+                                                <hr>
+                                                <p><strong>£ ";
+                    // line 226
+                    echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
+                    echo "</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ";
+                }
+                $_parent = $context['_parent'];
+                unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
+                $context = array_intersect_key($context, $_parent) + $_parent;
+                // line 231
+                echo "
+                            ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 233
+            echo "
+                        ";
+        }
+        // line 235
+        echo "
+                        ";
+        // line 236
+        if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "all-cat")) {
+            // line 237
+            echo "
+                            ";
+            // line 238
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
+            foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
+                // line 239
+                echo "                                ";
+                $context['_parent'] = $context;
+                $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
+                foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
+                    // line 240
+                    echo "                                    ";
+                    if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "category", array()))) {
+                        // line 241
+                        echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <!-- <p>";
+                        // line 242
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
+                        echo "</p> -->
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"";
+                        // line 245
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
+                        echo "\" alt=\"";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
+                        echo "\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/";
+                        // line 249
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["product"], "metadata", array()), "slug", array()), "html", null, true);
+                        echo "-";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array()), "html", null, true);
+                        echo "-";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "id", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
+                        echo "\">";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
+                        echo "</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">";
+                        // line 251
+                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
+                        echo " - ";
+                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo "</h6>
+                                                <hr>
+                                                <p><strong>£ ";
+                        // line 253
+                        echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
+                        echo "</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ";
+                    }
+                    // line 258
+                    echo "                                ";
+                }
+                $_parent = $context['_parent'];
+                unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
+                $context = array_intersect_key($context, $_parent) + $_parent;
+                // line 259
+                echo "                            ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 260
+            echo "
+                        ";
+        }
+        // line 262
+        echo "
+                        ";
+        // line 263
+        if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "specific")) {
+            // line 264
+            echo "                            ";
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
+            foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
+                // line 265
+                echo "                                ";
+                $context['_parent'] = $context;
+                $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
+                foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
+                    // line 266
+                    echo "                                    ";
+                    if ((($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "category", array())) && ($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "type", array())))) {
+                        // line 267
+                        echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <!-- <p>";
+                        // line 268
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
+                        echo "</p> -->
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"";
+                        // line 271
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
+                        echo "\" alt=\"";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
+                        echo "\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/";
+                        // line 275
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["product"], "metadata", array()), "slug", array()), "html", null, true);
+                        echo "-";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array()), "html", null, true);
+                        echo "-";
+                        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "id", array()), "html", null, true);
+                        echo "/";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
+                        echo "\">";
+                        echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
+                        echo "</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">";
+                        // line 277
+                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
+                        echo " - ";
+                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo "</h6>
+                                                <hr>
+                                                <p><strong>£ ";
+                        // line 279
+                        echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
+                        echo "</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ";
+                    }
+                    // line 284
+                    echo "                                ";
+                }
+                $_parent = $context['_parent'];
+                unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
+                $context = array_intersect_key($context, $_parent) + $_parent;
+                // line 285
+                echo "                            ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 286
+            echo "
 
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class=\"col-6 col-md-4 col-lg-3\">
-
-                            <div class=\"card product-card\" style=\"\">
-                                <img class=\"card-img-top\" src=\"/assets/livingroom/cushion3.jpg\" alt=\"Card image cap\">
-                                <div class=\"card-body\">
-                                    <h5 class=\"card-title\">Card title</h5>
-                                    <h6 class=\"card-subtitle mb-2 text-muted\">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
-
-                                </div>
-                            </div>
-
-                        </div>
+                        ";
+        }
+        // line 289
+        echo "
+                        <!-- <product-card></product-card> -->
 
                 </div>
+
+                ";
+        // line 294
+        if ($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "has_more", array())) {
+            // line 295
+            echo "                    <div class=\"row\">
+                        <div class=\"col-12 text-center\">
+                            <br>
+                            <button class=\"btn btn-primary\">Show more</button>
+                        </div>
+                    </div>
+                ";
+        }
+        // line 302
+        echo "
             </div>
         </div>
     </div>
@@ -315,7 +577,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
     public function getDebugInfo()
     {
-        return array (  253 => 199,  249 => 198,  80 => 31,  74 => 29,  72 => 28,  69 => 27,  61 => 24,  58 => 23,  56 => 22,  53 => 21,  46 => 18,  44 => 17,  41 => 16,  37 => 14,  33 => 12,  31 => 11,  19 => 1,);
+        return array (  560 => 302,  551 => 295,  549 => 294,  542 => 289,  537 => 286,  531 => 285,  525 => 284,  517 => 279,  510 => 277,  491 => 275,  482 => 271,  476 => 268,  473 => 267,  470 => 266,  465 => 265,  460 => 264,  458 => 263,  455 => 262,  451 => 260,  445 => 259,  439 => 258,  431 => 253,  424 => 251,  405 => 249,  396 => 245,  390 => 242,  387 => 241,  384 => 240,  379 => 239,  375 => 238,  372 => 237,  370 => 236,  367 => 235,  363 => 233,  356 => 231,  345 => 226,  340 => 224,  334 => 223,  315 => 221,  306 => 217,  301 => 214,  297 => 213,  294 => 212,  290 => 211,  287 => 210,  285 => 209,  265 => 204,  261 => 203,  97 => 41,  91 => 39,  89 => 38,  79 => 30,  73 => 28,  71 => 27,  68 => 26,  60 => 23,  57 => 22,  55 => 21,  52 => 20,  46 => 18,  44 => 17,  41 => 16,  37 => 14,  33 => 12,  31 => 11,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -346,7 +608,6 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                 {% if breadcrumb.one is defined and not breadcrumb.two is defined %}
                     <li class=\"breadcrumb-item active\">{{breadcrumb.one}}</li>
-
                 {% endif %}
 
                 {% if breadcrumb.one is defined and breadcrumb.two is defined %}
@@ -359,10 +620,16 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     <li class=\"breadcrumb-item active\" aria-current=\"page\">{{breadcrumb.two}}</li>
                 {% endif %}
 
-
               </ol>
               <!--  -->
             </nav>
+        </div>
+    </div>
+    <div class=\"row\">
+        <div class=\"col-12\">
+            {% if queryDetails.products is defined %}
+                <!-- <pre>{{ queryDetails.products}}</pre> -->
+            {% endif %}
         </div>
     </div>
 
@@ -530,35 +797,101 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <br>
 
                         </div>
-                        <div class=\"col-6 col-md-4 col-lg-3\">
 
-                            <div class=\"card product-card\" style=\"\">
-                                <img class=\"card-img-top\" src=\"/assets/livingroom/cushion3.jpg\" alt=\"Card image cap\">
-                                <div class=\"card-body\">
-                                    <h5 class=\"card-title\">Card title</h5>
-                                    <h6 class=\"card-subtitle mb-2 text-muted\">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
+                        {% if queryDetails.num_of_products == 'all' %}
 
-                                </div>
-                            </div>
+                            {% for product in queryDetails.products.data %}
 
-                        </div>
+                                {% for sku in product.skus.data %}
+                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <h6 class=\"\">{{sku.attributes.category | camel_case()}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
 
-                        <div class=\"col-6 col-md-4 col-lg-3\">
+                            {% endfor %}
 
-                            <div class=\"card product-card\" style=\"\">
-                                <img class=\"card-img-top\" src=\"/assets/livingroom/cushion3.jpg\" alt=\"Card image cap\">
-                                <div class=\"card-body\">
-                                    <h5 class=\"card-title\">Card title</h5>
-                                    <h6 class=\"card-subtitle mb-2 text-muted\">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
+                        {% endif %}
 
-                                </div>
-                            </div>
+                        {% if queryDetails.num_of_products == 'all-cat' %}
 
-                        </div>
+                            {% for product in queryDetails.products.data %}
+                                {% for sku in product.skus.data %}
+                                    {% if sku.attributes.category == queryDetails.category %}
+                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <!-- <p>{{sku.id}}</p> -->
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {% if queryDetails.num_of_products == 'specific' %}
+                            {% for product in queryDetails.products.data %}
+                                {% for sku in product.skus.data %}
+                                    {% if sku.attributes.category == queryDetails.category and sku.attributes.type == queryDetails.type %}
+                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
+                                        <!-- <p>{{sku.id}}</p> -->
+                                        <div class=\"card product-card\" style=\"\">
+                                            <div class=\"product-image\">
+                                                <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
+                                            </div>
+                                            <div class=\"card-body\">
+                                                <h5 class=\"card-title\">
+                                                    <a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class=\"card-subtitle mb-2 text-muted\">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+
+                        {% endif %}
+
+                        <!-- <product-card></product-card> -->
 
                 </div>
+
+                {% if queryDetails.products.has_more %}
+                    <div class=\"row\">
+                        <div class=\"col-12 text-center\">
+                            <br>
+                            <button class=\"btn btn-primary\">Show more</button>
+                        </div>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>

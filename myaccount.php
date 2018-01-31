@@ -136,7 +136,7 @@
                          <dd class="col-7"><?= $user_details['dob']?></dd>
                              <hr>
                          <dd class="col-12">
-                             <a href="#" class="btn btn-primary">Edit details</a>
+                             <a href="/myaccount/details" class="btn btn-primary">Edit details</a>
                          </dd>
                      </div>
                  </dl>
@@ -312,7 +312,7 @@
          ?>
     </div>
 <?php elseif($page === "addressbook"): ?>
-    <div class="container-fluid user-account-home user-vue">
+    <div class="container-fluid user-account-home user-vue address-book-vue">
         <?php if (isset($_SESSION['idyl_address_deleted'])): ?>
             <br><br>
             <div class="col-12">
@@ -422,6 +422,15 @@
                             <option value="United Kingdom" selected>United Kingdom</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="inputStatusSelect">Active Status *</label>
+                        <select class="inputStatusSelect" name="user-title" required>
+                            <option value="false" selected>Not active</option>
+                            <option value="true">Active</option>
+                        </select>
+                        <p><small class="form-text text-muted">Changing this to active will make this the active address</small> </p>
+                    </div>
+
 
                     <input type="submit" class="btn btn-primary btn-block btn-large create-user" value="Add address" @click.prevent="addAddress">
                 </form>
@@ -432,7 +441,7 @@
     </div>
 
 <?php elseif($page === "editaddress"): ?>
-    <div class="container-fluid user-account-home user-vue">
+    <div class="container-fluid user-account-home user-vue address-book-vue">
         <div class="row">
             <div class="col-12">
                 <form id="editAddress" class="address-form">
@@ -492,6 +501,14 @@
                         <select class="inputCountrySelect" name="user-title" required>
                             <option value="United Kingdom" selected>United Kingdom</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatusSelect">Active Status *</label>
+                        <select class="inputStatusSelect" name="user-title" required>
+                            <option value="false" <?php if ($address_info[$select_address]['status'] === 'false'): ?>selected<?php endif; ?>>Not active</option>
+                            <option value="true" <?php if ($address_info[$select_address]['status'] === 'true'): ?>selected<?php endif; ?>>Active</option>
+                        </select>
+                        <p><small class="form-text text-muted">Changing this to active will make this the active address</small> </p>
                     </div>
 
                     <input type="submit" class="btn btn-primary btn-block btn-large create-user" value="save changes" data-index="<?= $select_address ?>" @click.prevent="editAddress">

@@ -16,8 +16,9 @@
         public $city_town;
         public $post_code;
         public $country;
+        public $status;
 
-        function __construct($address_id, $title, $first_name, $last_name, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country)
+        function __construct($address_id, $title, $first_name, $last_name, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status)
         {
             $this->address_id = $address_id;
             $this->title = $title;
@@ -30,6 +31,7 @@
             $this->city_town = $city_town;
             $this->post_code = $post_code;
             $this->country = $country;
+            $this->status = $status;
         }
 
         public function fullname()

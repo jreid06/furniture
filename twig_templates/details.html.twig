@@ -3,7 +3,7 @@
         <div class="edit-details myDetails">
             <h4>About me</h4>
             <hr>
-            <form id="myDetails" data-uid="{{current_details.cus_id}}">
+            <form id="myDetails" data-uid="{{current_details.cus_id}}" data-sid="{{current_details.stripe_cus_id}}">
                 <div class="form-group">
                     <label for="inputTitleUpdate">Title</label>
                     <select class="inputTitleUpdate" name="user-title" required>
@@ -41,7 +41,7 @@
             <hr>
             <h5>Current Email: <strong><span id="user-email">{{current_details.email}}</span> </strong></h5>
             <hr>
-            <form id="loginDetails" data-uid="{{current_details.cus_id}}">
+            <form id="loginDetails" data-uid="{{current_details.cus_id}}" data-sid="{{current_details.stripe_cus_id}}">
                 <div class="form-group">
                     <label for="inputEmailUpdate">Email address</label>
                     <input type="email" class="form-control" id="inputEmailUpdate" aria-describedby="emailHelp" placeholder="Enter email" required>

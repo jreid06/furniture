@@ -5,8 +5,12 @@
     </div>
     {% for address in user_details.address %}
     <div class="col-12 col-md-6 col-lg-4">
-        <div class="card" style="width: 100%; margin-top: 50px;">
+        <div class="card address-card" style="width: 100%; margin-top: 50px; {% if address.status == 'true' %}background-color: #d2d2d2; {% endif %}">
           <div class="card-body" data-index="{{loop.index-1}}">
+             {% if address.status == 'true' %}
+                <h5><span class="badge badge-success">ACTIVE ADDRESS</span></h5>
+                <br>
+             {% endif %}
             <h5 class="card-title">{{address.title}} {{address.first_name}} {{address.last_name}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Address {{loop.index}}</h6>
             <p class="card-text">{{address.address1}}, {{address.city_town}}, {{address.post_code}}, {{address.country}}</p>

@@ -28,10 +28,16 @@
                     <li class="breadcrumb-item active" aria-current="page">{{breadcrumb.two}}</li>
                 {% endif %}
 
-
               </ol>
               <!--  -->
             </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% if queryDetails.products is defined %}
+                <!-- <pre>{{ queryDetails.products}}</pre> -->
+            {% endif %}
         </div>
     </div>
 
@@ -199,35 +205,101 @@
                             <br>
 
                         </div>
-                        <div class="col-6 col-md-4 col-lg-3">
 
-                            <div class="card product-card" style="">
-                                <img class="card-img-top" src="/assets/livingroom/cushion3.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
+                        {% if queryDetails.num_of_products == 'all' %}
 
-                                </div>
-                            </div>
+                            {% for product in queryDetails.products.data %}
 
-                        </div>
+                                {% for sku in product.skus.data %}
+                                    <div class="col-6 col-md-4 col-lg-3 product-card-col">
+                                        <div class="card product-card" style="">
+                                            <div class="product-image">
+                                                <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <h6 class="">{{sku.attributes.category | camel_case()}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
 
-                        <div class="col-6 col-md-4 col-lg-3">
+                            {% endfor %}
 
-                            <div class="card product-card" style="">
-                                <img class="card-img-top" src="/assets/livingroom/cushion3.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Card color & size</h6>
-                                    <p><strong>£ 32.00</strong> </p>
+                        {% endif %}
 
-                                </div>
-                            </div>
+                        {% if queryDetails.num_of_products == 'all-cat' %}
 
-                        </div>
+                            {% for product in queryDetails.products.data %}
+                                {% for sku in product.skus.data %}
+                                    {% if sku.attributes.category == queryDetails.category %}
+                                    <div class="col-6 col-md-4 col-lg-3 product-card-col">
+                                        <!-- <p>{{sku.id}}</p> -->
+                                        <div class="card product-card" style="">
+                                            <div class="product-image">
+                                                <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {% if queryDetails.num_of_products == 'specific' %}
+                            {% for product in queryDetails.products.data %}
+                                {% for sku in product.skus.data %}
+                                    {% if sku.attributes.category == queryDetails.category and sku.attributes.type == queryDetails.type %}
+                                    <div class="col-6 col-md-4 col-lg-3 product-card-col">
+                                        <!-- <p>{{sku.id}}</p> -->
+                                        <div class="card product-card" style="">
+                                            <div class="product-image">
+                                                <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
+                                                </h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <hr>
+                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+
+                        {% endif %}
+
+                        <!-- <product-card></product-card> -->
 
                 </div>
+
+                {% if queryDetails.products.has_more %}
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <br>
+                            <button class="btn btn-primary">Show more</button>
+                        </div>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>

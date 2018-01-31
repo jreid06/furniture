@@ -563,6 +563,9 @@ input:focus {
   height: auto !important;
   margin-bottom: 50px; }
 
+.address-card .card-link {
+  color: #222 !important; }
+
 .address-form {
   padding-top: 30px;
   transition: all .3s; }
@@ -694,11 +697,25 @@ input:focus {
 .products-page-main-container {
   margin-bottom: 90px;
   top: 130px !important; }
+  @media only screen and (min-width: 992px) {
+    .products-page-main-container {
+      top: 175px !important; } }
 
 .mobile-filter-ctrl .p-2 {
-  width: 100%; }
+  width: 100%;
+  text-align: center; }
 .mobile-filter-ctrl button {
   width: 100%; }
+  @media only screen and (min-width: 992px) {
+    .mobile-filter-ctrl button {
+      width: 60%; } }
+
+.product-image {
+  padding-top: 10px;
+  width: 70%;
+  margin: 0 auto; }
+  .product-image img {
+    width: 100%; }
 
 .filter-close {
   position: sticky;
@@ -720,6 +737,9 @@ input:focus {
 
 .open-filter {
   width: 80%; }
+  @media only screen and (min-width: 768px) {
+    .open-filter {
+      width: 40%; } }
 
 .filter-mobile {
   position: absolute;
@@ -729,7 +749,7 @@ input:focus {
   background-color: #d2d2d2;
   border: 1px solid #bbbbbb;
   padding: 0 !important;
-  z-index: 100; }
+  z-index: 98; }
   .filter-mobile .p-2:nth-child(1) {
     width: 85%; }
   .filter-mobile .p-2:nth-child(2) {
@@ -737,8 +757,12 @@ input:focus {
     width: 15%;
     background-color: #d2d2d2; }
 
+.product-card-col {
+  padding-top: 10px; }
+
 .product-card {
   width: 100%;
+  min-height: 310px;
   text-align: center; }
 
 body, html {

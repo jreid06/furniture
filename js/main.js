@@ -139,7 +139,7 @@ $(document).ready(function() {
 
             <h2>HOME ESSENTIALS</h2>
             <h4>RECLAIM YOUR HOME</h4>
-            <a class="btn btn-primary" href="#">SHOP NOW</a> </div>`,
+            <a class="btn btn-primary" href="/products">SHOP NOW</a> </div>`,
         props: ['image']
     });
 
@@ -387,7 +387,13 @@ $(document).ready(function() {
             },
             // NOTE rename to product category item types
             products: {
-                livingroom: [{
+                livingroom: [
+                    {
+                        name: 'all products',
+                        slug: '',
+                        cat: 'livingroom'
+                    },
+                    {
                         name: 'candle holders',
                         slug: 'candle-holders',
                         cat: 'livingroom',
@@ -438,6 +444,11 @@ $(document).ready(function() {
                 ],
                 kitchen: [
                     {
+                        name: 'all products',
+                        slug: '',
+                        cat: 'kitchen'
+                    },
+                    {
                         name: 'kitchen textiles',
                         slug: 'kitchen-textiles',
                         cat: 'kitchen',
@@ -458,14 +469,19 @@ $(document).ready(function() {
                 ],
                 bedroom: [
                     {
+                        name: 'all products',
+                        slug: '',
+                        cat: 'bedroom'
+                    },
+                    {
                         name: 'bed linen',
-                        slug: 'bed-linen',
+                        slug: 'linen',
                         cat: 'bedroom',
                         image: ''
                     },
                     {
                         name: 'Bedroom cushions',
-                        slug: 'bedroom-cushions',
+                        slug: 'cushions',
                         cat: 'bedroom',
                         image: ''
                     },
@@ -490,6 +506,11 @@ $(document).ready(function() {
                 ],
                 bath: [
                     {
+                        name: 'all products',
+                        slug: '',
+                        cat: 'bath'
+                    },
+                    {
                         name: 'towel',
                         slug: 'towel',
                         cat: 'bath',
@@ -497,7 +518,7 @@ $(document).ready(function() {
                     },
                     {
                         name: 'shower curtains',
-                        slug: 'shower-curtains',
+                        slug: 'curtains',
                         cat: 'bath',
                         image: ''
                     },
@@ -1343,6 +1364,7 @@ $(document).ready(function() {
                 updateDetails: function(e){
                     let eventTrigger = $(e.target).parent(),
                         $userID = eventTrigger[0].attributes[1].nodeValue,
+                        $userStripeID = eventTrigger[0].attributes[2].nodeValue,
                         $userTitle = eventTrigger[0][0],
                         $userTitleVal = '',
                         $userFname = eventTrigger[0][1].value,
@@ -1361,7 +1383,7 @@ $(document).ready(function() {
                         $('.update-user-details').notify('One or more fields are empty. Please fill with relevant information', 'warn');
                         return;
                     }else {
-                        let updatedDetails = new UpdateUserDetails($userID, $userTitleVal, $userFname, $userLname, $dob);
+                        let updatedDetails = new UpdateUserDetails($userID, $userStripeID, $userTitleVal, $userFname, $userLname, $dob);
 
                         console.log(updatedDetails);
 
@@ -1410,6 +1432,7 @@ $(document).ready(function() {
                 updateLoginDetails: function(e){
                     let eventTrigger = $(e.target).parent(),
                         $userID = eventTrigger[0].attributes[1].nodeValue,
+                        $userStripeID = eventTrigger[0].attributes[2].nodeValue,
                         $email = eventTrigger[0][0].value,
                         $emailConfirm = eventTrigger[0][1].value,
                         $password = eventTrigger[0][2].value,
@@ -1417,6 +1440,8 @@ $(document).ready(function() {
                         $vm = this,
                         emailtrue = false,
                         passwordtrue = false;
+
+                    console.log(eventTrigger);
 
                     // check to make sure fields are not empty
                     if (!$email || !$emailConfirm || !$password || !$passConfirm) {
@@ -1456,7 +1481,7 @@ $(document).ready(function() {
                     if (emailtrue && passwordtrue) {
                         console.log('details are ready to be submitted via ajax');
 
-                        let updatedLoginDetails = new UpdateLoginDetails($userID, $email, $emailConfirm, $password, $passConfirm);
+                        let updatedLoginDetails = new UpdateLoginDetails($userID, $userStripeID, $email, $emailConfirm, $password, $passConfirm);
 
                         $.ajax({
                             url: '/scripts/settings.php',
@@ -1538,6 +1563,8 @@ $(document).ready(function() {
                         $city_town = eventTrigger[0][7].value,
                         $post_code = eventTrigger[0][8].value.replace(/ /g, ''),
                         $country = eventTrigger[0][9].value,
+                        $status = eventTrigger[0][10],
+                        $status_selected = '',
                         $country_name = ''
                         $vm = this;
 
@@ -1551,6 +1578,11 @@ $(document).ready(function() {
                     for (var k = 0; k < $country.length; k++) {
                         if ($country[k].selected) {
                             $country_name = $country[k].value;
+                        }
+                    }
+                    for (var j = 0; j < $status.length; j++) {
+                        if ($status[j].selected) {
+                            $status_selected = $status[j].value;
                         }
                     }
 
@@ -1611,9 +1643,8 @@ $(document).ready(function() {
                                 }
                                 else {
                                     // create a class that represents address being added
-                                    let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country);
+                                    let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
-                                    console.log(address);
 
                                     $.ajax({
                                         type: 'post',
@@ -1689,6 +1720,8 @@ $(document).ready(function() {
                         $city_town = eventTrigger[0][7].value,
                         $post_code = eventTrigger[0][8].value.replace(/ /g, ''),
                         $country = eventTrigger[0][9].value,
+                        $status = eventTrigger[0][10],
+                        $status_selected = '',
                         $country_name = ''
                         $vm = this;
 
@@ -1703,6 +1736,11 @@ $(document).ready(function() {
                     for (var k = 0; k < $country.length; k++) {
                         if ($country[k].selected) {
                             $country_name = $country[k].value;
+                        }
+                    }
+                    for (var j = 0; j < $status.length; j++) {
+                        if ($status[j].selected) {
+                            $status_selected = $status[j].value;
                         }
                     }
 
@@ -1762,7 +1800,7 @@ $(document).ready(function() {
                                 }
                                 else {
                                     // create a class that represents address being added
-                                    let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country);
+                                    let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
                                     console.log(address);
 
@@ -1864,6 +1902,8 @@ $(document).ready(function() {
     console.log(window.location.pathname);
     if (window.location.pathname.split('/')[1] !== 'myaccount') {
         console.log('home visible');
+
+        // NOTE: rewrite what props the basket item uses to match basket-item 1
         let basketItem2 = {
             data: function(){
                 return{
@@ -1916,10 +1956,38 @@ $(document).ready(function() {
             }
         };
 
+        // create product card when show more is clicked
+
+        let productCard = {
+            data: function(){
+                return{
+                    status: 'component works'
+                }
+            },
+            props: [],
+            template: `<div class="col-6 col-md-4 col-lg-3">
+
+                <div class="card product-card" style="">
+                    <img class="card-img-top" src="{{product.image}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Card color & size</h6>
+                        <p><strong>£ 32.00</strong> </p>
+
+                    </div>
+                </div>
+
+            </div>`,
+            methods: {
+
+            }
+        }
+
         let $home_vue = new Vue({
             el: '.home',
             components:{
-                'basket-item-checkout': basketItem2
+                'basket-item-checkout': basketItem2,
+                'product-card': productCard
             },
             data: {
                 slidesActive: true,
@@ -2489,7 +2557,10 @@ $(document).ready(function() {
 
                 })
 
-                this.getFeaturedProducts();
+                if (window.location.pathname === '/' || window.location.pathname.split('/')[1] === 'product') {
+                    this.getFeaturedProducts();
+                }
+
                 this.getBasketInfo();
 
                 // this.ajaxFunctions();

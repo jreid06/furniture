@@ -1,15 +1,35 @@
 .products-page-main-container{
     margin-bottom: 90px;
     top: 130px !important;
+
+    @include respond-to($lg-break){
+        top: 175px !important;
+    };
 }
 
 .mobile-filter-ctrl{
     .p-2{
         // border: 1px solid gold;
         width: 100%;
+        text-align: center;
     }
 
     button{
+        width: 100%;
+
+        @include respond-to($lg-break){
+            width: 60%;
+        };
+    }
+}
+
+.product-image{
+    padding-top: 10px;
+    // border: 1px solid red;
+    width: 70%;
+    margin: 0 auto;
+
+    img{
         width: 100%;
     }
 }
@@ -45,6 +65,10 @@
 
 .open-filter{
     width: 80%;
+
+    @include respond-to($md-break){
+        width: 40%;
+    };
 }
 
 .filter-mobile{
@@ -57,7 +81,7 @@
     background-color: #d2d2d2;
     border: 1px solid darken(#d2d2d2, 9%);
     padding: 0 !important;
-    z-index: 100;
+    z-index: 98;
 
     .p-2{
         &:nth-child(1){
@@ -73,7 +97,12 @@
     }
 }
 
+.product-card-col{
+    padding-top: 10px;
+}
+
 .product-card{
     width: 100%;
+    min-height: 310px;
     text-align: center;
 }

@@ -12,24 +12,44 @@
 
     \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
     try {
+
+        $products_all = \Stripe\Product::retrieve($productID);
+
         include ROOT_PATH.'templates/header.php';
-        include ROOT_PATH.'templates/nav.php';
+
 
         // product has been found
-        $products_all = \Stripe\Product::retrieve($productID);
         $product = $products_all['skus']['data'];
         // loop through sku and get correct product using $sku_id
-
+        $match = false;
         for ($i=0; $i < count($product); $i++) {
             if ($product[$i]['id'] === $sku_id) {
+                $match = true;
                 $selected_sku_product = $product[$i];
             }
         }
+
+        if (!$match) {
+             header('location: /products');
+        }
+
+        include ROOT_PATH.'templates/nav.php';
 
         // add the needed data to selected product array
         $selected_sku_product['prod_name'] = $products_all['name'];
         $selected_sku_product['prod_desc'] = $products_all['description'];
         $selected_sku_product['prod_slug'] = $products_all['metadata']['slug'];
+
+        // convert all details into an array to be looped on front end
+        if (isset($selected_sku_product['attributes']['detail_bullets'])) {
+            $selected_sku_product['attributes']['detail_bullets'] = array_map('trim', explode(',', $selected_sku_product['attributes']['detail_bullets']));
+        }
+
+
+        // echo "<pre style='position: absolute; z-index: 100000; background-color: #f2f2f2'>";
+        //     // var_dump($selected_sku_product);
+        //     var_dump($selected_sku_product);
+        // echo "</pre>";
 
         $template = $twig->load('product.html.twig');
         echo $template->render(array(
@@ -127,6 +147,7 @@
 
       // exit(json_encode($msg));
       var_dump($msg);
+      header('location: /products');
 
   }
 

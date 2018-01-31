@@ -52,7 +52,7 @@
                 $query = "SELECT $tbl1.*, product_type.inner_cat_slug, product_type.cat_code FROM $tbl1 INNER JOIN product_type ON livingroom.product_type = product_type.id WHERE $tbl1.product_id='$value'";
 
                 $result = parent::returnConnection()->query($query);
-                
+
                 if (!$result) {
                     return array(false);
                 }
@@ -220,7 +220,7 @@
         {
             parent::checkConnection();
 
-            $query = "SELECT cus_id, title, fname, lname, dob, email, basket_id ,address FROM customers WHERE email='$email'";
+            $query = "SELECT cus_id, stripe_cus_id, title, fname, lname, dob, email, basket_id ,address FROM customers WHERE email='$email'";
             $result = parent::returnConnection()->query($query);
 
             if ($result->num_rows > 0) {
@@ -312,16 +312,16 @@
             }
         }
 
-        public static function createUser($tbl, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8)
+        public static function createUser($tbl, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9)
         {
             parent::checkConnection();
 
-            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (title, fname, lname, dob, email, password, basket_id, address) VALUES (?,?,?,?,?,?,?,?)");
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (stripe_cus_id, title, fname, lname, dob, email, password, basket_id, address) VALUES (?,?,?,?,?,?,?,?,?)");
 
-            $query->bind_param("ssssssss", $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8);
+            $query->bind_param("sssssssss", $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9);
 
             // hash password for security
-            $value6 = password_hash($value6, PASSWORD_DEFAULT);
+            $value7 = password_hash($value7, PASSWORD_DEFAULT);
 
             $query->execute();
 

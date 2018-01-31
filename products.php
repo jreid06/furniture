@@ -11,7 +11,16 @@
     if (!isset($_GET['cat']) || !$_GET['cat']) {
         $data = 'show all products';
 
-        $details = array();
+        \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+        $stripe_products = \Stripe\Product::all(array(
+            "limit" => 20
+        ));
+
+        $details = array(
+            'num_of_products'=>'all',
+            'products'=>$stripe_products
+        );
+
         $breadcrumbs = array();
     }
     elseif ($output['cat'] && isset($output['prodtype']) && !empty($output['prodtype'])) {
@@ -19,9 +28,16 @@
         $category = $output['cat'];
         $prod_type = $output['prodtype'];
 
+        \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+        $stripe_products = \Stripe\Product::all(array(
+            "limit" => 20
+        ));
+
         $details = array(
+            'num_of_products'=>'specific',
             'category' => $category,
-            'type' => $prod_type
+            'type' => $prod_type,
+            'products'=>$stripe_products
         );
 
         $breadcrumbs = array(
@@ -29,14 +45,20 @@
             'two'=>$prod_type
         );
 
-
     }
     else if ($output['cat']) {
         $data = 'show all products in category';
         $category = $output['cat'];
 
+        \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+        $stripe_products = \Stripe\Product::all(array(
+            "limit" => 20
+        ));
+
         $details = array(
-            'category' => $category
+            'num_of_products'=>'all-cat',
+            'category' => $category,
+            'products'=> $stripe_products
         );
 
         $breadcrumbs = array(

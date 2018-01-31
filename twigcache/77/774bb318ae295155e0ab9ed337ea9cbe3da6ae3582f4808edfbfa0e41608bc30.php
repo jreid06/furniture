@@ -24,6 +24,8 @@ class __TwigTemplate_0ee62586d41581e69b71f592cc221edd2e2b35d2998404475e1f4a20ec8
             <form id=\"myDetails\" data-uid=\"";
         // line 6
         echo twig_escape_filter($this->env, $this->getAttribute(($context["current_details"] ?? null), "cus_id", array()), "html", null, true);
+        echo "\" data-sid=\"";
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["current_details"] ?? null), "stripe_cus_id", array()), "html", null, true);
         echo "\">
                 <div class=\"form-group\">
                     <label for=\"inputTitleUpdate\">Title</label>
@@ -102,6 +104,8 @@ class __TwigTemplate_0ee62586d41581e69b71f592cc221edd2e2b35d2998404475e1f4a20ec8
             <form id=\"loginDetails\" data-uid=\"";
         // line 44
         echo twig_escape_filter($this->env, $this->getAttribute(($context["current_details"] ?? null), "cus_id", array()), "html", null, true);
+        echo "\" data-sid=\"";
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["current_details"] ?? null), "stripe_cus_id", array()), "html", null, true);
         echo "\">
                 <div class=\"form-group\">
                     <label for=\"inputEmailUpdate\">Email address</label>
@@ -144,7 +148,7 @@ class __TwigTemplate_0ee62586d41581e69b71f592cc221edd2e2b35d2998404475e1f4a20ec8
 
     public function getDebugInfo()
     {
-        return array (  104 => 44,  99 => 42,  81 => 27,  74 => 23,  67 => 19,  57 => 14,  51 => 13,  45 => 12,  39 => 11,  33 => 10,  26 => 6,  19 => 1,);
+        return array (  106 => 44,  101 => 42,  83 => 27,  76 => 23,  69 => 19,  59 => 14,  53 => 13,  47 => 12,  41 => 11,  35 => 10,  26 => 6,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -162,7 +166,7 @@ class __TwigTemplate_0ee62586d41581e69b71f592cc221edd2e2b35d2998404475e1f4a20ec8
         <div class=\"edit-details myDetails\">
             <h4>About me</h4>
             <hr>
-            <form id=\"myDetails\" data-uid=\"{{current_details.cus_id}}\">
+            <form id=\"myDetails\" data-uid=\"{{current_details.cus_id}}\" data-sid=\"{{current_details.stripe_cus_id}}\">
                 <div class=\"form-group\">
                     <label for=\"inputTitleUpdate\">Title</label>
                     <select class=\"inputTitleUpdate\" name=\"user-title\" required>
@@ -200,7 +204,7 @@ class __TwigTemplate_0ee62586d41581e69b71f592cc221edd2e2b35d2998404475e1f4a20ec8
             <hr>
             <h5>Current Email: <strong><span id=\"user-email\">{{current_details.email}}</span> </strong></h5>
             <hr>
-            <form id=\"loginDetails\" data-uid=\"{{current_details.cus_id}}\">
+            <form id=\"loginDetails\" data-uid=\"{{current_details.cus_id}}\" data-sid=\"{{current_details.stripe_cus_id}}\">
                 <div class=\"form-group\">
                     <label for=\"inputEmailUpdate\">Email address</label>
                     <input type=\"email\" class=\"form-control\" id=\"inputEmailUpdate\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\" required>

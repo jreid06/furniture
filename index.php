@@ -37,7 +37,7 @@
 
             <div class="row">
                 <div class="col-12 button-box d-flex justify-content-center align-items-center">
-                    <a href="https://google.co.uk" class="btn btn-primary">
+                    <a href="/products" class="btn btn-primary">
                         SHOP NOW
                     </a>
                     <hr>
@@ -55,15 +55,15 @@
                         v-bind:key="index"
                         v-bind:indexkey="index"
                         v-bind:productid="featured.id"
-                        v-bind:productskuid="featured.skus.data[index].id"
-                        v-bind:productimage="featured.images[index]"
+                        v-bind:productskuid="featured.skus.data[0].id"
+                        v-bind:productimage="featured.images[0]"
                         v-bind:producttitle="featured.name"
                         v-bind:productnameslug="featured.metadata.slug"
-                        v-bind:productcolorslug="featured.skus.data[index].attributes.color"
-                        v-bind:productsizeslug="featured.skus.data[index].attributes.size"
-                        v-bind:productprice="featured.skus.data[index].price"
-                        v-bind:productcat = "featured.skus.data[index].attributes.category"
-                        v-bind:productcattype="featured.skus.data[index].attributes.type">
+                        v-bind:productcolorslug="featured.skus.data[0].attributes.color"
+                        v-bind:productsizeslug="featured.skus.data[0].attributes.size"
+                        v-bind:productprice="featured.skus.data[0].price"
+                        v-bind:productcat = "featured.skus.data[0].attributes.category"
+                        v-bind:productcattype="featured.skus.data[0].attributes.type">
                 </featured>
             </div>
 

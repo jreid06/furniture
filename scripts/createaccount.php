@@ -39,13 +39,30 @@
 
         if (!DatabaseFunctions::checkExists($email) && $email_real) {
 
+            // create new user as a stripe customer
+            \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+            $customer_stripe = \Stripe\Customer::create(array(
+              "description" => "Customer email:  " .$email,
+              "metadata"=>array(
+                  'title'=>$title,
+                  'first_name'=>$fname,
+                  'last_name'=>$lname,
+                  'email'=>$email,
+                  'dob'=>$dob
+              ),
+              'email'=>$email
+            ));
+
             // add user to database
+            $cus_stripe_id = $customer_stripe['id'];
 
             // set the address array to have brief details set using address class
-            $address_temp = new Address($title, $fname, $lname, 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 'United Kingdom');
+            $address_id = bin2hex(random_bytes(10));
+
+            $address_temp = new Address($address_id, $title, $fname, $lname, 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 'n/a', 'United Kingdom', 'false');
             $addressArray = json_encode(array($address_temp));
 
-            $result = DatabaseFunctions::createUser('customers', $title, $fname, $lname, $dob, $email, $password, 'N/A', $addressArray);
+            $result = DatabaseFunctions::createUser('customers', $cus_stripe_id, $title, $fname, $lname, $dob, $email, $password, 'N/A', $addressArray);
 
             if ($result) {
                 $msg = array(
@@ -57,6 +74,7 @@
                         'msg'=>'new user created successfully'
                     ),
                     'user'=>array(
+                        'stripe_id'=>$cus_stripe_id,
                         'title'=>$title,
                         'firstName'=>$fname,
                         'lastName'=>$lname,

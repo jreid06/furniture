@@ -158,39 +158,36 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-description\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                ";
+                                <strong>";
         // line 88
         echo twig_escape_filter($this->env, $this->getAttribute(($context["product"] ?? null), "description", array()), "html", null, true);
-        echo "
+        echo "</strong>
 
-                                <ul>
-                                    <li>&nbsp;";
-        // line 91
-        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("foax fur")), "html", null, true);
-        echo "</li>
-                                    <li>&nbsp;";
-        // line 92
-        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("made with cotton")), "html", null, true);
-        echo "</li>
-                                    <li>&nbsp;";
-        // line 93
-        echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("designed in london")), "html", null, true);
-        echo "</li>
-
-                                    ";
-        // line 95
-        $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(($context["seq"] ?? null));
-        foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
-            // line 96
-            echo "                                        <li>test</li>
-                                    ";
+                                ";
+        // line 90
+        if ($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array(), "any", false, true), "detail_bullets", array(), "any", true, true)) {
+            // line 91
+            echo "                                    <ul>
+                                        ";
+            // line 92
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "detail_bullets", array()));
+            foreach ($context['_seq'] as $context["_key"] => $context["bullet"]) {
+                // line 93
+                echo "                                            <li>&nbsp;";
+                echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($context["bullet"])), "html", null, true);
+                echo "</li>
+                                        ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['bullet'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 95
+            echo "                                    </ul>
+                                ";
         }
-        $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
-        $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 98
-        echo "                                </ul>
+        // line 97
+        echo "
                             </div>
                         </div>
                     </div>
@@ -211,7 +208,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                                 <pre>
                                     ";
-        // line 118
+        // line 117
         echo twig_escape_filter($this->env, ($context["basket"] ?? null), "html", null, true);
         echo "
                                 </pre>
@@ -263,15 +260,15 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
                         v-bind:productid=\"featured.id\"
-                        v-bind:productskuid=\"featured.skus.data[index].id\"
-                        v-bind:productimage=\"featured.images[index]\"
+                        v-bind:productskuid=\"featured.skus.data[0].id\"
+                        v-bind:productimage=\"featured.images[0]\"
                         v-bind:producttitle=\"featured.name\"
                         v-bind:productnameslug=\"featured.metadata.slug\"
-                        v-bind:productcolorslug=\"featured.skus.data[index].attributes.color\"
-                        v-bind:productsizeslug=\"featured.skus.data[index].attributes.size\"
-                        v-bind:productprice=\"featured.skus.data[index].price\"
-                        v-bind:productcat = \"featured.skus.data[index].attributes.category\"
-                        v-bind:productcattype=\"featured.skus.data[index].attributes.type\">
+                        v-bind:productcolorslug=\"featured.skus.data[0].attributes.color\"
+                        v-bind:productsizeslug=\"featured.skus.data[0].attributes.size\"
+                        v-bind:productprice=\"featured.skus.data[0].price\"
+                        v-bind:productcat = \"featured.skus.data[0].attributes.category\"
+                        v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
                 </featured>
                 <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"
@@ -305,7 +302,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
     public function getDebugInfo()
     {
-        return array (  215 => 118,  193 => 98,  186 => 96,  182 => 95,  177 => 93,  173 => 92,  169 => 91,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
+        return array (  212 => 117,  190 => 97,  186 => 95,  177 => 93,  173 => 92,  170 => 91,  168 => 90,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -405,17 +402,16 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                         <div id=\"prod-description\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
-                                {{product.description}}
+                                <strong>{{product.description}}</strong>
 
-                                <ul>
-                                    <li>&nbsp;{{'foax fur'| camel_case()}}</li>
-                                    <li>&nbsp;{{'made with cotton'| camel_case()}}</li>
-                                    <li>&nbsp;{{'designed in london'| camel_case()}}</li>
+                                {% if skuprod.attributes.detail_bullets is defined %}
+                                    <ul>
+                                        {% for bullet in skuprod.attributes.detail_bullets %}
+                                            <li>&nbsp;{{bullet | camel_case()}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                                    {% for item in seq %}
-                                        <li>test</li>
-                                    {% endfor %}
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -485,15 +481,15 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
                         v-bind:productid=\"featured.id\"
-                        v-bind:productskuid=\"featured.skus.data[index].id\"
-                        v-bind:productimage=\"featured.images[index]\"
+                        v-bind:productskuid=\"featured.skus.data[0].id\"
+                        v-bind:productimage=\"featured.images[0]\"
                         v-bind:producttitle=\"featured.name\"
                         v-bind:productnameslug=\"featured.metadata.slug\"
-                        v-bind:productcolorslug=\"featured.skus.data[index].attributes.color\"
-                        v-bind:productsizeslug=\"featured.skus.data[index].attributes.size\"
-                        v-bind:productprice=\"featured.skus.data[index].price\"
-                        v-bind:productcat = \"featured.skus.data[index].attributes.category\"
-                        v-bind:productcattype=\"featured.skus.data[index].attributes.type\">
+                        v-bind:productcolorslug=\"featured.skus.data[0].attributes.color\"
+                        v-bind:productsizeslug=\"featured.skus.data[0].attributes.size\"
+                        v-bind:productprice=\"featured.skus.data[0].price\"
+                        v-bind:productcat = \"featured.skus.data[0].attributes.category\"
+                        v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
                 </featured>
                 <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"

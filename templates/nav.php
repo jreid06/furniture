@@ -132,7 +132,7 @@
                     <li style="text-align:center">
                         <template v-model="basketHasItems" v-if="basketHasItems">
                             <br>
-                            <button class="btn btn-primary"><p>PROCEED TO CHECKOUT</p></button>
+                            <a href="/basket" class="btn btn-primary"><p>PROCEED TO CHECKOUT</p></a>
                             <button class="btn btn-primary" v-on:click="emptyBasket"><p>EMPTY BASKET <span class="fa fa-trash-o"></span> </p></button>
                         </template>
                         <template v-else>

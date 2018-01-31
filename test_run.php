@@ -39,6 +39,34 @@
     echo "<br>";
     echo "<br>";
 
+    // test add customer to stripe
+
+    $details = array(
+        'title'=>'Mr.',
+        'fname'=>'Jason',
+        'lname'=> 'Reid',
+        'dob'=> '1994-06-29',
+        'email'=> 'jasonbrandon9406@gmail.com'
+    );
+
+    // \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+    //
+    // $customer_stripe = \Stripe\Customer::create(array(
+    //   "description" => "Customer for " .$details['email'],
+    //   "metadata"=>array(
+    //       'title'=>$details['title'],
+    //       'first_name'=>$details['fname'],
+    //       'last_name'=>$details['lname'],
+    //       'email'=>$details['email'],
+    //       'dob'=>$details['dob']
+    //   ),
+    //   'email'=>$details['email']
+    // ));
+
+
+    echo "<br>";
+    echo "<br>";
+
     \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJnmzNUfNjpXW");
 
     try {

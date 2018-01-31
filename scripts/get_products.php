@@ -4,7 +4,7 @@
 
     if (isset($_POST['all'])) {
         // $productID = $_POST['id'];
-        $products = DatabaseFunctions::getProductData('livingroom', 'product_type', 'id', false, false);
+        // $products = DatabaseFunctions::getProductData('livingroom', 'product_type', 'id', false, false);
 
 
         // get products from stripe api

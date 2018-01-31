@@ -45,8 +45,9 @@ class User {
 }
 
 class UpdateUserDetails {
-    constructor(id, title, fname, lname, dob) {
+    constructor(id, stripe_cus_id, title, fname, lname, dob) {
         this.id = id;
+        this.stripe_cus_id = stripe_cus_id;
         this.title = title;
         this.fname = fname;
         this.lname = lname;
@@ -55,8 +56,9 @@ class UpdateUserDetails {
 }
 
 class UpdateLoginDetails {
-    constructor(id, email, email_confirm, password, password_confirm) {
+    constructor(id, stripe_cus_id, email, email_confirm, password, password_confirm) {
         this.id = id;
+        this.stripe_cus_id = stripe_cus_id;
         this.email = email;
         this.email_confirm = email_confirm;
         this.password = password;
@@ -74,7 +76,7 @@ class LoginUser {
 }
 
 class Address {
-    constructor(title, fname, lname, phone, address1, address2, address3, city_town, post_code, country) {
+    constructor(title, fname, lname, phone, address1, address2, address3, city_town, post_code, country, status) {
         this.title = title;
         this.fname = fname;
         this.lname = lname;
@@ -85,6 +87,7 @@ class Address {
         this.city_town = city_town;
         this.post_code = post_code;
         this.country = country;
+        this.status = status;
     }
 }
 

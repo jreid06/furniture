@@ -41,13 +41,26 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
         foreach ($context['_seq'] as $context["_key"] => $context["address"]) {
             // line 7
             echo "    <div class=\"col-12 col-md-6 col-lg-4\">
-        <div class=\"card\" style=\"width: 100%; margin-top: 50px;\">
+        <div class=\"card address-card\" style=\"width: 100%; margin-top: 50px; ";
+            // line 8
+            if (($this->getAttribute($context["address"], "status", array()) == "true")) {
+                echo "background-color: #d2d2d2; ";
+            }
+            echo "\">
           <div class=\"card-body\" data-index=\"";
             // line 9
             echo twig_escape_filter($this->env, ($this->getAttribute($context["loop"], "index", array()) - 1), "html", null, true);
             echo "\">
-            <h5 class=\"card-title\">";
+             ";
             // line 10
+            if (($this->getAttribute($context["address"], "status", array()) == "true")) {
+                // line 11
+                echo "                <h5><span class=\"badge badge-success\">ACTIVE ADDRESS</span></h5>
+                <br>
+             ";
+            }
+            // line 14
+            echo "            <h5 class=\"card-title\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "title", array()), "html", null, true);
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "first_name", array()), "html", null, true);
@@ -55,11 +68,11 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "last_name", array()), "html", null, true);
             echo "</h5>
             <h6 class=\"card-subtitle mb-2 text-muted\">Address ";
-            // line 11
+            // line 15
             echo twig_escape_filter($this->env, $this->getAttribute($context["loop"], "index", array()), "html", null, true);
             echo "</h6>
             <p class=\"card-text\">";
-            // line 12
+            // line 16
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "address1", array()), "html", null, true);
             echo ", ";
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "city_town", array()), "html", null, true);
@@ -69,7 +82,7 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "country", array()), "html", null, true);
             echo "</p>
             <a href=\"/myaccount/editaddress/";
-            // line 13
+            // line 17
             echo twig_escape_filter($this->env, $this->getAttribute($context["address"], "address_id", array()), "html", null, true);
             echo "\" class=\"card-link\" @click.prevent=\"editaddressDirect\">Edit address</a>
             <a href=\"\" class=\"card-link\" @click.prevent=\"deleteAddress\">Delete Address</a>
@@ -89,12 +102,12 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['address'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 19
+        // line 23
         echo "
     <div class=\"col-12\">
         <!-- <pre>
             ";
-        // line 22
+        // line 26
         echo twig_escape_filter($this->env, twig_var_dump($this->env, $context, ($context["user_details"] ?? null)), "html", null, true);
         echo "
         </pre> -->
@@ -116,7 +129,7 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
 
     public function getDebugInfo()
     {
-        return array (  98 => 22,  93 => 19,  73 => 13,  63 => 12,  59 => 11,  51 => 10,  47 => 9,  43 => 7,  26 => 6,  19 => 1,);
+        return array (  111 => 26,  106 => 23,  86 => 17,  76 => 16,  72 => 15,  63 => 14,  58 => 11,  56 => 10,  52 => 9,  46 => 8,  43 => 7,  26 => 6,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -136,8 +149,12 @@ class __TwigTemplate_b74c70075f3bedc468a21f94f36c829be160e5428df31718d3a81fa6f9c
     </div>
     {% for address in user_details.address %}
     <div class=\"col-12 col-md-6 col-lg-4\">
-        <div class=\"card\" style=\"width: 100%; margin-top: 50px;\">
+        <div class=\"card address-card\" style=\"width: 100%; margin-top: 50px; {% if address.status == 'true' %}background-color: #d2d2d2; {% endif %}\">
           <div class=\"card-body\" data-index=\"{{loop.index-1}}\">
+             {% if address.status == 'true' %}
+                <h5><span class=\"badge badge-success\">ACTIVE ADDRESS</span></h5>
+                <br>
+             {% endif %}
             <h5 class=\"card-title\">{{address.title}} {{address.first_name}} {{address.last_name}}</h5>
             <h6 class=\"card-subtitle mb-2 text-muted\">Address {{loop.index}}</h6>
             <p class=\"card-text\">{{address.address1}}, {{address.city_town}}, {{address.post_code}}, {{address.country}}</p>
