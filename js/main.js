@@ -137,7 +137,7 @@ $(document).ready(function() {
         },
         template: `<div class="slideshow-div justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
 
-            <h2>HOME ESSENTIALS</h2>
+            <h1>HOME ESSENTIALS</h1>
             <h4>RECLAIM YOUR HOME</h4>
             <a class="btn btn-primary" href="/products">SHOP NOW</a> </div>`,
         props: ['image']
@@ -234,26 +234,44 @@ $(document).ready(function() {
 
                     localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
 
+                    // update database with latest basket info
+                    if ($nav_vue.loggedInStatus) {
+                        $nav_vue.updateBasketDB($nav_vue.basket.items);
+                    }
+
+
                 } else {
 
                     if ($nav_vue.basketCount === 1) {
                         $nav_vue.emptyBasket();
+
+                        // update database with latest basket info
+                        if ($nav_vue.loggedInStatus) {
+                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                        }
+
                         return;
                     }
                     $nav_vue.basketCount -= 1;
                     $nav_vue.basketTotal -= selectedItem.total_price;
 
-                    console.log(itemrowID);
-                    console.log(itemID);
+                    // console.log(itemrowID);
+                    // console.log(itemID);
 
                     $(itemrowID).fadeOut().remove();
 
                     // delete from array
-                    console.log($nav_vue.basket.items);
+                    // console.log($nav_vue.basket.items);
                     $nav_vue.basket.items.splice(itemID, 1);
-                    console.log($nav_vue.basket.items);
+                    // console.log($nav_vue.basket.items);
 
                     localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                    // update database with latest basket info
+                    if ($nav_vue.loggedInStatus) {
+                        $nav_vue.updateBasketDB($nav_vue.basket.items);
+                    }
+
                 }
 
                 // $nav_vue.basket.deletedItems.push($nav_vue.basket.items.splice(itemID,1));
@@ -293,9 +311,12 @@ $(document).ready(function() {
         },
         template: `<div class="col-6 col-sm-3 col-lg-2" :data-product-link="'/product/'+productcat+'/'+productcattype+'/'+productnameslug+'-'+productcolorslug+'-'+productsizeslug+'/'+productid+'/'+productskuid" v-bind:id="'featuredproduct-'+indexkey" @click="gotoProduct">
                 <div class="card featured-prod-card" :data-product-id="productid">
-                <div class="card-img-bgrnd" :style="{background: 'url(' + productimage + ')'}"></div>
+                <!--<div class="card-img-bgrnd" :style="{background: 'url(' + productimage + ')'}"></div>-->
+                <div class="product-image">
+                    <img class="card-img-top" :src="productimage" alt="image of product">
+                </div>
                   <div class="card-body">
-                    <h4 class="card-title"><a :href="'/product/'+productcat+'/'+productcattype+'/'+productnameslug+'-'+productcolorslug+'-'+productsizeslug+'/'+productid+'/'+productskuid">{{producttitle}} - {{capitalizeFirstLetter(productcolorslug)}}-{{capitalizeFirstLetter(productsizeslug)}}</a></h4>
+                    <h6 class="card-subtitle mb-2"><a :href="'/product/'+productcat+'/'+productcattype+'/'+productnameslug+'-'+productcolorslug+'-'+productsizeslug+'/'+productid+'/'+productskuid">{{producttitle}} - {{capitalizeFirstLetter(productcolorslug)}} - {{capitalizeFirstLetter(productsizeslug)}}</a></h6>
                     <p class="card-text">£{{(productprice/100).toFixed(2)}}</p>
                   </div>
                 </div>
@@ -376,6 +397,9 @@ $(document).ready(function() {
                 }
             ],
             loggedInStatus: false,
+            loggedInUser: {
+                id: ''
+            },
             accountMenu: false,
             wishlist: {
                 status: false,
@@ -548,20 +572,9 @@ $(document).ready(function() {
                 });
             }
 
-            // $('#nav-link-0').on('click', function() {
-            //     console.log('clicked collection link');
-            //     $vm.menuToggle();
-            //     if ($vm.menuStatus) {
-            //         $(this).addClass('active-nav-link');
-            //     } else {
-            //         $(this).removeClass('active-nav-link');
-            //     }
-            // })
-
-
-            this.checkBasketSession();
             this.checkSigninCookies();
             this.checkSigninSession();
+            this.checkBasketSession();
         },
         created: function() {
 
@@ -718,46 +731,107 @@ $(document).ready(function() {
 
                 return [false];
             },
+            retrieveWishlist: function(){
+                let testData = '';
+
+
+                // return 'hello async';
+            },
             initializeWishlist: function(){
-                // get basket items from local storage
-                // localStorage.getItem('basket', );
-                let wishListExists = (localStorage.getItem('idyl-wishlist')) ? true : false;
+                // check if wishlist items exist in DB
+                let $vm = this;
+                $.ajax({
+                    url: '/scripts/settings',
+                    type: 'get',
+                    data:{
+                        type: 'retrieve-wishlist',
+                        uid: $vm.loggedInUser.id
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+                        // console.log($data);
 
-                if (wishListExists && this.loggedInStatus) {
-                    let wishlistItems = JSON.parse(localStorage.getItem('idyl-wishlist'));
+                        switch ($data.status.code) {
+                            case (101 || '101'):
+                                let wishlist_data = JSON.parse($data.data.wishlistData);
+                                // console.log(wishlist_data);
 
-                    if (window.location.pathname.split('/')[1] === 'product') {
-                        let productid = window.location.pathname.split('/')[5];
+                                wishlist_data.products = JSON.parse(wishlist_data.products);
 
-                        if (typeof productid === 'string') {
-                            for (var i = 0; i < wishlistItems.length; i++) {
-                                // if an item in wishlist matches current item add class to heart
-                                if (wishlistItems[i].product_id === productid) {
-                                    console.log('THIS ITEM IS IN WISHLIST. HEART SHOULD BE BLACK');
-
-                                    $('.wishlist-heart-icon').removeClass('fa-heart-o').addClass('fa-heart');
+                                if (wishlist_data.products.length < 1) {
+                                    return
+                                }else {
+                                    // add wishlist data to local storage
+                                    localStorage.setItem('idyl-wishlist', JSON.stringify(wishlist_data.products));
                                 }
-                                this.wishlist.items.push(wishlistItems[i]);
-                                this.wishlist.totalItems += 1;
+
+
+                                break;
+                            case (404 || '404'):
+                                console.log($data.data.msg);
+                                return;
+                                break;
+                            default:
+
+                        }
+
+                    },
+                    complete: function(){
+                        let wishListExists = (localStorage.getItem('idyl-wishlist')) ? true : false,
+                            $vm = this;
+
+                        console.log(wishListExists);
+                        console.log($nav_vue.loggedInStatus);
+
+                        if (wishListExists && $nav_vue.loggedInStatus) {
+                            let wishlistItems = JSON.parse(localStorage.getItem('idyl-wishlist'));
+
+                            // used to change colour of wishlist heart to show its active
+                            if (window.location.pathname.split('/')[1] === 'product') {
+                                let skuid = window.location.pathname.split('/')[6];
+
+                                if (typeof skuid === 'string') {
+                                    for (var i = 0; i < wishlistItems.length; i++) {
+                                        // if an item in wishlist matches current item add class to heart
+
+                                        if (wishlistItems[i].stripesku_id === skuid) {
+                                            console.log('THIS ITEM IS IN WISHLIST. HEART SHOULD BE BLACK');
+
+                                            $('.wishlist-heart-icon').removeClass('fa-heart-o').addClass('fa-heart');
+                                        }
+
+                                        $nav_vue.wishlist.items.push(wishlistItems[i]);
+                                        $nav_vue.wishlist.totalItems += 1;
+                                    }
+                                }
+
+                            }else {
+                                for (var i = 0; i < wishlistItems.length; i++) {
+                                    $nav_vue.wishlist.items.push(wishlistItems[i]);
+                                    $nav_vue.wishlist.totalItems += 1;
+                                }
                             }
+
+                            // set the wishlist counter to equal num of items in wishlist array
+                            let wishlistLength = wishlistItems.length;
+                            $nav_vue.wishlist.totalItems = wishlistLength;
+
+
+
+                        }else {
+                            console.log('no wishlist items in local storage');
                         }
 
-                    }else {
-                        for (var i = 0; i < wishlistItems.length; i++) {
-                            this.wishlist.items.push(wishlistItems[i]);
-                            this.wishlist.totalItems += 1;
-                        }
+                    },
+                    error: function(){
+                        console.log('error with wishlist DB check');
                     }
+                })
 
-                    // set the wishlist counter to equal num of items in wishlist array
-                    let wishlistLength = wishlistItems.length;
-                    this.wishlist.totalItems = wishlistLength;
-
+                // if it exists parse and add to local storage for use
 
 
-                }else {
-                    console.log('no wishlist items in local storage');
-                }
+
 
             },
             activatewishlist: function() {
@@ -828,6 +902,7 @@ $(document).ready(function() {
                     console.log('user should be signed in');
                     if (!this.loggedInStatus) {
                         this.loggedInStatus = true;
+                        $nav_vue.loggedInUser.id = Cookies.get('idyl_qni');
 
                         this.activatewishlist();
                     }
@@ -845,12 +920,15 @@ $(document).ready(function() {
                         let $data = JSON.parse(data),
                             $vm = this;
 
-                        console.log($data);
+                        // console.log($data);
 
                         switch ($data.status.code) {
                             case (101 || '101'):
                                 // success
+                                let $sessionData = JSON.parse($data.data.session);
                                 if (!$vm.loggedInStatus) {
+                                    // console.log($sessionData);
+                                    $nav_vue.loggedInUser.id = $sessionData.idyl_qni;
                                     $nav_vue.loggedInStatus = true;
                                     $nav_vue.activatewishlist();
                                 }
@@ -895,38 +973,153 @@ $(document).ready(function() {
                 this.basketTotal = basketTotal;
             },
             checkBasketSession: function() {
-                let itemsExist = (localStorage.getItem('basket')) ? true : false,
-                    $vm = this;
+                /*
+                    1. check if user is logged in
+                        1.1 if user is logged in check if they have basket data stored in database
+                        1.2 if true add to local storage and overwrite anything in it
+                    2. else
+                        2.1 use basket data in local storage
+                */
 
-                console.log("EXISTS: "+ itemsExist);
-                if (itemsExist) {
-                    let option = {
-                        action: 'render'
+                let $vm = this;
+
+                setTimeout(function(){
+                    if ($vm.loggedInStatus) {
+                        // send request to DB to check if they have a stored basket session
+                        console.log("User logged in status: " + $vm.loggedInStatus);
+                        console.log("LOGGED IN USER ID: " + $vm.loggedInUser.id);
+                        $.ajax({
+                            url: '/scripts/settings',
+                            type: 'post',
+                            data: {
+                                type: 'retrieve-basket',
+                                uid: $vm.loggedInUser.id
+                            },
+                            success: function(data){
+                                let $data = JSON.parse(data),
+                                    itemsExist = '';
+
+                                console.log($data);
+
+                                switch ($data.status.code) {
+                                    case (101 || '101'):
+                                        // update local storage basket item with retrieved basket data
+                                        console.log($data.data.msg);
+                                        // console.log($data.data.basketData);
+                                        $data.data.basketData = JSON.parse($data.data.basketData);
+                                        $data.data.basketData.products = JSON.parse($data.data.basketData.products);
+                                        console.log($data.data.basketData.products);
+                                        // console.log(JSON.parse($data.data.basketData));
+                                        localStorage.setItem('basket', JSON.stringify($data.data.basketData.products));
+
+                                        // then
+                                        itemsExist = (localStorage.getItem('basket')) ? true : false;
+                                            // $vm = this;
+
+                                        console.log("EXISTS: "+ itemsExist);
+                                        if (itemsExist) {
+                                            let option = {
+                                                action: 'render'
+                                            }
+                                            $vm.initializeBasket(option);
+                                        } else {
+                                            let option = {
+                                                action: 'init'
+                                            }
+                                            $vm.initializeBasket(option);
+                                            // return false;
+                                        }
+                                        break;
+                                    case (404 || '404'):
+
+                                        console.log($data.data.msg);
+
+                                        itemsExist = (localStorage.getItem('basket')) ? true : false;
+                                            // $vm = this;
+
+                                        console.log("EXISTS: "+ itemsExist);
+                                        if (itemsExist) {
+                                            let option = {
+                                                action: 'render'
+                                            }
+                                            $vm.initializeBasket(option);
+                                        } else {
+                                            let option = {
+                                                action: 'init'
+                                            }
+                                            $vm.initializeBasket(option);
+                                            // return false;
+                                        }
+                                        break;
+                                    default:
+
+                                }
+
+                                // let itemsExist = (localStorage.getItem('basket')) ? true : false;
+                                //     // $vm = this;
+                                //
+                                // console.log("EXISTS: "+ itemsExist);
+                                // if (itemsExist) {
+                                //     let option = {
+                                //         action: 'render'
+                                //     }
+                                //     $vm.initializeBasket(option);
+                                // } else {
+                                //     let option = {
+                                //         action: 'init'
+                                //     }
+                                //     $vm.initializeBasket(option);
+                                //     // return false;
+                                // }
+                            },
+                            error: function(){
+
+                            }
+                        })
+                    }else {
+                        console.log("User logged in status: " + this.loggedInStatus);
+
+                        let itemsExist = (localStorage.getItem('basket')) ? true : false;
+                            // $vm = this;
+
+                        console.log("EXISTS: "+ itemsExist);
+                        if (itemsExist) {
+                            let option = {
+                                action: 'render'
+                            }
+                            $vm.initializeBasket(option);
+                        } else {
+                            let option = {
+                                action: 'init'
+                            }
+                            $vm.initializeBasket(option);
+                            // return false;
+                        }
                     }
-                    $vm.initializeBasket(option);
-                } else {
-                    let option = {
-                        action: 'init'
-                    }
-                    $vm.initializeBasket(option);
-                    // return false;
-                }
+
+                }, 2000);
+
             },
             initializeBasket: function(option) {
                 if (option.action === 'render') {
                     // change setting of basketHasItems to true
                     this.basketHasItems = true;
 
-                    // get basket items from local storage
-                    // localStorage.getItem('basket', );
+
+                    // reset basket items before pulling from local storage
                     this.basket.items.splice(0, this.basket.items.length);
-                    console.log('reset basket items before pulling from local storage');
+                    // console.log('reset basket items before pulling from local storage');
+
+                    // get basket items from local storage
                     let basketItems = JSON.parse(localStorage.getItem('basket'));
 
                     console.log(basketItems);
                     for (var i = 0; i < basketItems.length; i++) {
                         this.basket.items.push(basketItems[i]);
+
                     }
+
+
 
                     // set the basket counter to equal num of items in basket
                     let basketLength = basketItems.length;
@@ -947,6 +1140,26 @@ $(document).ready(function() {
                     return;
                 }
 
+            },
+            updateBasketDB: function(bskt){
+                let $vm = this;
+
+                $.ajax({
+                    url: '/scripts/settings.php',
+                    type: 'post',
+                    data: {
+                        type: 'update-basket',
+                        uid: $vm.loggedInUser.id,
+                        basket: JSON.stringify(bskt)
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+                        console.log($data);
+                    },
+                    error: function(){
+                        console.log('error sending user basket data to Database');
+                    }
+                })
             },
             capitalizeFirstLetter: function(string) {
                 let splitStr = string.split(' ');
@@ -1189,7 +1402,11 @@ $(document).ready(function() {
 
                                 $('.wishlist-heart-icon').removeClass('fa-heart').addClass('fa-heart-o');
 
-                                this.wishlist.totalItems -= 1;
+                                $nav_vue.wishlist.totalItems -= 1;
+
+                                if ($nav_vue.wishlist.items.length < 1) {
+                                    localStorage.removeItem('idyl-wishlist');
+                                }
                             }
                         }
                     }else {
@@ -1206,6 +1423,28 @@ $(document).ready(function() {
 
 
 
+            },
+            updateWishlistDB: function(wlist){
+                let $vm = this;
+
+                $.ajax({
+                    url: '/scripts/settings.php',
+                    type: 'post',
+                    data: {
+                        type: 'update-wishlist',
+                        wishlist: wlist,
+                        uid: $vm.loggedInUser.id
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+                        console.log('WISHLIST DB RESPONSE');
+
+                        console.log($data);
+                    },
+                    error: function(){
+                        console.log('error updating wishlist database');
+                    }
+                })
             }
 
         }
@@ -1267,7 +1506,9 @@ $(document).ready(function() {
         // update user Vue with wishlist details
 
         // update database & store in local storage
+        console.log(newVal);
         localStorage.setItem('idyl-wishlist', JSON.stringify(newVal));
+        $nav_vue.updateWishlistDB(localStorage.getItem('idyl-wishlist'));
 
         setTimeout(function(){
             console.log(JSON.parse(localStorage.getItem('idyl-wishlist')));
@@ -1333,16 +1574,23 @@ $(document).ready(function() {
                 removeFromWishlist: function(e){
                     console.log($(e.target));
                     let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
+
                     console.log(productInfo);
 
                     for (var i = 0; i < $nav_vue.wishlist.items.length; i++) {
-                        if ($nav_vue.wishlist.items[i].id === productInfo.id) {
+                        // console.log($nav_vue.wishlist.items[i].stripesku_id);
+                        // console.log(productInfo.stripesku_id);
+                        if ($nav_vue.wishlist.items[i].stripesku_id === productInfo.stripesku_id) {
                             $nav_vue.wishlist.items.splice(i,1);
 
                             $.notify('item removed from wish list', 'error');
 
                             $nav_vue.wishlist.totalItems -= 1;
                         }
+                    }
+
+                    if ($nav_vue.wishlist.items.length < 1) {
+                        localStorage.removeItem('idyl-wishlist');
                     }
 
                 },
@@ -1983,11 +2231,51 @@ $(document).ready(function() {
             }
         }
 
+        let filterItem = {
+            data: function(){
+                return{
+                    status: 'component works'
+                }
+            },
+            props: ['filtername'],
+            template: `<li>
+                <div class="input-group mb-3 filter-input-group">
+                    <div class="input-group-prepend filter-input-box">
+                        <div class="input-group-text filter-input d-flex flex-row">
+                            <div class="p-2 fltr-inp">
+                                <input :name="filtername" type="checkbox" :data-prod-type="filtername" aria-label="Checkbox for following text input">
+                            </div>
+
+                            <div class="p-2 fltr-inp">
+                                <p>{{ capitalizeFirstLetter(filtername)}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </li>`,
+            methods: {
+                capitalizeFirstLetter: function(string) {
+                    let splitStr = string.split(' ');
+                    if (splitStr.length > 1) {
+                        for (var i = 0; i < splitStr.length; i++) {
+                            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
+                        }
+                        return splitStr.join(' ');
+                    } else {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+
+                },
+            }
+        }
+
         let $home_vue = new Vue({
             el: '.home',
             components:{
                 'basket-item-checkout': basketItem2,
-                'product-card': productCard
+                'product-card': productCard,
+                'filter-item': filterItem
             },
             data: {
                 slidesActive: true,
@@ -1999,7 +2287,7 @@ $(document).ready(function() {
                 basketHasItems: false,
                 filterStatus: false,
                 basket:{
-
+                    items:''
                 },
                 slides: [{
                         id: 1,
@@ -2017,28 +2305,200 @@ $(document).ready(function() {
                 categories: [{
                         name: 'living room',
                         image: '/assets/category/christelle-bourgeois-97314.jpg',
-                        categoryLink: '#'
+                        categoryLink: '#',
+                        key: 'LIV'
                     },
                     {
                         name: 'kitchen',
                         image: '/assets/category/alison-marras-361007.jpg',
-                        categoryLink: '#'
+                        categoryLink: '#',
+                        key: 'KIT'
                     },
                     {
                         name: 'bedroom',
                         image: '/assets/category/krista-mcphee-445060.jpg',
-                        categoryLink: '#'
+                        categoryLink: '#',
+                        key: 'BED'
                     },
                     {
                         name: 'bath',
                         image: '/assets/category/david-cohen-127022.jpg',
-                        categoryLink: '#'
+                        categoryLink: '#',
+                        key: 'BTH'
                     }
                 ],
+                products: {
+                    livingroom: [
+                        {
+                            key: '#L01',
+                            name: 'all products',
+                            slug: '',
+                            cat: 'livingroom'
+                        },
+                        {
+                            key: '#L02',
+                            name: 'candle holders',
+                            slug: 'candle-holders',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L03',
+                            name: 'plaids',
+                            slug: 'plaids',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L04',
+                            name: 'cushions',
+                            slug: 'cushions',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L05',
+                            name: 'lamps',
+                            slug: 'lamps',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L06',
+                            name: 'nips',
+                            slug: 'nips',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L07',
+                            name: 'posters',
+                            slug: 'posters',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L08',
+                            name: 'shelves',
+                            slug: 'shelves',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        },
+                        {
+                            key: '#L09',
+                            name: 'pots',
+                            slug: 'pots',
+                            cat: 'livingroom',
+                            image: '/assets/main/dust_scratches.png'
+                        }
+                    ],
+                    kitchen: [
+                        {
+                            key: '#K01',
+                            name: 'all products',
+                            slug: '',
+                            cat: 'kitchen'
+                        },
+                        {
+                            key: '#K02',
+                            name: 'kitchen textiles',
+                            slug: 'kitchen-textiles',
+                            cat: 'kitchen',
+                            image: ''
+                        },
+                        {
+                            key: '#K03',
+                            name: 'dining',
+                            slug: 'dining',
+                            cat: 'kitchen',
+                            image: ''
+                        },
+                        {
+                            key: '#K04',
+                            name: 'cook',
+                            slug: 'cook',
+                            cat: 'kitchen',
+                            image: ''
+                        }
+                    ],
+                    bedroom: [
+                        {
+                            key: '#BE01',
+                            name: 'all products',
+                            slug: '',
+                            cat: 'bedroom'
+                        },
+                        {
+                            key: '#BE02',
+                            name: 'bed linen',
+                            slug: 'linen',
+                            cat: 'bedroom',
+                            image: ''
+                        },
+                        {
+                            key: '#BE03',
+                            name: 'Bedroom cushions',
+                            slug: 'cushions',
+                            cat: 'bedroom',
+                            image: ''
+                        },
+                        {
+                            key: '#BE04',
+                            name: 'lamps',
+                            slug: 'lamp',
+                            cat: 'bedroom',
+                            image: ''
+                        },
+                        {
+                            key: '#BE05',
+                            name: 'nips',
+                            slug: 'nips',
+                            cat: 'bedroom',
+                            image: ''
+                        },
+                        {
+                            key: '#BE06',
+                            name: 'poster',
+                            slug: 'poster',
+                            cat: 'bedroom',
+                            image: ''
+                        }
+                    ],
+                    bath: [
+                        {
+                            key: '#BA01',
+                            name: 'all products',
+                            slug: '',
+                            cat: 'bath'
+                        },
+                        {
+                            key: '#BA02',
+                            name: 'towel',
+                            slug: 'towel',
+                            cat: 'bath',
+                            image: ''
+                        },
+                        {
+                            key: '#BA03',
+                            name: 'shower curtains',
+                            slug: 'curtains',
+                            cat: 'bath',
+                            image: ''
+                        },
+                        {
+                            key: '#BA04',
+                            name: 'accessories',
+                            slug: 'accessories',
+                            cat: 'bath',
+                            image: ''
+                        }
+                    ]
+                },
                 blogStories: [{
                         id: 'BP0001',
                         status: 'LIVE',
-                        image_address: '/assets/main/Blog-intro.jpg',
+                        // image_address: '/assets/main/Blog-intro.jpg',
+                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
                         category: 'all',
                         title: 'My First Blog Post',
                         brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
@@ -2057,7 +2517,8 @@ $(document).ready(function() {
                     {
                         id: 'BP0002',
                         status: 'LIVE',
-                        image_address: '/assets/main/Blog-intro.jpg',
+                        // image_address: '/assets/main/Blog-intro.jpg',
+                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
                         category: 'all',
                         title: 'My Second Blog Post',
                         brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
@@ -2076,7 +2537,8 @@ $(document).ready(function() {
                     {
                         id: 'BP0003',
                         status: 'LIVE',
-                        image_address: '/assets/main/Blog-intro.jpg',
+                        // image_address: '/assets/main/Blog-intro.jpg',
+                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
                         category: 'all',
                         title: 'My Third Blog Post',
                         brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
@@ -2098,27 +2560,6 @@ $(document).ready(function() {
                 toggleFilter: function(e){
                     // console.log('filter toggled');
                     this.filterStatus = !this.filterStatus;
-                },
-                dummyAdd: function() {
-                    let randomData = {
-                        cookieid: 'xbdgwt538196vd',
-                        email: 'random@gmail.com',
-                        customerid: '18'
-                    };
-
-                    $.ajax({
-                        url: '/scripts/dummyadd.php',
-                        type: 'post',
-                        data: {
-                            cookieinfo: randomData
-                        },
-                        success: function(data) {
-
-                        },
-                        error: function() {
-
-                        }
-                    })
                 },
                 addToWishlist: function() {
                     $nav_vue.addToWishlist();
@@ -2237,14 +2678,25 @@ $(document).ready(function() {
                     return [false];
                 },
                 getBasketInfo: function() {
-                    this.basket = $nav_vue.basket;
-                    if (this.basket.items.length < 1) {
-                        this.basketHasItems = false;
-                        $('.basket-home').addClass('empty-basket');
-                    }else {
-                        this.basketHasItems = true;
-                        $('.basket-home').removeClass('empty-basket');
-                    }
+
+                    let $vm = this;
+                    setTimeout(function () {
+
+                        $vm.basket.items = $nav_vue.basket.items;
+                        // console.log(this.basket);
+
+                        if ($vm.basket.items.length < 1) {
+                            console.log('FALSE');
+                            $vm.basketHasItems = false;
+                            $('.basket-home').addClass('empty-basket');
+                        }else {
+                            console.log('TRUE');
+                            $vm.basketHasItems = true;
+                            $('.basket-home').removeClass('empty-basket');
+                        }
+                    }, 1000)
+
+
                 },
                 addToBasket: function(e) {
                     console.log('item added successfully');
@@ -2292,6 +2744,12 @@ $(document).ready(function() {
 
                         localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
 
+                        // update database with latest basket info
+                        if ($nav_vue.loggedInStatus) {
+                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                        }
+
+
                         shakeShoppingIcon();
                     }
                     else {
@@ -2301,6 +2759,12 @@ $(document).ready(function() {
                         $nav_vue.basketTotal += (item.price * item.quantity);
 
                         localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                        // update database with latest basket info if LOGGED IN
+                        if ($nav_vue.loggedInStatus) {
+                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                        }
+
 
                         shakeShoppingIcon();
                     }
@@ -2491,6 +2955,37 @@ $(document).ready(function() {
                             console.log('error with create account ajax');
                         }
                     })
+                },
+                toggleSign: function(e){
+                    let targetElement = $(e.target)[0];
+
+                    console.log(targetElement);
+                    console.log(targetElement.tagName);
+
+                    if (targetElement.tagName === 'SPAN' || targetElement.tagName === "DIV") {
+                        let spanIcon = $(targetElement).siblings();
+
+                        if ($(spanIcon[0]).hasClass('fa')) {
+                            if ($(spanIcon).hasClass('open-accordion')) {
+                                console.log('if-- has open accordion');
+                                $(spanIcon).removeClass('open-accordion fa-minus').addClass('closed-accordion fa-plus');
+                            }else if ($(spanIcon).hasClass('closed-accordion')) {
+                                console.log('if-- has closed-accordion');
+                                $(spanIcon).removeClass('closed-accordion fa-plus').addClass('open-accordion fa-minus');
+                            }
+                        }else {
+                            if ($(spanIcon.prevObject[0]).hasClass('open-accordion')) {
+                                console.log('elseif-- has open accordion');
+                                $(spanIcon.prevObject[0]).removeClass('open-accordion fa-minus').addClass('closed-accordion fa-plus');
+                            }else if ($(spanIcon.prevObject[0]).hasClass('closed-accordion')) {
+                                console.log('elseif--  has closed-accordion');
+                                $(spanIcon.prevObject[0]).removeClass('closed-accordion fa-plus').addClass('open-accordion fa-minus');
+                            }
+
+                        }
+
+                    }
+
                 }
             },
             computed: {
@@ -2514,6 +3009,7 @@ $(document).ready(function() {
                 },
                 createUserSuccess: function(value) {
                     $('#signup-message').html(value);
+
                 }
             },
             created: function() {
@@ -2533,7 +3029,7 @@ $(document).ready(function() {
                 $('.pr-info-link').on('click', function(e) {
                     console.log($(e.target));
                     let targetElement = $(e.target)[0];
-                    if (targetElement.tagName === 'SPAN') {
+                    if (targetElement.tagName === 'SPAN' || targetElement.tagName === "BUTTON") {
                         console.log('span clicked');
                         if ($(targetElement).hasClass('closed-accordion')) {
 
@@ -2557,12 +3053,14 @@ $(document).ready(function() {
 
                 })
 
+                // only get featured products if user is on home page or individual product page
+
                 if (window.location.pathname === '/' || window.location.pathname.split('/')[1] === 'product') {
                     this.getFeaturedProducts();
                 }
 
-                this.getBasketInfo();
 
+                this.getBasketInfo();
                 // this.ajaxFunctions();
             },
 

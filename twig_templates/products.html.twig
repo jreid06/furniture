@@ -43,9 +43,16 @@
 
     <div class="row">
         <div class="col-12 d-flex flex-wrap flex-row mobile-filter-ctrl">
-            <div class="p-2">
+            <div class="p-2 d-lg-none">
                 <button class="btn btn-primary" @click.prevent="toggleFilter">FILTER</button>
             </div>
+        </div>
+
+        <div class="col-12">
+            <p class="text-center"><small>{{msg}}</small></p>
+            <h4 class="text-center">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+            <br>
+
         </div>
         <div class="col-12 d-flex flex-wrap flex-row products-page-content">
             <div class="p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row">
@@ -53,68 +60,130 @@
                 <div class="p-2">
                     <div id="accordion">
 
-                          <div class="card">
+                          <div class="card filter-card">
                             <div class="card-header" id="headingOne">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#filter1" aria-expanded="true" aria-controls="filter1">
-                                 Brands
+                              <!-- <h5 class="mb-0">
+                                <button v-on:click="toggleSign" class="btn btn-link btn-filter" data-toggle="collapse" data-target="#filter1" aria-expanded="true" aria-controls="filter1">
+                                 <span>Product type</span>
+                                 <span class="fa fa-minus open-accordion" id="desc"></span>
                                 </button>
-                              </h5>
+                              </h5> -->
+
+                              <div v-on:click="toggleSign" class="btn btn-link collapsed btn-filter" data-toggle="collapse" data-target="#filter1" aria-expanded="false" aria-controls="filter1" data-filter-id="#filter1">
+
+                                    <div>Product type</div>
+                                    <div class="fa fa-minus open-accordion" data-filter-id="#filte1"></div>
+
+                              </div>
                             </div>
 
-                            <div id="filter1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div id="filter1" class="collapse show" aria-labelledby="headingOne" >
                               <div class="card-body">
                                 <ul>
-                                    <li>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" aria-label="Checkbox for following text input">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+
+                                    <!--
+                                        list all living room product types
+                                    -->
+                                    <template v-for="(prodtype, index) in products.livingroom">
+                                        <template v-if="prodtype.name == 'all products'">
+
+                                        </template>
+                                        <template v-else>
+                                            <filter-item
+                                                    v-bind:key="prodtype.key"
+                                                    v-bind:filtername="prodtype.name">
+                                            </filter-item>
+                                        </template>
+                                    </template>
+
+                                    <!--
+                                        list all kitchen product types
+                                    -->
+                                    <template v-for="(prodtype, index) in products.kitchen">
+                                        <template v-if="prodtype.name == 'all products'">
+
+                                        </template>
+                                        <template v-else>
+                                            <filter-item
+                                                    v-bind:key="prodtype.key"
+                                                    v-bind:filtername="prodtype.name">
+                                            </filter-item>
+                                        </template>
+                                    </template>
+
+
+                                    <!--
+                                        list all bedroom product types
+                                    -->
+                                    <template v-for="(prodtype, index) in products.bedroom">
+                                        <template v-if="prodtype.name == 'all products'">
+
+                                        </template>
+                                        <template v-else>
+                                            <filter-item
+                                                    v-bind:key="prodtype.key"
+                                                    v-bind:filtername="prodtype.name">
+                                            </filter-item>
+                                        </template>
+                                    </template>
+
+
+                                    <!--
+                                        list all bathroom product types
+                                    -->
+                                    <template v-for="(prodtype, index) in products.bath">
+                                        <template v-if="prodtype.name == 'all products'">
+
+                                        </template>
+                                        <template v-else>
+                                            <filter-item
+                                                    v-bind:key="prodtype.key"
+                                                    v-bind:filtername="prodtype.name">
+                                            </filter-item>
+                                        </template>
+                                    </template>
+
                                 </ul>
                               </div>
                             </div>
                           </div>
 
                           <!--  -->
-                          <div class="card">
+                          <div class="card filter-card">
                             <div class="card-header" id="headingTwo">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#filter2" aria-expanded="false" aria-controls="filter2">
-                                  filter-2
-                                </button>
-                              </h5>
+
+                              <div v-on:click="toggleSign" class="btn btn-link collapsed btn-filter" data-toggle="collapse" data-target="#filter2" aria-expanded="false" aria-controls="filter2" data-filter-id="#filter2">
+
+                                    <div>Category</div>
+                                    <div class="fa fa-minus open-accordion" data-filter-id="#filter2"></div>
+
+                              </div>
                             </div>
-                            <div id="filter2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div id="filter2" class="collapse show" aria-labelledby="headingTwo" >
                               <div class="card-body">
                                   <ul>
-                                      <li>
-                                          <div class="input-group mb-3">
-                                              <div class="input-group-prepend">
-                                                  <div class="input-group-text">
-                                                      <input type="checkbox" aria-label="Checkbox for following text input">
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </li>
+                                      <template v-for="(category, index) in categories">
+                                          <filter-item
+                                                  v-bind:key="category.key"
+                                                  v-bind:filtername="category.name">
+                                          </filter-item>
+                                      </template>
                                   </ul>
                               </div>
                             </div>
                           </div>
 
                           <!--  -->
-                          <div class="card">
+                          <div class="card filter-card">
                             <div class="card-header" id="headingThree">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#filter3" aria-expanded="false" aria-controls="filter3">
-                                  filter-3
-                                </button>
-                              </h5>
+                              <div v-on:click="toggleSign" class="btn btn-link collapsed btn-filter" data-toggle="collapse" data-target="#filter3" aria-expanded="false" aria-controls="filter3" data-filter-id="#filter3">
+
+                                    <div>Brand</div>
+                                    <div class="fa fa-minus open-accordion" data-filter-id="#filter3"></div>
+
+                              </div>
                            </div>
-                           <div id="filter3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                           <div id="filter3" class="collapse show" aria-labelledby="headingThree" >
                               <div class="card-body">
                                   <ul>
                                       <li>
@@ -133,22 +202,50 @@
                          <!--  -->
 
                          <!--  -->
-                         <div class="card">
+                         <div class="card filter-card">
                            <div class="card-header" id="headingThree">
-                             <h5 class="mb-0">
-                               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#filter4" aria-expanded="false" aria-controls="filter4">
-                                 filter-4
-                               </button>
-                             </h5>
+
+                             <div v-on:click="toggleSign" class="btn btn-link collapsed btn-filter" data-toggle="collapse" data-target="#filter4" aria-expanded="false" aria-controls="filter4" data-filter-id="#filter4">
+
+                                   <div>Price</div>
+                                   <div class="fa fa-minus open-accordion" data-filter-id="#filter4"></div>
+
+                             </div>
                           </div>
-                          <div id="filter4" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                          <div id="filter4" class="collapse show" aria-labelledby="headingThree" >
                              <div class="card-body">
                                  <ul>
                                      <li>
-                                         <div class="input-group mb-3">
-                                             <div class="input-group-prepend">
-                                                 <div class="input-group-text">
-                                                     <input type="checkbox" aria-label="Checkbox for following text input">
+                                         <div class="input-group mb-3 filter-input-group">
+                                             <div class="input-group-prepend filter-input-box">
+                                                 <div class="input-group-text filter-input d-flex flex-row">
+                                                     <div class="p-2 fltr-inp">
+                                                         <input name="lowtohigh" type="checkbox" data-prod-type="price" aria-label="Checkbox for following text input">
+                                                     </div>
+
+                                                     <div class="p-2 fltr-inp">
+                                                         <p>
+                                                         {{'low to high' |camel_case()}}
+                                                        </p>
+                                                     </div>
+
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </li>
+
+                                     <li>
+                                         <div class="input-group mb-3 filter-input-group">
+                                             <div class="input-group-prepend filter-input-box">
+                                                 <div class="input-group-text filter-input d-flex flex-row">
+                                                     <div class="p-2 fltr-inp">
+                                                         <input name="hightolow" type="checkbox" data-prod-type="price" aria-label="Checkbox for following text input">
+                                                     </div>
+
+                                                     <div class="p-2 fltr-inp">
+                                                         <p>{{'high to low' |camel_case()}}</p>
+                                                     </div>
+
                                                  </div>
                                              </div>
                                          </div>
@@ -159,37 +256,11 @@
                         </div>
                         <!--  -->
 
-                        <!--  -->
-                        <div class="card">
-                          <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#filter5" aria-expanded="false" aria-controls="filter5">
-                                filter-5
-                              </button>
-                            </h5>
-                         </div>
-                         <div id="filter5" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul>
-                                    <li>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <input type="checkbox" aria-label="Checkbox for following text input">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                          </div>
-                       </div>
-                       <!--  -->
                     </div>
                     <!-- end of accordion-->
                 </div>
 
-                <div class="p-2">
+                <div class="p-2 d-lg-none">
                     <div class="filter-close">
                         <span class="fa fa-close"></span>
                     </div>
@@ -199,12 +270,12 @@
             <div class="p-2 products-page-container">
                 <div class="row">
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <p class="text-center"><small>{{msg}}</small></p>
                             <h4 class="text-center">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
                             <br>
 
-                        </div>
+                        </div> -->
 
                         {% if queryDetails.num_of_products == 'all' %}
 
@@ -217,13 +288,9 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
-                                                </h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
                                                 <h6 class="">{{sku.attributes.category | camel_case()}}</h6>
-                                                <hr>
-                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                                <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -245,12 +312,8 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
-                                                </h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
-                                                <hr>
-                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -271,12 +334,8 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}}</a>
-                                                </h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</h6>
-                                                <hr>
-                                                <p><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
                                     </div>

@@ -134,13 +134,15 @@
   text-align: center; }
 
 .btn-primary {
-  background-color: #3c3c3c;
-  border: 2px solid #f2f2f2; }
+  background-color: #f2f2f2;
+  border: 2px solid #f2f2f2;
+  border-radius: 0px !important;
+  color: #222; }
   .btn-primary:hover {
     cursor: pointer;
     background-color: #EFEFEF;
     color: #222;
-    border: 2px solid #222; }
+    border: 2px solid #f2f2f2; }
 
 .btn-info {
   background-color: #384E5B;
@@ -699,7 +701,7 @@ input:focus {
   top: 130px !important; }
   @media only screen and (min-width: 992px) {
     .products-page-main-container {
-      top: 175px !important; } }
+      top: 125px !important; } }
 
 .mobile-filter-ctrl .p-2 {
   width: 100%;
@@ -731,6 +733,12 @@ input:focus {
   padding-right: 0 !important; }
   .products-page-content .p-2:nth-child(2) {
     width: 100%; }
+    @media only screen and (min-width: 992px) {
+      .products-page-content .p-2:nth-child(2) {
+        width: 75%; } }
+    @media only screen and (min-width: 1200px) {
+      .products-page-content .p-2:nth-child(2) {
+        width: 80%; } }
 
 .closed-filter {
   width: 0%; }
@@ -741,13 +749,50 @@ input:focus {
     .open-filter {
       width: 40%; } }
 
+.filter-card {
+  border: 0px;
+  border-radius: 0px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .filter-card .card-header {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #fff; }
+    .filter-card .card-header button {
+      color: #222; }
+
+.btn-filter {
+  display: inline-flex;
+  color: #222; }
+  .btn-filter div {
+    position: absolute; }
+    .btn-filter div:nth-child(2) {
+      top: 28.5px;
+      left: 206px; }
+      @media only screen and (min-width: 992px) {
+        .btn-filter div:nth-child(2) {
+          left: 166px; } }
+  .btn-filter span {
+    border: 1px solid gold; }
+
+.filter-input-group {
+  width: 100%; }
+
+.filter-input-box {
+  width: 100%; }
+
+.filter-input .fltr-inp {
+  background-color: #fff !important; }
+  .filter-input .fltr-inp:nth-child(1) {
+    width: 25% !important; }
+  .filter-input .fltr-inp:nth-child(2) {
+    width: 75% !important; }
+
 .filter-mobile {
   position: absolute;
   transition: all .5s;
   height: 100%;
   overflow-y: scroll;
-  background-color: #d2d2d2;
-  border: 1px solid #bbbbbb;
+  background-color: #fff;
   padding: 0 !important;
   z-index: 98; }
   .filter-mobile .p-2:nth-child(1) {
@@ -755,7 +800,17 @@ input:focus {
   .filter-mobile .p-2:nth-child(2) {
     position: relative;
     width: 15%;
-    background-color: #d2d2d2; }
+    background-color: #f2f2f2; }
+  @media only screen and (min-width: 992px) {
+    .filter-mobile {
+      position: relative;
+      width: 25%;
+      margin-top: 80px;
+      z-index: 0;
+      padding-left: 30px !important; } }
+  @media only screen and (min-width: 1200px) {
+    .filter-mobile {
+      width: 20%; } }
 
 .product-card-col {
   padding-top: 10px; }
@@ -763,10 +818,19 @@ input:focus {
 .product-card {
   width: 100%;
   min-height: 310px;
-  text-align: center; }
+  text-align: center;
+  border: 0px; }
+  .product-card h6 {
+    font-weight: 300;
+    font-size: 12px; }
+  .product-card a {
+    color: #222; }
+
+.product-price-p {
+  margin-top: 5px;
+  font-weight: 100; }
 
 body, html {
-  font-family: 'Quicksand', sans-serif !important;
   height: 100%;
   width: 100%;
   min-width: 320px;
@@ -874,15 +938,19 @@ nav {
 .desktop-login-help {
   position: absolute;
   top: 0;
-  right: 0; }
+  right: 30px; }
   .desktop-login-help .custom-menu {
     position: absolute;
     background-color: #222;
     top: 30px;
     transition: all .6s;
-    z-index: 999999; }
+    z-index: 999999;
+    text-align: right !important;
+    box-shadow: 0px 0px 1px #e5e5e5; }
+    .desktop-login-help .custom-menu a {
+      color: #fff; }
   .desktop-login-help a {
-    color: #fff;
+    color: #222;
     text-transform: uppercase;
     font-size: 0.6em; }
 
@@ -929,6 +997,9 @@ nav {
     #nav-main {
       background-color: #222;
       color: #f2f2f2; } }
+  @media only screen and (min-width: 992px) {
+    #nav-main {
+      background-color: #d2d2d2; } }
   #nav-main .p-2 {
     max-height: 100px; }
     #nav-main .p-2:nth-child(2) {
@@ -946,25 +1017,27 @@ nav {
     @media only screen and (min-width: 992px) {
       #nav-main .p-2:nth-child(1) {
         width: 100%;
-        max-height: 65px;
-        background-color: #222; }
+        max-height: 65px; }
       #nav-main .p-2:nth-child(2) {
         display: none; }
       #nav-main .p-2:nth-child(3) {
         display: flex;
         width: 100%;
-        font-weight: 600; }
+        font-weight: 600;
+        font-size: 12px; }
       #nav-main .p-2:nth-child(4) {
         display: none; } }
 
 .links-nav {
-  background-color: #d2d2d2;
+  top: 5px;
+  background-color: #222;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   position: relative;
-  order: 2; }
+  order: 2;
+  height: 70px; }
   .links-nav ul {
     width: 80%;
     display: flex;
@@ -973,16 +1046,16 @@ nav {
       display: inline-block;
       padding: 10px; }
       .links-nav ul li a {
-        color: #010101; }
+        color: #f2f2f2; }
   .links-nav .search-basket-nav {
     position: absolute;
     width: 20%;
-    top: 8px;
+    top: 20px;
     left: auto;
     right: 0;
     font-size: 1.5em;
     color: #222;
-    padding-right: 7px;
+    padding-right: 40px;
     text-align: end; }
     @media only screen and (max-width: 767px) {
       .links-nav .search-basket-nav {
@@ -990,6 +1063,15 @@ nav {
 
 .menu-nav {
   order: 1; }
+
+.logo-box {
+  width: 3.5%;
+  position: absolute;
+  z-index: 100;
+  top: 21px;
+  left: 40px; }
+  .logo-box img {
+    width: 100%; }
 
 .logo-nav {
   position: relative;
@@ -1233,7 +1315,7 @@ nav {
     color: #fff; }
     @media only screen and (min-width: 992px) {
       .search-basket-nav span {
-        color: #222; } }
+        color: #f2f2f2; } }
     .search-basket-nav span:nth-child(1):hover {
       color: darkgoldenrod; }
     .search-basket-nav span:nth-child(2):hover {
@@ -1329,26 +1411,29 @@ nav {
 .slideshow-div {
   text-align: center;
   color: #f2f2f2; }
-  .slideshow-div h2 {
+  .slideshow-div h1 {
     margin-top: 50px;
     font-weight: bold;
     padding: 5px 0 5px 0; }
     @media only screen and (max-width: 767px) {
-      .slideshow-div h2 {
+      .slideshow-div h1 {
         font-size: 1.6em; } }
     @media only screen and (min-width: 576px) {
-      .slideshow-div h2 {
+      .slideshow-div h1 {
         margin-top: 120px; } }
     @media only screen and (min-width: 768px) {
-      .slideshow-div h2 {
+      .slideshow-div h1 {
         margin-top: 230px; } }
   .slideshow-div h4 {
-    padding: 5px 0 5px 0; }
+    padding: 5px 0 5px 0;
+    font-weight: 300;
+    letter-spacing: 2px; }
     @media only screen and (max-width: 767px) {
       .slideshow-div h4 {
         font-size: 1.1em; } }
   .slideshow-div a {
-    margin-top: 10px;
+    margin-top: 30px;
+    width: 150px;
     font-size: 0.8em; }
 
 .slider-column {
@@ -1361,7 +1446,7 @@ nav {
   min-height: 50%; }
   @media only screen and (min-width: 992px) {
     .home {
-      top: 118px; } }
+      top: 75px; } }
 
 .home-slide div {
   width: 100%;
@@ -1434,7 +1519,10 @@ nav {
         height: 150px; } }
   .featured-prod-card .card-body {
     text-align: center;
-    padding: 10px 0 10px 0; }
+    padding: 10px 0 10px 0;
+    font-size: 12px; }
+    .featured-prod-card .card-body a {
+      color: #222; }
 
 .blog-post-card {
   width: 100%;
@@ -1475,7 +1563,7 @@ nav {
       height: 43px; } }
   @media only screen and (min-width: 992px) {
     .breadcrumb-container nav {
-      top: 118px; } }
+      top: 91px; } }
 
 @media only screen and (max-width: 340px) {
   .breadcrumb-item {
@@ -1492,9 +1580,6 @@ nav {
     .breadcrumb {
       padding-left: 2.5rem;
       font-size: 0.9em; } }
-  @media only screen and (min-width: 992px) {
-    .breadcrumb {
-      padding-left: 7rem; } }
   .breadcrumb li:nth-child(1n+2)::before {
     content: ">"; }
 

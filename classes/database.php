@@ -350,13 +350,13 @@
             // return "User Created Successfully";
         }
 
-        public static function createRow($tbl, $fields, $value1, $value2, $value3)
+        public static function createRow($tbl, $fields, $value1, $value2)
         {
             Connect::checkConnection();
 
-            $query = parent::returnConnection()->prepare("INSERT INTO $tbl $fields VALUES (?,?,?)");
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl $fields VALUES (?,?)");
 
-            $query->bind_param('sss',$value1, $value2, $value3);
+            $query->bind_param('ss',$value1, $value2);
             $query->execute();
 
             $query->close();

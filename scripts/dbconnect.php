@@ -52,6 +52,16 @@
      	include_once ROOT_PATH . $file;
 	};
 
+	// $session_not_set = !isset($_SESSION['idyl_tkn'])?true:'session is set';
+	// $cookie_not_set = !isset($_COOKIE['idyl_tkn'])?true:'cookie is set';
+    //
+	// if ($session_not_set && $cookie_not_set) {
+	// 	// SET BASKET SESSION TO EXPIRE AFTER SESSION IS CLOSED DAYS
+	// 	setcookie('idyl_basket_session', bin2hex(random_bytes(10)), 0, "/");
+	// }
+
+
+
 	// Connect::checkConnection();
 	/**
 	 *

@@ -94,6 +94,21 @@ class Address {
 $(document).ready(function(){
     console.log('connected but separate from main.js');
 
+    var _originalSize = $(window).width() + $(window).height()
+      $(window).resize(function(){
+        if($(window).width() + $(window).height() != _originalSize){
+          console.log("keyboard show up");
+          $('footer').css("visibility", "hidden");
+        }else{
+          console.log("keyboard closed");
+           $('footer').css("visibility", "visible");
+        }
+      });
+
+    // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    //
+    // }
+
     /*TEMP CODE TO ADD ITEMS TO LOCAL STORAGE
 
     let item1 = new BasketItem('001', 'Kitchen Item 1', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 29, '/assets/products/k1.jpg', 1, 'livingroom'),

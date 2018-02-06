@@ -29,11 +29,13 @@
 		    <div id="collapseTwo" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
 		      <div class="card-body">
 		        <ul>
-		        	<li><a href="#">Help</a></li>
-					<li><a href="#">Shipping</a></li>
-					<li><a href="#">Returns</a></li>
+		        	<li><a href="/">Help</a></li>
+					<li><a href="/shipping">Shipping</a></li>
+					<li><a href="/returns">Returns</a></li>
 					<li><a href="#">Payments</a></li>
-					<li><a href="#">Your Orders</a></li>
+					<li>
+						<a href="/myaccount/orders">Your Orders</a>
+					</li>
 		        </ul>
 		      </div>
 		    </div>

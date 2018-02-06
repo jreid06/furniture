@@ -8,7 +8,7 @@
 
 body, html{
 	// overflow: hidden;
-	font-family: 'Quicksand', sans-serif !important;
+	// font-family: 'Quicksand', sans-serif !important;
 	height: 100%;
 	width: 100%;
     min-width: 320px;
@@ -184,7 +184,7 @@ nav{
 .desktop-login-help{
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: 30px;
 	// display: flex !important;
 	// height: 100%;
 	// align-items: center;
@@ -195,11 +195,17 @@ nav{
 		top: 30px;
 		transition: all .6s;
 		z-index: 999999;
+		text-align: right !important;
+		box-shadow: 0px 0px 1px #e5e5e5;
 
+		a{
+			color: #fff;
+		}
 	}
 
 	a{
-		color: #fff;
+		// color: #fff;
+		color: #222;
 		text-transform: uppercase;
 		font-size: 0.6em;
 	}
@@ -261,10 +267,15 @@ nav{
     z-index: 101;
     // background-color: #EFEFEF;
 	background-color: #222;
+	// background-color: #222;
 
 	@include respond-to('(max-width: 768px)'){
 		background-color: #222;
 		color: #f2f2f2;
+	};
+
+	@include respond-to($lg-break){
+		background-color: #d2d2d2;
 	};
 
     .p-2{
@@ -296,7 +307,8 @@ nav{
                 width: 100%;
                 // border: 1px solid green;
                 max-height: 65px;
-                background-color: #222;
+                // background-color: #222;
+				// background-color: ;
             }
             &:nth-child(2){
                 display: none;
@@ -306,6 +318,7 @@ nav{
                 display: flex;
                 width: 100%;
 				font-weight: 600;
+				font-size: 12px;
             }
             &:nth-child(4){
                 display: none;
@@ -315,13 +328,17 @@ nav{
 }
 
 .links-nav{
-    background-color: #d2d2d2;
+    // background-color: #d2d2d2;
+	// border: 1px solid red;
+	top: 5px;
+	background-color: #222;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-content: center;
     position: relative;
 	order: 2;
+	height: 70px;
 
     ul{
         width: 80%;
@@ -335,7 +352,8 @@ nav{
             padding: 10px;
 
             a{
-                color: #010101;
+                // color: #010101;
+				color: #f2f2f2;
             }
 
 			@include respond-to($md-break){
@@ -347,12 +365,12 @@ nav{
     .search-basket-nav{
         position: absolute;
         width: 20%;
-        top:8px;
+        top:20px;
         left: auto;
         right: 0;
         font-size: 1.5em;
 		color: #222;
-		padding-right: 7px;
+		padding-right: 40px;
 		text-align: end;
 
 		@include respond-to('(max-width: 767px)'){
@@ -366,6 +384,20 @@ nav{
 
 .menu-nav{
 	order: 1;
+}
+
+.logo-box{
+	// border: 1px solid red;
+	width: 3.5%;
+	position: absolute;
+	z-index: 100;
+	top: 21px;
+	left: 40px;
+
+	img{
+		// border: 1px solid gold;
+		width: 100%;
+	}
 }
 
 .logo-nav{
@@ -745,7 +777,8 @@ nav{
 		color: #fff;
 
 		@include respond-to($lg-break){
-			color: #222;
+			// color: #222;
+			color: #f2f2f2;
 		};
 
         &:nth-child(1){
@@ -906,7 +939,7 @@ nav{
 	text-align: center;
 	color: #f2f2f2;
 
-	h2{
+	h1{
 		margin-top: 50px;
 		font-weight: bold;
 		padding: 5px 0 5px 0;
@@ -928,13 +961,16 @@ nav{
 	}
 	h4{
 		padding: 5px 0 5px 0;
+		font-weight: 300;
+		letter-spacing: 2px;
 		@include respond-to('(max-width:767px)'){
 			font-size: 1.1em;
 		};
 
 	}
 	a{
-		margin-top: 10px;
+		margin-top: 30px;
+		width: 150px;
 		font-size: 0.8em;
 	}
 }
@@ -950,7 +986,7 @@ nav{
 	min-height: 50%;
 
 	@include respond-to($lg-break){
-		top: 118px;
+		top: 75px;
 	};
 }
 
@@ -1053,6 +1089,14 @@ nav{
 	.card-body{
 		text-align: center;
 		padding: 10px 0 10px 0;
+			font-size: 12px;
+		h6{
+
+		}
+
+		a{
+			color: #222;
+		}
 	}
 }
 
@@ -1112,7 +1156,7 @@ nav{
 		};
 
 		@include respond-to($lg-break){
-			top: 118px;
+			top: 91px;
 		};
 	}
 }
@@ -1139,7 +1183,7 @@ nav{
 		font-size: 0.9em;
 	};
 	@include respond-to($lg-break){
-		padding-left: 7rem;
+		// padding-left: 7rem;
 	};
 
 	li{

@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-12 info-basket-column">
                 <div class="alert alert-info text-center" role="alert">
-                    Basket is empty. Start shopping today. <a href="/">SHOP NOW</a>
+                    Basket is empty. Start shopping today. <a href="/products">SHOP NOW</a>
                 </div>
             </div>
         </div>

@@ -5,6 +5,16 @@
     include ROOT_PATH.'templates/nav.php';
 
     // Connect::checkConnection();
+    // var_dump($_SESSION);
+    //
+    // echo "<br>";
+    // echo "<br>";
+    // echo "<br>";
+    // echo "<br>";
+    //
+    // echo $session_not_set."<br>";
+    // echo $cookie_not_set."<br>";
+
 ?>
 
 <div class="container-fluid home">
@@ -35,14 +45,14 @@
                 </category>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12 button-box d-flex justify-content-center align-items-center">
                     <a href="/products" class="btn btn-primary">
                         SHOP NOW
                     </a>
                     <hr>
                 </div>
-            </div>
+            </div> -->
             <!--  -->
 
             <div class="row">

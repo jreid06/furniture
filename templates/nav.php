@@ -21,7 +21,7 @@
     </div>
     <div class="d-flex flex-row flex-wrap align-items-center" id="nav-main">
         <div class="p-2 logo-nav order-2 order-md-1">
-            <img src="/assets/general/idyl_original_logo_white.png" alt="logo" @click="goHome">
+            <img class="d-lg-none" src="/assets/general/idyl_original_logo_white.png" alt="logo" @click="goHome">
             <!-- <h2>LOGO</h2> -->
             <div class="desktop-login-help d-none d-lg-block">
 
@@ -57,6 +57,9 @@
             </div>
         </div>
         <div class="p-2 links-nav order-md-2">
+            <div class="logo-box">
+                <img src="/assets/general/idyl_original_logo_white.png" alt="logo" @click="goHome">
+            </div>
             <ul>
                 <template v-for="(nav, index) in navHeader">
                     <template v-if="nav.slug">
@@ -137,7 +140,7 @@
                         </template>
                         <template v-else>
                             <br>
-                            <button class="btn btn-primary"><p>ADD PRODUCTS</p></button>
+                            <a href="/products" class="btn btn-primary"><p>ADD PRODUCTS</p></a>
                         </template>
 
 

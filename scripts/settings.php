@@ -349,6 +349,204 @@
             exit(json_encode($msg));
         }
     }
+    elseif (isset($_GET['type']) && $_GET['type'] === 'retrieve-wishlist') {
+
+        // do a DB check to see if there is any wishlist data in table for customer with UID
+        $wishlistExists = DatabaseFunctions::getData('*', 'wishlist', 'customer_id', $_GET['uid']);
+
+        if ($wishlistExists[0]) {
+            $msg = array(
+                'status'=>array(
+                    'code'=> 101,
+                    'code_status'=>'success'
+                ),
+                'data'=>array(
+                    'msg' => 'wishlist data retrieved',
+                    'id' => $_GET['uid'],
+                    'wishlistData' => json_encode($wishlistExists[1])
+                )
+            );
+
+            exit(json_encode($msg));
+        }else {
+            $msg = array(
+                'status'=>array(
+                    'code'=> 404,
+                    'code_status'=>'error'
+                ),
+                'data'=>array(
+                    'msg'=>'Wishlist data doesnt exist in DB'
+                )
+            );
+
+            exit(json_encode($msg));
+        }
+
+
+    }
+    elseif (isset($_POST['type']) && $_POST['type'] === 'update-wishlist') {
+
+        $user_id = $_POST['uid'];
+        $user_wishlist = $_POST['wishlist'];
+        /*
+            1. check if customer wishlist data already exists
+                1.1. if exists updatethefield products column with new JSON
+                1.2  else create new entry with users data
+
+        */
+        $wishlist_data_exists = DatabaseFunctions::getData('*', 'wishlist', 'customer_id', $user_id);
+
+        if ($wishlist_data_exists[0]) {
+
+            $fields = array('products');
+            $values = array($user_wishlist);
+
+            $wishlist_update = DatabaseFunctions::updateMultipleFields('wishlist', $fields, $values, 'customer_id', $user_id);
+
+            if ($wishlist_update[0]) {
+                $msg = array(
+                    'status'=>array(
+                        'code'=> 101,
+                        'code_status'=>'success'
+                    ),
+                    'data'=>array(
+                        'msg'=>'Wishlist products updated successfully'
+                    )
+                );
+
+                exit(json_encode($msg));
+            }else {
+                $msg = array(
+                    'status'=>array(
+                        'code'=> 404,
+                        'code_status'=>'error'
+                    ),
+                    'data'=>array(
+                        'msg'=>'Failed to update wishlist data for customer with ID: '.$user_id
+                    )
+                );
+
+                exit(json_encode($msg));
+            }
+
+        }else {
+            # 1.2  else create new entry with users data
+            DatabaseFunctions::createRow('wishlist', '(customer_id, products)', $user_id, $user_wishlist);
+
+            $msg = array(
+                'status'=>array(
+                    'code'=> 101,
+                    'code_status'=>'success'
+                ),
+                'data'=>array(
+                    'msg'=>'ROW CREATED: Wishlist saved Successfully',
+                    'uid'=> $user_id
+                )
+            );
+
+            exit(json_encode($msg));
+
+        }
+
+    }
+    elseif (isset($_POST['type']) && $_POST['type'] === 'retrieve-basket') {
+        $user_id = $_POST['uid'];
+
+        // do a DB check to see if there is any wishlist data in table for customer with UID
+        $basketExists = DatabaseFunctions::getData('products', 'basket', 'customer_id', $user_id);
+
+        if ($basketExists[0]) {
+            $msg = array(
+                'status'=>array(
+                    'code'=> 101,
+                    'code_status'=>'success'
+                ),
+                'data'=>array(
+                    'msg' => 'BASKET data retrieved SUCCESSFULLY',
+                    'id' => $user_id,
+                    'basketData' => json_encode($basketExists[1])
+                )
+            );
+
+            exit(json_encode($msg));
+        }else {
+            $msg = array(
+                'status'=>array(
+                    'code'=> 404,
+                    'code_status'=>'error'
+                ),
+                'data'=>array(
+                    'msg'=>'User basket data DOESNT exist in DB'
+                )
+            );
+
+            exit(json_encode($msg));
+        }
+
+    }
+    elseif (isset($_POST['type']) && $_POST['type'] === 'update-basket') {
+        $user_id = $_POST['uid'];
+        $user_basket = $_POST['basket'];
+        /*
+            1. check if customer wishlist data already exists
+                1.1. if exists updatethefield products column with new JSON
+                1.2  else create new entry with users data
+
+        */
+        $basket_data_exists = DatabaseFunctions::getData('*', 'basket', 'customer_id', $user_id);
+
+        if ($basket_data_exists[0]) {
+
+            $fields = array('products');
+            $values = array($user_basket);
+
+            $basket_update = DatabaseFunctions::updateMultipleFields('basket', $fields, $values, 'customer_id', $user_id);
+
+            if ($basket_update[0]) {
+                $msg = array(
+                    'status'=>array(
+                        'code'=> 101,
+                        'code_status'=>'success'
+                    ),
+                    'data'=>array(
+                        'msg'=>'user basket products updated successfully'
+                    )
+                );
+
+                exit(json_encode($msg));
+            }else {
+                $msg = array(
+                    'status'=>array(
+                        'code'=> 404,
+                        'code_status'=>'error'
+                    ),
+                    'data'=>array(
+                        'msg'=>'Failed to update basket data for customer with ID: '.$user_id
+                    )
+                );
+
+                exit(json_encode($msg));
+            }
+
+        }else {
+            # 1.2  else create new entry with users data
+            DatabaseFunctions::createRow('basket', '(customer_id, products)', $user_id, $user_basket);
+
+            $msg = array(
+                'status'=>array(
+                    'code'=> 101,
+                    'code_status'=>'success'
+                ),
+                'data'=>array(
+                    'msg'=>'ROW CREATED: Wishlist saved Successfully',
+                    'uid'=> $user_id
+                )
+            );
+
+            exit(json_encode($msg));
+
+        }
+    }
     else {
         header('location: /');
         exit();
