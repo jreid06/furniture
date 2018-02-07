@@ -5,6 +5,7 @@
 @import "account";
 @import "basket";
 @import "products";
+@import "help";
 
 body, html{
 	// overflow: hidden;
@@ -87,6 +88,15 @@ footer{
 #contact-info{
 	li{
 		text-transform: lowercase !important;
+
+		&:nth-child(3){
+			text-transform: capitalize !important;
+		}
+
+		&:nth-child(4){
+			text-transform: capitalize !important;
+		}
+
 	}
 }
 // footer scss code

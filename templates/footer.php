@@ -29,12 +29,12 @@
 		    <div id="collapseTwo" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
 		      <div class="card-body">
 		        <ul>
-		        	<li><a href="/">Help</a></li>
-					<li><a href="/shipping">Shipping</a></li>
-					<li><a href="/returns">Returns</a></li>
-					<li><a href="#">Payments</a></li>
+		        	<li><a href="/help">Help</a></li>
+					<li><a href="/help/shipping">Shipping</a></li>
+					<li><a href="/help/returns">Returns</a></li>
+					<li><a href="/help/payments">Payments</a></li>
 					<li>
-						<a href="/myaccount/orders">Your Orders</a>
+						<a href="/help/orders">Orders</a>
 					</li>
 		        </ul>
 		      </div>
@@ -51,11 +51,10 @@
 		    <div id="contact-info" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
 		      <div class="card-body">
 		        <ul>
-		        	<li> <a href="tel:02086541456">+44 (0)2086541456</a> </li>
-					<li> <a href="mailto:info@nordicidyl.com">info@nordicidyl.com</a></li>
-					<li>
-
-					</li>
+		        	<li><a href="tel:02086541456">+44 (0)2086541456</a> </li>
+					<li><a href="mailto:info@nordicidyl.com">info@nordicidyl.com</a></li>
+					<li style="text-transform: capitalize"><a href="/termsconditions">Terms &amp; Conditions</a> </li>
+					<li style="text-transform: capitalize"><a href="/privacy-policy">Privacy Ploicy</a> </li>
 		        </ul>
 		      </div>
 		    </div>

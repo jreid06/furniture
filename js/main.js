@@ -2148,7 +2148,8 @@ $(document).ready(function() {
     }
 
     console.log(window.location.pathname);
-    if (window.location.pathname.split('/')[1] !== 'myaccount') {
+    console.log(window.location.pathname.split('/')[1]);
+    if (window.location.pathname.split('/')[1] !== 'myaccount' && window.location.pathname.split('/')[1] !== 'help') {
         console.log('home visible');
 
         // NOTE: rewrite what props the basket item uses to match basket-item 1

@@ -830,6 +830,37 @@ input:focus {
   margin-top: 5px;
   font-weight: 100; }
 
+.help-container {
+  position: relative;
+  top: 88px;
+  min-height: 50%;
+  margin-bottom: 50px; }
+  .help-container h2 {
+    margin-bottom: 40px; }
+  @media only screen and (min-width: 992px) {
+    .help-container {
+      top: 110px; } }
+  .help-container h4 {
+    text-transform: uppercase;
+    margin-bottom: 20px; }
+  .help-container .info-columns {
+    margin-bottom: 30px; }
+    .help-container .info-columns p {
+      margin-bottom: 10px; }
+    .help-container .info-columns ul li {
+      list-style: circle;
+      list-style-position: inside;
+      padding-left: 20px;
+      padding-bottom: 10px; }
+    .help-container .info-columns ol li {
+      list-style: lower-roman;
+      list-style-position: inside;
+      padding-left: 20px;
+      padding-bottom: 10px; }
+    .help-container .info-columns h3 {
+      margin-bottom: 20px;
+      text-transform: uppercase; }
+
 body, html {
   height: 100%;
   width: 100%;
@@ -884,6 +915,10 @@ footer {
 
 #contact-info li {
   text-transform: lowercase !important; }
+  #contact-info li:nth-child(3) {
+    text-transform: capitalize !important; }
+  #contact-info li:nth-child(4) {
+    text-transform: capitalize !important; }
 
 .active-nav-link {
   border-bottom: 2px solid; }
