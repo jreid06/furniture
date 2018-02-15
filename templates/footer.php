@@ -102,9 +102,9 @@
 <script src="/js/plugins/notify.min.js"></script>
 <script src="/js/plugins/jqueryrotate.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
+<script src="/node_modules/simplemde/dist/simplemde.min.js"></script>
 <!-- Compiled and minified JavaScript -->
-
+<script src="/node_modules/marked/marked.min.js"></script>
 <script src="/js/classes.js"></script>
 <script src="/js/validate-forms.js"></script>
 <script src="/js/main.js"></script>

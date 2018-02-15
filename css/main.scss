@@ -8,12 +8,40 @@
 @import "help";
 
 body, html{
-	// overflow: hidden;
+	overflow: hidden;
 	// font-family: 'Quicksand', sans-serif !important;
 	height: 100%;
 	width: 100%;
     min-width: 320px;
 	background-color: #fff;
+}
+
+.loader-generic{
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	// border: 1px solid red;
+	background-color: #fff;
+	z-index: 10000;
+
+	height: 1300px;
+
+	.spinner{
+		margin-top: 85%;
+
+		@include respond-to($sm-break){
+				margin-top: 25%;
+		};
+
+		@include respond-to($md-break){
+				margin-top: 45%;
+		};
+
+		@include respond-to($lg-break){
+				margin-top: 25%;
+		};
+	}
 }
 
 // footer scss code
@@ -403,6 +431,7 @@ nav{
 	z-index: 100;
 	top: 21px;
 	left: 40px;
+	cursor: pointer;
 
 	img{
 		// border: 1px solid gold;
@@ -488,7 +517,7 @@ nav{
 .menu-closed{
     // display: none;
     // top: -100%;
-    transform:translate(0, -105%);
+    transform:translate(0, -115%);
     transition: all 1s;
 
 	@include respond-to($md-break){
@@ -516,7 +545,7 @@ nav{
 	overflow-y: scroll;
 
 	@include respond-to($lg-break){
-		height: 300px;
+		height: 330px;
 		overflow-y: hidden;
 	};
 
@@ -605,6 +634,7 @@ nav{
 
 .dl-box-content-nav{
 	width: 100%;
+	padding-top: 30px;
 
 	ul{
 		// border: 1px solid black;
@@ -806,25 +836,26 @@ nav{
 }
 
 .basket-box{
-	border: 1px solid darken(#F2F2F2, 3%);
-	box-shadow: 0 0 20px darken(#e5e5e5, 10%);
-	background-color: #F2F2F2;
-	height: 300px;
+	// border: 1px solid darken(#F2F2F2, 3%);
+	// background-color: #F2F2F2;
+	border-bottom: 1px solid #d2d2d2;
+	height: 400px;
 	width: 100%;
 	overflow-y: scroll;
 	position: absolute;
 	transition: all .4s;
 	z-index: 100;
 	right: 0;
+	top: 87px;
 
 	@include respond-to($md-break){
 		width: 45%;
-		height: 450px;
+		height: 500px;
 	};
 
 	@include respond-to($lg-break){
 		width: 30%;
-		height: 500px;
+		height: 550px;
 	};
 
 	@include respond-to($xl-break){
@@ -844,15 +875,17 @@ nav{
 	// height: 300px;
 	// overflow-y:scroll;
 	// overflow-x: hidden;
-	background-color: lighten(#d2d2d2, 10%);
+	// background-color: lighten(#d2d2d2, 10%);
+	background-color: #fff;
 
 	.p-2{
 		width: 100%;
-		height: 112px;
-		padding-top: 0 !important;
+		height: 132px;
+		padding-top: 20px !important;
 
 		&:nth-child(2n+1){
-			background-color: lighten(#d2d2d2, 10%);
+			// background-color: lighten(#d2d2d2, 10%);
+			background-color: #fff;
 		}
 
 		&.basket-info{
@@ -881,7 +914,11 @@ nav{
 		height: 100px;
 		margin-top: 10px;
 		h4{
-			font-size: 1.3em;
+			font-size: 14px;
+		}
+
+		p{
+			font-size: 12px;
 		}
 	}
 
@@ -898,6 +935,10 @@ nav{
 		justify-content: center;
 		align-items: center;
 		font-size: 1.4em;
+
+		span{
+			cursor: pointer;
+		}
 	}
 
 	.empty-message{
@@ -923,8 +964,8 @@ nav{
 }
 
 .checkout-info{
-	background-color: lighten(#d2d2d2, 6%);
-	height: 160px !important;
+	// background-color: lighten(#d2d2d2, 6%);
+	height: 190px !important;
 
 	.total-box{
 		background-color: #010101;
@@ -936,11 +977,11 @@ nav{
 }
 
 .basket-closed{
-	transform: translate(0, -160%);
+	transform: translate(103%, 0%);
 }
 
 .basket-open{
-	transform: translate(0, 0%);
+	transform: translate(0%, 0%);
 }
 
 
@@ -998,6 +1039,47 @@ nav{
 	@include respond-to($lg-break){
 		top: 75px;
 	};
+}
+
+.generic-container-position{
+	position: relative;
+	top: 88px;
+	min-height: 50%;
+
+	@include respond-to($lg-break){
+		top: 115px;
+	};
+}
+
+.story-content{
+	p{
+		margin-bottom: 20px;
+
+		@include respond-to($lg-break){
+			width: 70%;
+			margin-left: auto;
+			margin-right: auto;
+		};
+	}
+
+	img{
+		// margin-top: 50px;
+		position: relative;
+		top: 100px;
+		display: block;
+		width: 45%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.story-logo{
+		width: 50%;
+		margin: 0 auto;
+
+		img{
+			width: 100%;
+		}
+	}
 }
 
 .home-slide{

@@ -292,7 +292,8 @@
                     'code_status'=>'error'
                 ),
                 'data'=>array(
-                    'msg'=>'Address not saved. Please try again or contact help'
+                    'msg'=>'Address not saved. Please try again or contact help',
+                    'query'=> $result[1]
                 )
             );
 

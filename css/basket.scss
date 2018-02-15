@@ -29,6 +29,22 @@
 .info-basket-column{
     padding-left: 0;
     padding-right: 0;
+
+    .loader-screen{
+        // border: 1px solid red;
+        height: 700px;
+        position: absolute;
+        width: 100%;
+        background-color: #fff;
+        left: 0;
+        right: 0;
+        top: -20px;
+
+        .spinner{
+            // vertical-align: middle;
+            top: 25%;
+        }
+    }
 }
 
 .basket-card{

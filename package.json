@@ -20,7 +20,9 @@
   "dependencies": {
     "autoprefixer": "^7.2.5",
     "cssnano": "^3.10.0",
+    "marked": "^0.3.12",
     "pixrem": "^4.0.1",
-    "popper.js": "^1.12.9"
+    "popper.js": "^1.12.9",
+    "simplemde": "^1.11.2"
   }
 }

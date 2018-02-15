@@ -26,6 +26,17 @@
 		margin-bottom: 0;
 	};
 
+	.nav-pills .nav-link.active, .show > .nav-pills .nav-link{
+		background-color: #222 !important;
+		color: #fff;
+	}
+
+	.nav-pills {
+		.nav-link{
+
+			color: #222;
+		}
+	}
 }
 
 .login-signup-form-div{
@@ -47,6 +58,8 @@
 
 	@include respond-to($lg-break){
 		width: 30%;
+		margin: 95px auto 90px auto;
+
 		// top: 35%;
 	};
 

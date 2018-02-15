@@ -11,8 +11,8 @@
             <h2 class="text-center">TERMS &AMP; CONDITIONS</h2>
         </div>
 
-        <div class="col-12 info-columns">
-            <h3 class="text-dark">Introduction</h3>
+        <div class="col-12 info-columns" id="termscondition-content">
+            <!-- <h3 class="text-dark">Introduction</h3>
             <p>These terms and conditions apply between you, the User of this Website (including any sub-domains, unless expressly excluded by their own terms and conditions), and IDYL, the owner and operator of this Website. Please read these terms and conditions carefully, as they affect your legal rights. Your agreement to comply with and be bound by these terms and conditions is deemed to occur upon your first use of the Website. If you do not agree to be bound by these terms and conditions, you should stop using the Website immediately. </p>
             <p>In these terms and conditions, User or Users  means any third party that accesses the Website and is not either (i) employed by IDYL and acting in the course of their employment or (ii) engaged as a consultant or otherwise providing services to IDYL and accessing the Website in connection with the provision of such services.</p>
             <hr>
@@ -56,7 +56,7 @@
             <hr>
 
             <h3 class="text-dark">IDYL Details</h3>
-            <p>IDYL is a company incorporated in England and Wales with registered number _______________ whose registered address is _______________, _______________ and it operates the Website  www.idyl.co.uk. </p>
+            <p>IDYL is a company incorporated in England and Wales with registered number _______________ whose registered address is _______________, _______________ and it operates the Website  www.idyl.co.uk. </p> -->
         </div>
     </div>
 </div>

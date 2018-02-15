@@ -16,6 +16,7 @@
         <!-- ONLINE BS css & VUE -->
         <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 	   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link rel="stylesheet" href="/node_modules/simplemde/dist/simplemde.min.css">
 
         <!-- <link rel="stylesheet" href="/bootstrap-4.0.0-alpha.6-dist/css/bootstrap.min.css"> -->
         <!-- <link rel="stylesheet" href="/bootstrap-4.0.0-alpha.6-dist/css/bootstrap-grid.min.css"> -->
@@ -39,7 +40,6 @@
         <!-- ONLINE JQUERY-->
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="/js/plugins/jquery.validate.js" charset="utf-8"></script>
-
         <!-- OFFLINE JQUERY & VUE -->
         <!-- <script src="/js/jquery-3.2.1.min.js"></script> -->
         <script src="/js/vue.js"></script>

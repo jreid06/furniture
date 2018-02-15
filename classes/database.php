@@ -23,7 +23,6 @@
                 }
 
 
-
                 return array(true, $data);
             }else {
                 $val = 1;
@@ -134,7 +133,7 @@
             }
         }
 
-        public static function updateMultipleFields($tbl,$fields, $values, $field2, $value2)
+        public static function updateMultipleFields($tbl,$fields, $values, $field2, $value2, $json=false)
         {
             parent::checkConnection();
             // $fields = array e.g ['id', 'fname', 'lname']
@@ -142,14 +141,26 @@
 
 			$setString = '';
 
-        	for ($i=0; $i < count($fields); $i++) {
-                // check if its the last value in array so we can remove the "," from the query
-				if ($i === count($fields)-1) {
-					$setString .= "$fields[$i]='$values[$i]'";
-				}else {
-					$setString .= "$fields[$i]='$values[$i]',";
-				}
-			}
+            if ($json) {
+                for ($i=0; $i < count($fields); $i++) {
+                    // check if its the last value in array so we can remove the "," from the query
+                    if ($i === count($fields)-1) {
+                        $setString .= "$fields[$i]=$values[$i]";
+                    }else {
+                        $setString .= "$fields[$i]=$values[$i],";
+                    }
+                }
+            }else {
+                for ($i=0; $i < count($fields); $i++) {
+                    // check if its the last value in array so we can remove the "," from the query
+                    if ($i === count($fields)-1) {
+                        $setString .= "$fields[$i]='$values[$i]'";
+                    }else {
+                        $setString .= "$fields[$i]='$values[$i]',";
+                    }
+                }
+            }
+
 
             // return array($setString);
 
@@ -238,6 +249,26 @@
             parent::checkConnection();
 
             $query = "SELECT * FROM customers WHERE email='$email'";
+
+            $result = parent::returnConnection()->query($query);
+
+            if ($result->num_rows > 0) {
+                parent::returnConnection()->close();
+                return true;
+
+            } else {
+                parent::returnConnection()->close();
+                return false;
+
+            }
+        }
+
+        public static function checkDataExists($tbl, $field, $value)
+        {
+            // open connection to database
+            parent::checkConnection();
+
+            $query = "SELECT * FROM $tbl WHERE $field='$value'";
 
             $result = parent::returnConnection()->query($query);
 

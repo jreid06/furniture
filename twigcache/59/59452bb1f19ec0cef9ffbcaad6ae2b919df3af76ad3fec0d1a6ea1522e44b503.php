@@ -109,10 +109,10 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         // line 52
         echo twig_escape_filter($this->env, ($context["msg"] ?? null), "html", null, true);
         echo "</small></p>
-            <h4 class=\"text-center\">Showing all ";
+            <h4 class=\"text-center filter-title-display\">Showing ";
         // line 53
         if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array(), "any", true, true) && $this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true))) {
-            echo " ";
+            echo " all ";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "category", array()), "html", null, true);
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "type", array()), "html", null, true);
@@ -128,6 +128,10 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
             <br>
 
         </div>
+
+
+
+
         <div class=\"col-12 d-flex flex-wrap flex-row products-page-content\">
             <div class=\"p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row\">
 
@@ -158,65 +162,100 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                     <!--
                                         list all living room product types
                                     -->
-                                    <template v-for=\"(prodtype, index) in products.livingroom\">
-                                        <template v-if=\"prodtype.name == 'all products'\">
 
-                                        </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
-                                            </filter-item>
-                                        </template>
-                                    </template>
+                                    ";
+        // line 92
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "livingroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 93
+            echo "                                        <template v-for=\"(prodtype, index) in products.livingroom\">
+                                            <template v-if=\"prodtype.name == 'all products'\">
 
+                                            </template>
+                                            <template v-else>
+                                                <filter-item
+                                                        v-bind:key=\"prodtype.key\"
+                                                        v-bind:filtername=\"prodtype.name\"
+                                                        v-bind:activetype=\"prodtype.currentPage\">
+                                                </filter-item>
+                                            </template>
+                                        </template>
+                                    ";
+        }
+        // line 106
+        echo "
                                     <!--
                                         list all kitchen product types
                                     -->
-                                    <template v-for=\"(prodtype, index) in products.kitchen\">
+
+                                    ";
+        // line 111
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "kitchen") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 112
+            echo "                                    <template v-for=\"(prodtype, index) in products.kitchen\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
                                         </template>
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
-
+                                    ";
+        }
+        // line 125
+        echo "
 
                                     <!--
                                         list all bedroom product types
                                     -->
-                                    <template v-for=\"(prodtype, index) in products.bedroom\">
+
+                                    ";
+        // line 131
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bedroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 132
+            echo "                                    <template v-for=\"(prodtype, index) in products.bedroom\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
                                         </template>
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
-
-
+                                    ";
+        }
+        // line 145
+        echo "
                                     <!--
                                         list all bathroom product types
                                     -->
-                                    <template v-for=\"(prodtype, index) in products.bath\">
+
+                                    ";
+        // line 150
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bath") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 151
+            echo "                                    <template v-for=\"(prodtype, index) in products.bath\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
                                         </template>
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
-
+                                    ";
+        }
+        // line 164
+        echo "
                                 </ul>
                               </div>
                             </div>
@@ -236,12 +275,127 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <div id=\"filter2\" class=\"collapse show\" aria-labelledby=\"headingTwo\" >
                               <div class=\"card-body\">
                                   <ul>
-                                      <template v-for=\"(category, index) in categories\">
-                                          <filter-item
-                                                  v-bind:key=\"category.key\"
-                                                  v-bind:filtername=\"category.name\">
-                                          </filter-item>
-                                      </template>
+
+                                      ";
+        // line 185
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "livingroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 186
+            echo "                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-livingroom\" type=\"checkbox\" data-category=\"livingroom\" aria-label=\"Checkbox for following text input\" ";
+            // line 191
+            if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "livingroom")) {
+                echo " checked ";
+            }
+            echo ">
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Living Room</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      ";
+        }
+        // line 204
+        echo "
+                                      ";
+        // line 205
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "kitchen") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 206
+            echo "                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-kitchen\" type=\"checkbox\" data-category=\"kitchen\" aria-label=\"Checkbox for following text input\" ";
+            // line 211
+            if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "kitchen")) {
+                echo " checked ";
+            }
+            echo ">
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Kitchen</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      ";
+        }
+        // line 224
+        echo "
+                                      ";
+        // line 225
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bedroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 226
+            echo "                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-bedroom\" type=\"checkbox\" data-category=\"bedroom\" aria-label=\"Checkbox for following text input\" ";
+            // line 231
+            if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bedroom")) {
+                echo " checked ";
+            }
+            echo ">
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Bedroom</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      ";
+        }
+        // line 244
+        echo "
+                                      ";
+        // line 245
+        if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bath") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
+            // line 246
+            echo "                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-bath\" type=\"checkbox\" data-category=\"bath\" aria-label=\"Checkbox for following text input\" ";
+            // line 251
+            if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bath")) {
+                echo " checked ";
+            }
+            echo ">
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Bath</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      ";
+        }
+        // line 264
+        echo "
                                   </ul>
                               </div>
                             </div>
@@ -300,7 +454,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                      <div class=\"p-2 fltr-inp\">
                                                          <p>
                                                          ";
-        // line 228
+        // line 322
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("low to high")), "html", null, true);
         echo "
                                                         </p>
@@ -321,7 +475,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                                                      <div class=\"p-2 fltr-inp\">
                                                          <p>";
-        // line 246
+        // line 340
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array("high to low")), "html", null, true);
         echo "</p>
                                                      </div>
@@ -348,15 +502,15 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
             </div>
             <div class=\"p-2 products-page-container\">
-                <div class=\"row\">
+                <div class=\"row\" id=\"products-row\">
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
                         <!-- <div class=\"col-12\">
                             <p class=\"text-center\"><small>";
-        // line 274
+        // line 368
         echo twig_escape_filter($this->env, ($context["msg"] ?? null), "html", null, true);
         echo "</small></p>
                             <h4 class=\"text-center\">Showing all ";
-        // line 275
+        // line 369
         if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array(), "any", true, true) && $this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true))) {
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute(($context["queryDetails"] ?? null), "category", array()), "html", null, true);
@@ -375,29 +529,36 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                         </div> -->
 
+                        <div class=\"loader-screen\">
+                            <div class=\"spinner\">
+                                <div class=\"double-bounce1\"></div>
+                                <div class=\"double-bounce2\"></div>
+                            </div>
+                        </div>
+
                         ";
-        // line 280
+        // line 381
         if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "all")) {
-            // line 281
+            // line 382
             echo "
                             ";
-            // line 282
+            // line 383
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
-                // line 283
+                // line 384
                 echo "
                                 ";
-                // line 284
+                // line 385
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
                 foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
-                    // line 285
+                    // line 386
                     echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
                                         <div class=\"card product-card\" style=\"\">
                                             <div class=\"product-image\">
                                                 <img class=\"card-img-top\" src=\"";
-                    // line 288
+                    // line 389
                     echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
                     echo "\" alt=\"";
                     echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
@@ -405,7 +566,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                             </div>
                                             <div class=\"card-body\">
                                                 <h6 class=\"card-subtitle mb-2\"><a href=\"/product/";
-                    // line 291
+                    // line 392
                     echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
                     echo "/";
                     echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
@@ -427,11 +588,11 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
                     echo "</a></h6>
                                                 <h6 class=\"\">";
-                    // line 292
+                    // line 393
                     echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()))), "html", null, true);
                     echo "</h6>
                                                 <p class=\"product-price-p\"><strong>£ ";
-                    // line 293
+                    // line 394
                     echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
                     echo "</strong> </p>
                                             </div>
@@ -442,47 +603,47 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 298
+                // line 399
                 echo "
                             ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 300
+            // line 401
             echo "
                         ";
         }
-        // line 302
+        // line 403
         echo "
                         ";
-        // line 303
+        // line 404
         if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "all-cat")) {
-            // line 304
+            // line 405
             echo "
                             ";
-            // line 305
+            // line 406
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
-                // line 306
+                // line 407
                 echo "                                ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
                 foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
-                    // line 307
+                    // line 408
                     echo "                                    ";
                     if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "category", array()))) {
-                        // line 308
+                        // line 409
                         echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
                                         <!-- <p>";
-                        // line 309
+                        // line 410
                         echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
                         echo "</p> -->
                                         <div class=\"card product-card\" style=\"\">
                                             <div class=\"product-image\">
                                                 <img class=\"card-img-top\" src=\"";
-                        // line 312
+                        // line 413
                         echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
                         echo "\" alt=\"";
                         echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
@@ -490,7 +651,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                             </div>
                                             <div class=\"card-body\">
                                                 <h6 class=\"card-subtitle mb-2\"><a href=\"/product/";
-                        // line 315
+                        // line 416
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
                         echo "/";
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
@@ -512,7 +673,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
                         echo "</a></h6>
                                                 <p class=\"product-price-p\"><strong>£ ";
-                        // line 316
+                        // line 417
                         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
                         echo "</strong> </p>
                                             </div>
@@ -520,50 +681,50 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                     </div>
                                     ";
                     }
-                    // line 321
+                    // line 422
                     echo "                                ";
                 }
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 322
+                // line 423
                 echo "                            ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 323
+            // line 424
             echo "
                         ";
         }
-        // line 325
+        // line 426
         echo "
                         ";
-        // line 326
+        // line 427
         if (($this->getAttribute(($context["queryDetails"] ?? null), "num_of_products", array()) == "specific")) {
-            // line 327
+            // line 428
             echo "                            ";
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "data", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["product"]) {
-                // line 328
+                // line 429
                 echo "                                ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($context["product"], "skus", array()), "data", array()));
                 foreach ($context['_seq'] as $context["_key"] => $context["sku"]) {
-                    // line 329
+                    // line 430
                     echo "                                    ";
                     if ((($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "category", array())) && ($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()) == $this->getAttribute(($context["queryDetails"] ?? null), "type", array())))) {
-                        // line 330
+                        // line 431
                         echo "                                    <div class=\"col-6 col-md-4 col-lg-3 product-card-col\">
                                         <!-- <p>";
-                        // line 331
+                        // line 432
                         echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "id", array()), "html", null, true);
                         echo "</p> -->
                                         <div class=\"card product-card\" style=\"\">
                                             <div class=\"product-image\">
                                                 <img class=\"card-img-top\" src=\"";
-                        // line 334
+                        // line 435
                         echo twig_escape_filter($this->env, $this->getAttribute($context["sku"], "image", array()), "html", null, true);
                         echo "\" alt=\"";
                         echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "caption", array()), "html", null, true);
@@ -571,7 +732,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                             </div>
                                             <div class=\"card-body\">
                                                 <h6 class=\"card-subtitle mb-2\"><a href=\"/product/";
-                        // line 337
+                        // line 438
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "category", array()), "html", null, true);
                         echo "/";
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "type", array()), "html", null, true);
@@ -593,7 +754,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
                         echo "</a> </h6>
                                                 <p class=\"product-price-p\"><strong>£ ";
-                        // line 338
+                        // line 439
                         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["sku"], "price", array()) / 100), 2), "html", null, true);
                         echo "</strong> </p>
                                             </div>
@@ -601,33 +762,33 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                     </div>
                                     ";
                     }
-                    // line 343
+                    // line 444
                     echo "                                ";
                 }
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sku'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 344
+                // line 445
                 echo "                            ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['product'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 345
+            // line 446
             echo "
 
                         ";
         }
-        // line 348
+        // line 449
         echo "
                         <!-- <product-card></product-card> -->
 
                 </div>
 
                 ";
-        // line 353
+        // line 454
         if ($this->getAttribute($this->getAttribute(($context["queryDetails"] ?? null), "products", array()), "has_more", array())) {
-            // line 354
+            // line 455
             echo "                    <div class=\"row\">
                         <div class=\"col-12 text-center\">
                             <br>
@@ -636,7 +797,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     </div>
                 ";
         }
-        // line 361
+        // line 462
         echo "
             </div>
         </div>
@@ -657,7 +818,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
     public function getDebugInfo()
     {
-        return array (  640 => 361,  631 => 354,  629 => 353,  622 => 348,  617 => 345,  611 => 344,  605 => 343,  597 => 338,  575 => 337,  567 => 334,  561 => 331,  558 => 330,  555 => 329,  550 => 328,  545 => 327,  543 => 326,  540 => 325,  536 => 323,  530 => 322,  524 => 321,  516 => 316,  494 => 315,  486 => 312,  480 => 309,  477 => 308,  474 => 307,  469 => 306,  465 => 305,  462 => 304,  460 => 303,  457 => 302,  453 => 300,  446 => 298,  435 => 293,  431 => 292,  409 => 291,  401 => 288,  396 => 285,  392 => 284,  389 => 283,  385 => 282,  382 => 281,  380 => 280,  360 => 275,  356 => 274,  325 => 246,  304 => 228,  114 => 53,  110 => 52,  97 => 41,  91 => 39,  89 => 38,  79 => 30,  73 => 28,  71 => 27,  68 => 26,  60 => 23,  57 => 22,  55 => 21,  52 => 20,  46 => 18,  44 => 17,  41 => 16,  37 => 14,  33 => 12,  31 => 11,  19 => 1,);
+        return array (  801 => 462,  792 => 455,  790 => 454,  783 => 449,  778 => 446,  772 => 445,  766 => 444,  758 => 439,  736 => 438,  728 => 435,  722 => 432,  719 => 431,  716 => 430,  711 => 429,  706 => 428,  704 => 427,  701 => 426,  697 => 424,  691 => 423,  685 => 422,  677 => 417,  655 => 416,  647 => 413,  641 => 410,  638 => 409,  635 => 408,  630 => 407,  626 => 406,  623 => 405,  621 => 404,  618 => 403,  614 => 401,  607 => 399,  596 => 394,  592 => 393,  570 => 392,  562 => 389,  557 => 386,  553 => 385,  550 => 384,  546 => 383,  543 => 382,  541 => 381,  514 => 369,  510 => 368,  479 => 340,  458 => 322,  398 => 264,  380 => 251,  373 => 246,  371 => 245,  368 => 244,  350 => 231,  343 => 226,  341 => 225,  338 => 224,  320 => 211,  313 => 206,  311 => 205,  308 => 204,  290 => 191,  283 => 186,  281 => 185,  258 => 164,  243 => 151,  241 => 150,  234 => 145,  219 => 132,  217 => 131,  209 => 125,  194 => 112,  192 => 111,  185 => 106,  170 => 93,  168 => 92,  114 => 53,  110 => 52,  97 => 41,  91 => 39,  89 => 38,  79 => 30,  73 => 28,  71 => 27,  68 => 26,  60 => 23,  57 => 22,  55 => 21,  52 => 20,  46 => 18,  44 => 17,  41 => 16,  37 => 14,  33 => 12,  31 => 11,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -722,10 +883,14 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
         <div class=\"col-12\">
             <p class=\"text-center\"><small>{{msg}}</small></p>
-            <h4 class=\"text-center\">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+            <h4 class=\"text-center filter-title-display\">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
             <br>
 
         </div>
+
+
+
+
         <div class=\"col-12 d-flex flex-wrap flex-row products-page-content\">
             <div class=\"p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row\">
 
@@ -756,21 +921,27 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                     <!--
                                         list all living room product types
                                     -->
-                                    <template v-for=\"(prodtype, index) in products.livingroom\">
-                                        <template v-if=\"prodtype.name == 'all products'\">
 
+                                    {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
+                                        <template v-for=\"(prodtype, index) in products.livingroom\">
+                                            <template v-if=\"prodtype.name == 'all products'\">
+
+                                            </template>
+                                            <template v-else>
+                                                <filter-item
+                                                        v-bind:key=\"prodtype.key\"
+                                                        v-bind:filtername=\"prodtype.name\"
+                                                        v-bind:activetype=\"prodtype.currentPage\">
+                                                </filter-item>
+                                            </template>
                                         </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
-                                            </filter-item>
-                                        </template>
-                                    </template>
+                                    {% endif %}
 
                                     <!--
                                         list all kitchen product types
                                     -->
+
+                                    {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
                                     <template v-for=\"(prodtype, index) in products.kitchen\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
@@ -778,15 +949,19 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
+                                    {% endif %}
 
 
                                     <!--
                                         list all bedroom product types
                                     -->
+
+                                    {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
                                     <template v-for=\"(prodtype, index) in products.bedroom\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
@@ -794,15 +969,18 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
-
+                                    {% endif %}
 
                                     <!--
                                         list all bathroom product types
                                     -->
+
+                                    {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
                                     <template v-for=\"(prodtype, index) in products.bath\">
                                         <template v-if=\"prodtype.name == 'all products'\">
 
@@ -810,10 +988,12 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key=\"prodtype.key\"
-                                                    v-bind:filtername=\"prodtype.name\">
+                                                    v-bind:filtername=\"prodtype.name\"
+                                                    v-bind:activetype=\"prodtype.currentPage\">
                                             </filter-item>
                                         </template>
                                     </template>
+                                    {% endif %}
 
                                 </ul>
                               </div>
@@ -834,12 +1014,87 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <div id=\"filter2\" class=\"collapse show\" aria-labelledby=\"headingTwo\" >
                               <div class=\"card-body\">
                                   <ul>
-                                      <template v-for=\"(category, index) in categories\">
-                                          <filter-item
-                                                  v-bind:key=\"category.key\"
-                                                  v-bind:filtername=\"category.name\">
-                                          </filter-item>
-                                      </template>
+
+                                      {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-livingroom\" type=\"checkbox\" data-category=\"livingroom\" aria-label=\"Checkbox for following text input\" {% if queryDetails.category == 'livingroom' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Living Room</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-kitchen\" type=\"checkbox\" data-category=\"kitchen\" aria-label=\"Checkbox for following text input\" {% if queryDetails.category == 'kitchen' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Kitchen</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-bedroom\" type=\"checkbox\" data-category=\"bedroom\" aria-label=\"Checkbox for following text input\" {% if queryDetails.category == 'bedroom' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Bedroom</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class=\"input-group mb-3 filter-input-group\">
+                                              <div class=\"input-group-prepend filter-input-box\">
+                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <input @click=\"toggleProducts\" class=\"cat-checkbox\" name=\"cat-bath\" type=\"checkbox\" data-category=\"bath\" aria-label=\"Checkbox for following text input\" {% if queryDetails.category == 'bath' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class=\"p-2 fltr-inp\">
+                                                          <p>Bath</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
                                   </ul>
                               </div>
                             </div>
@@ -940,7 +1195,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
             </div>
             <div class=\"p-2 products-page-container\">
-                <div class=\"row\">
+                <div class=\"row\" id=\"products-row\">
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
                         <!-- <div class=\"col-12\">
                             <p class=\"text-center\"><small>{{msg}}</small></p>
@@ -948,6 +1203,13 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                             <br>
 
                         </div> -->
+
+                        <div class=\"loader-screen\">
+                            <div class=\"spinner\">
+                                <div class=\"double-bounce1\"></div>
+                                <div class=\"double-bounce2\"></div>
+                            </div>
+                        </div>
 
                         {% if queryDetails.num_of_products == 'all' %}
 

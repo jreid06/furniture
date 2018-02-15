@@ -4,6 +4,7 @@
 }());
 
 
+
 class BasketItem {
     constructor(product_id, stripesku_id, prod_name, prod_size, prod_color, name_slug, prod_desc, price, prod_image, quantity, category, prod_type) {
         this.product_id = product_id;
@@ -91,6 +92,116 @@ class Address {
     }
 }
 
+class getPageContent {
+    constructor(type, tbl, field, val) {
+        this.type = type;
+        this.tbl = tbl;
+        this.field = field;
+        this.val = val,
+        this.editor = '';
+    }
+
+    populateEditor(markdown, pageEditor){
+        let editor = pageEditor,
+            $markdown = markdown;
+
+        console.log('---------');
+        console.log('populateEditor');
+        console.log($markdown);
+        $markdown = JSON.parse($markdown);
+        console.log($markdown);
+
+        for (var i = 0; i < editor.length; i++) {
+            editor[i].value($markdown[i]);
+        }
+        console.log('---------');
+
+    }
+
+    markdown(el){
+        // el is for element
+        // mulitple is an array
+
+        let $type = this.type,
+            $tbl = this.tbl,
+            $field = this.field,
+            $val = this.val,
+            $editor = this.editor,
+            $this = this;
+
+        $.ajax({
+            url: '/backend/scripts/content-controls.php',
+            type: 'post',
+            data: {
+                type: $type,
+                table: $tbl,
+                field: $field,
+                id: $val
+            },
+            success: function(data){
+                let $data = JSON.parse(data);
+
+                console.log($data);
+                // only populate editor if user is on edit page
+                if (window.location.pathname.split('/')[4] === 'edit') {
+                    $this.populateEditor($data.data.markdown.page_markdown, $editor);
+                    return;
+                }else {
+                    // render content on customer facing pages parsing markdown
+                    if (el.length < 2) {
+                        $this.singleContent(el[0], $data.data.markdown.page_markdown);
+                        return;
+                    }else {
+                        $this.mulitpleContent(el, $data.data.markdown.page_markdown);
+                    }
+
+                }
+
+            }
+        })
+    }
+
+    singleContent(element, markdown){
+        let $el = $(`${element}`),
+            $markdown = markdown,
+            content_html = '';
+
+        console.log($markdown);
+        // parse the markdown
+        $markdown = JSON.parse($markdown);
+
+        // turn to html
+        content_html = marked($markdown[0]);
+
+        // render html parsed markdown in element
+        $el.prepend(content_html);
+    }
+
+    mulitpleContent(element, markdown){
+        let $el = element,
+            $markdown = markdown,
+            content_html = '';
+
+        console.log($el);
+        // parse the markdown
+        $markdown = JSON.parse($markdown);
+        console.log($markdown);
+        //
+        for (var i = 0; i < $el.length; i++) {
+            // turn to html
+            content_html = marked($markdown[i]);
+            // render html parsed markdown in element
+            $($el[i]).prepend(content_html);
+        }
+    }
+
+    configEditorVar(val){
+        return this.editor = val;
+    }
+
+
+}
+
 $(document).ready(function(){
     console.log('connected but separate from main.js');
 
@@ -109,88 +220,5 @@ $(document).ready(function(){
     //
     // }
 
-    /*TEMP CODE TO ADD ITEMS TO LOCAL STORAGE
-
-    let item1 = new BasketItem('001', 'Kitchen Item 1', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 29, '/assets/products/k1.jpg', 1, 'livingroom'),
-        item2 = new BasketItem('002', 'Kitchen Item 2', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 65, '/assets/products/k2.jpg', 1, 'kitchen'),
-        item3 = new BasketItem('003', 'Kitchen Item 3', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 30, '/assets/products/k1.jpg', 2, 'kitchen'),
-        item4 = new BasketItem('004', 'Kitchen Item 4', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 12, '/assets/products/k1.jpg', 2, 'bath');
-
-        let arr = [item1, item2, item3, item4];
-
-        localStorage.setItem('basket', JSON.stringify(arr));
-
-        alert('basket set');
-
-    */
-
-    /*
-        OLD BASKET ITEMS DATA
-
-        {
-            id: '0001',
-            category: 'livingroom',
-            prod_name: 'Kitchen Item 1',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.',
-            price: 29,
-            prod_image: '/assets/products/k1.jpg',
-            quantity: 1,
-            total_price: function(){
-                return this.quantity * this.price;
-            },
-            itemTotal: function(){
-                return this.quantity * this.price;
-            }
-
-        },
-        {
-            id: '0002',
-            category: 'kitchen',
-            prod_name: 'Kitchen Item 2',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.',
-            price: 65,
-            prod_image: '/assets/products/k2.jpg',
-            quantity: 1,
-            total_price: function(){
-                return this.quantity * this.price;
-            },
-            itemTotal: function(){
-                return this.quantity * this.price;
-            }
-
-        },
-        {
-            id: '0003',
-            category: 'bath',
-            prod_name: 'Kitchen Item 3',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.',
-            price: 34,
-            prod_image: '/assets/products/k3.jpg',
-            quantity: 2,
-            total_price: function(){
-                return this.quantity * this.price;
-            },
-            itemTotal: function(){
-                return this.quantity * this.price;
-            }
-
-        },
-        {
-            id: '0004',
-            category: 'kitchen',
-            prod_name: 'Kitchen Item 4',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.',
-            price: 12,
-            prod_image: '/assets/products/k4.jpg',
-            quantity: 4,
-            total_price: function(){
-                return this.quantity * this.price;
-            },
-            itemTotal: function(){
-                return this.quantity * this.price;
-            }
-
-        }
-    */
 
 })

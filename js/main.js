@@ -212,7 +212,7 @@ $(document).ready(function() {
 
                 // getting the correct items details from the basket array
                 let itemID = parseInt($(e.target).parent().attr('data-position-id'))
-                    itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
+                itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
                     selectedItem = $nav_vue.basket.items[itemID];
 
                 console.log(selectedItem.total_price);
@@ -321,9 +321,9 @@ $(document).ready(function() {
                   </div>
                 </div>
             </div>`,
-        props: ['productid', 'productskuid','productimage', 'producttitle', 'productprice', 'indexkey', 'productcattype', 'productcat', 'productnameslug', 'productcolorslug', 'productsizeslug'],
-        methods:{
-            gotoProduct: function(e){
+        props: ['productid', 'productskuid', 'productimage', 'producttitle', 'productprice', 'indexkey', 'productcattype', 'productcat', 'productnameslug', 'productcolorslug', 'productsizeslug'],
+        methods: {
+            gotoProduct: function(e) {
                 let eventTrigger = $(e.target);
                 console.log(eventTrigger);
             },
@@ -411,8 +411,7 @@ $(document).ready(function() {
             },
             // NOTE rename to product category item types
             products: {
-                livingroom: [
-                    {
+                livingroom: [{
                         name: 'all products',
                         slug: '',
                         cat: 'livingroom'
@@ -466,8 +465,7 @@ $(document).ready(function() {
                         image: '/assets/main/dust_scratches.png'
                     }
                 ],
-                kitchen: [
-                    {
+                kitchen: [{
                         name: 'all products',
                         slug: '',
                         cat: 'kitchen'
@@ -491,8 +489,7 @@ $(document).ready(function() {
                         image: ''
                     }
                 ],
-                bedroom: [
-                    {
+                bedroom: [{
                         name: 'all products',
                         slug: '',
                         cat: 'bedroom'
@@ -528,8 +525,7 @@ $(document).ready(function() {
                         image: ''
                     }
                 ],
-                bath: [
-                    {
+                bath: [{
                         name: 'all products',
                         slug: '',
                         cat: 'bath'
@@ -572,6 +568,12 @@ $(document).ready(function() {
                 });
             }
 
+            setTimeout(function(){
+                $('.loader-generic').fadeOut();
+                $('body').css({'overflow-y':'scroll'});
+            }, 1500)
+
+
             this.checkSigninCookies();
             this.checkSigninSession();
             this.checkBasketSession();
@@ -581,10 +583,10 @@ $(document).ready(function() {
 
         },
         watch: {
-            accountMenu: function(value){
+            accountMenu: function(value) {
                 if (value) {
                     $('.custom-menu').removeClass('custom-menu-closed').addClass('custom-menu-open');
-                }else {
+                } else {
                     $('.custom-menu').removeClass('custom-menu-open').addClass('custom-menu-closed');
                 }
             },
@@ -607,50 +609,50 @@ $(document).ready(function() {
 
             },
             // menuStatus: function(value) {
-                // if (!value) {
-                //     console.log('MENU IS CLOSING');
-                //     $('#b2').animate({
-                //         opacity: 1
-                //     }, 300);
-                //
-                //     $('#b1').rotate({
-                //         angle: 43.5,
-                //         center: ["10%", "50%"],
-                //         animateTo: 0
-                //     });
-                //
-                //     $('#b3').rotate({
-                //         angle: -42,
-                //         center: ["10%", "70%"],
-                //         animateTo: 0
-                //     });
-                //
-                //     $('.menu-box').removeClass('menu-open').addClass('menu-closed');
-                // } else if (value) {
-                //     console.log('MENU IS OPENING');
-                //     $('#b2').animate({
-                //         opacity: 0
-                //     }, 200);
-                //
-                //     $('#b1').rotate({
-                //         angle: 0,
-                //         center: ["10%", "50%"],
-                //         animateTo: 43.5
-                //     });
-                //
-                //     $('#b3').rotate({
-                //         angle: 0,
-                //         center: ["10%", "70%"],
-                //         animateTo: -42
-                //     });
-                //
-                //     $('.menu-box').removeClass('menu-closed').addClass('menu-open');
-                //
-                //     let basketStatus = this.basketStatus;
-                //     if (basketStatus) {
-                //         this.basketStatus = !this.basketStatus;
-                //     }
-                // }
+            // if (!value) {
+            //     console.log('MENU IS CLOSING');
+            //     $('#b2').animate({
+            //         opacity: 1
+            //     }, 300);
+            //
+            //     $('#b1').rotate({
+            //         angle: 43.5,
+            //         center: ["10%", "50%"],
+            //         animateTo: 0
+            //     });
+            //
+            //     $('#b3').rotate({
+            //         angle: -42,
+            //         center: ["10%", "70%"],
+            //         animateTo: 0
+            //     });
+            //
+            //     $('.menu-box').removeClass('menu-open').addClass('menu-closed');
+            // } else if (value) {
+            //     console.log('MENU IS OPENING');
+            //     $('#b2').animate({
+            //         opacity: 0
+            //     }, 200);
+            //
+            //     $('#b1').rotate({
+            //         angle: 0,
+            //         center: ["10%", "50%"],
+            //         animateTo: 43.5
+            //     });
+            //
+            //     $('#b3').rotate({
+            //         angle: 0,
+            //         center: ["10%", "70%"],
+            //         animateTo: -42
+            //     });
+            //
+            //     $('.menu-box').removeClass('menu-closed').addClass('menu-open');
+            //
+            //     let basketStatus = this.basketStatus;
+            //     if (basketStatus) {
+            //         this.basketStatus = !this.basketStatus;
+            //     }
+            // }
             // },
             searchStatus: function(value) {
                 if (!value) {
@@ -680,8 +682,7 @@ $(document).ready(function() {
                     $('#basket-container').animate({
                         opacity: 0
                     }, 300);
-                }
-                else if (value) {
+                } else if (value) {
                     $vm.checkBasketSession();
                     $('#basket-container').animate({
                         opacity: 1
@@ -712,10 +713,10 @@ $(document).ready(function() {
 
         },
         methods: {
-            goHome: function(){
+            goHome: function() {
                 window.location = '/';
             },
-            toggleAccountMenu: function(){
+            toggleAccountMenu: function() {
                 console.log('item toggled');
                 this.accountMenu = !this.accountMenu;
                 console.log(this.accountMenu);
@@ -731,23 +732,23 @@ $(document).ready(function() {
 
                 return [false];
             },
-            retrieveWishlist: function(){
+            retrieveWishlist: function() {
                 let testData = '';
 
 
                 // return 'hello async';
             },
-            initializeWishlist: function(){
+            initializeWishlist: function() {
                 // check if wishlist items exist in DB
                 let $vm = this;
                 $.ajax({
                     url: '/scripts/settings',
                     type: 'get',
-                    data:{
+                    data: {
                         type: 'retrieve-wishlist',
                         uid: $vm.loggedInUser.id
                     },
-                    success: function(data){
+                    success: function(data) {
                         let $data = JSON.parse(data);
                         // console.log($data);
 
@@ -760,7 +761,7 @@ $(document).ready(function() {
 
                                 if (wishlist_data.products.length < 1) {
                                     return
-                                }else {
+                                } else {
                                     // add wishlist data to local storage
                                     localStorage.setItem('idyl-wishlist', JSON.stringify(wishlist_data.products));
                                 }
@@ -776,7 +777,7 @@ $(document).ready(function() {
                         }
 
                     },
-                    complete: function(){
+                    complete: function() {
                         let wishListExists = (localStorage.getItem('idyl-wishlist')) ? true : false,
                             $vm = this;
 
@@ -805,7 +806,7 @@ $(document).ready(function() {
                                     }
                                 }
 
-                            }else {
+                            } else {
                                 for (var i = 0; i < wishlistItems.length; i++) {
                                     $nav_vue.wishlist.items.push(wishlistItems[i]);
                                     $nav_vue.wishlist.totalItems += 1;
@@ -818,12 +819,12 @@ $(document).ready(function() {
 
 
 
-                        }else {
+                        } else {
                             console.log('no wishlist items in local storage');
                         }
 
                     },
-                    error: function(){
+                    error: function() {
                         console.log('error with wishlist DB check');
                     }
                 })
@@ -983,7 +984,7 @@ $(document).ready(function() {
 
                 let $vm = this;
 
-                setTimeout(function(){
+                setTimeout(function() {
                     if ($vm.loggedInStatus) {
                         // send request to DB to check if they have a stored basket session
                         console.log("User logged in status: " + $vm.loggedInStatus);
@@ -995,7 +996,7 @@ $(document).ready(function() {
                                 type: 'retrieve-basket',
                                 uid: $vm.loggedInUser.id
                             },
-                            success: function(data){
+                            success: function(data) {
                                 let $data = JSON.parse(data),
                                     itemsExist = '';
 
@@ -1014,9 +1015,9 @@ $(document).ready(function() {
 
                                         // then
                                         itemsExist = (localStorage.getItem('basket')) ? true : false;
-                                            // $vm = this;
+                                        // $vm = this;
 
-                                        console.log("EXISTS: "+ itemsExist);
+                                        console.log("EXISTS: " + itemsExist);
                                         if (itemsExist) {
                                             let option = {
                                                 action: 'render'
@@ -1035,9 +1036,9 @@ $(document).ready(function() {
                                         console.log($data.data.msg);
 
                                         itemsExist = (localStorage.getItem('basket')) ? true : false;
-                                            // $vm = this;
+                                        // $vm = this;
 
-                                        console.log("EXISTS: "+ itemsExist);
+                                        console.log("EXISTS: " + itemsExist);
                                         if (itemsExist) {
                                             let option = {
                                                 action: 'render'
@@ -1072,17 +1073,18 @@ $(document).ready(function() {
                                 //     // return false;
                                 // }
                             },
-                            error: function(){
+                            error: function() {
 
                             }
                         })
-                    }else {
+                    }
+                    else {
                         console.log("User logged in status: " + this.loggedInStatus);
 
                         let itemsExist = (localStorage.getItem('basket')) ? true : false;
-                            // $vm = this;
+                        // $vm = this;
 
-                        console.log("EXISTS: "+ itemsExist);
+                        console.log("EXISTS: " + itemsExist);
                         if (itemsExist) {
                             let option = {
                                 action: 'render'
@@ -1097,7 +1099,7 @@ $(document).ready(function() {
                         }
                     }
 
-                }, 2000);
+                }, 1500);
 
             },
             initializeBasket: function(option) {
@@ -1141,7 +1143,7 @@ $(document).ready(function() {
                 }
 
             },
-            updateBasketDB: function(bskt){
+            updateBasketDB: function(bskt) {
                 let $vm = this;
 
                 $.ajax({
@@ -1152,11 +1154,11 @@ $(document).ready(function() {
                         uid: $vm.loggedInUser.id,
                         basket: JSON.stringify(bskt)
                     },
-                    success: function(data){
+                    success: function(data) {
                         let $data = JSON.parse(data);
                         console.log($data);
                     },
-                    error: function(){
+                    error: function() {
                         console.log('error sending user basket data to Database');
                     }
                 })
@@ -1173,7 +1175,7 @@ $(document).ready(function() {
                 }
 
             },
-            closeMenu: function(e){
+            closeMenu: function(e) {
                 let target = $(e.target)[0].attributes[0].nodeValue,
                     $vm = this;
 
@@ -1182,28 +1184,28 @@ $(document).ready(function() {
                     case 'livingroom':
                         $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $vm.menuStatus.livingroom = false;
                         }, 500);
                         break;
                     case 'bedroom':
                         $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $vm.menuStatus.bedroom = false;
                         }, 500);
                         break;
                     case 'bath':
                         $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $vm.menuStatus.bath = false;
                         }, 500);
                         break;
                     case 'kitchen':
                         $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $vm.menuStatus.kitchen = false;
                         }, 500);
                         break;
@@ -1228,10 +1230,9 @@ $(document).ready(function() {
                             $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
 
 
-                           // open menu js
+                            // open menu js
 
-                        }
-                        else {
+                        } else {
                             // close menu
                             $vm.menuStatus.open = !$vm.menuStatus.open;
 
@@ -1258,10 +1259,10 @@ $(document).ready(function() {
                             $vm.menuStatus.open = !$vm.menuStatus.open;
 
                             // stops menu info disappearing before menu has closed fully
-                            setTimeout(function(){
+                            setTimeout(function() {
                                 $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
                             }, 500);
-                        }else {
+                        } else {
                             $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
                         }
 
@@ -1287,11 +1288,11 @@ $(document).ready(function() {
                             $vm.menuStatus.open = !$vm.menuStatus.open;
 
                             // stops menu info disappearing before menu has closed fully
-                            setTimeout(function(){
+                            setTimeout(function() {
                                 $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
                             }, 500);
 
-                        }else {
+                        } else {
                             $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
                         }
 
@@ -1317,11 +1318,11 @@ $(document).ready(function() {
                             $vm.menuStatus.open = !$vm.menuStatus.open;
 
                             // stops menu info disappearing before menu has closed fully
-                            setTimeout(function(){
+                            setTimeout(function() {
                                 $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
                             }, 500)
 
-                        }else {
+                        } else {
                             $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
                         }
 
@@ -1346,11 +1347,11 @@ $(document).ready(function() {
                             $vm.menuStatus.open = !$vm.menuStatus.open;
 
                             // stops menu info disappearing before menu has closed fully
-                            setTimeout(function(){
+                            setTimeout(function() {
                                 $vm.menuStatus.bath = !$vm.menuStatus.bath;
                             }, 500)
 
-                        }else {
+                        } else {
                             $vm.menuStatus.bath = !$vm.menuStatus.bath;
                         }
                         break;
@@ -1371,7 +1372,7 @@ $(document).ready(function() {
                     console.log($('#wishlist-heart'));
 
                     // create a new basketItem
-                    productInfo.price = productInfo.price/100;
+                    productInfo.price = productInfo.price / 100;
 
                     // create a new basketItem
                     let item = new BasketItem(productInfo.product, productInfo.id, productInfo.prod_name, productInfo.attributes.size, productInfo.attributes.color, productInfo.prod_slug, productInfo.prod_desc, productInfo.price, productInfo.image, this.prodQuantity, productInfo.attributes.category, productInfo.attributes.type);
@@ -1379,13 +1380,13 @@ $(document).ready(function() {
                     console.log(item);
 
                     //check item wishlist exists in localStorage
-                    let wishListStorage = (localStorage.getItem('idyl-wishlist'))?true:false;
+                    let wishListStorage = (localStorage.getItem('idyl-wishlist')) ? true : false;
 
                     if (!wishListStorage) {
                         console.log('WISHLIST localStorage DOESNT EXIST');
                         this.wishlist.items.splice(0, this.wishlist.items.length);
 
-                    }else {
+                    } else {
                         console.log('WISHLIST localStorage EXISTS ');
                         this.wishlist.items = JSON.parse(localStorage.getItem('idyl-wishlist'));
                     }
@@ -1396,7 +1397,7 @@ $(document).ready(function() {
                     if (exists[0]) {
                         for (var i = 0; i < $vm.wishlist.items.length; i++) {
                             if ($vm.wishlist.items[i].id === item.id) {
-                                $vm.wishlist.items.splice(i,1);
+                                $vm.wishlist.items.splice(i, 1);
 
                                 $.notify('item removed from wish list', 'error');
 
@@ -1409,7 +1410,7 @@ $(document).ready(function() {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         $('.wishlist-heart-icon').removeClass('fa-heart-o').addClass('fa-heart');
 
                         this.wishlist.items.push(item);
@@ -1417,14 +1418,14 @@ $(document).ready(function() {
 
                         $.notify('item added to wish list', 'success');
                     }
-                }else {
+                } else {
                     $.notify('You have to be logged in to add items to your wishlist. create an account today', 'warn');
                 }
 
 
 
             },
-            updateWishlistDB: function(wlist){
+            updateWishlistDB: function(wlist) {
                 let $vm = this;
 
                 $.ajax({
@@ -1435,13 +1436,13 @@ $(document).ready(function() {
                         wishlist: wlist,
                         uid: $vm.loggedInUser.id
                     },
-                    success: function(data){
+                    success: function(data) {
                         let $data = JSON.parse(data);
                         console.log('WISHLIST DB RESPONSE');
 
                         console.log($data);
                     },
-                    error: function(){
+                    error: function() {
                         console.log('error updating wishlist database');
                     }
                 })
@@ -1450,52 +1451,52 @@ $(document).ready(function() {
         }
     })
 
-    $nav_vue.$watch('menuStatus.open', function(newVal, oldVal){
+    $nav_vue.$watch('menuStatus.open', function(newVal, oldVal) {
         if (newVal) {
             // open menu
             $('.menu-box').removeClass('menu-closed').addClass('menu-open');
-        }else {
+        } else {
             $('.menu-box').removeClass('menu-open').addClass('menu-closed');
         }
     });
 
-    $nav_vue.$watch('menuStatus.mobile', function(newVal, oldVal){
+    $nav_vue.$watch('menuStatus.mobile', function(newVal, oldVal) {
         if (newVal) {
             console.log('MENU IS OPENING');
-           $('#b2').animate({
-               opacity: 0
-           }, 200);
+            $('#b2').animate({
+                opacity: 0
+            }, 200);
 
-           $('#b1').rotate({
-               angle: 0,
-               center: ["10%", "50%"],
-               animateTo: 43.5
-           });
+            $('#b1').rotate({
+                angle: 0,
+                center: ["10%", "50%"],
+                animateTo: 43.5
+            });
 
-           $('#b3').rotate({
-               angle: 0,
-               center: ["10%", "70%"],
-               animateTo: -42
-           });
+            $('#b3').rotate({
+                angle: 0,
+                center: ["10%", "70%"],
+                animateTo: -42
+            });
 
-       }else {
-           $('#b2').animate({
-                 opacity: 1
+        } else {
+            $('#b2').animate({
+                opacity: 1
             }, 300);
 
-           $('#b1').rotate({
-              angle: 43.5,
-              center: ["10%", "50%"],
-              animateTo: 0
-           });
+            $('#b1').rotate({
+                angle: 43.5,
+                center: ["10%", "50%"],
+                animateTo: 0
+            });
 
-           $('#b3').rotate({
-              angle: -42,
-              center: ["10%", "70%"],
-              animateTo: 0
-           });
-           // close menu js
-       }
+            $('#b3').rotate({
+                angle: -42,
+                center: ["10%", "70%"],
+                animateTo: 0
+            });
+            // close menu js
+        }
 
     });
 
@@ -1510,7 +1511,7 @@ $(document).ready(function() {
         localStorage.setItem('idyl-wishlist', JSON.stringify(newVal));
         $nav_vue.updateWishlistDB(localStorage.getItem('idyl-wishlist'));
 
-        setTimeout(function(){
+        setTimeout(function() {
             console.log(JSON.parse(localStorage.getItem('idyl-wishlist')));
         }, 300);
 
@@ -1529,16 +1530,16 @@ $(document).ready(function() {
                     status: false,
                     code: ''
                 },
-                basket:{
+                basket: {
 
                 },
-                wishlist:{
+                wishlist: {
 
                 }
             },
             methods: {
                 // NOTE: VOID function. No longer adding to basket in wishlist
-                addToBasket: function(e){
+                addToBasket: function(e) {
                     // $nav_vue.addToBasket(e);
                     console.log('ADD TO BASKET USER VUE');
                     console.log($(e.target));
@@ -1555,10 +1556,10 @@ $(document).ready(function() {
                     let exists = this.checkItemExists(productInfo);
                     console.log(exists);
 
-                    if(!exists){
+                    if (!exists) {
                         // update basket with new item
                         if (productInfo.quantity < 1) {
-                            productInfo.quantity+=1;
+                            productInfo.quantity += 1;
                         }
 
                         $nav_vue.basketCount += 1;
@@ -1571,7 +1572,7 @@ $(document).ready(function() {
                     }
 
                 },
-                removeFromWishlist: function(e){
+                removeFromWishlist: function(e) {
                     console.log($(e.target));
                     let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
 
@@ -1581,7 +1582,7 @@ $(document).ready(function() {
                         // console.log($nav_vue.wishlist.items[i].stripesku_id);
                         // console.log(productInfo.stripesku_id);
                         if ($nav_vue.wishlist.items[i].stripesku_id === productInfo.stripesku_id) {
-                            $nav_vue.wishlist.items.splice(i,1);
+                            $nav_vue.wishlist.items.splice(i, 1);
 
                             $.notify('item removed from wish list', 'error');
 
@@ -1594,7 +1595,7 @@ $(document).ready(function() {
                     }
 
                 },
-                checkItemExists: function(itm){
+                checkItemExists: function(itm) {
                     console.log('clicked');
                     console.log(itm);
                     // this.item = itm;
@@ -1603,13 +1604,13 @@ $(document).ready(function() {
                     if (exists[0]) {
                         // this.inBasket = true;
                         return true;
-                    }else {
+                    } else {
                         // this.inBasket = false;
                         return false;
 
                     }
                 },
-                updateDetails: function(e){
+                updateDetails: function(e) {
                     let eventTrigger = $(e.target).parent(),
                         $userID = eventTrigger[0].attributes[1].nodeValue,
                         $userStripeID = eventTrigger[0].attributes[2].nodeValue,
@@ -1630,7 +1631,7 @@ $(document).ready(function() {
                     if (!$userFname || !$userLname || !$dob || $userTitleVal === 'default') {
                         $('.update-user-details').notify('One or more fields are empty. Please fill with relevant information', 'warn');
                         return;
-                    }else {
+                    } else {
                         let updatedDetails = new UpdateUserDetails($userID, $userStripeID, $userTitleVal, $userFname, $userLname, $dob);
 
                         console.log(updatedDetails);
@@ -1639,11 +1640,11 @@ $(document).ready(function() {
                         $.ajax({
                             url: '/scripts/settings.php',
                             type: 'post',
-                            data:{
-                                type:'user-details',
+                            data: {
+                                type: 'user-details',
                                 details: updatedDetails
                             },
-                            success: function(data){
+                            success: function(data) {
                                 let $data = JSON.parse(data);
                                 console.log($data);
 
@@ -1652,7 +1653,7 @@ $(document).ready(function() {
 
                                         $('#details-success').html($data.data.msg);
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#details-success').html('');
                                         }, 3000);
 
@@ -1661,7 +1662,7 @@ $(document).ready(function() {
 
                                         $('#details-success').html($data.data.msg);
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#details-success').html('');
                                         }, 3000);
                                         break;
@@ -1669,7 +1670,7 @@ $(document).ready(function() {
 
                                 }
                             },
-                            error: function(){
+                            error: function() {
                                 console.log('error sending details to be updated. contact help');
                             }
                         })
@@ -1677,7 +1678,7 @@ $(document).ready(function() {
 
 
                 },
-                updateLoginDetails: function(e){
+                updateLoginDetails: function(e) {
                     let eventTrigger = $(e.target).parent(),
                         $userID = eventTrigger[0].attributes[1].nodeValue,
                         $userStripeID = eventTrigger[0].attributes[2].nodeValue,
@@ -1696,7 +1697,7 @@ $(document).ready(function() {
 
                         $('#login-details-message').html('Login details cant be changed. One or more fields are empty');
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $('#login-details-message').html('');
                         }, 4000);
                         return;
@@ -1707,21 +1708,21 @@ $(document).ready(function() {
                         // alert user
                         $('#email-check').html('Emails don\'t match. Please re-enter');
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $('#email-check').html('');
                         }, 4000);
 
-                    }else {
+                    } else {
                         emailtrue = !emailtrue;
                     }
 
                     if ($password !== $passConfirm) {
                         $('#pass-check').html('Passwords don\'t match. Please re-enter');
 
-                        setTimeout(function(){
+                        setTimeout(function() {
                             $('#pass-check').html('');
                         }, 4000);
-                    }else {
+                    } else {
                         passwordtrue = !passwordtrue;
                     }
 
@@ -1738,7 +1739,7 @@ $(document).ready(function() {
                                 type: 'login-details',
                                 details: updatedLoginDetails
                             },
-                            success: function(data){
+                            success: function(data) {
                                 let $data = JSON.parse(data);
 
                                 switch ($data.status.code) {
@@ -1751,7 +1752,7 @@ $(document).ready(function() {
                                         // reset form
 
                                         // clear success message
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#login-details-message').html('');
                                         }, 4000);
 
@@ -1760,7 +1761,7 @@ $(document).ready(function() {
                                         $('#login-details-message').html($data.data.msg);
 
                                         // clear error message
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#login-details-message').html('');
                                         }, 4000);
 
@@ -1770,7 +1771,7 @@ $(document).ready(function() {
                                 }
                                 console.log($data);
                             },
-                            error: function(){
+                            error: function() {
 
                             }
                         })
@@ -1781,24 +1782,23 @@ $(document).ready(function() {
                     this.basketCount = $nav_vue.basketCount;
                     this.basket = $nav_vue.basket;
                 },
-                getWishlistInfo: function(){
+                getWishlistInfo: function() {
                     this.wishlist = $nav_vue.wishlist;
                 },
-                phonenumber: function(inputtxt){
+                phonenumber: function(inputtxt) {
                     let phoneno = /^\d{11}$/;
-                    if(inputtxt.match(phoneno)) {
+                    if (inputtxt.match(phoneno)) {
                         return true;
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 },
-                validatePostCode: function(postcode){
+                validatePostCode: function(postcode) {
                     let $data = '',
                         $vm = this;
 
                 },
-                addAddress: function(e){
+                addAddress: function(e) {
                     let eventTrigger = $(e.target).parent(),
                         $userTitle = eventTrigger[0][0],
                         $userTitleVal = '',
@@ -1814,7 +1814,7 @@ $(document).ready(function() {
                         $status = eventTrigger[0][10],
                         $status_selected = '',
                         $country_name = ''
-                        $vm = this;
+                    $vm = this;
 
                     // get the selected option from list
                     // NOTE: turn into a function
@@ -1839,8 +1839,8 @@ $(document).ready(function() {
                     let phone_real = this.phonenumber($phone_num);
 
                     // add default value to address 2 & 3 if they havent been entered;
-                    $address2 = (!$address2)?'false':$address2;
-                    $address3 = (!$address3)?'false':$address3;
+                    $address2 = (!$address2) ? 'false' : $address2;
+                    $address3 = (!$address3) ? 'false' : $address3;
 
 
                     /*
@@ -1850,16 +1850,16 @@ $(document).ready(function() {
                     $.ajax({
                         url: `https://api.postcodes.io/postcodes/${$post_code}/validate`,
                         type: 'get',
-                        success:function(data){
+                        success: function(data) {
                             let validateSuccess = new Promise(function(resolve, reject) {
                                 if (data.status === 200) {
                                     resolve(data.result);
-                                }else {
+                                } else {
                                     reject(false);
                                 }
                             });
 
-                            validateSuccess.then(function(val){
+                            validateSuccess.then(function(val) {
                                 // if ($data.result) {
                                 console.log(val);
                                 if (!$userFname || !$userLname || !$phone_num || !$address1 || !$city_town || !$post_code || $userTitleVal === 'default' || !phone_real || !val) {
@@ -1867,29 +1867,36 @@ $(document).ready(function() {
                                     $.notify('Required fields haven\'t been filled in', 'error');
 
                                     if (!val) {
-                                        $('#postcode-input').css({'border':'2px solid red'});
+                                        $('#postcode-input').css({
+                                            'border': '2px solid red'
+                                        });
                                         $('#postcode-input-mesage').html('please enter a valid postcode');
-                                        $('#postcode-input-message').css({'color':'red'});
+                                        $('#postcode-input-message').css({
+                                            'color': 'red'
+                                        });
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#postcode-input-mesage').html('');
                                         }, 5000);
                                     }
 
                                     if (!phone_real) {
                                         console.log('PHONE NOT REAL');
-                                        $('#phone-input-address').css({'border':'2px solid red'});
+                                        $('#phone-input-address').css({
+                                            'border': '2px solid red'
+                                        });
                                         $('#phone-input-message').html('Please enter a valid phone number')
-                                        $('#phone-input-message').css({'color':'red'});
+                                        $('#phone-input-message').css({
+                                            'color': 'red'
+                                        });
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#phone-input-message').html('');
                                         }, 5000);
                                     }
 
                                     return;
-                                }
-                                else {
+                                } else {
                                     // create a class that represents address being added
                                     let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
@@ -1928,19 +1935,19 @@ $(document).ready(function() {
                                     })
                                 }
 
-                            }).catch((reason)=>{
+                            }).catch((reason) => {
                                 console.log(reason);
                             });
 
 
                         },
-                        error: function(){
+                        error: function() {
                             console.log('error validating postcode');
                         }
                     })
 
                 },
-                editaddressDirect: function(e){
+                editaddressDirect: function(e) {
                     let eventTrigger = $(e.target),
                         targetpage = eventTrigger[0].href,
                         posID = eventTrigger.parent().attr('data-index');
@@ -1950,11 +1957,11 @@ $(document).ready(function() {
                     console.log(targetpage);
                     console.log(posID);
 
-                    setTimeout(function(){
+                    setTimeout(function() {
                         window.location = targetpage;
                     }, 200);
                 },
-                editAddress: function(e){
+                editAddress: function(e) {
                     let eventTrigger = $(e.target).parent(),
                         addressPositionID = parseInt($(e.target)[0].attributes[1].nodeValue),
                         $userTitle = eventTrigger[0][0],
@@ -1971,7 +1978,7 @@ $(document).ready(function() {
                         $status = eventTrigger[0][10],
                         $status_selected = '',
                         $country_name = ''
-                        $vm = this;
+                    $vm = this;
 
                     console.log(addressPositionID);
                     // get the selected option from list
@@ -1997,8 +2004,8 @@ $(document).ready(function() {
                     let phone_real = this.phonenumber($phone_num);
 
                     // add default value to address 2 & 3 if they havent been entered;
-                    $address2 = (!$address2)?'false':$address2;
-                    $address3 = (!$address3)?'false':$address3;
+                    $address2 = (!$address2) ? 'false' : $address2;
+                    $address3 = (!$address3) ? 'false' : $address3;
 
                     /*
                         NOTE: postcodes.io API
@@ -2007,16 +2014,16 @@ $(document).ready(function() {
                     $.ajax({
                         url: `https://api.postcodes.io/postcodes/${$post_code}/validate`,
                         type: 'get',
-                        success:function(data){
+                        success: function(data) {
                             let validateSuccess = new Promise(function(resolve, reject) {
                                 if (data.status === 200) {
                                     resolve(data.result);
-                                }else {
+                                } else {
                                     reject(false);
                                 }
                             });
 
-                            validateSuccess.then(function(val){
+                            validateSuccess.then(function(val) {
                                 // if ($data.result) {
                                 console.log(val);
                                 if (!$userFname || !$userLname || !$phone_num || !$address1 || !$city_town || !$post_code || $userTitleVal === 'default' || !phone_real || !val) {
@@ -2024,29 +2031,36 @@ $(document).ready(function() {
                                     $.notify('Required fields haven\'t been filled in', 'error');
 
                                     if (!val) {
-                                        $('#postcode-input').css({'border':'2px solid red'});
+                                        $('#postcode-input').css({
+                                            'border': '2px solid red'
+                                        });
                                         $('#postcode-input-mesage').html('please enter a valid postcode');
-                                        $('#postcode-input-message').css({'color':'red'});
+                                        $('#postcode-input-message').css({
+                                            'color': 'red'
+                                        });
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#postcode-input-mesage').html('');
                                         }, 5000);
                                     }
 
                                     if (!phone_real) {
                                         console.log('PHONE NOT REAL');
-                                        $('#phone-input-address').css({'border':'2px solid red'});
+                                        $('#phone-input-address').css({
+                                            'border': '2px solid red'
+                                        });
                                         $('#phone-input-message').html('Please enter a valid phone number')
-                                        $('#phone-input-message').css({'color':'red'});
+                                        $('#phone-input-message').css({
+                                            'color': 'red'
+                                        });
 
-                                        setTimeout(function(){
+                                        setTimeout(function() {
                                             $('#phone-input-message').html('');
                                         }, 5000);
                                     }
 
                                     return;
-                                }
-                                else {
+                                } else {
                                     // create a class that represents address being added
                                     let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
@@ -2087,18 +2101,18 @@ $(document).ready(function() {
                                     })
                                 }
 
-                            }).catch((reason)=>{
+                            }).catch((reason) => {
                                 console.log(reason);
                             });
 
 
                         },
-                        error: function(){
+                        error: function() {
                             console.log('error validating postcode');
                         }
                     })
                 },
-                deleteAddress: function(e){
+                deleteAddress: function(e) {
                     let eventTrigger = $(e.target),
                         addressPositionID = eventTrigger.parent().attr('data-index');
 
@@ -2109,7 +2123,7 @@ $(document).ready(function() {
                             type: 'delete-address',
                             position: addressPositionID
                         },
-                        success: function(data){
+                        success: function(data) {
                             let $data = JSON.parse(data);
 
                             switch ($data.status.code) {
@@ -2124,7 +2138,7 @@ $(document).ready(function() {
 
                             }
                         },
-                        error: function(){
+                        error: function() {
 
                         }
                     })
@@ -2149,13 +2163,15 @@ $(document).ready(function() {
 
     console.log(window.location.pathname);
     console.log(window.location.pathname.split('/')[1]);
-    if (window.location.pathname.split('/')[1] !== 'myaccount' && window.location.pathname.split('/')[1] !== 'help') {
+
+
+    if (window.location.pathname.split('/')[1] !== 'myaccount' && window.location.pathname.split('/')[1] !== 'help' && window.location.pathname.split('/')[1] !== 'termsconditions' && window.location.pathname.split('/')[1] !== 'privacy-policy') {
         console.log('home visible');
 
         // NOTE: rewrite what props the basket item uses to match basket-item 1
         let basketItem2 = {
-            data: function(){
-                return{
+            data: function() {
+                return {
                     status: 'component works'
                 }
             },
@@ -2164,10 +2180,10 @@ $(document).ready(function() {
                 <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <h5 class="card-title">{{itemname}}</h5> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span><strong>Size:</strong>N/A</span>&nbsp; <span><strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"><strong>Total: £{{accprice.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> <hr> </div>
                 </div>`,
             methods: {
-                removeItem: function(e){
+                removeItem: function(e) {
                     // getting the correct items details from the basket array
                     let itemID = parseInt($(e.target).parent().attr('data-position-id'))
-                        itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
+                    itemrowID = '#' + $(e.target).parent().attr('data-element-id'),
                         selectedItem = $nav_vue.basket.items[itemID];
 
 
@@ -2184,6 +2200,8 @@ $(document).ready(function() {
                         if ($nav_vue.basketCount === 1) {
                             $nav_vue.emptyBasket();
                             $home_vue.basketHasItems = false;
+                            console.log('HOME VUE basketHasItems STATUS BELOW');
+                            console.log($home_vue.basketHasItems);
                             return;
                         }
                         $nav_vue.basketCount -= 1;
@@ -2208,43 +2226,63 @@ $(document).ready(function() {
         // create product card when show more is clicked
 
         let productCard = {
-            data: function(){
-                return{
-                    status: 'component works'
+            data: function() {
+                return {
+                    status: 'component works',
+                    properties: {
+                        image: {
+                            alt: '',
+                            address: ''
+                        },
+                        productdata: {
+                            category: '',
+                            type: '',
+                            slug: '',
+                            color: '',
+                            size: '',
+                            prod_id: '',
+                            sku_id: '',
+                            price: ''
+                        }
+
+                    }
                 }
             },
-            props: [],
-            template: `<div class="col-6 col-md-4 col-lg-3">
-
+            props: ['skuimage'],
+            template: `<div class="col-6 col-md-4 col-lg-3 product-card-col">
                 <div class="card product-card" style="">
-                    <img class="card-img-top" src="{{product.image}}" alt="Card image cap">
+                    <div class="product-image">
+                        <img class="card-img-top" src="" alt="">
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card color & size</h6>
-                        <p><strong>£ 32.00</strong> </p>
-
+                        <h6 class="card-subtitle mb-2"><a href="">{{this.status}}</a></h6>
+                        <p class="product-price-p"><strong>£ 45</strong> </p>
                     </div>
                 </div>
-
             </div>`,
             methods: {
+                populateData: function() {
 
+                },
+                returnTemplate: function() {
+                    return this.template;
+                }
             }
         }
 
         let filterItem = {
-            data: function(){
-                return{
+            data: function() {
+                return {
                     status: 'component works'
                 }
             },
-            props: ['filtername'],
+            props: ['filtername', 'activetype'],
             template: `<li>
                 <div class="input-group mb-3 filter-input-group">
                     <div class="input-group-prepend filter-input-box">
                         <div class="input-group-text filter-input d-flex flex-row">
                             <div class="p-2 fltr-inp">
-                                <input :name="filtername" type="checkbox" :data-prod-type="filtername" aria-label="Checkbox for following text input">
+                                <input class="type-checkbox" :name="filtername" type="checkbox" :data-prod-type="filtername" aria-label="Checkbox for following text input" :checked="activetype ?true:false" @click="toggleFilter">
                             </div>
 
                             <div class="p-2 fltr-inp">
@@ -2268,12 +2306,114 @@ $(document).ready(function() {
                     }
 
                 },
+                returnTemplate: function(skuimage, skuname, skucategory, skutype, skuslug, skucolor, skusize, skuprodid, skuid, skuprice) {
+                    //
+                    let productCard = `<div class="col-6 col-md-4 col-lg-3 product-card-col">
+                        <div class="card product-card" style="">
+                            <div class="product-image">
+                                <img class="card-img-top" src="${skuimage}" alt=${skuname}>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2"><a href="/product/${skucategory}/${skutype}/${skuslug}-${skucolor}-${skusize}/${skuprodid}/${skuid}">${skuname} - ${skucolor} - ${skusize}</a></h6>
+                                <h6 class="">${skucategory}</h6>
+                                <p class="product-price-p"><strong>£ ${skuprice/100}</strong> </p>
+                            </div>
+                        </div>
+                    </div>`;
+
+                    return productCard;
+                },
+                toggleFilter: function(e) {
+                    console.log('type checkbox clicked');
+                    let targetCheckbox = $(e.target);
+                    allCheckboxes = document.querySelectorAll('.type-checkbox'),
+                        categoryCheckboxes = document.querySelectorAll('.cat-checkbox'),
+                        checkBoxValues = [],
+                        category = '',
+                        $vm = this;
+
+                    // add loader to products box
+
+                    console.log(targetCheckbox);
+                    console.log(allCheckboxes);
+                    console.log(categoryCheckboxes);
+
+                    for (var j = 0; j < categoryCheckboxes.length; j++) {
+                        if (categoryCheckboxes[j].checked) {
+                            category = categoryCheckboxes[j].attributes['data-category'].value;
+                            // console.log(categoryCheckboxes[j].attributes['data-category'].value);
+                        } else {
+                            category = 'all';
+                        }
+                    }
+
+                    for (var i = 0; i < allCheckboxes.length; i++) {
+                        if (allCheckboxes[i].checked) {
+                            checkBoxValues.push(allCheckboxes[i].attributes['data-prod-type'].value);
+                        }
+                    }
+
+
+                    console.log(checkBoxValues);
+
+                    // clear the current selection
+                    $('.product-card-col').remove();
+
+                    // show loader in box for 2 seconds
+                    $('.loader-screen').css({
+                        'z-index': '20',
+                        'visibility': 'visible'
+                    });
+
+                    // send ajax over with the selected values array
+                    $.ajax({
+                        url: '/scripts/filter_products.php',
+                        type: 'get',
+                        data: {
+                            filters: checkBoxValues,
+                            category: category
+                        },
+                        success: function(data) {
+                            let $data = JSON.parse(data);
+
+                            console.log($data);
+
+
+                            setTimeout(function() {
+                                $('.loader-screen').css({
+                                    'z-index': '1',
+                                    'visibility': 'hidden'
+                                });
+
+                                $('.product-card-col').remove();
+                                // render products on screen
+                                for (var i = 0; i < $data.data.filtered_skus.length; i++) {
+                                    // skuimage, skuname, skucategory, skutype, skuslug, skucolor, skusize, skuprodid, skuid, skuprice
+                                    let productMarkup = $vm.returnTemplate($data.data.filtered_skus[i].image, $data.data.filtered_skus[i].prod_name, $data.data.filtered_skus[i].attributes.category, $data.data.filtered_skus[i].attributes.type, $data.data.filtered_skus[i].prod_slug, $data.data.filtered_skus[i].attributes.color, $data.data.filtered_skus[i].attributes.size, $data.data.filtered_skus[i].product, $data.data.filtered_skus[i].id, $data.data.filtered_skus[i].price);
+
+                                    $('#products-row').append(productMarkup);
+                                }
+
+                            }, 2000);
+
+                            // console.log($vm.returnTemplate());
+
+                        },
+                        error: function() {
+                            console.log('ERROR WITH FILTER AJAX');
+                        }
+                    })
+
+
+                }
+
             }
         }
 
+
         let $home_vue = new Vue({
             el: '.home',
-            components:{
+            components: {
                 'basket-item-checkout': basketItem2,
                 'product-card': productCard,
                 'filter-item': filterItem
@@ -2287,8 +2427,8 @@ $(document).ready(function() {
                 createUserSuccess: '',
                 basketHasItems: false,
                 filterStatus: false,
-                basket:{
-                    items:''
+                basket: {
+                    items: ''
                 },
                 slides: [{
                         id: 1,
@@ -2307,30 +2447,37 @@ $(document).ready(function() {
                         name: 'living room',
                         image: '/assets/category/christelle-bourgeois-97314.jpg',
                         categoryLink: '#',
-                        key: 'LIV'
+                        key: 'LIV',
+                        slug: 'livingroom',
+                        currentPage: window.location.pathname.split('/')[2] === 'livingroom' ? window.location.pathname.split('/')[2] : 'all'
                     },
                     {
                         name: 'kitchen',
                         image: '/assets/category/alison-marras-361007.jpg',
                         categoryLink: '#',
-                        key: 'KIT'
+                        key: 'KIT',
+                        slug: 'kitchen',
+                        currentPage: window.location.pathname.split('/')[2] === 'kitchen' ? window.location.pathname.split('/')[2] : 'all'
                     },
                     {
                         name: 'bedroom',
                         image: '/assets/category/krista-mcphee-445060.jpg',
                         categoryLink: '#',
-                        key: 'BED'
+                        key: 'BED',
+                        slug: 'bedroom',
+                        currentPage: window.location.pathname.split('/')[2] === 'bedroom' ? window.location.pathname.split('/')[2] : 'all'
                     },
                     {
                         name: 'bath',
                         image: '/assets/category/david-cohen-127022.jpg',
                         categoryLink: '#',
-                        key: 'BTH'
+                        key: 'BTH',
+                        slug: 'bath',
+                        currentPage: window.location.pathname.split('/')[2] === 'bath' ? window.location.pathname.split('/')[2] : 'all'
                     }
                 ],
                 products: {
-                    livingroom: [
-                        {
+                    livingroom: [{
                             key: '#L01',
                             name: 'all products',
                             slug: '',
@@ -2341,60 +2488,67 @@ $(document).ready(function() {
                             name: 'candle holders',
                             slug: 'candle-holders',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'candle-holders' ? true : false
                         },
                         {
                             key: '#L03',
                             name: 'plaids',
                             slug: 'plaids',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'plaids' ? true : false
                         },
                         {
                             key: '#L04',
                             name: 'cushions',
                             slug: 'cushions',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'cushions' ? true : false
                         },
                         {
                             key: '#L05',
                             name: 'lamps',
                             slug: 'lamps',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'lamps' ? true : false
                         },
                         {
                             key: '#L06',
                             name: 'nips',
                             slug: 'nips',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'nips' ? true : false
                         },
                         {
                             key: '#L07',
-                            name: 'posters',
-                            slug: 'posters',
+                            name: 'poster',
+                            slug: 'poster',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'posters' ? true : false
                         },
                         {
                             key: '#L08',
                             name: 'shelves',
                             slug: 'shelves',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'shelves' ? true : false
                         },
                         {
                             key: '#L09',
                             name: 'pots',
                             slug: 'pots',
                             cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png'
+                            image: '/assets/main/dust_scratches.png',
+                            currentPage: window.location.pathname.split('/')[3] === 'pots' ? true : false
                         }
                     ],
-                    kitchen: [
-                        {
+                    kitchen: [{
                             key: '#K01',
                             name: 'all products',
                             slug: '',
@@ -2405,25 +2559,27 @@ $(document).ready(function() {
                             name: 'kitchen textiles',
                             slug: 'kitchen-textiles',
                             cat: 'kitchen',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'kitchen-textiles' ? true : false
                         },
                         {
                             key: '#K03',
                             name: 'dining',
                             slug: 'dining',
                             cat: 'kitchen',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'dining' ? true : false
                         },
                         {
                             key: '#K04',
                             name: 'cook',
                             slug: 'cook',
                             cat: 'kitchen',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'cook' ? true : false
                         }
                     ],
-                    bedroom: [
-                        {
+                    bedroom: [{
                             key: '#BE01',
                             name: 'all products',
                             slug: '',
@@ -2434,39 +2590,43 @@ $(document).ready(function() {
                             name: 'bed linen',
                             slug: 'linen',
                             cat: 'bedroom',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'linen' ? true : false
                         },
                         {
                             key: '#BE03',
-                            name: 'Bedroom cushions',
+                            name: 'cushions',
                             slug: 'cushions',
                             cat: 'bedroom',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'cushions' ? true : false
                         },
                         {
                             key: '#BE04',
                             name: 'lamps',
                             slug: 'lamp',
                             cat: 'bedroom',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'lamps' ? true : false
                         },
                         {
                             key: '#BE05',
                             name: 'nips',
                             slug: 'nips',
                             cat: 'bedroom',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'nips' ? true : false
                         },
                         {
                             key: '#BE06',
                             name: 'poster',
-                            slug: 'poster',
+                            slug: 'posters',
                             cat: 'bedroom',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'poster' ? true : false
                         }
                     ],
-                    bath: [
-                        {
+                    bath: [{
                             key: '#BA01',
                             name: 'all products',
                             slug: '',
@@ -2477,21 +2637,24 @@ $(document).ready(function() {
                             name: 'towel',
                             slug: 'towel',
                             cat: 'bath',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'towel' ? true : false
                         },
                         {
                             key: '#BA03',
                             name: 'shower curtains',
                             slug: 'curtains',
                             cat: 'bath',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'curtains' ? true : false
                         },
                         {
                             key: '#BA04',
                             name: 'accessories',
                             slug: 'accessories',
                             cat: 'bath',
-                            image: ''
+                            image: '',
+                            currentPage: window.location.pathname.split('/')[3] === 'accessories' ? true : false
                         }
                     ]
                 },
@@ -2558,9 +2721,50 @@ $(document).ready(function() {
                 ]
             },
             methods: {
-                toggleFilter: function(e){
+                renderStoryContent: function(){
+                    let id = '8f003a39e5',
+                        table = 'pages',
+                        type ='retrieve',
+                        field = 'page_id';
+
+                    let content = new getPageContent(type, table, field, id),
+                        element = ['.story-content'];
+
+                    content.markdown(element);
+
+                },
+                toggleFilter: function(e) {
                     // console.log('filter toggled');
                     this.filterStatus = !this.filterStatus;
+                },
+                toggleProducts: function(e) {
+                    console.log('category checkbox clicked');
+                    let targetCheckbox = $(e.target);
+
+                    console.log(targetCheckbox);
+                    console.log(targetCheckbox[0].checked);
+                    if (targetCheckbox[0].checked) {
+                        console.log('cat checkbox for ' + targetCheckbox[0].attributes[1].nodeValue + ' has been checked');
+                        switch (targetCheckbox[0].attributes[1].nodeValue) {
+                            case 'livingroom':
+                                window.location = '/products/livingroom'
+                                break;
+                            case 'kitchen':
+                                window.location = '/products/kitchen'
+                                break;
+                            case 'bedroom':
+                                window.location = '/products/bedroom'
+                                break;
+                            case 'bath':
+                                window.location = '/products/bath'
+                                break;
+                            default:
+
+                        }
+                    } else {
+                        window.location = "/products"
+                    }
+
                 },
                 addToWishlist: function() {
                     $nav_vue.addToWishlist();
@@ -2681,21 +2885,28 @@ $(document).ready(function() {
                 getBasketInfo: function() {
 
                     let $vm = this;
-                    setTimeout(function () {
+                    setTimeout(function() {
 
                         $vm.basket.items = $nav_vue.basket.items;
-                        // console.log(this.basket);
+                        console.log('GET BASKET HOME VUE TIMEOUT RUN');
 
                         if ($vm.basket.items.length < 1) {
                             console.log('FALSE');
                             $vm.basketHasItems = false;
                             $('.basket-home').addClass('empty-basket');
-                        }else {
+
+                            if($('.loader-screen').hasClass('visible')){
+                                $('.loader-screen').css({'display':'none'});
+                                if (!$vm.basketHasItems) {
+                                    $('.basket-alert').fadeIn();
+                                }
+                            }
+                        } else {
                             console.log('TRUE');
                             $vm.basketHasItems = true;
                             $('.basket-home').removeClass('empty-basket');
                         }
-                    }, 1000)
+                    }, 2100)
 
 
                 },
@@ -2713,62 +2924,64 @@ $(document).ready(function() {
                     let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
                     console.log(productInfo);
 
-                    productInfo.price = productInfo.price/100;
+                    productInfo.price = productInfo.price / 100;
 
                     // create a new basketItem
-                    let item = new BasketItem(productInfo.product, productInfo.id, productInfo.prod_name, productInfo.attributes.size, productInfo.attributes.color, productInfo.prod_slug, productInfo.prod_desc, productInfo.price, productInfo.image, this.prodQuantity, productInfo.attributes.category, productInfo.attributes.type);
+                    let item = new BasketItem(productInfo.product, productInfo.id, productInfo.prod_name, productInfo.attributes.size, productInfo.attributes.color, productInfo.prod_slug, productInfo.prod_desc, productInfo.price, productInfo.image, this.prodQuantity, productInfo.attributes.category, productInfo.attributes.type),
+                        $vm = this;
 
                     console.log(item);
                     //
                     // // check if basket exist in local Storage
                     $nav_vue.checkBasketSession();
 
-                    let exists = this.checkItemExists($nav_vue.basket.items, item);
-                    console.log(exists);
+                    setTimeout(function(){
+                        let exists = $vm.checkItemExists($nav_vue.basket.items, item);
+                        console.log(exists);
 
-                    if (exists[0]) {
-                        console.log('item exists in basket');
-                        // update quantity and price for exsisting item
-                        console.log(item.quantity);
-                        let itemPos = exists[2];
+                        if (exists[0]) {
+                            console.log('item exists in basket');
+                            // update quantity and price for exsisting item
+                            console.log(item.quantity);
+                            let itemPos = exists[2];
 
-                        $nav_vue.basket.items[itemPos].quantity += item.quantity;
+                            $nav_vue.basket.items[itemPos].quantity += item.quantity;
 
-                        // re-calculate total
-                        $nav_vue.basket.items[itemPos].total_price += ($nav_vue.basket.items[itemPos].price * item.quantity);
+                            // re-calculate total
+                            $nav_vue.basket.items[itemPos].total_price += ($nav_vue.basket.items[itemPos].price * item.quantity);
 
-                        console.log($nav_vue.basket.items[itemPos].total_price);
+                            console.log($nav_vue.basket.items[itemPos].total_price);
 
-                        $nav_vue.basketTotal += (item.price * item.quantity);
+                            $nav_vue.basketTotal += (item.price * item.quantity);
 
-                        // $.notify('items quanitity updated', 'success');
+                            // $.notify('items quanitity updated', 'success');
 
-                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+                            localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
 
-                        // update database with latest basket info
-                        if ($nav_vue.loggedInStatus) {
-                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                            // update database with latest basket info
+                            if ($nav_vue.loggedInStatus) {
+                                $nav_vue.updateBasketDB($nav_vue.basket.items);
+                            }
+
+
+                            shakeShoppingIcon();
+                        } else {
+                            // update basket with new item
+                            $nav_vue.basketCount += 1;
+                            $nav_vue.basket.items.push(item);
+                            $nav_vue.basketTotal += (item.price * item.quantity);
+
+                            localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                            // update database with latest basket info if LOGGED IN
+                            if ($nav_vue.loggedInStatus) {
+                                $nav_vue.updateBasketDB($nav_vue.basket.items);
+                            }
+
+
+                            shakeShoppingIcon();
                         }
-
-
-                        shakeShoppingIcon();
-                    }
-                    else {
-                        // update basket with new item
-                        $nav_vue.basketCount += 1;
-                        $nav_vue.basket.items.push(item);
-                        $nav_vue.basketTotal += (item.price * item.quantity);
-
-                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
-
-                        // update database with latest basket info if LOGGED IN
-                        if ($nav_vue.loggedInStatus) {
-                            $nav_vue.updateBasketDB($nav_vue.basket.items);
-                        }
-
-
-                        shakeShoppingIcon();
-                    }
+                    }, 1600)
 
 
                 },
@@ -2957,7 +3170,7 @@ $(document).ready(function() {
                         }
                     })
                 },
-                toggleSign: function(e){
+                toggleSign: function(e) {
                     let targetElement = $(e.target)[0];
 
                     console.log(targetElement);
@@ -2970,15 +3183,15 @@ $(document).ready(function() {
                             if ($(spanIcon).hasClass('open-accordion')) {
                                 console.log('if-- has open accordion');
                                 $(spanIcon).removeClass('open-accordion fa-minus').addClass('closed-accordion fa-plus');
-                            }else if ($(spanIcon).hasClass('closed-accordion')) {
+                            } else if ($(spanIcon).hasClass('closed-accordion')) {
                                 console.log('if-- has closed-accordion');
                                 $(spanIcon).removeClass('closed-accordion fa-plus').addClass('open-accordion fa-minus');
                             }
-                        }else {
+                        } else {
                             if ($(spanIcon.prevObject[0]).hasClass('open-accordion')) {
                                 console.log('elseif-- has open accordion');
                                 $(spanIcon.prevObject[0]).removeClass('open-accordion fa-minus').addClass('closed-accordion fa-plus');
-                            }else if ($(spanIcon.prevObject[0]).hasClass('closed-accordion')) {
+                            } else if ($(spanIcon.prevObject[0]).hasClass('closed-accordion')) {
                                 console.log('elseif--  has closed-accordion');
                                 $(spanIcon.prevObject[0]).removeClass('closed-accordion fa-plus').addClass('open-accordion fa-minus');
                             }
@@ -2993,13 +3206,13 @@ $(document).ready(function() {
 
             },
             watch: {
-                filterStatus: function(value){
+                filterStatus: function(value) {
                     if (value) {
                         if ($('.filter-mobile').hasClass('closed-filter')) {
                             $('.filter-mobile').removeClass('closed-filter').addClass('open-filter');
                         }
 
-                    }else {
+                    } else {
                         if ($('.filter-mobile').hasClass('open-filter')) {
                             $('.filter-mobile').removeClass('open-filter').addClass('closed-filter');
                         }
@@ -3011,6 +3224,11 @@ $(document).ready(function() {
                 createUserSuccess: function(value) {
                     $('#signup-message').html(value);
 
+                },
+                basketHasItems: function(value){
+                    if (!value) {
+
+                    }
                 }
             },
             created: function() {
@@ -3060,16 +3278,135 @@ $(document).ready(function() {
                     this.getFeaturedProducts();
                 }
 
+                if (window.location.pathname.split('/')[1] === 'our-story') {
+                    this.renderStoryContent();
+                }
+
 
                 this.getBasketInfo();
                 // this.ajaxFunctions();
             },
 
         })
+
+        $home_vue.$watch('basket.items', function(newVal, oldVal){
+            if (newVal.length < 1) {
+                $home_vue.basketHasItems = false;
+                $('.loader-screen').css({'display':'none'});
+            }
+        })
     } else {
         console.log('home hidden');
     }
 
+    function renderShippingContent(){
+        let id = '97cc350c5e',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#ship-content1', '#ship-content2', '#ship-content3', '#ship-content4', '#ship-content5'];
+
+        content.markdown(element);
+
+    }
+
+    function renderReturnContent(){
+        let id = 'ed8c8f347e',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#return-content1', '#return-content2', '#return-content3', '#return-content4'];
+
+        content.markdown(element);
+
+    }
+
+    function renderPaymentContent(){
+        let id = '5d4b314e6d',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#payment-content1', '#payment-content2', '#payment-content3', '#payment-content4'];
+
+        content.markdown(element);
+
+    }
+
+    function renderOrderContent(){
+        let id = '649b879831',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#order-content1', '#order-content2', '#order-content3', '#order-content4'];
+
+        content.markdown(element);
+
+    }
+
+    function renderTermscondContent(){
+        let id = 'e7b6d56e22',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#termscondition-content'];
+
+        content.markdown(element);
+
+    }
+
+    function renderPrivacypolContent(){
+        let id = 'b77bf5106e',
+            table = 'pages',
+            type ='retrieve',
+            field = 'page_id';
+
+        let content = new getPageContent(type, table, field, id),
+            element = ['#privacypol-content'];
+
+        content.markdown(element);
+
+    }
+
+
+    if (window.location.pathname.split('/')[2] === 'shipping') {
+        console.log('SHIPPING CONTENT RENDERED');
+        renderShippingContent();
+    }
+
+    if (window.location.pathname.split('/')[2] === 'returns') {
+        console.log('RETURNS CONTENT RENDERED');
+        renderReturnContent();
+    }
+
+    if (window.location.pathname.split('/')[2] === 'payments') {
+        console.log('PAYMENT CONTENT RENDERED');
+        renderPaymentContent();
+    }
+
+    if (window.location.pathname.split('/')[2] === 'orders') {
+        console.log('ORDER CONTENT RENDERED');
+        renderOrderContent();
+    }
+
+    if (window.location.pathname.split('/')[1] === 'termsconditions') {
+        console.log('TERMS AND CONDITIONS CONTENT RENDERED');
+        renderTermscondContent();
+    }
+
+    if (window.location.pathname.split('/')[1] === 'privacy-policy') {
+        console.log('PRIVACY POLICY CONTENT RENDERED');
+        renderPrivacypolContent();
+    }
 
 
 

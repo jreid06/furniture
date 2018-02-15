@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html style="overflow-x: hidden">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue Js</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
+    <meta name="description" content="">
+    <meta name="keywords" content="athletes">
+    <meta name="author" content="Jason Brandon Reid">
+
+
+    <!-- ONLINE BS css & VUE -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <!-- <link rel="stylesheet" href="/bootstrap-4.0.0-alpha.6-dist/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="/bootstrap-4.0.0-alpha.6-dist/css/bootstrap-grid.min.css"> -->
+    <!-- <link rel="stylesheet" href="/bootstrap-4.0.0-alpha.6-dist/css/bootstrap-reboot.min.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Raleway:400,600" rel="stylesheet">
+
+    <!-- ONLINE SLICK-->
+    <!-- <link rel="stylesheet" href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"> -->
+
+    <!-- OFFLINE SLICK-->
+    <link rel="stylesheet" href="/slick-1.8.0/slick/slick.css">
+    <link rel="stylesheet" href="/slick-1.8.0/slick/slick-theme.css">
+
+
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/hover-min.css">
+
+    <!-- ONLINE JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="/js/plugins/jquery.validate.js" charset="utf-8"></script>
+
+    <!-- OFFLINE JQUERY & VUE -->
+    <!-- <script src="/js/jquery-3.2.1.min.js"></script> -->
+    <script src="/js/vue.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- <script src="/js/plugins/jquerymigrate-1.2.1.min.js"></script> -->
+
+    <!-- OFFLINE SLICK -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script> -->
+
+    <!-- ONLINE SLICK -->
+    <script src="/slick-1.8.0/slick/slick.min.js"></script>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
+
+    <!-- NOTE: allow script to work in basket only -->
+    <!-- $_SERVER['REQUEST_URI'] === "/basket" -->
+    <?php if (true): ?>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <?php endif; ?>
+
+</head>
+
+<body style="position: relative" class="">
+
+    
+
+
+    <footer class="nav-vue">
+        <div id="accordion" role="tablist">
+            <div class="card">
+                <div class="card-header ch-footer" role="tab" id="headingTwo">
+                    <h5 class="mb-0">
+        		        <a class="collapsed collapse-link" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        		          Customer Service
+        		        </a>
+        		      </h5>
+                </div>
+                <div id="collapseTwo" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="/">Help</a></li>
+                            <li><a href="/shipping">Shipping</a></li>
+                            <li><a href="/returns">Returns</a></li>
+                            <li><a href="#">Payments</a></li>
+                            <li>
+                                <a href="/myaccount/orders">Your Orders</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header ch-footer" role="tab" id="headingThree">
+                    <h5 class="mb-0">
+        		        <a class="collapsed collapse-link" data-toggle="collapse" href="#contact-info" aria-expanded="false" aria-controls="collapseThree" class="collapse-link">
+        		          Contact Us
+        		        </a>
+        		      </h5>
+                </div>
+                <div id="contact-info" class="collapse footer-collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul>
+                            <li> <a href="tel:02086541456">+44 (0)2086541456</a> </li>
+                            <li> <a href="mailto:info@nordicidyl.com">info@nordicidyl.com</a></li>
+                            <li>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+        </div>
+    </footer>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.11/vue.js" charset="utf-8"></script> -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+    <!-- ONLINE BS js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <!-- OFFLINE BS js -->
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <!-- <script src="/bootstrap-4.0.0-alpha.6-dist/js/tether.min.js"></script> -->
+    <!-- <script src="/bootstrap-4.0.0-alpha.6-dist/js/bootstrap.min.js"></script> -->
+    <script src="/js/jquery-mousewheel/jquery.mousewheel.min.js" charset="utf-8"></script>
+
+    <!-- font awsome -->
+    <!-- <script src="https://use.fontawesome.com/7c0f3e2f67.js"></script> -->
+
+    <script src="/js/plugins/velocity.js"></script>
+    <script src="/js/plugins/notify.min.js"></script>
+    <script src="/js/plugins/jqueryrotate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+
+    <script src="/js/classes.js"></script>
+    <script src="/js/validate-forms.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- <script src="/js/wow.min.js"></script>
+        <script>
+          new WOW().init();
+        </script> -->
+
+    <script type="application/ld+json">
+        {
+            "@content": "http://schema.org",
+            "@type": "Sports Blog",
+            "url": "https://dsdsports.co.uk",
+            "name": "dsdsports"
+        }
+    </script>
+
+</body>
+
+</html>

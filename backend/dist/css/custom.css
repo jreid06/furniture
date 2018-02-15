@@ -1,0 +1,10 @@
+.content-controls {
+  padding-bottom: 50px; }
+
+.markdown-edit-container .CodeMirror {
+  height: 320px !important; }
+
+.md-long .CodeMirror {
+  height: 520px !important; }
+
+/*# sourceMappingURL=custom.css.map */

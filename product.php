@@ -22,6 +22,7 @@
         $product = $products_all['skus']['data'];
         // loop through sku and get correct product using $sku_id
         $match = false;
+        // checks to make sure product ID in url matches product in stripe database
         for ($i=0; $i < count($product); $i++) {
             if ($product[$i]['id'] === $sku_id) {
                 $match = true;
@@ -29,6 +30,7 @@
             }
         }
 
+        // will redirect user to products page if product doesnt exist
         if (!$match) {
              header('location: /products');
         }

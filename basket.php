@@ -51,9 +51,18 @@
     <template v-else>
         <div class="row">
             <div class="col-12 info-basket-column">
-                <div class="alert alert-info text-center" role="alert">
-                    Basket is empty. Start shopping today. <a href="/products">SHOP NOW</a>
-                </div>
+
+                    <div class="loader-screen visible">
+                        <div class="spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info text-center basket-alert" role="alert">
+                        Basket is empty. Start shopping today. <a href="/products">SHOP NOW</a>
+                    </div>
+
             </div>
         </div>
     </template>

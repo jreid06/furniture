@@ -50,10 +50,14 @@
 
         <div class="col-12">
             <p class="text-center"><small>{{msg}}</small></p>
-            <h4 class="text-center">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+            <h4 class="text-center filter-title-display">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
             <br>
 
         </div>
+
+
+
+
         <div class="col-12 d-flex flex-wrap flex-row products-page-content">
             <div class="p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row">
 
@@ -84,21 +88,27 @@
                                     <!--
                                         list all living room product types
                                     -->
-                                    <template v-for="(prodtype, index) in products.livingroom">
-                                        <template v-if="prodtype.name == 'all products'">
 
+                                    {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
+                                        <template v-for="(prodtype, index) in products.livingroom">
+                                            <template v-if="prodtype.name == 'all products'">
+
+                                            </template>
+                                            <template v-else>
+                                                <filter-item
+                                                        v-bind:key="prodtype.key"
+                                                        v-bind:filtername="prodtype.name"
+                                                        v-bind:activetype="prodtype.currentPage">
+                                                </filter-item>
+                                            </template>
                                         </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name">
-                                            </filter-item>
-                                        </template>
-                                    </template>
+                                    {% endif %}
 
                                     <!--
                                         list all kitchen product types
                                     -->
+
+                                    {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
                                     <template v-for="(prodtype, index) in products.kitchen">
                                         <template v-if="prodtype.name == 'all products'">
 
@@ -106,15 +116,19 @@
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name">
+                                                    v-bind:filtername="prodtype.name"
+                                                    v-bind:activetype="prodtype.currentPage">
                                             </filter-item>
                                         </template>
                                     </template>
+                                    {% endif %}
 
 
                                     <!--
                                         list all bedroom product types
                                     -->
+
+                                    {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
                                     <template v-for="(prodtype, index) in products.bedroom">
                                         <template v-if="prodtype.name == 'all products'">
 
@@ -122,15 +136,18 @@
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name">
+                                                    v-bind:filtername="prodtype.name"
+                                                    v-bind:activetype="prodtype.currentPage">
                                             </filter-item>
                                         </template>
                                     </template>
-
+                                    {% endif %}
 
                                     <!--
                                         list all bathroom product types
                                     -->
+
+                                    {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
                                     <template v-for="(prodtype, index) in products.bath">
                                         <template v-if="prodtype.name == 'all products'">
 
@@ -138,10 +155,12 @@
                                         <template v-else>
                                             <filter-item
                                                     v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name">
+                                                    v-bind:filtername="prodtype.name"
+                                                    v-bind:activetype="prodtype.currentPage">
                                             </filter-item>
                                         </template>
                                     </template>
+                                    {% endif %}
 
                                 </ul>
                               </div>
@@ -162,12 +181,87 @@
                             <div id="filter2" class="collapse show" aria-labelledby="headingTwo" >
                               <div class="card-body">
                                   <ul>
-                                      <template v-for="(category, index) in categories">
-                                          <filter-item
-                                                  v-bind:key="category.key"
-                                                  v-bind:filtername="category.name">
-                                          </filter-item>
-                                      </template>
+
+                                      {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class="input-group mb-3 filter-input-group">
+                                              <div class="input-group-prepend filter-input-box">
+                                                  <div class="input-group-text filter-input d-flex flex-row">
+                                                      <div class="p-2 fltr-inp">
+                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-livingroom" type="checkbox" data-category="livingroom" aria-label="Checkbox for following text input" {% if queryDetails.category == 'livingroom' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class="p-2 fltr-inp">
+                                                          <p>Living Room</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class="input-group mb-3 filter-input-group">
+                                              <div class="input-group-prepend filter-input-box">
+                                                  <div class="input-group-text filter-input d-flex flex-row">
+                                                      <div class="p-2 fltr-inp">
+                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-kitchen" type="checkbox" data-category="kitchen" aria-label="Checkbox for following text input" {% if queryDetails.category == 'kitchen' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class="p-2 fltr-inp">
+                                                          <p>Kitchen</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class="input-group mb-3 filter-input-group">
+                                              <div class="input-group-prepend filter-input-box">
+                                                  <div class="input-group-text filter-input d-flex flex-row">
+                                                      <div class="p-2 fltr-inp">
+                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-bedroom" type="checkbox" data-category="bedroom" aria-label="Checkbox for following text input" {% if queryDetails.category == 'bedroom' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class="p-2 fltr-inp">
+                                                          <p>Bedroom</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
+                                      {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
+                                      <li>
+                                          <div class="input-group mb-3 filter-input-group">
+                                              <div class="input-group-prepend filter-input-box">
+                                                  <div class="input-group-text filter-input d-flex flex-row">
+                                                      <div class="p-2 fltr-inp">
+                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-bath" type="checkbox" data-category="bath" aria-label="Checkbox for following text input" {% if queryDetails.category == 'bath' %} checked {% endif %}>
+                                                      </div>
+
+                                                      <div class="p-2 fltr-inp">
+                                                          <p>Bath</p>
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </li>
+
+                                      {% endif %}
+
                                   </ul>
                               </div>
                             </div>
@@ -268,7 +362,7 @@
 
             </div>
             <div class="p-2 products-page-container">
-                <div class="row">
+                <div class="row" id="products-row">
                     <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
                         <!-- <div class="col-12">
                             <p class="text-center"><small>{{msg}}</small></p>
@@ -276,6 +370,13 @@
                             <br>
 
                         </div> -->
+
+                        <div class="loader-screen">
+                            <div class="spinner">
+                                <div class="double-bounce1"></div>
+                                <div class="double-bounce2"></div>
+                            </div>
+                        </div>
 
                         {% if queryDetails.num_of_products == 'all' %}
 

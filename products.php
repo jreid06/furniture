@@ -10,6 +10,7 @@
     // check whart paremeters have been added to determine what product data to get
     if (!isset($_GET['cat']) || !$_GET['cat']) {
         $data = 'show all products';
+        $category = 'all';
 
         \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
         $stripe_products = \Stripe\Product::all(array(
@@ -18,7 +19,8 @@
 
         $details = array(
             'num_of_products'=>'all',
-            'products'=>$stripe_products
+            'products'=>$stripe_products,
+            'category'=> $category
         );
 
         $breadcrumbs = array();
@@ -70,7 +72,7 @@
     echo $template->render(array(
         'msg' => $data,
         'breadcrumb'=>$breadcrumbs,
-        'queryDetails'=> isset($details)?$details:false
+        'queryDetails'=> isset($details)?$details:false,
     ));
 
 

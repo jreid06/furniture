@@ -121,6 +121,40 @@
 	    return $timeArray;
 	}
 
+	function getSkuData($products)
+	{
+		$skus = array();
+		$names = array();
+
+		for ($i=0; $i < count($products['data']); $i++) {
+			for ($j=0; $j < count($products['data'][$i]['skus']['data']); $j++) {
+				if ($products['data'][$i]['id'] === $products['data'][$i]['skus']['data'][$j]['product']) {
+					$connect_array = array(
+						'id'=> $products['data'][$i]['id'],
+						'name'=>$products['data'][$i]['name'],
+						'slug'=>$products['data'][$i]['metadata']['slug']
+					);
+
+					array_push($names, $connect_array);
+				}
+
+				array_push($skus, $products['data'][$i]['skus']['data'][$j]);
+			}
+		}
+
+		for ($j=0; $j < count($skus); $j++) {
+			for ($k=0; $k < count($names); $k++) {
+				if ($skus[$j]['product'] === $names[$k]['id']) {
+					$skus[$j]['prod_name'] = $names[$k]['name'];
+					$skus[$j]['prod_slug'] = $names[$k]['slug'];
+				}
+			}
+		}
+
+		return $skus;
+	}
+
+
 	// function generateSessionToken($length, $email, $name, $status, $con){
 	// 	$cookieCode = bin2hex(random_bytes($length));
 	// 	$_SESSION['tkn'] = $cookieCode;

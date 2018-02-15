@@ -1,6 +1,6 @@
 <nav id="nav" class="nav-vue">
     <div class="mobile-login-help d-lg-none">
-        <a href="#">help</a>
+        <a href="/help">help</a>
 
         <template v-model="loggedInStatus" v-if="!loggedInStatus">
             <a href="/login">signup/login</a>
@@ -26,7 +26,7 @@
             <div class="desktop-login-help d-none d-lg-block">
 
                 <template v-model="loggedInStatus" v-if="!loggedInStatus">
-                    <a class="dsktp-a" href="#">help</a>
+                    <a class="dsktp-a" href="/help">help</a>
                     <a class="dsktp-a" href="/login">signup/login</a>
                 </template>
                 <template v-else>
@@ -135,7 +135,8 @@
                     <li style="text-align:center">
                         <template v-model="basketHasItems" v-if="basketHasItems">
                             <br>
-                            <a href="/basket" class="btn btn-primary"><p>PROCEED TO CHECKOUT</p></a>
+                            <a href="/basket" class="btn btn-primary" style="margin-bottom: 10px;"><p>PROCEED TO CHECKOUT</p></a>
+                            <br>
                             <button class="btn btn-primary" v-on:click="emptyBasket"><p>EMPTY BASKET <span class="fa fa-trash-o"></span> </p></button>
                         </template>
                         <template v-else>
@@ -216,7 +217,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY PRODUCT</h4>
+                                    <h4>SHOP BY LIVING ROOM PRODUCTS</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.livingroom">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -261,7 +262,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY PRODUCT</h4>
+                                    <h4>SHOP BY KITCHEN PRODUCTS</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.kitchen">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -306,7 +307,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY PRODUCT</h4>
+                                    <h4>SHOP BY BEDROOM PRODUCTS</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.bedroom">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -351,7 +352,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY PRODUCT</h4>
+                                    <h4>SHOP BY BATH PRODUCTS</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.bath">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -392,3 +393,9 @@
     </div>
 
 </nav>
+<div class="loader-screen loader-generic">
+    <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+</div>
