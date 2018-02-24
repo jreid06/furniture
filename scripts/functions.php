@@ -67,7 +67,7 @@
 		$con->close();
 	}
 
-	function generatecookieToken($length, $email, $name, $id, $address){
+	function generatecookieToken($length, $email, $name, $id, $address, $stripe_cus_id){
 		Connect::checkConnection();
 		$con = Connect::returnConnection();
 
@@ -79,9 +79,11 @@
 		// $_SESSION['idyl_qni'] = $id;
 		// $_SESSION['idyl_uem'] = $email;
 
+		// 30 days cookies are active for
 		setcookie('idyl_tkn', $cookieCode, time() + 86400, "/");
 		setcookie('idyl_unm', $name, time() + 86400, "/");
 		setcookie('idyl_qni', $id, time() + 86400, "/");
+		setcookie('idyl_str_id', $stripe_cus_id, time() + 86400, "/");
 		setcookie('idyl_uem', $email, time() + 86400, "/");
 		setcookie('idyl_uaddrs', $address, time() + 86400, "/");
 
@@ -119,6 +121,130 @@
 	    );
 
 	    return $timeArray;
+	}
+
+	function send_receipt($charge, $email){
+
+		try {
+
+			\Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+			$customer_charge = \Stripe\Charge::retrieve($charge);
+
+			$customer_charge->receipt_email = $email;
+			$customer_charge->save();
+
+			return array(true, $customer_charge);
+
+		} catch(Stripe_CardError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            $error1 = $body['error']['type'];
+
+
+            $msg = array(
+                'status'=> array(
+                    'code'=>404,
+                    'code_status'=>'error',
+                    'type'=> $error1
+                )
+            );
+
+            return array(false, $msg);
+            // var_dump($msg);
+
+        } catch (Stripe_InvalidRequestError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+              // Invalid parameters were supplied to Stripe's API
+              $error2 = $body['error']['type'];
+
+              $msg = array(
+                  'status'=> array(
+                      'code'=>404,
+                      'code_status'=>'error',
+                      'type'=> $error2
+                  )
+              );
+
+              return array(false, $msg);
+              // var_dump($msg);
+
+        } catch (Stripe_AuthenticationError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Authentication with Stripe's API failed
+          $error3 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+                  'code'=>404,
+                  'code_status'=>'error',
+                  'type'=> $error3
+              )
+          );
+
+          return array(false, $msg);
+          // var_dump($msg);
+
+        } catch (Stripe_ApiConnectionError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Network communication with Stripe failed
+          $error4 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+                  'code'=>404,
+                  'code_status'=>'error',
+                  'type'=> $error4
+              )
+          );
+
+          return array(false, $msg);
+          // var_dump($msg);
+
+        } catch (Stripe_Error $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Display a very generic error to the user, and maybe send
+          // yourself an email
+          $error5 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+                  'code'=>404,
+                  'code_status'=>'error',
+                  'type'=> $error5
+              )
+          );
+
+          return array(false, $msg);
+          // var_dump($msg);
+
+        } catch (Exception $e) {
+            $body = $e->getJsonBody();
+            // var_dump($body);
+          // Something else happened, completely unrelated to Stripe
+          $error6 = $body['error']['type'];
+          $err_msg =  $body['error']['message'];
+
+          $msg = array(
+              'status'=> array(
+                  'code'=>404,
+                  'code_status'=>'error',
+                  'type'=> $error6,
+                  'msg'=> $err_msg
+              )
+          );
+
+         return array(false, $msg);
+          // var_dump($msg);
+          // header('location: /products');
+
+      }
+
+
 	}
 
 	function getSkuData($products)

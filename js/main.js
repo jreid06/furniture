@@ -6,119 +6,26 @@
 
 $(document).ready(function() {
 
-    // stripe js code
-    if (window.location.pathname === '/myaccount/home') {
-        console.log('true');
-        $('footer').addClass('d-none');
-    }
+    $('#test-btn').on('click', function(){
 
-    if (window.location.pathname === '/basket' || window.location.pathname.split('/')[1] === 'product') {
-        var handler = StripeCheckout.configure({
-            key: 'pk_test_o1lkn4I74t5tIEB8rdzKbCtp',
-            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-            locale: 'auto',
-            token: function(token, args) {
-                // You can access the token ID with `token.id`.
-                // Get the token ID to your server-side code for use.
-                console.log('test');
-                console.log(token.id);
-                console.log(token.email);
-                console.log(args);
+        $.ajax({
+            url: '/scripts/testscript.php',
+            type: 'post',
+            data:{
+                order: 'or_1Bz1CvL06dWivKUTHhNXzn1G',
+                email: 'info@jbreid.co.uk'
+            },
+            success: function(data){
+                let $data = JSON.parse(data);
 
-                paymentPromise(token.id);
+                console.log($data);
+            },
+            error: function(){
+
             }
-        });
-    }
-
-
-    // Close Checkout on page navigation:
-    window.addEventListener('popstate', function() {
-        handler.close();
-    });
-
-    function paymentPromise(stripetoken) {
-
-        // We make a new promise: we promise a numeric count of this promise, starting from 1 (after waiting 3s)
-        let p1 = new Promise(
-            // The resolver function is called with the ability to resolve or
-            // reject the promise
-            (resolve, reject) => {
-                $.ajax({
-                    url: '/scripts/create.php',
-                    type: 'post',
-                    data: {
-                        token: stripetoken,
-                        basket: JSON.stringify($nav_vue.basket.items)
-                    },
-                    success: function(data) {
-                        let $data = JSON.parse(data);
-
-                        resolve($data);
-                    },
-                    error: function() {
-                        reject('ajax unsuccessful')
-                    }
-                })
-            }
-        );
-
-        // We define what to do when the promise is resolved with the then() call,
-        // and what to do when the promise is rejected with the catch() call
-        p1.then(
-                // Log the fulfillment value
-                function(val) {
-                    console.log(val);
-                })
-            .catch(
-                // Log the rejection reason
-                (reason) => {
-                    console.log(reason);
-                });
-    };
-
-    // stripe js code
-
-    setTimeout(function() {
-        console.log('classes should be added');
-        $('#featuredproduct-4').addClass('d-none d-lg-block');
-        $('#featuredproduct-5').addClass('d-none d-lg-block');
-    }, 400);
-
-    function removeCollapseClass() {
-        if ($(window).width() > 767) {
-            if ($('.footer-collapse').hasClass('collapse')) {
-                $('.footer-collapse').removeClass('collapse');
-            }
-
-            $('.collapse-link').attr('data-toggle', 'false');
-
-        }
-    }
-
-    removeCollapseClass();
-
-    $(window).resize(function() {
-        if ($(window).width() < 768) {
-            if (!$('.footer-collapse').hasClass('collapse')) {
-                $('.footer-collapse').addClass('collapse');
-            }
-
-            // reset the tabs to toggle on click
-            $('.collapse-link').attr('data-toggle', 'collapse');
-
-            // hide last 2 products when screen is less that desktop
-            $('#featuredproduct-4').addClass('d-none d-lg-block');
-            $('#featuredproduct-5').addClass('d-none d-lg-block');
-        }
-
-        if ($(window).width() > 768) {
-            if ($('.footer-collapse').hasClass('collapse')) {
-                $('.footer-collapse').removeClass('collapse');
-            }
-
-            $('.collapse-link').attr('data-toggle', 'false');
-        }
+        })
     })
+
 
     function shakeShoppingIcon() {
         let shoppingIcon = $('.search-basket-nav').find('.fa-shopping-cart');
@@ -348,7 +255,7 @@ $(document).ready(function() {
             'basket-item': basketItem
         },
         data: {
-            testData: 'work',
+            window: window,
             menuStatus: {
                 open: false,
                 mobile: false,
@@ -608,52 +515,6 @@ $(document).ready(function() {
                 }
 
             },
-            // menuStatus: function(value) {
-            // if (!value) {
-            //     console.log('MENU IS CLOSING');
-            //     $('#b2').animate({
-            //         opacity: 1
-            //     }, 300);
-            //
-            //     $('#b1').rotate({
-            //         angle: 43.5,
-            //         center: ["10%", "50%"],
-            //         animateTo: 0
-            //     });
-            //
-            //     $('#b3').rotate({
-            //         angle: -42,
-            //         center: ["10%", "70%"],
-            //         animateTo: 0
-            //     });
-            //
-            //     $('.menu-box').removeClass('menu-open').addClass('menu-closed');
-            // } else if (value) {
-            //     console.log('MENU IS OPENING');
-            //     $('#b2').animate({
-            //         opacity: 0
-            //     }, 200);
-            //
-            //     $('#b1').rotate({
-            //         angle: 0,
-            //         center: ["10%", "50%"],
-            //         animateTo: 43.5
-            //     });
-            //
-            //     $('#b3').rotate({
-            //         angle: 0,
-            //         center: ["10%", "70%"],
-            //         animateTo: -42
-            //     });
-            //
-            //     $('.menu-box').removeClass('menu-closed').addClass('menu-open');
-            //
-            //     let basketStatus = this.basketStatus;
-            //     if (basketStatus) {
-            //         this.basketStatus = !this.basketStatus;
-            //     }
-            // }
-            // },
             searchStatus: function(value) {
                 if (!value) {
                     $('.search-bar').removeClass('search-open').addClass('search-hidden');
@@ -1099,7 +960,7 @@ $(document).ready(function() {
                         }
                     }
 
-                }, 1500);
+                }, 1000);
 
             },
             initializeBasket: function(option) {
@@ -1517,6 +1378,184 @@ $(document).ready(function() {
 
     });
 
+    // stripe js code
+    if (window.location.pathname === '/myaccount/home') {
+        console.log('true');
+        $('footer').addClass('d-none');
+    }
+
+    if (window.location.pathname.split('/')[1] === 'checkout') {
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_o1lkn4I74t5tIEB8rdzKbCtp',
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            opened: function(){
+                console.log('checkout opened');
+                let orderID = $('.payOrder').attr('data-order-id');
+                localStorage.setItem('idyl-order-id', orderID);
+            },
+            token: function(token, args) {
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+                console.log(token.id);
+                console.log(token.email);
+                console.log(args);
+
+                paymentPromise(token.id);
+            }
+        });
+    }
+
+
+    // Close Checkout on page navigation:
+    window.addEventListener('popstate', function() {
+        handler.close();
+    });
+
+    function paymentPromise(stripetoken) {
+
+        // We make a new promise: we promise a numeric count of this promise, starting from 1 (after waiting 3s)
+        let p1 = new Promise(
+            // The resolver function is called with the ability to resolve or
+            // reject the promise
+            (resolve, reject) => {
+
+                let orderID = localStorage.getItem('idyl-order-id');
+                $.ajax({
+                    url: '/scripts/payorder.php',
+                    type: 'post',
+                    data: {
+                        token: stripetoken,
+                        order: orderID
+                    },
+                    success: function(data) {
+                        let $data = JSON.parse(data);
+                        resolve($data);
+                    },
+                    error: function() {
+                        reject('ajax unsuccessful')
+                    }
+                })
+            }
+        );
+
+        // We define what to do when the promise is resolved with the then() call,
+        // and what to do when the promise is rejected with the catch() call
+        p1.then(
+                // Log the fulfillment value
+                function(val) {
+                    console.log(val);
+                    switch (val.status.code) {
+                        case (101 || '101'):
+                            $.notify(val.data.msg, val.status.code_status);
+                            let orderID = localStorage.getItem('idyl-order-id');
+
+                            // delete local storage order data
+                            localStorage.removeItem('idyl-order-id');
+                            console.log('local storage order id removed');
+
+                            // delete checkout cookie
+                            let cookieLocation = localStorage.getItem('checkout-cookie-location');
+                            Cookies.remove('trans_local_token', {path: cookieLocation});
+
+                            //delete basket data
+                            // (front end (NOTE: all users)
+                            // in database (NOTE:logged in users only))
+                            localStorage.removeItem('basket');
+                            $nav_vue.emptyBasket();
+
+                            // delete basket data from database
+                            if ($nav_vue.loggedInStatus) {
+                                $.ajax({
+                                    url: '/scripts/deletebasketdata.php',
+                                    type: 'post',
+                                    data: {
+                                        cusID: $nav_vue.loggedInUser.id
+                                    },
+                                    success: function(data){
+                                        let $data = JSON.parse(data);
+
+                                        console.log("---------------");
+                                        console.log("DELETE BASKET DATA BELOW");
+                                        console.log("---------------");
+                                        console.log($data);
+
+                                        // setTimeout(function(){
+                                        //     window.location =  '/order/confirmation/'+orderID;
+                                        // }, 2000);
+                                    },
+                                    error: function(){
+                                        console.log('error with DELETE BASKET DATA ajax');
+                                    }
+                                })
+                            }else {
+                                setTimeout(function(){
+                                    window.location =  '/order/confirmation/'+orderID;
+                                }, 2000);
+                            }
+
+
+                            break;
+                        case (404 || '404'):
+                            $.notify(val.status.type, 'error');
+                            console.log(val);
+                            break;
+                        default:
+
+                    }
+                })
+            .catch(
+                // Log the rejection reason
+                (reason) => {
+                    console.log(reason);
+                });
+    };
+
+    // stripe js code
+
+    setTimeout(function() {
+        console.log('classes should be added');
+        $('#featuredproduct-4').addClass('d-none d-lg-block');
+        $('#featuredproduct-5').addClass('d-none d-lg-block');
+    }, 400);
+
+    function removeCollapseClass() {
+        if ($(window).width() > 767) {
+            if ($('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').removeClass('collapse');
+            }
+
+            $('.collapse-link').attr('data-toggle', 'false');
+
+        }
+    }
+
+    removeCollapseClass();
+
+    $(window).resize(function() {
+        if ($(window).width() < 768) {
+            if (!$('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').addClass('collapse');
+            }
+
+            // reset the tabs to toggle on click
+            $('.collapse-link').attr('data-toggle', 'collapse');
+
+            // hide last 2 products when screen is less that desktop
+            $('#featuredproduct-4').addClass('d-none d-lg-block');
+            $('#featuredproduct-5').addClass('d-none d-lg-block');
+        }
+
+        if ($(window).width() > 768) {
+            if ($('.footer-collapse').hasClass('collapse')) {
+                $('.footer-collapse').removeClass('collapse');
+            }
+
+            $('.collapse-link').attr('data-toggle', 'false');
+        }
+    })
+
+
     if (window.location.pathname.split('/')[1] === 'myaccount') {
         let $user_vue = new Vue({
             el: '.user-vue',
@@ -1538,40 +1577,6 @@ $(document).ready(function() {
                 }
             },
             methods: {
-                // NOTE: VOID function. No longer adding to basket in wishlist
-                addToBasket: function(e) {
-                    // $nav_vue.addToBasket(e);
-                    console.log('ADD TO BASKET USER VUE');
-                    console.log($(e.target));
-                    let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
-                    console.log(productInfo);
-
-                    // create a new basketItem
-                    // let item = new BasketItem(productInfo.id, productInfo.stripe_id, productInfo.prod_name, productInfo.prod_tags, productInfo.prod_desc, productInfo.price, productInfo.prod_image, productInfo.quantity, productInfo.category);
-
-
-                    // check if basket exist in local Storage
-                    $nav_vue.checkBasketSession();
-                    //
-                    let exists = this.checkItemExists(productInfo);
-                    console.log(exists);
-
-                    if (!exists) {
-                        // update basket with new item
-                        if (productInfo.quantity < 1) {
-                            productInfo.quantity += 1;
-                        }
-
-                        $nav_vue.basketCount += 1;
-                        $nav_vue.basket.items.push(productInfo);
-                        $nav_vue.basketTotal += productInfo.price;
-
-                        localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
-
-                        shakeShoppingIcon();
-                    }
-
-                },
                 removeFromWishlist: function(e) {
                     console.log($(e.target));
                     let productInfo = JSON.parse($(e.target)[0].attributes[0].nodeValue);
@@ -2175,11 +2180,21 @@ $(document).ready(function() {
                     status: 'component works'
                 }
             },
-            props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'accprice', 'index', 'stripeid'],
-            template: `<div class="card basket-card" :id="'basket-checkout-item-'+index">
-                <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <h5 class="card-title">{{itemname}}</h5> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span><strong>Size:</strong>N/A</span>&nbsp; <span><strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"><strong>Total: £{{accprice.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> <hr> </div>
-                </div>`,
+            props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'index', 'prodcolor', 'prodsize'],
+            template: `<div class="card basket-card" :id="'basket-checkout-item-'+index"> <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <h5 class="card-title text-center">{{itemname}}<br>{{capitalizeFirstLetter(prodcolor)}} - {{capitalizeFirstLetter(prodsize)}}</h5> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span><strong>Size:</strong>{{capitalizeFirstLetter(prodsize)}}</span>&nbsp; <span><strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"><strong>Total: £{{price*quantity.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> <hr> </div> </div>`,
             methods: {
+                capitalizeFirstLetter: function(string) {
+                    let splitStr = string.split(' ');
+                    if (splitStr.length > 1) {
+                        for (var i = 0; i < splitStr.length; i++) {
+                            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
+                        }
+                        return splitStr.join(' ');
+                    } else {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                    }
+
+                },
                 removeItem: function(e) {
                     // getting the correct items details from the basket array
                     let itemID = parseInt($(e.target).parent().attr('data-position-id'))
@@ -2192,20 +2207,34 @@ $(document).ready(function() {
                         selectedItem.quantity -= 1;
                         selectedItem.total_price -= selectedItem.price;
                         $nav_vue.basketTotal -= selectedItem.price;
-
+                        $home_vue.basketTotal -= selectedItem.price;
                         localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                        // update database with latest basket info
+                        if ($nav_vue.loggedInStatus) {
+                            console.log('--------ITEM REMOVED FROM BASKET ON BASKET PAGE');
+                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                        }
 
                     } else {
 
-                        if ($nav_vue.basketCount === 1) {
+                        if ($nav_vue.basket.items.length === 1) {
                             $nav_vue.emptyBasket();
                             $home_vue.basketHasItems = false;
                             console.log('HOME VUE basketHasItems STATUS BELOW');
                             console.log($home_vue.basketHasItems);
+                            $home_vue.basketTotal = 0;
+                            // update database with latest basket info
+                            if ($nav_vue.loggedInStatus) {
+                                console.log('---------LAST ITEM REMOVED FROM BASKET ON BASKET PAGE');
+                                $nav_vue.updateBasketDB($nav_vue.basket.items);
+                            }
+
                             return;
                         }
                         $nav_vue.basketCount -= 1;
                         $nav_vue.basketTotal -= selectedItem.total_price;
+                        $home_vue.basketTotal -= selectedItem.total_price;
 
                         console.log(itemrowID);
                         console.log(itemID);
@@ -2218,6 +2247,11 @@ $(document).ready(function() {
                         console.log($nav_vue.basket.items);
 
                         localStorage.setItem('basket', JSON.stringify($nav_vue.basket.items));
+
+                        // update database with latest basket info
+                        if ($nav_vue.loggedInStatus) {
+                            $nav_vue.updateBasketDB($nav_vue.basket.items);
+                        }
                     }
                 }
             }
@@ -2419,6 +2453,7 @@ $(document).ready(function() {
                 'filter-item': filterItem
             },
             data: {
+                window: window,
                 slidesActive: true,
                 selectedProduct: false,
                 prodQuantity: 1,
@@ -2426,7 +2461,11 @@ $(document).ready(function() {
                 featuredProducts: [],
                 createUserSuccess: '',
                 basketHasItems: false,
+                basketTotal: 0,
                 filterStatus: false,
+                checkoutValues: {
+                    savedDetails: false
+                },
                 basket: {
                     items: ''
                 },
@@ -2721,6 +2760,38 @@ $(document).ready(function() {
                 ]
             },
             methods: {
+                payment: function(e) {
+                    // get the total of the basket
+                    let orderTotal = $(e.target).attr('data-total'),
+                        userEmail = $(e.target).attr('data-customer');
+
+                    // send over customer email and other info here
+
+                    // console.log(basketTotal * 100);
+                    handler.open({
+                        name: 'idyl',
+                        description: 'Multiple Purchases',
+                        amount: orderTotal,
+                        currency: 'gbp',
+                        zipCode: true,
+                        billingAddress: true,
+                        email: userEmail
+
+                    });
+                },
+                setPaymentCookie: function(e){
+                    let targetEl = $(e.target)[0],
+                        locationURL = targetEl.attributes['data-href'].value,
+                        inhour= new Date(new Date().getTime() + 60 * 60 * 1000);
+
+                    Cookies.set('trans_local_token', 'user-checkout',{expires: inhour, path: locationURL});
+                    localStorage.setItem('checkout-cookie-location', locationURL);
+
+                    setTimeout(function(){
+                        window.location = locationURL;
+                    },200);
+
+                },
                 renderStoryContent: function(){
                     let id = '8f003a39e5',
                         table = 'pages',
@@ -2768,24 +2839,6 @@ $(document).ready(function() {
                 },
                 addToWishlist: function() {
                     $nav_vue.addToWishlist();
-                },
-                payment: function(e) {
-                    // get the total of the basket
-                    let basketTotal = parseInt($nav_vue.basketTotal) * 100;
-
-                    // send over customer email and other info here
-
-                    // console.log(basketTotal * 100);
-                    handler.open({
-                        name: 'idyl',
-                        description: 'Multiple Purchases',
-                        amount: basketTotal,
-                        currency: 'gbp',
-                        zipCode: true,
-                        billingAddress: true,
-                        shippingAddress: true
-
-                    });
                 },
                 addtoQuant: function() {
                     this.prodQuantity += 1;
@@ -2981,7 +3034,7 @@ $(document).ready(function() {
 
                             shakeShoppingIcon();
                         }
-                    }, 1600)
+                    }, 1300)
 
 
                 },
@@ -3272,6 +3325,51 @@ $(document).ready(function() {
 
                 })
 
+                // click event for shipping choice radio buttons
+
+                $('.rate-radio').on('click', function(e){
+                    let targetElement = $(e.target)[0],
+                        allRateRadios = $('#shipping-method-radios').find('.rate-radio'),
+                        targetRate = $(targetElement).attr('data-rate-id'),
+                        orderID = $(targetElement).attr('data-order-id');
+
+                    // console.log(targetElement);
+                    // console.log(allRateRadios);
+
+                    for (var i = 0; i < allRateRadios.length; i++) {
+                        if (allRateRadios[i].checked) {
+                            allRateRadios[i].checked = false;
+                        }
+                    }
+
+                    targetElement.checked = true;
+                    console.log(targetRate);
+                    console.log(orderID);
+
+                    //send ajax to update selected order shipping method
+                    $.ajax({
+                        url: '/scripts/order_functions.php',
+                        type: 'post',
+                        data:{
+                            rate: targetRate,
+                            order: orderID
+                        },
+                        success: function(data){
+                            let $data = JSON.parse(data),
+                                newAmount = ($data.data.new_amount/100).toFixed(2);
+
+                            // update span total with new order amount
+                            $('#total-order-price').html(newAmount);
+                            $('.payOrder').attr('data-total', $data.data.new_amount);
+
+                        },
+                        error: function(){
+                            console.log('error with ajax request');
+                        }
+                    })
+
+                })
+
                 // only get featured products if user is on home page or individual product page
 
                 if (window.location.pathname === '/' || window.location.pathname.split('/')[1] === 'product') {
@@ -3280,6 +3378,24 @@ $(document).ready(function() {
 
                 if (window.location.pathname.split('/')[1] === 'our-story') {
                     this.renderStoryContent();
+                }
+
+                if (window.location.pathname.split('/')[1] === 'checkout') {
+                    console.log('chcekout');
+                    window.addEventListener('load', function() {
+                      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                      var forms = document.getElementsByClassName('needs-validation');
+                      // Loop over them and prevent submission
+                      var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                          if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                          form.classList.add('was-validated');
+                        }, false);
+                      });
+                    }, false);
                 }
 
 
@@ -3293,7 +3409,22 @@ $(document).ready(function() {
             if (newVal.length < 1) {
                 $home_vue.basketHasItems = false;
                 $('.loader-screen').css({'display':'none'});
+                $home_vue.basketTotal = 0;
+            }else if(newVal.length > oldVal.length){
+                //add to the total price when item is added to basket
+                for (var i = 0; i < newVal.length; i++) {
+                    $home_vue.basketTotal += (newVal[i].price * newVal[i].quantity);
+                }
+
             }
+
+
+            console.log("BASKET ITEMS CHANGED HOME VUE");
+            $home_vue.basketTotal = 0;
+            for (var i = 0; i < newVal.length; i++) {
+                $home_vue.basketTotal += (newVal[i].price * newVal[i].quantity);
+            }
+
         })
     } else {
         console.log('home hidden');

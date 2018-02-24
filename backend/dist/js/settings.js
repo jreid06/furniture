@@ -7,6 +7,27 @@ $(document).ready(function() {
 
     console.log('settings is connected');
 
+    let $dashboard_vue = new Vue({
+        el: '.dash-vue',
+        data:{
+            status: 'dashboard vue connected'
+        },
+        watch: {
+
+        },
+        computed: {
+
+        },
+        methods: {
+            dashhome: function(){
+                window.location = '/';
+            }
+        },
+        mounted: function(){
+
+        }
+    })
+
     /* //////////////////////////////////////////////////////// */
 
     // GET CONTENT FUNCTIONS TO POPULATE MARKDOWN EDITORS

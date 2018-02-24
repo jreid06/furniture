@@ -51,11 +51,9 @@
 
         <!-- ONLINE SLICK -->
         <script src="/slick-1.8.0/slick/slick.min.js"></script>
-        <!-- <script src="https://js.stripe.com/v3/"></script> -->
 
         <!-- NOTE: allow script to work in basket only -->
-        <!-- $_SERVER['REQUEST_URI'] === "/basket" -->
-        <?php if (true): ?>
+        <?php if (explode("/", $_SERVER['REQUEST_URI'])[1] === 'checkout' || explode("/", $_SERVER['REQUEST_URI'])[1] === 'basket' ): ?>
             <script src="https://checkout.stripe.com/checkout.js"></script>
         <?php endif; ?>
 

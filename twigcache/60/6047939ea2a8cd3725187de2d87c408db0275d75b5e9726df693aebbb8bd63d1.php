@@ -230,7 +230,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         <div id=\"prod-returns\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
 
-                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button>
+                                <!-- <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button> -->
 
                                 <pre>
 
@@ -255,7 +255,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             <h5 class=\"text-center\">you might also like</h5>
 
             <div class=\"row related-products-row\">
-                <featured
+                <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
@@ -269,7 +269,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:productprice=\"featured.skus.data[0].price\"
                         v-bind:productcat = \"featured.skus.data[0].attributes.category\"
                         v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
-                </featured>
+                </featured> -->
                 <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"
                         v-bind:key=\"index\"
@@ -451,7 +451,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         <div id=\"prod-returns\" class=\"collapse\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
 
-                                <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button>
+                                <!-- <button class=\"btn btn-info payOrder\" v-on:click=\"payment\" data-customer=\"\" data-shipping-address=\"true\">Confirm order & pay order</button> -->
 
                                 <pre>
 
@@ -476,7 +476,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             <h5 class=\"text-center\">you might also like</h5>
 
             <div class=\"row related-products-row\">
-                <featured
+                <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"
                         v-bind:key=\"index\"
                         v-bind:indexkey=\"index\"
@@ -490,7 +490,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         v-bind:productprice=\"featured.skus.data[0].price\"
                         v-bind:productcat = \"featured.skus.data[0].attributes.category\"
                         v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
-                </featured>
+                </featured> -->
                 <!-- <featured
                         v-for=\"(featured, index) in featuredProducts\"
                         v-bind:key=\"index\"

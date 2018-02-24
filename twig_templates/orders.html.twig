@@ -4,7 +4,6 @@
             <thead class="thead-dark">
                 <tr>
                   <th scope="col">Order #No.</th>
-                  <th scope="col">Items</th>
                   <th scope="col">Created</th>
                   <th scope="col">Status</th>
                   <th scope="col">Date Paid</th>
@@ -15,7 +14,6 @@
                 {% for order in orderSQL %}
                     <tr>
                         <th scope="row" style="vertical-align: middle;">{{order.real_json.id}}</th>
-                        <td>{{itemCount |length}}</td>
                         <td>{{order.real_json.created |timestamp_format()['full_date']}}</td>
                         <td>{{order.real_json.status}}</td>
                         <td>{{order.real_json.status_transitions.paid |timestamp_format()['full_date']}}</td>

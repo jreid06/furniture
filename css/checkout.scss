@@ -1,0 +1,120 @@
+.checkout-home{
+    @include respond-to($lg-break){
+        top: 91px !important;
+    };
+}
+
+.form-details-column{
+    // border: 1px solid black;
+    height: auto;
+    padding: 10px;
+
+    @include respond-to($md-break){
+        // height: 500px;
+    };
+
+
+}
+
+.details-card{
+    border: 0px solid;
+}
+
+#checkout-form-guest{
+    .input-group-prepend{
+        padding: 10px;
+        border: 1px solid gold;
+    }
+}
+
+.paynow{
+    // border: 1px solid green;
+    height: auto;
+    padding: 10px;
+
+    @include respond-to($md-break){
+        height: 200px;
+    };
+}
+
+.checkout-edit-btn{
+    margin-bottom: 20px;
+}
+
+.item-column{
+    height: 200px;
+    overflow-x: scroll;
+}
+
+.basket-listing{
+    // border: 1px solid red;
+    // height: 300px;
+    padding: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    @include respond-to($lg-break){
+        padding: 40px 10px 10px 10px;
+    };
+}
+
+.basket-item-checkout{
+
+    .p-2{
+        width: calc(100%/4);
+    }
+    .item-image{
+        text-align: center;
+        img{
+            width: 70%;
+        }
+    }
+
+    .item-details{
+        text-align: center;
+        h6{
+            font-weight: 300;
+            font-size: 12px;
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item-total-price{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 100;
+    }
+
+}
+
+.price-td{
+    text-align: right !important;
+    padding-right: 32px !important;
+}
+
+.loggedin-checkout-table{
+    tr{
+        td{
+            width: 50%;
+            // border: 1px solid red;
+            &:nth-child(1){
+                text-align: left;
+                font-weight: bold;
+                &::after{
+                    content: '\003A'
+                }
+            }
+        }
+    }
+}
+
+.payment-td{
+    text-align: center !important;
+    &::after{
+        content: '' !important;
+    }
+}

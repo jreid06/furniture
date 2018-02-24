@@ -65,7 +65,7 @@
                 <div class="col-12">
                     <h5 class="text-center">FEATURED PRODUCTS</h5>
                 </div>
-                <featured
+                <!-- <featured
                         v-for="(featured, index) in featuredProducts"
                         v-bind:key="index"
                         v-bind:indexkey="index"
@@ -79,7 +79,7 @@
                         v-bind:productprice="featured.skus.data[0].price"
                         v-bind:productcat = "featured.skus.data[0].attributes.category"
                         v-bind:productcattype="featured.skus.data[0].attributes.type">
-                </featured>
+                </featured> -->
             </div>
 
             <!--  -->

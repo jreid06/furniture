@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <table class="table confirm-order-table">
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Item Name</th>
+                  <th scope="col">type</th>
+                  <th scope="col">SKU ID / Shipping ID</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items %}
+                    <tr>
+                        <th scope="row" style="vertical-align: middle;">{{item.description}}</th>
+                        <td>{{item.type}}</td>
+                        <td>
+                            {% if item.parent == 'null' %}
+                                N/A
+                            {% else %}
+                                {{item.parent}}
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {% if item.quantity == 'null' %}
+                                0
+                            {% else %}
+                                {{item.quantity}}
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            £ {{item.amount / 100 | number_format(2)}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+    </div>
+    <div class="col-12 col-lg-12">
+        <div class="row">
+            <div class="col-12 col-md-6">
+
+            </div>
+            <div class="col-12 col-md-6">
+                <h4 class="text-right">Total: £ {{order.amount / 100 | number_format(2)}}</h4>
+            </div>
+        </div>
+    </div>
+</div>

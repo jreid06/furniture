@@ -41,7 +41,7 @@
 					$sign_in_status = 'cookie';
 
 					// create logged in cookies
-					if (generatecookieToken(20 ,$email, $userDetails['fname'], $userDetails['cus_id'], $userDetails['address'])) {
+					if (generatecookieToken(20 ,$email, $userDetails['fname'], $userDetails['cus_id'], $userDetails['address'], $userDetails['stripe_cus_id'])) {
 
 						$msg = array(
 							'status'=>array(
@@ -77,6 +77,7 @@
 					$_SESSION['idyl_tkn'] = bin2hex(random_bytes(20));
 					$_SESSION['idyl_unm'] = $userDetails['fname'];
 					$_SESSION['idyl_qni'] = $userDetails['cus_id'];
+					$_SESSION['idyl_str_id'] = $userDetails['stripe_cus_id'];
 					$_SESSION['idyl_uem'] = $email;
 					$_SESSION['idyl_uaddrs'] = $userDetails['address'];
 

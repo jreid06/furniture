@@ -94,13 +94,17 @@
 
         public static function deleteInfo($tbl, $value)
         {
-            $query = "DELETE FROM $tbl WHERE id='$value'";
+            parent::checkConnection();
+
+            $query = "DELETE FROM $tbl WHERE customer_id='$value'";
 
             if (parent::returnConnection()->query($query)) {
-                $result = array('777','Image data deleted from successfully', true);
+                $result = true;
+
                 return $result;
             } else {
-                $result = array('222','ERROR deleting image data from database', false);
+                $result = false;
+
                 return $result;
             }
         }
@@ -365,22 +369,6 @@
             return true;
         }
 
-        public static function addGalleryImages($tbl, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9)
-        {
-            $query = parent::returnConnection()->prepare("INSERT INTO $tbl (imgAddress, imgAlt, imgDesc, img_size, uploadedBy, dateDay, date_hisTime, date_month, date_weekday) VALUES (?,?,?,?,?,?,?,?,?)");
-
-            $query->bind_param("sssssssss", $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9);
-
-            // $value6 = password_hash($value6, PASSWORD_DEFAULT);
-
-            $query->execute();
-
-            $query->close();
-            parent::returnConnection()->close();
-
-            // return "User Created Successfully";
-        }
-
         public static function createRow($tbl, $fields, $value1, $value2)
         {
             Connect::checkConnection();
@@ -397,6 +385,26 @@
             return true;
 
         }
+
+        public static function addOrderData($tbl, $fields, $value1, $value2, $value3)
+        {
+            Connect::checkConnection();
+
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl $fields VALUES (?,?, ?)");
+
+            $query->bind_param('sss',$value1, $value2, $value3);
+            if($query->execute()){
+                $query->close();
+
+                parent::returnConnection()->close();
+
+                return true;
+            }else {
+                return false;
+            }
+
+        }
+
 
         // $values = array();
         // ** must be equal

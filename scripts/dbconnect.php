@@ -3,6 +3,8 @@
     define('ROOT_PATH', dirname(__DIR__).'/');
 
 	require_once "random_compat-2.0.10/lib/random.php";
+	require_once "easypost-php/lib/easypost.php";
+	// require_once "shippo-php-client/lib/Shippo.php";
 	require_once 'functions.php';
 
 	require_once ROOT_PATH.'vendor/autoload.php';
@@ -46,7 +48,8 @@
 		'classes/connect.php',
 		'classes/database.php',
 		'classes/logout.php',
-		'classes/address.php'
+		'classes/address.php',
+		'classes/itemorder.php'
 	);
 	foreach($includes as $file) {
      	include_once ROOT_PATH . $file;

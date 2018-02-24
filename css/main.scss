@@ -6,6 +6,7 @@
 @import "basket";
 @import "products";
 @import "help";
+@import "checkout";
 
 body, html{
 	overflow: hidden;
@@ -57,6 +58,13 @@ footer{
 		padding-bottom: 20px;
 		text-align: left;
 		top: 255px;
+	};
+
+	@include respond-to($lg-break){
+		padding-top: 40px;
+		padding-bottom: 20px;
+		text-align: left;
+		top: 195px;
 	};
 
 	a{

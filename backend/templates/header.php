@@ -9,13 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IDYL - Stories - edit</title>
+    <title>IDYL - Stories - dashboard</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/backend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/backend/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- <link href="/backend/vendor/metisMenu/metisMenu.min.css" rel="stylesheet"> -->
 
     <!-- Custom CSS -->
     <link href="/backend/dist/css/sb-admin-2.css" rel="stylesheet">
@@ -25,6 +25,8 @@
     <link href="/backend/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/node_modules/simplemde/dist/simplemde.min.css">
+
+    <script src="/js/vue.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

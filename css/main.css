@@ -133,6 +133,9 @@
   vertical-align: middle;
   text-align: center; }
 
+.confirm-order-table td {
+  text-align: left !important; }
+
 .btn-primary {
   background-color: #f2f2f2;
   border: 2px solid #f2f2f2;
@@ -925,6 +928,80 @@ input:focus {
       margin-bottom: 20px;
       text-transform: uppercase; }
 
+@media only screen and (min-width: 992px) {
+  .checkout-home {
+    top: 91px !important; } }
+
+.form-details-column {
+  height: auto;
+  padding: 10px; }
+
+.details-card {
+  border: 0px solid; }
+
+#checkout-form-guest .input-group-prepend {
+  padding: 10px;
+  border: 1px solid gold; }
+
+.paynow {
+  height: auto;
+  padding: 10px; }
+  @media only screen and (min-width: 768px) {
+    .paynow {
+      height: 200px; } }
+
+.checkout-edit-btn {
+  margin-bottom: 20px; }
+
+.item-column {
+  height: 200px;
+  overflow-x: scroll; }
+
+.basket-listing {
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+  @media only screen and (min-width: 992px) {
+    .basket-listing {
+      padding: 40px 10px 10px 10px; } }
+
+.basket-item-checkout .p-2 {
+  width: calc(100%/4); }
+.basket-item-checkout .item-image {
+  text-align: center; }
+  .basket-item-checkout .item-image img {
+    width: 70%; }
+.basket-item-checkout .item-details {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .basket-item-checkout .item-details h6 {
+    font-weight: 300;
+    font-size: 12px; }
+.basket-item-checkout .item-total-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 100; }
+
+.price-td {
+  text-align: right !important;
+  padding-right: 32px !important; }
+
+.loggedin-checkout-table tr td {
+  width: 50%; }
+  .loggedin-checkout-table tr td:nth-child(1) {
+    text-align: left;
+    font-weight: bold; }
+    .loggedin-checkout-table tr td:nth-child(1)::after {
+      content: ":"; }
+
+.payment-td {
+  text-align: center !important; }
+  .payment-td::after {
+    content: '' !important; }
+
 body, html {
   overflow: hidden;
   height: 100%;
@@ -963,6 +1040,12 @@ footer {
       padding-bottom: 20px;
       text-align: left;
       top: 255px; } }
+  @media only screen and (min-width: 992px) {
+    footer {
+      padding-top: 40px;
+      padding-bottom: 20px;
+      text-align: left;
+      top: 195px; } }
   footer a {
     color: #f2f2f2; }
   footer .card {

@@ -1,4 +1,7 @@
-<nav id="nav" class="nav-vue">
+
+<?php if ($_SERVER['REQUEST_URI'] === '/checkout'): $hidden = true; ?><?php endif; ?>
+
+<nav id="nav" class="nav-vue" style="<?php if($hidden): ?>visibility: hidden <?php endif; ?>">
     <div class="mobile-login-help d-lg-none">
         <a href="/help">help</a>
 
@@ -78,12 +81,23 @@
             </ul>
             <div class="search-basket-nav">
                 <span class="fa fa-search" v-on:click="searchToggle"></span>
-                <span class="fa fa-shopping-cart empty" v-on:click="basketToggle"></span>
+                <template v-if="window.location.pathname.split('/')[2] === 'user' || window.location.pathname.split('/')[2] === 'guest'">
+                    <span class="fa fa-shopping-cart empty disabled"></span>
+                </template>
+                <template v-else>
+                    <span class="fa fa-shopping-cart empty" v-on:click="basketToggle"></span>
+                </template>
+
             </div>
         </div>
         <div class="p-2 search-basket-nav order-3">
             <span class="fa fa-search" v-on:click="searchToggle"></span>
-            <span class="fa fa-shopping-cart empty" v-on:click="basketToggle"></span>
+            <template v-if="window.location.pathname.split('/')[2] === 'user' || window.location.pathname.split('/')[2] === 'guest'">
+                <span class="fa fa-shopping-cart empty disabled" style="cursor: not-allowed "></span>
+            </template>
+            <template v-else>
+                <span class="fa fa-shopping-cart empty" v-on:click="basketToggle"></span>
+            </template>
         </div>
     </div>
     <div class="search-bar search-hidden">
@@ -398,4 +412,8 @@
         <div class="double-bounce1"></div>
         <div class="double-bounce2"></div>
     </div>
+</div>
+
+<div class="test div" style="position: absolute; background-color: green; z-index: 100000;">
+    <h1 id="test-btn" class="btn btn-info">debug</h1>
 </div>

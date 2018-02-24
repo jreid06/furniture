@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-default navbar-static-top dash-vue" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -7,7 +7,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">OUR STORY</a>
+
+        <img src="/assets/general/idyl_original_logo.png" alt="idyl logo" width="80" height="45" style="margin-top:2px; padding-left: 15px;" @click="dashhome">
+
     </div>
     <!-- /.navbar-header -->
 

@@ -1,4 +1,6 @@
-<footer class="nav-vue">
+<?php if ($_SERVER['REQUEST_URI'] === '/checkout'): $hidden = true; ?><?php endif; ?>
+
+<footer class="nav-vue" style="<?php if(isset($hidden) && $hidden): ?>display: none <?php endif; ?>">
 	<div id="accordion" role="tablist">
 		<!-- <div class="card">
 		    <div class="card-header ch-footer" role="tab" id="headingOne">
