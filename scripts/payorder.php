@@ -175,6 +175,8 @@
           // $order->save();
 
           // if ($receipt_status[0]) {
+          $easypost_error =  false;
+
           $msg = array(
               'status'=>array(
                   'code'=>101,
@@ -194,7 +196,7 @@
 
           exit(json_encode($msg));
 
-          $easypost_error =  false;
+
      }catch (\EasyPost\Error $e) {
           $easypost_error = $e->ecode;
           $shipment = false;
