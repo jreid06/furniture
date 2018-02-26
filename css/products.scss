@@ -66,6 +66,12 @@
         }
     }
 
+    .products-full-width{
+        @include respond-to($lg-break){
+            width: 100% !important;
+        };
+    }
+
 }
 
 .closed-filter{
