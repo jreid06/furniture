@@ -806,6 +806,9 @@ input:focus {
     @media only screen and (min-width: 1200px) {
       .products-page-content .p-2:nth-child(2) {
         width: 80%; } }
+  @media only screen and (min-width: 992px) {
+    .products-page-content .products-full-width {
+      width: 100% !important; } }
 
 .closed-filter {
   width: 0%; }
