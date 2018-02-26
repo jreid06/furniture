@@ -293,7 +293,7 @@ $(document).ready(function() {
                     title: 'brands'
                 },
                 {
-                    address: '/product/livingroom/sofas/3-seater-clic-clac-sofa-bed-in-turquoise-blue/7573f9a381d51775LIV#',
+                    address: '/products/gifts',
                     title: 'gifts'
                 },
                 {
@@ -2408,9 +2408,10 @@ $(document).ready(function() {
                     $('.product-card-col').remove();
 
                     // show loader in box for 2 seconds
-                    $('.loader-screen').css({
+                    $('.loader-filter').css({
                         'z-index': '20',
-                        'visibility': 'visible'
+                        'visibility': 'visible',
+                        'display':'block'
                     });
 
                     // send ajax over with the selected values array
@@ -2428,7 +2429,7 @@ $(document).ready(function() {
 
 
                             setTimeout(function() {
-                                $('.loader-screen').css({
+                                $('.loader-filter').css({
                                     'z-index': '1',
                                     'visibility': 'hidden'
                                 });
