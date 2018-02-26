@@ -4,7 +4,7 @@
     include ROOT_PATH.'templates/nav.php';
  ?>
 
-    <div class="container-fluid home brand-home" style="">
+    <div class="container-fluid home brands-home" style="">
 
         <h3 class="text-center" style="margin-top: 10px;">Brands</h3>
 
