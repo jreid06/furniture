@@ -1088,6 +1088,14 @@ footer {
   #contact-info li:nth-child(4) {
     text-transform: capitalize !important; }
 
+@media only screen and (min-width: 992px) {
+  .brands-home {
+    top: 105px !important; } }
+
+.brand-title-listing a {
+  color: #222;
+  font-weight: 200; }
+
 .active-nav-link {
   border-bottom: 2px solid; }
 

@@ -137,6 +137,29 @@ footer{
 }
 // footer scss code
 
+
+
+
+// BRANDS START SCSS CODE
+
+.brands-home{
+	@include respond-to($lg-break){
+		top: 105px !important;
+	};
+}
+
+.brand-title-listing{
+	a{
+		color: #222;
+		font-weight: 200;
+	}
+}
+
+
+
+
+// BRANDS END
+
 .active-nav-link{
     border-bottom: 2px solid;
 }
