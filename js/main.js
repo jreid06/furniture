@@ -2711,6 +2711,343 @@ $(document).ready(function() {
                         }
                     ]
                 },
+                brands: [
+                    {
+                        id: 1,
+                        letter: 'a',
+                        brand_array: [
+                        {
+                            name: 'Alexander and James',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+                        },
+                        {
+                            name: 'ALF Italia',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+                        }]
+                    },
+                    {
+                        id: 2,
+                        letter: 'b',
+                        brand_array: [{
+                            name: 'Bernh. Pedersen & Son',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Bestlite',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 3,
+                        letter: 'c',
+                        brand_array: [
+                            {
+                            name: 'Calligaris',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Collins & Hayes',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 5,
+                        letter: 'e',
+                        brand_array: [{
+                            name: 'Ercol',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Erik Jorgensen',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 7,
+                        letter: 'g',
+                        brand_array: [{
+                            name: 'Gubi',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Getama',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 14,
+                        letter: 'n',
+                        brand_array: [{
+                            name: 'Natuzzi',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Naver Collection',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                      },
+                      {
+                          name: 'Normann Copenhagen',
+                          slug: '',
+                          createSlug: function(){
+                              let splitToLower = this.name.split(' ');
+
+                              for(let i = 0; i < splitToLower.length; i++){
+                                splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                              }
+                              this.slug = splitToLower.join('-');
+                              return this.slug;
+                         }
+
+                      }]
+                    },
+                    {
+                        id: 16,
+                        letter: 'p',
+                        brand_array: [{
+                            name: 'Parker Knoll',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Pandul',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                      }]
+                    },
+                    {
+                        id: 18,
+                        letter: 'r',
+                        brand_array: [{
+                            name: 'Ranch',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Rosendahl',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 19,
+                        letter: 's',
+                        brand_array: [{
+                            name: 'Skagerak Denmark',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name:'SOFTLINE',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    },
+                    {
+                        id: 22,
+                        letter: 'v',
+                        brand_array: [{
+                            name: 'Verpan',
+                            slug: '',
+                            createSlug: function(){
+                                let splitToLower = this.name.split(' ');
+
+                                for(let i = 0; i < splitToLower.length; i++){
+                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                }
+                                this.slug = splitToLower.join('-');
+                                return this.slug;
+                           }
+
+                       },
+                       {
+                           name: 'Versus',
+                           slug: '',
+                           createSlug: function(){
+                               let splitToLower = this.name.split(' ');
+
+                               for(let i = 0; i < splitToLower.length; i++){
+                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                               }
+                               this.slug = splitToLower.join('-');
+                               return this.slug;
+                          }
+
+                       }]
+                    }
+                ],
                 blogStories: [{
                         id: 'BP0001',
                         status: 'LIVE',
