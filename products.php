@@ -8,7 +8,7 @@
     parse_str($_SERVER['QUERY_STRING'], $output);
 
     // check whart paremeters have been added to determine what product data to get
-    if (!isset($_GET['cat']) || !$_GET['cat']) {
+    if (!isset($_GET['cat']) || !$_GET['cat'] || $_GET['cat'] === 'gifts') {
         $data = 'show all products';
         $category = 'all';
 
@@ -17,11 +17,19 @@
             "limit" => 20
         ));
 
-        $details = array(
-            'num_of_products'=>'all',
-            'products'=>$stripe_products,
-            'category'=> $category
-        );
+        if (isset($_GET['cat']) && $_GET['cat'] === 'gifts') {
+            $details = array(
+                'num_of_products' => 'gifts',
+                'products' => $stripe_products,
+                'category'=> $category
+            );
+        }else {
+            $details = array(
+                'num_of_products'=>'all',
+                'products'=>$stripe_products,
+                'category'=> $category
+            );
+        }
 
         $breadcrumbs = array();
     }
@@ -73,6 +81,7 @@
         'msg' => $data,
         'breadcrumb'=>$breadcrumbs,
         'queryDetails'=> isset($details)?$details:false,
+        'pagelocation'=>$_SERVER['REQUEST_URI']
     ));
 
 

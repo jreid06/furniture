@@ -5,39 +5,42 @@
             <nav aria-label="breadcrumb" role="navigation">
               <ol class="breadcrumb">
                 <!-- render list items dynamically based on $_GET parameters set on products.php -->
-
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
 
-                {% if not breadcrumb.one and not breadcrumb.two %}
-                    <li class="breadcrumb-item active">Products</li>
-                {% else %}
+                {% if pagelocation == '/products/gifts' %}
+
                     <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                    <li class="breadcrumb-item active">Gifts</li>
+
+                {% else %}
+
+                    {% if not breadcrumb.one and not breadcrumb.two %}
+                        <li class="breadcrumb-item active">Products</li>
+                    {% else %}
+                        <li class="breadcrumb-item"><a href="/products">Products</a></li>
+                    {% endif %}
+
+                    {% if breadcrumb.one is defined and not breadcrumb.two is defined %}
+                        <li class="breadcrumb-item active">{{breadcrumb.one}}</li>
+                    {% endif %}
+
+                    {% if breadcrumb.one is defined and breadcrumb.two is defined %}
+                        <li class="breadcrumb-item ">
+                            <a href="/products/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if breadcrumb.two is defined %}
+                        <li class="breadcrumb-item active" aria-current="page">{{breadcrumb.two}}</li>
+                    {% endif %}
+
                 {% endif %}
 
-                {% if breadcrumb.one is defined and not breadcrumb.two is defined %}
-                    <li class="breadcrumb-item active">{{breadcrumb.one}}</li>
-                {% endif %}
 
-                {% if breadcrumb.one is defined and breadcrumb.two is defined %}
-                    <li class="breadcrumb-item ">
-                        <a href="/products/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
-                    </li>
-                {% endif %}
-
-                {% if breadcrumb.two is defined %}
-                    <li class="breadcrumb-item active" aria-current="page">{{breadcrumb.two}}</li>
-                {% endif %}
 
               </ol>
               <!--  -->
             </nav>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            {% if queryDetails.products is defined %}
-                <!-- <pre>{{ queryDetails.products}}</pre> -->
-            {% endif %}
         </div>
     </div>
 
@@ -49,9 +52,19 @@
         </div>
 
         <div class="col-12">
-            <p class="text-center"><small>{{msg}}</small></p>
-            <h4 class="text-center filter-title-display">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
-            <br>
+            {% if pagelocation == '/products/gifts' %}
+                <br>
+                <h4 class="text-center filter-title-display">Showing all Gift products</h4>
+                <br>
+
+            {% else %}
+
+                <p class="text-center"><small>{{msg}}</small></p>
+                <h4 class="text-center filter-title-display">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+                <br>
+
+            {% endif %}
+
 
         </div>
 
@@ -59,7 +72,14 @@
 
 
         <div class="col-12 d-flex flex-wrap flex-row products-page-content">
-            <div class="p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row">
+
+            {% if pagelocation == '/products/gifts' %}
+                {% set hideFilter = true %}
+            {% else %}
+                {% set hideFilter = false %}
+            {% endif %}
+
+            <div class="p-2 filter filter-mobile closed-filter d-flex flex-wrap flex-row" style="{% if hideFilter %}display: none !important;{% endif %}">
 
                 <div class="p-2">
                     <div id="accordion">
@@ -361,22 +381,43 @@
                 </div>
 
             </div>
-            <div class="p-2 products-page-container">
+            <div class="p-2 products-page-container {% if hideFilter %}products-full-width{% endif %}">
                 <div class="row" id="products-row">
-                    <!-- NOTE: COLUMN WILL GO IN A FOR LOOP  -->
-                        <!-- <div class="col-12">
-                            <p class="text-center"><small>{{msg}}</small></p>
-                            <h4 class="text-center">Showing all {% if queryDetails.category is defined and queryDetails.type is defined %} {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
-                            <br>
 
-                        </div> -->
-
-                        <div class="loader-screen">
+                        <div class="loader-screen loader-filter">
                             <div class="spinner">
                                 <div class="double-bounce1"></div>
                                 <div class="double-bounce2"></div>
                             </div>
                         </div>
+
+                        {% if queryDetails.num_of_products == 'gifts' %}
+
+                            {% for product in queryDetails.products.data %}
+
+                                {% for sku in product.skus.data %}
+
+                                    {% if sku.attributes.gift %}
+                                    <div class="col-6 col-md-4 col-lg-3 product-card-col">
+                                        <div class="card product-card" style="">
+                                            <div class="product-image">
+                                                <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
+                                            </div>
+                                            <div class="card-body">
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class="">{{sku.attributes.category | camel_case()}}</h6>
+                                                <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
 
                         {% if queryDetails.num_of_products == 'all' %}
 
