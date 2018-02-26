@@ -14,7 +14,6 @@
                 <div class="col-12 col-sm-6 col-lg-4">
                     <br>
                     <h4>{{ brandobj.letter.toUpperCase() }}</h4>
-                    <hr>
 
                     <ul class="list-group list-group-flush">
                     <template v-for="(brand, index) in brandobj.brand_array">
