@@ -50,4 +50,31 @@
             </div>
         </div>
     </div>
+    <div class="col-12">
+        <h4>DELIVERY ORDER ID: #{{order.metadata['easypost-order-id']}}<span class="badge badge-success"></span></h4>
+        <br>
+    </div>
+    <div class="col-12 col-lg-12">
+        <table class="table confirm-order-table">
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Shipment ID</th>
+                  <th scope="col">Tracking Code</th>
+                  <th scope="col">Carrier</th>
+                  <th scope="col">Item Associated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in metadata_details %}
+                <tr>
+                    <th scope="row" style="vertical-align: middle;">{{order.metadata[item.shipment_id]}}</th>
+                    <td>{{order.metadata[item.tracker_code]}}</td>
+                    <td>{{item.carrier}}</td>
+                    <td>{{item.name}}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
 </div>

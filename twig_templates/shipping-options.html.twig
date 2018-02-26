@@ -6,11 +6,36 @@
         <div class="input-group">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="radio" class="rate-radio" aria-label="Radio button for following text input" data-rate-id="{{rates.id}}" data-order-id="{{order.id}}" {% if default_shipping == rates.id %}checked="checked"{% endif %}>
+                    <input type="radio" class="rate-radio" aria-label="Radio button for following text input" data-rate-id="{{rates.id}}" data-order-id="{{order.id}}" data-ep-order-id="{{easypost_order.id}}" data-carrier="{{ep_shipping_methods[loop.index0].carrier}}" data-carrier-service="{{ep_shipping_methods[loop.index0].service}}" {% if default_shipping == rates.id %}checked="checked"{% endif %}>
                 </div>
             </div>
             <p>&nbsp;&nbsp;&nbsp;&nbsp; <strong>£{{rates.amount / 100 | number_format(2)}}</strong> - {{rates.description}}</p>
         </div>
         {% endfor %}
     </form>
+</div>
+<div class="row" id="test">
+    <!-- <div class="col-6" style="border: 2px solid green; background-color: #d2d2d2; height: 400px; overflow-y:scroll; position: relative; z-index: 10000">
+        <pre>
+            {{ order }}
+        </pre>
+    </div> -->
+
+    <!-- <div class="col-6" style="border: 2px solid orange; background-color: #d2d2d2; height: 400px; overflow-y:scroll; position: relative; z-index: 10000">
+        <pre>
+            {{ easypost_order }}
+        </pre>
+    </div> -->
+
+     <!-- <div class="col-6" style="border: 2px solid green; background-color: #d2d2d2; height: 400px; overflow-y:scroll; position: relative; z-index: 10000">
+        <pre>
+            {{ dump(ep_shipping_methods) }}
+        </pre>
+    </div>
+
+    <div class="col-6" style="border: 2px solid orange; background-color: #d2d2d2; height: 400px; overflow-y:scroll; position: relative; z-index: 10000">
+        <pre>
+            {{ dump(shipping_methods) }}
+        </pre>
+    </div> -->
 </div>

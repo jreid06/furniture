@@ -257,28 +257,30 @@
                                 }
 
 
-
                                 try {
-                                  // Use Stripe's library to make requests...
+                                    // create order
+                                     $order = \Stripe\Order::create(array(
+                                          "items" => $item_array,
+                                          "currency" => "gbp",
+                                          "customer" => $user_details['stripe_cus_id'],
+                                          "shipping" => array(
+                                              "name" => $user_details['fname']." ".$user_details['lname'],
+                                              "address" => array(
+                                                  "line1" => $user_active_address[0]['address1'],
+                                                  "line2" => $user_active_address[0]['address2']==='false'?'N/A':$user_active_address[0]['address1'],
+                                                  "city" => $user_active_address[0]['city_town'],
+                                                  "country" => "UK",
+                                                  "postal_code" => $user_active_address[0]['post_code']
+                                              ),
+                                              "phone"=> $user_active_address[0]['phone_num']
+                                        ),
+                                        "email" => $user_details['email']
+                                      ));
 
-                                  // create order
-                                  // \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
-                                  $order = \Stripe\Order::create(array(
-                                      "items" => $item_array,
-                                      "currency" => "gbp",
-                                      "customer" => $user_details['stripe_cus_id'],
-                                      "shipping" => array(
-                                          "name" => $user_details['fname']." ".$user_details['lname'],
-                                          "address" => array(
-                                              "line1" => $user_active_address[0]['address1'],
-                                              "line2" => $user_active_address[0]['address2']==='false'?'N/A':$user_active_address[0]['address1'],
-                                              "city" => $user_active_address[0]['city_town'],
-                                              "country" => "UK",
-                                              "postal_code" => $user_active_address[0]['post_code']
-                                          )
-                                    ),
-                                    "email" => $user_details['email']
-                                  ));
+                                     $stripe_error = array(
+                                         'msg'=>'success',
+                                         'error'=>false
+                                     );
 
 
                                 } catch(\Stripe\Error\Card $e) {
@@ -286,22 +288,30 @@
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
 
-                                  print('Status is:' . $e->getHttpStatus() . "\n");
-                                  print('Type is:' . $err['type'] . "\n");
-                                  print('Code is:' . $err['code'] . "\n");
-                                  // param is '' in this case
-                                  print('Param is:' . $err['param'] . "\n");
-                                  print('Message is:' . $err['message'] . "\n");
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
 
                                 } catch (\Stripe\Error\RateLimit $e) {
                                   // Too many requests made to the API too quickly
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
 
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
+
                                 } catch (\Stripe\Error\InvalidRequest $e) {
                                   // Invalid parameters were supplied to Stripe's API
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
+
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
 
                                 } catch (\Stripe\Error\Authentication $e) {
                                   // Authentication with Stripe's API failed
@@ -309,10 +319,20 @@
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
 
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
+
                                 } catch (\Stripe\Error\ApiConnection $e) {
                                   // Network communication with Stripe failed
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
+
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
 
                                 } catch (\Stripe\Error\Base $e) {
                                   // Display a very generic error to the user, and maybe send
@@ -320,37 +340,107 @@
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
 
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
+
                                 } catch (Exception $e) {
                                   // Something else happened, completely unrelated to Stripe
                                   $body = $e->getJsonBody();
                                   $err  = $body['error'];
 
+                                  $stripe_error = array(
+                                      'msg'=> $err['message'],
+                                      'error'=> true
+                                  );
+
                                 }
 
-                                if (count($order['shipping_methods']) < 1) {
+                                // stripe customer address from order
+                                $to_address = array(
+                                    "name"=> $order['shipping']['name'],
+                                    "street1" => $order['shipping']['address']['line1'],
+                                    "street2" => $order['shipping']['address']['line2'],
+                                    "city"    => $order['shipping']['address']['city'],
+                                    "state"   => "GB",
+                                    "zip"     => $order['shipping']['address']['postal_code'],
+                                    "country" => $order['shipping']['address']['country'],
+                                    "phone"   => $order['shipping']['phone']
+                                );
 
-                                    echo "<div class=\"\">
-                                        <h3 class=\"text-center\">UNFORTUNATELY SHIPPING RATES CANT BE DISPLAYED FOR THIS ORDER. MAKE THE PURCAHSE AND WE WILL HANDLE THE SHIPPING MANUALLY AND SEND YOU AN EMAIL WITH ALL REQUIRED DETAILS</h3>
-                                    </div>";
+                                // from address is declared in dbconnect.php
+                                $company_address = $from_address;
 
-                                }else {
+                                // create an easy post order
+                                \EasyPost\EasyPost::setApiKey("GApzToQ5BwOn9YlJ05H8iQ");
 
-                                    // shipping methods from order created
+                                try {
+                                    $easypost_order_parcels = array();
+                                    //
+                                    for ($parcel=0; $parcel < count($sku_items); $parcel++) {
 
-                                    $template = $twig->load('shipping-options.html.twig');
-                                    echo $template->render(array(
-                                        'order'=>$order,
-                                        'shipping_methods'=>$order['shipping_methods'],
-                                        'default_shipping'=>$order['selected_shipping_method']
+                                        $parcel_array = array(
+                                            'weight'=>$sku_items[$parcel]['package_dimensions']['weight'],
+                                            'width'=>$sku_items[$parcel]['package_dimensions']['width'],
+                                            'length'=>$sku_items[$parcel]['package_dimensions']['length'],
+                                            'height'=>$sku_items[$parcel]['package_dimensions']['height']
+                                        );
+
+                                        array_push($easypost_order_parcels, array('parcel'=> $parcel_array, 'options'=>array('currency' => 'gbp')));
+                                    }
+
+                                    $easypost_order = \EasyPost\Order::create(array(
+                                        "to_address"=> $to_address,
+                                        "from_address"=>$company_address,
+                                        "options"=>array(
+                                            'currency'=>"gbp"
+                                        ),
+                                        "shipments"=> $easypost_order_parcels
                                     ));
 
+                                    if (count($easypost_order['rates']) < 1) {
+
+                                        echo "<div class=\"\">
+                                            <h3 class=\"text-center\">UNFORTUNATELY SHIPPING RATES CANT BE DISPLAYED FOR THIS ORDER. MAKE THE PURCAHSE AND WE WILL HANDLE THE SHIPPING MANUALLY AND SEND YOU AN EMAIL WITH ALL REQUIRED DETAILS</h3>
+                                        </div>";
+
+                                    }else {
+
+                                        // update order metadata with service detials
+                                        $order->metadata['chosen_carrier'] = $easypost_order['rates'][0]['carrier'];
+                                        $order->metadata['chosen_service'] = $easypost_order['rates'][0]['service'];
+
+                                        $order->save();
+
+                                        // shipping methods from order created using
+                                        $template = $twig->load('shipping-options.html.twig');
+                                        echo $template->render(array(
+                                            'order'=>$order,
+                                            'easypost_order'=>$easypost_order,
+                                            'ep_shipping_methods'=>$easypost_order['rates'],
+                                            'shipping_methods'=>$order['shipping_methods'],
+                                            'default_shipping'=>$order['selected_shipping_method']
+                                        ));
+
+                                    }
+
+
+                                } catch (\EasyPost\Error $e) {
+                                     $easypost_error = $e->ecode;
+
+                                     echo "<div class=\"row\">
+                                         <h3 class=\"text-center\">".$easypost_error."</h3>
+                                     </div>";
                                 }
+
+
 
                              ?>
 
                     <?php endif; ?>
 
-                    <div class="row">
+                    <div class="row" id="basket">
                         <div class="col-12" style="text-align: center">
                             <a class="btn btn-primary checkout-edit-btn" href="/basket">Edit Basket</a>
                             <div class="table-responsive">
@@ -366,7 +456,7 @@
                                      </tr>
                                      <tr>
                                          <td colspan="2" class="payment-td">
-                                             <button class="btn btn-info payOrder" v-on:click="payment" data-customer="<?=$user_details['email']?>" data-total="<?=$order['amount']?>" data-shipping-address="true" data-order-id="<?=$order['id']?>">Confirm & pay order</button>
+                                             <button class="btn btn-info payOrder" v-on:click="payment" data-customer="<?=$user_details['email']?>" data-total="<?=$order['amount']?>" data-shipping-address="true" data-order-id="<?=$order['id']?>" data-easypost-order-id="<?=$easypost_order['id']?>">Confirm & pay order</button>
                                          </td>
                                      </tr>
                                  </tbody>

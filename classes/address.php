@@ -40,5 +40,31 @@
         }
     }
 
+    /**
+     *
+     */
+    class ShippingAddress
+    {
+        public $name;
+        public $phone;
+        public $street1;
+        public $street2;
+        public $city;
+        public $zip;
+        public $country;
+
+        function __construct($full_name, $phone_num, $street1, $street2, $city, $zip, $country)
+        {
+            $this->name = $name;
+            $this->phone = $phone;
+            $this->street1 = $street1;
+            $this->street2 = $street2;
+            $this->city = $city;
+            $this->zip = $zip;
+            $this->country = $country;
+        }
+    }
+
+
 
  ?>

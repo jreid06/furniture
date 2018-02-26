@@ -55,6 +55,17 @@
      	include_once ROOT_PATH . $file;
 	};
 
+	$from_address = array(
+		"street1" => "39 sandmere road",
+		"street2" => "N/a",
+		"city"    => "london",
+		"state"   => "GB",
+		"zip"     => "sw47ps",
+		"country" => "UK",
+		"company" => "IDYL",
+		"phone"   => "415-123-4567"
+	);
+
 	// $session_not_set = !isset($_SESSION['idyl_tkn'])?true:'session is set';
 	// $cookie_not_set = !isset($_COOKIE['idyl_tkn'])?true:'cookie is set';
     //

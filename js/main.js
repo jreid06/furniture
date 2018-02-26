@@ -16,12 +16,10 @@ $(document).ready(function() {
                 email: 'info@jbreid.co.uk'
             },
             success: function(data){
-                let $data = JSON.parse(data);
+                // let $data = JSON.parse(data);
 
-                console.log($data);
-            },
-            error: function(){
-
+                // console.log($data);
+                console.log(data);
             }
         })
     })
@@ -822,6 +820,8 @@ $(document).ready(function() {
 
                 localStorage.removeItem('basket');
 
+                // update database if user is logged in
+
                 console.log('basket cleared');
             },
             setBasketTotal: function() {
@@ -1391,8 +1391,13 @@ $(document).ready(function() {
             locale: 'auto',
             opened: function(){
                 console.log('checkout opened');
-                let orderID = $('.payOrder').attr('data-order-id');
+                let orderID = $('.payOrder').attr('data-order-id'),
+                    easypostOrderID = $('.payOrder').attr('data-easypost-order-id');
+
+                console.log(easypostOrderID);
+
                 localStorage.setItem('idyl-order-id', orderID);
+                localStorage.setItem('idyl-easypost-order-id', easypostOrderID);
             },
             token: function(token, args) {
                 // You can access the token ID with `token.id`.
@@ -1420,13 +1425,15 @@ $(document).ready(function() {
             // reject the promise
             (resolve, reject) => {
 
-                let orderID = localStorage.getItem('idyl-order-id');
+                let orderID = localStorage.getItem('idyl-order-id'),
+                    easypostID = localStorage.getItem('idyl-easypost-order-id');
                 $.ajax({
                     url: '/scripts/payorder.php',
                     type: 'post',
                     data: {
                         token: stripetoken,
-                        order: orderID
+                        order: orderID,
+                        easypost: easypostID
                     },
                     success: function(data) {
                         let $data = JSON.parse(data);
@@ -1444,7 +1451,10 @@ $(document).ready(function() {
         p1.then(
                 // Log the fulfillment value
                 function(val) {
-                    console.log(val);
+                    // console.log(val);
+                    // console.log(val.data.shippment_details);
+                    // console.log(JSON.parse(val.data.shippment_details));
+                    // console.log(JSON.parse(val));
                     switch (val.status.code) {
                         case (101 || '101'):
                             $.notify(val.data.msg, val.status.code_status);
@@ -1452,6 +1462,7 @@ $(document).ready(function() {
 
                             // delete local storage order data
                             localStorage.removeItem('idyl-order-id');
+                            localStorage.removeItem('idyl-easypost-order-id');
                             console.log('local storage order id removed');
 
                             // delete checkout cookie
@@ -1480,9 +1491,9 @@ $(document).ready(function() {
                                         console.log("---------------");
                                         console.log($data);
 
-                                        // setTimeout(function(){
-                                        //     window.location =  '/order/confirmation/'+orderID;
-                                        // }, 2000);
+                                        setTimeout(function(){
+                                            window.location =  '/order/confirmation/'+orderID;
+                                        }, 2000);
                                     },
                                     error: function(){
                                         console.log('error with DELETE BASKET DATA ajax');
@@ -1498,6 +1509,9 @@ $(document).ready(function() {
                             break;
                         case (404 || '404'):
                             $.notify(val.status.type, 'error');
+                            break;
+                        case (401 || '401'):
+                            $.notify(val.data.msg, 'warn');
                             console.log(val);
                             break;
                         default:
@@ -3331,7 +3345,9 @@ $(document).ready(function() {
                     let targetElement = $(e.target)[0],
                         allRateRadios = $('#shipping-method-radios').find('.rate-radio'),
                         targetRate = $(targetElement).attr('data-rate-id'),
-                        orderID = $(targetElement).attr('data-order-id');
+                        orderID = $(targetElement).attr('data-order-id'),
+                        $carrier = $(targetElement).attr('data-carrier'),
+                        carrierService = $(targetElement).attr('data-carrier-service');
 
                     // console.log(targetElement);
                     // console.log(allRateRadios);
@@ -3352,7 +3368,9 @@ $(document).ready(function() {
                         type: 'post',
                         data:{
                             rate: targetRate,
-                            order: orderID
+                            order: orderID,
+                            carrier: $carrier,
+                            service: carrierService
                         },
                         success: function(data){
                             let $data = JSON.parse(data),

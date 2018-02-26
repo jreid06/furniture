@@ -80,12 +80,21 @@
              </div>
              <div class="col-12">
                  <br>
-                 <h4>ORDER: #<?= $confirmed_order['id']?> <span class="badge badge-success"><?= strtoupper($confirmed_order['status'])?></span></h4>
+                 <h4>IYDL ORDER ID: #<?= $confirmed_order['id']?> <span class="badge badge-success"><?= strtoupper($confirmed_order['status'])?></span></h4>
                  <br>
                  <?php
+                    $metadata_keys = array();
+                    for ($item=0; $item < count($confirmed_order['items']); $item++) {
+                        // echo $confirmed_order['items'][$item];
+                        if ($confirmed_order['items'][$item]['type'] === 'sku') {
+                            array_push($metadata_keys, array( 'name'=>$confirmed_order['items'][$item]['description'], 'shipment_id' => 'shipment-id-'.($item+1), 'tracker_code' => 'tracking-'.($item+1), 'carrier'=>$confirmed_order['metadata']['chosen_carrier']));
+                        }
+                    }
+
                      $template = $twig->load('order-confirmation.html.twig');
                      echo $template->render(array(
-                         'order'=>$confirmed_order
+                         'order'=>$confirmed_order,
+                         'metadata_details'=>$metadata_keys
                      ));
                   ?>
              </div>
