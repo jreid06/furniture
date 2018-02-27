@@ -255,35 +255,11 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             <h5 class=\"text-center\">you might also like</h5>
 
             <div class=\"row related-products-row\">
-                <!-- <featured
-                        v-for=\"(featured, index) in featuredProducts\"
-                        v-bind:key=\"index\"
-                        v-bind:indexkey=\"index\"
-                        v-bind:productid=\"featured.id\"
-                        v-bind:productskuid=\"featured.skus.data[0].id\"
-                        v-bind:productimage=\"featured.images[0]\"
-                        v-bind:producttitle=\"featured.name\"
-                        v-bind:productnameslug=\"featured.metadata.slug\"
-                        v-bind:productcolorslug=\"featured.skus.data[0].attributes.color\"
-                        v-bind:productsizeslug=\"featured.skus.data[0].attributes.size\"
-                        v-bind:productprice=\"featured.skus.data[0].price\"
-                        v-bind:productcat = \"featured.skus.data[0].attributes.category\"
-                        v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
-                </featured> -->
-                <!-- <featured
-                        v-for=\"(featured, index) in featuredProducts\"
-                        v-bind:key=\"index\"
-                        v-bind:indexkey=\"index\"
-                        v-bind:productdbid=\"featured.id\"
-                        v-bind:productid=\"featured.product_id\"
-                        v-bind:productimage=\"featured.product_image.image1\"
-                        v-bind:producttitle=\"featured.product_name\"
-                        v-bind:productnameslug=\"featured.name_slug\"
-                        v-bind:productprice=\"featured.price\"
-                        v-bind:productcat=\"featured.product_category\"
-                        v-bind:productcattype=\"featured.inner_cat_slug\">
-                </featured> -->
-            </div>
+                ";
+        // line 162
+        $this->loadTemplate("featured.html.twig", "product.html.twig", 162)->display($context);
+        // line 163
+        echo "            </div>
         </div>
     </div>
 </div>
@@ -302,7 +278,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
     public function getDebugInfo()
     {
-        return array (  212 => 117,  190 => 97,  186 => 95,  177 => 93,  173 => 92,  170 => 91,  168 => 90,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
+        return array (  262 => 163,  260 => 162,  212 => 117,  190 => 97,  186 => 95,  177 => 93,  173 => 92,  170 => 91,  168 => 90,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -476,34 +452,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             <h5 class=\"text-center\">you might also like</h5>
 
             <div class=\"row related-products-row\">
-                <!-- <featured
-                        v-for=\"(featured, index) in featuredProducts\"
-                        v-bind:key=\"index\"
-                        v-bind:indexkey=\"index\"
-                        v-bind:productid=\"featured.id\"
-                        v-bind:productskuid=\"featured.skus.data[0].id\"
-                        v-bind:productimage=\"featured.images[0]\"
-                        v-bind:producttitle=\"featured.name\"
-                        v-bind:productnameslug=\"featured.metadata.slug\"
-                        v-bind:productcolorslug=\"featured.skus.data[0].attributes.color\"
-                        v-bind:productsizeslug=\"featured.skus.data[0].attributes.size\"
-                        v-bind:productprice=\"featured.skus.data[0].price\"
-                        v-bind:productcat = \"featured.skus.data[0].attributes.category\"
-                        v-bind:productcattype=\"featured.skus.data[0].attributes.type\">
-                </featured> -->
-                <!-- <featured
-                        v-for=\"(featured, index) in featuredProducts\"
-                        v-bind:key=\"index\"
-                        v-bind:indexkey=\"index\"
-                        v-bind:productdbid=\"featured.id\"
-                        v-bind:productid=\"featured.product_id\"
-                        v-bind:productimage=\"featured.product_image.image1\"
-                        v-bind:producttitle=\"featured.product_name\"
-                        v-bind:productnameslug=\"featured.name_slug\"
-                        v-bind:productprice=\"featured.price\"
-                        v-bind:productcat=\"featured.product_category\"
-                        v-bind:productcattype=\"featured.inner_cat_slug\">
-                </featured> -->
+                {% include 'featured.html.twig' %}
             </div>
         </div>
     </div>
