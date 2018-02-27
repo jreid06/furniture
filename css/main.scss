@@ -64,7 +64,7 @@ footer{
 		padding-top: 40px;
 		padding-bottom: 20px;
 		text-align: left;
-		top: 195px;
+		top: 255px;
 	};
 
 	a{
@@ -1212,9 +1212,10 @@ nav{
 	.card-body{
 		text-align: center;
 		padding: 10px 0 10px 0;
-			font-size: 12px;
-		h6{
 
+		h6{
+			font-size: 12px;
+			font-weight: 300;
 		}
 
 		a{

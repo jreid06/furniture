@@ -1048,7 +1048,7 @@ footer {
       padding-top: 40px;
       padding-bottom: 20px;
       text-align: left;
-      top: 195px; } }
+      top: 255px; } }
   footer a {
     color: #f2f2f2; }
   footer .card {
@@ -1765,8 +1765,10 @@ nav {
         height: 150px; } }
   .featured-prod-card .card-body {
     text-align: center;
-    padding: 10px 0 10px 0;
-    font-size: 12px; }
+    padding: 10px 0 10px 0; }
+    .featured-prod-card .card-body h6 {
+      font-size: 12px;
+      font-weight: 300; }
     .featured-prod-card .card-body a {
       color: #222; }
 
