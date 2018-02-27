@@ -3729,7 +3729,7 @@ $(document).ready(function() {
                 // only get featured products if user is on home page or individual product page
 
                 if (window.location.pathname === '/' || window.location.pathname.split('/')[1] === 'product') {
-                    this.getFeaturedProducts();
+                    // this.getFeaturedProducts();
                 }
 
                 if (window.location.pathname.split('/')[1] === 'our-story') {
