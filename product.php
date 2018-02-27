@@ -10,6 +10,8 @@
     $slug = $_GET['slug'];
     $category = $_GET['cat'];
 
+    $featured_products = get_products(6);
+
     \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
     try {
 
@@ -56,9 +58,10 @@
         $template = $twig->load('product.html.twig');
         echo $template->render(array(
             'product'=> $products_all,
+            'featured_products'=> $featured_products,
             'skuprod'=> $selected_sku_product,
             'category'=> $category,
-            'type'=> $type
+            'type'=> $type,
         ));
 
 

@@ -65,21 +65,19 @@
                 <div class="col-12">
                     <h5 class="text-center">FEATURED PRODUCTS</h5>
                 </div>
-                <!-- <featured
-                        v-for="(featured, index) in featuredProducts"
-                        v-bind:key="index"
-                        v-bind:indexkey="index"
-                        v-bind:productid="featured.id"
-                        v-bind:productskuid="featured.skus.data[0].id"
-                        v-bind:productimage="featured.images[0]"
-                        v-bind:producttitle="featured.name"
-                        v-bind:productnameslug="featured.metadata.slug"
-                        v-bind:productcolorslug="featured.skus.data[0].attributes.color"
-                        v-bind:productsizeslug="featured.skus.data[0].attributes.size"
-                        v-bind:productprice="featured.skus.data[0].price"
-                        v-bind:productcat = "featured.skus.data[0].attributes.category"
-                        v-bind:productcattype="featured.skus.data[0].attributes.type">
-                </featured> -->
+
+                <?php
+
+                $featured_products = get_products(6);
+
+                $template = $twig->load('featured.html.twig');
+                echo $template->render(array(
+                    'data'=>'test value',
+                    'featured_products'=>$featured_products
+                ));
+
+                 ?>
+
             </div>
 
             <!--  -->
