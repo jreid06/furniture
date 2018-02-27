@@ -1,0 +1,255 @@
+[
+  {
+    "id": "prod_CEUFYi3463Clkw",
+    "object": "product",
+    "active": true,
+    "attributes": [
+      "category",
+      "type",
+      "color",
+      "size",
+      "gift"
+    ],
+    "caption": "Cushion with pineapple design",
+    "created": 1517327039,
+    "deactivate_on": [],
+    "description": "Finished with a metallic gold pineapple design with pipe edging this rich teal blue square cushion cover features a soft textured feel and a secure zip fastening",
+    "images": [
+      "http://images.dunelm.com/i/dm/1000092751_main?"
+    ],
+    "livemode": false,
+    "metadata": {
+      "slug": "pinapple-foil-cushion"
+    },
+    "name": "Pineapple Cushion",
+    "package_dimensions": {
+      "height": 17,
+      "length": 17,
+      "weight": 15,
+      "width": 17
+    },
+    "shippable": true,
+    "skus": {
+      "object": "list",
+      "data": [
+        {
+          "id": "sku_CEUOwNipCWNsnh",
+          "object": "sku",
+          "active": true,
+          "attributes": {
+            "category": "bedroom",
+            "type": "cushions",
+            "color": "blue",
+            "size": "m"
+          },
+          "created": 1517327555,
+          "currency": "gbp",
+          "image": "http://images.dunelm.com/i/dm/1000092751_main?",
+          "inventory": {
+            "quantity": 14,
+            "type": "finite",
+            "value": null
+          },
+          "livemode": false,
+          "metadata": [],
+          "package_dimensions": {
+            "height": 11,
+            "length": 11,
+            "weight": 5,
+            "width": 11
+          },
+          "price": 2000,
+          "product": "prod_CEUFYi3463Clkw",
+          "updated": 1519662263
+        }
+      ],
+      "has_more": false,
+      "total_count": 1,
+      "url": "/v1/skus?product=prod_CEUFYi3463Clkw&active=true"
+    },
+    "type": "good",
+    "updated": 1519676522,
+    "url": null
+  },
+  {
+    "id": "prod_CDQInUynL0Uu0P",
+    "object": "product",
+    "active": true,
+    "attributes": [
+      "category",
+      "type",
+      "color",
+      "size",
+      "detail_bullets"
+    ],
+    "caption": "Desk lamp for working",
+    "created": 1517081664,
+    "deactivate_on": [],
+    "description": "Switch On. Work. Work. Work. Switch off. With the Flexi lamp from our Simple Value range. The perfect desk or bedside accessory, the black plastic shade sits on the end of a flexi neck, allowing you to position the light exactly where you want it, perfect for reading.",
+    "images": [
+      "http://media.4rgos.it/s/Argos/4308980_R_SET?$Main768$&w=620&h=620"
+    ],
+    "livemode": false,
+    "metadata": {
+      "slug": "desk-lamp"
+    },
+    "name": "Desk Lamp",
+    "package_dimensions": {
+      "height": 100,
+      "length": 100,
+      "weight": 70,
+      "width": 100
+    },
+    "shippable": true,
+    "skus": {
+      "object": "list",
+      "data": [
+        {
+          "id": "sku_CDQI3rHjk9Dujy",
+          "object": "sku",
+          "active": true,
+          "attributes": {
+            "category": "livingroom",
+            "type": "lamps",
+            "color": "black",
+            "size": "m",
+            "detail_bullets": "In-line switch, Suitable for use with low energy bulbs, IP rating 20, Assembly required, No wiring required, Bulbs required 1 x 40W golfball SES small edison eco halogen bulb(s) (not included)or 1 x 6W golfball SES small edison LED bulb(s) (not included)."
+          },
+          "created": 1517081711,
+          "currency": "gbp",
+          "image": "http://media.4rgos.it/s/Argos/4308980_R_SET?$Main768$&w=620&h=620",
+          "inventory": {
+            "quantity": 5,
+            "type": "finite",
+            "value": null
+          },
+          "livemode": false,
+          "metadata": [],
+          "package_dimensions": {
+            "height": 15,
+            "length": 13,
+            "weight": 10,
+            "width": 13
+          },
+          "price": 1599,
+          "product": "prod_CDQInUynL0Uu0P",
+          "updated": 1519662264
+        }
+      ],
+      "has_more": false,
+      "total_count": 1,
+      "url": "/v1/skus?product=prod_CDQInUynL0Uu0P&active=true"
+    },
+    "type": "good",
+    "updated": 1519310747,
+    "url": null
+  },
+  {
+    "id": "prod_CDME1dinY2YyTr",
+    "object": "product",
+    "active": true,
+    "attributes": [
+      "category",
+      "type",
+      "color",
+      "size",
+      "detail_bullets",
+      "gift"
+    ],
+    "caption": "Soft Foax fur cushion",
+    "created": 1517066547,
+    "deactivate_on": [],
+    "description": "Soft foax furry cushion for you living room or bedroom. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "images": [
+      "http://images.dunelm.com/i/dm/1000018983_main",
+      "http://images.dunelm.com/i/dm/1000091653_main"
+    ],
+    "livemode": false,
+    "metadata": {
+      "slug": "soft-furry-cushion"
+    },
+    "name": "Soft Furry Cushion",
+    "package_dimensions": {
+      "height": 0,
+      "length": 0,
+      "weight": 0,
+      "width": 0
+    },
+    "shippable": true,
+    "skus": {
+      "object": "list",
+      "data": [
+        {
+          "id": "sku_CDQ1lS8reaBLIy",
+          "object": "sku",
+          "active": true,
+          "attributes": {
+            "category": "livingroom",
+            "type": "cushions",
+            "color": "grey",
+            "size": "m",
+            "detail_bullets": "foax fur, Machine washable, Cover 100% polyester, Filling 100% polyester hollowfibre, Iron on a cool setting",
+            "gift": "true"
+          },
+          "created": 1517080685,
+          "currency": "gbp",
+          "image": "http://images.dunelm.com/i/dm/1000018983_main",
+          "inventory": {
+            "quantity": 17,
+            "type": "finite",
+            "value": null
+          },
+          "livemode": false,
+          "metadata": [],
+          "package_dimensions": {
+            "height": 17,
+            "length": 17,
+            "weight": 15,
+            "width": 17
+          },
+          "price": 3200,
+          "product": "prod_CDME1dinY2YyTr",
+          "updated": 1519677913
+        },
+        {
+          "id": "sku_CDQ2bYmUdDbdL2",
+          "object": "sku",
+          "active": true,
+          "attributes": {
+            "category": "livingroom",
+            "type": "cushions",
+            "color": "pink",
+            "size": "m",
+            "detail_bullets": "foax fur, Machine washable, Cover 100% polyester, Filling 100% polyester hollowfibre, Iron on a cool setting",
+            "gift": "true"
+          },
+          "created": 1517080715,
+          "currency": "gbp",
+          "image": "http://images.dunelm.com/i/dm/1000091653_main",
+          "inventory": {
+            "quantity": 23,
+            "type": "finite",
+            "value": null
+          },
+          "livemode": false,
+          "metadata": [],
+          "package_dimensions": {
+            "height": 17,
+            "length": 17,
+            "weight": 15,
+            "width": 17
+          },
+          "price": 3200,
+          "product": "prod_CDME1dinY2YyTr",
+          "updated": 1519677913
+        }
+      ],
+      "has_more": false,
+      "total_count": 2,
+      "url": "/v1/skus?product=prod_CDME1dinY2YyTr&active=true"
+    },
+    "type": "good",
+    "updated": 1519670031,
+    "url": null
+  }
+]
