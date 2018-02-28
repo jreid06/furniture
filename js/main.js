@@ -2376,7 +2376,7 @@ $(document).ready(function() {
             },
             props: ['filtername', 'activetype'],
             template: `<li>
-                <div class="input-group mb-3 filter-input-group">
+                <div class="input-group mb-0 filter-input-group">
                     <div class="input-group-prepend filter-input-box">
                         <div class="input-group-text filter-input d-flex flex-row">
                             <div class="p-2 fltr-inp">
