@@ -324,7 +324,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "livingroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
             // line 206
             echo "                                      <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -354,7 +354,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "kitchen") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
             // line 226
             echo "                                      <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -384,7 +384,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bedroom") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
             // line 246
             echo "                                      <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -414,7 +414,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         if ((($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "bath") || ($this->getAttribute(($context["queryDetails"] ?? null), "category", array()) == "all"))) {
             // line 266
             echo "                                      <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -487,7 +487,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                              <div class=\"card-body\">
                                  <ul>
                                      <li>
-                                         <div class=\"input-group mb-3 filter-input-group\">
+                                         <div class=\"input-group mb-0 filter-input-group\">
                                              <div class=\"input-group-prepend filter-input-box\">
                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
                                                      <div class=\"p-2 fltr-inp\">
@@ -509,7 +509,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                      </li>
 
                                      <li>
-                                         <div class=\"input-group mb-3 filter-input-group\">
+                                         <div class=\"input-group mb-0 filter-input-group\">
                                              <div class=\"input-group-prepend filter-input-box\">
                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
                                                      <div class=\"p-2 fltr-inp\">
@@ -1150,7 +1150,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                                       {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
                                       <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -1170,7 +1170,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                                       {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
                                       <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -1190,7 +1190,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                                       {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
                                       <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -1210,7 +1210,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
                                       {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
                                       <li>
-                                          <div class=\"input-group mb-3 filter-input-group\">
+                                          <div class=\"input-group mb-0 filter-input-group\">
                                               <div class=\"input-group-prepend filter-input-box\">
                                                   <div class=\"input-group-text filter-input d-flex flex-row\">
                                                       <div class=\"p-2 fltr-inp\">
@@ -1276,7 +1276,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                              <div class=\"card-body\">
                                  <ul>
                                      <li>
-                                         <div class=\"input-group mb-3 filter-input-group\">
+                                         <div class=\"input-group mb-0 filter-input-group\">
                                              <div class=\"input-group-prepend filter-input-box\">
                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
                                                      <div class=\"p-2 fltr-inp\">
@@ -1295,7 +1295,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                      </li>
 
                                      <li>
-                                         <div class=\"input-group mb-3 filter-input-group\">
+                                         <div class=\"input-group mb-0 filter-input-group\">
                                              <div class=\"input-group-prepend filter-input-box\">
                                                  <div class=\"input-group-text filter-input d-flex flex-row\">
                                                      <div class=\"p-2 fltr-inp\">
