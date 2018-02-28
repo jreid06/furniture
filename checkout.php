@@ -21,6 +21,16 @@
             header("location: /checkout/user/$cus_id");
         }
 
+        // set user_details = to session data sent from guest form
+
+        $user_details = $_SESSION['guest_details'];
+        $user_active_address_main = $_SESSION['guest_shipping'];
+        $user_basket_info = $_SESSION['guest_basket'];
+
+        $user_basket_info = json_decode( $user_basket_info, true);
+
+
+
     }elseif (isset($_GET['q']) && $_GET['q'] === 'user') {
 
         // checking if user may have logged out in another tab. if true the user will redirected to checkout as a guest // only does check if page is efreshed again
@@ -50,6 +60,8 @@
             }
         }
 
+        $user_active_address_main = $user_active_address[0];
+
     }else {
         header('location: /basket');
         die();
@@ -65,143 +77,89 @@
 <div class="container-fluid home checkout-home" data-status="<?php if (!$logged_in_status): ?>false <?php else: ?>true<?php endif; ?>" data-in="<?php if (!$logged_in_status): ?>false<?php else: ?>true<?php endif; ?>">
     <div class="row">
 
-        <?php if (!$logged_in_status): ?>
-            <div class="col-12 col-md-7 guest-form form-details-column">
-                <form id="checkout-form-guest">
-                   <div class="form-row">
-                      <div class="col-md-6 mb-3">
-                         <label for="validationDefault01">First name</label>
-                         <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="Mark" required>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                         <label for="validationDefault02">Last name</label>
-                         <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="Otto" required>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                         <label for="validationDefaultUsername">Username</label>
-                         <div class="input-group">
-                            <div class="input-group-prepend">
-                               <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                            </div>
-                            <input type="text" class="form-control" id="validationDefaultUsername" placeholder="Username" aria-describedby="inputGroupPrepend2" required>
-                         </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="inputDateUpdate">D.O.B</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                 <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                              </div>
-                              <input type="date" class="form-control" id="inputDateUpdate" value="" required>
-                          </div>
-
-                      </div>
-                   </div>
-                   <div class="form-row">
-                      <div class="col-md-6 mb-3">
-                         <label for="validationDefault03">City</label>
-                         <input type="text" class="form-control" id="validationDefault03" placeholder="City" required>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                         <label for="validationDefault04">State</label>
-                         <input type="text" class="form-control" id="validationDefault04" placeholder="State" required>
-                      </div>
-                      <div class="col-md-3 mb-3">
-                         <label for="validationDefault05">Zip</label>
-                         <input type="text" class="form-control" id="validationDefault05" placeholder="Zip" required>
-                      </div>
-                   </div>
-                   <button class="btn btn-primary" type="submit" @click="save-purcahse-details">SAVE</button>
-                </form>
-            </div>
-
-        <?php else: ?>
-
-            <div class="col-12 col-md-7 user-form form-details-column" data-status="true">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- user logged in details -->
-                        <div class="card details-card" style="width: 100%">
-                          <div class="card-body">
-                            <h5 class="card-title">Your Details</h5>
-                            <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
-                            <div class="table-responsive">
-                              <table class="table loggedin-checkout-table">
-                                 <tbody>
-                                     <tr>
-                                         <td>Title</td>
-                                         <td><?=$user_details['title'];?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Name</td>
-                                         <td><?=$user_details['fname'];?> <?=$user_details['lname'];?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Email</td>
-                                         <td><?=$user_details['email'];?></td>
-                                     </tr>
-                                 </tbody>
-                              </table>
-                            </div>
-                          </div>
+        <div class="col-12 col-md-7 user-form form-details-column" data-status="true">
+            <div class="row">
+                <div class="col-12">
+                    <!-- user logged in details -->
+                    <div class="card details-card" style="width: 100%">
+                      <div class="card-body">
+                        <h5 class="card-title">Your Details</h5>
+                        <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                        <div class="table-responsive">
+                          <table class="table loggedin-checkout-table">
+                             <tbody>
+                                 <tr>
+                                     <td>Title</td>
+                                     <td><?=$user_details['title'];?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Name</td>
+                                     <td><?=$user_details['fname'];?> <?=$user_details['lname'];?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Email</td>
+                                     <td><?=$user_details['email'];?></td>
+                                 </tr>
+                             </tbody>
+                          </table>
                         </div>
-
-                        <hr class="d-md-none">
-                        <!-- user active address details -->
+                      </div>
                     </div>
 
-                    <div class="col-12">
-                        <div class="card details-card" style="width: 100%">
-                          <div class="card-body">
-                            <h5 class="card-title">Delivery Address</h5>
-
-                            <div class="table-responsive">
-                              <table class="table loggedin-checkout-table">
-                                 <tbody>
-                                     <tr>
-                                         <td>Address Line 1</td>
-                                         <td><?=$user_active_address[0]['address1']; ?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Address Line 2</td>
-                                         <td>
-                                             <?php
-                                             if ($user_active_address[0]['address2'] === 'false') {
-                                                 echo 'N/A';
-                                             }else {
-                                                 echo $user_active_address[0]['address2'];
-                                             }
-
-                                            ?>
-                                        </td>
-                                     </tr>
-                                     <tr>
-                                         <td>City</td>
-                                         <td><?=$user_active_address[0]['city_town']; ?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Post Code</td>
-                                         <td><?=$user_active_address[0]['post_code']; ?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Country</td>
-                                         <td><?=$user_active_address[0]['country']; ?></td>
-                                     </tr>
-                                     <tr>
-                                         <td>Contact Num</td>
-                                         <td><?=$user_active_address[0]['phone_num']; ?></td>
-                                     </tr>
-                                 </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-
+                    <hr class="d-md-none">
+                    <!-- user active address details -->
                 </div>
-            </div>
 
-        <?php endif; ?>
+                <div class="col-12">
+                    <div class="card details-card" style="width: 100%">
+                      <div class="card-body">
+                        <h5 class="card-title">Delivery Address</h5>
+
+                        <div class="table-responsive">
+                          <table class="table loggedin-checkout-table">
+                             <tbody>
+                                 <tr>
+                                     <td>Address Line 1</td>
+                                     <td><?=$user_active_address_main['address1']; ?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Address Line 2</td>
+                                     <td>
+                                         <?php
+                                         if ($user_active_address_main['address2'] === 'false') {
+                                             echo 'N/A';
+                                         }else {
+                                             echo $user_active_address_main['address2'];
+                                         }
+
+                                        ?>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                     <td>City</td>
+                                     <td><?=$user_active_address_main['city_town']; ?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Post Code</td>
+                                     <td><?=$user_active_address_main['post_code']; ?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Country</td>
+                                     <td><?=$user_active_address_main['country']; ?></td>
+                                 </tr>
+                                 <tr>
+                                     <td>Contact Num</td>
+                                     <td><?=$user_active_address_main['phone_num']; ?></td>
+                                 </tr>
+                             </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
         <div class="col-12 col-md-5">
@@ -234,211 +192,228 @@
                 </div>
 
                 <div class="col-12 paynow">
-                    <?php if ($logged_in_status): ?>
 
-                            <?php
-                                # create a new order and update the session variable "order_id"
-                                $item_array = array();
-                                $sku_items = array();
+                    <?php
+                        # create a new order and update the session variable "order_id"
+                        $item_array = array();
+                        $sku_items = array();
 
-                                 \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+                        \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
 
-                                for ($item=0; $item < count($user_basket_info); $item++) {
-                                    $ord_item = new Orderitem('sku', $user_basket_info[$item]['stripesku_id'], $user_basket_info[$item]['quantity']);
+                        for ($item=0; $item < count($user_basket_info); $item++) {
+                            $ord_item = new Orderitem('sku', $user_basket_info[$item]['stripesku_id'], $user_basket_info[$item]['quantity']);
 
-                                    // cast object to assosiative array and push into item array
-                                    array_push($item_array, (array) $ord_item);
+                            // cast object to assosiative array and push into item array
+                            array_push($item_array, (array) $ord_item);
 
-                                    // get sku data
-                                    $sku_item = \Stripe\SKU::retrieve($user_basket_info[$item]['stripesku_id']);
+                            // get sku data
+                            $sku_item = \Stripe\SKU::retrieve($user_basket_info[$item]['stripesku_id']);
 
-                                    array_push($sku_items, $sku_item);
+                            array_push($sku_items, $sku_item);
 
-                                }
-
-
-                                try {
-                                    // create order
-                                     $order = \Stripe\Order::create(array(
-                                          "items" => $item_array,
-                                          "currency" => "gbp",
-                                          "customer" => $user_details['stripe_cus_id'],
-                                          "shipping" => array(
-                                              "name" => $user_details['fname']." ".$user_details['lname'],
-                                              "address" => array(
-                                                  "line1" => $user_active_address[0]['address1'],
-                                                  "line2" => $user_active_address[0]['address2']==='false'?'N/A':$user_active_address[0]['address1'],
-                                                  "city" => $user_active_address[0]['city_town'],
-                                                  "country" => "UK",
-                                                  "postal_code" => $user_active_address[0]['post_code']
-                                              ),
-                                              "phone"=> $user_active_address[0]['phone_num']
-                                        ),
-                                        "email" => $user_details['email']
-                                      ));
-
-                                     $stripe_error = array(
-                                         'msg'=>'success',
-                                         'error'=>false
-                                     );
+                        }
 
 
-                                } catch(\Stripe\Error\Card $e) {
-                                  // Since it's a decline, \Stripe\Error\Card will be caught
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        try {
+                            // create order
+                            if ($logged_in_status) {
+                                $order = \Stripe\Order::create(array(
+                                     "items" => $item_array,
+                                     "currency" => "gbp",
+                                     "customer" => $user_details['stripe_cus_id'],
+                                     "shipping" => array(
+                                         "name" => $user_details['fname']." ".$user_details['lname'],
+                                         "address" => array(
+                                             "line1" => $user_active_address_main['address1'],
+                                             "line2" => $user_active_address_main['address2']==='false'?'N/A':$user_active_address_main['address1'],
+                                             "city" => $user_active_address_main['city_town'],
+                                             "country" => "UK",
+                                             "postal_code" => $user_active_address_main['post_code']
+                                         ),
+                                         "phone"=> $user_active_address_main['phone_num']
+                                   ),
+                                   "email" => $user_details['email']
+                                 ));
+                            }else {
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                                $order = \Stripe\Order::create(array(
+                                     "items" => $item_array,
+                                     "currency" => "gbp",
+                                     "shipping" => array(
+                                         "name" => $user_details['fname']." ".$user_details['lname'],
+                                         "address" => array(
+                                             "line1" => $user_active_address_main['address1'],
+                                             "line2" => $user_active_address_main['address2']==='false'?'N/A':$user_active_address_main['address1'],
+                                             "city" => $user_active_address_main['city_town'],
+                                             "country" => "UK",
+                                             "postal_code" => $user_active_address_main['post_code']
+                                         ),
+                                         "phone"=> $user_active_address_main['phone_num']
+                                   ),
+                                   "email" => $user_details['email']
+                                 ));
+                            }
 
-                                } catch (\Stripe\Error\RateLimit $e) {
-                                  // Too many requests made to the API too quickly
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                             $stripe_error = array(
+                                 'msg'=>'success',
+                                 'error'=>false
+                             );
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
 
-                                } catch (\Stripe\Error\InvalidRequest $e) {
-                                  // Invalid parameters were supplied to Stripe's API
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        } catch(\Stripe\Error\Card $e) {
+                          // Since it's a decline, \Stripe\Error\Card will be caught
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
 
-                                } catch (\Stripe\Error\Authentication $e) {
-                                  // Authentication with Stripe's API failed
-                                  // (maybe you changed API keys recently)
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        } catch (\Stripe\Error\RateLimit $e) {
+                          // Too many requests made to the API too quickly
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
 
-                                } catch (\Stripe\Error\ApiConnection $e) {
-                                  // Network communication with Stripe failed
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        } catch (\Stripe\Error\InvalidRequest $e) {
+                          // Invalid parameters were supplied to Stripe's API
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
 
-                                } catch (\Stripe\Error\Base $e) {
-                                  // Display a very generic error to the user, and maybe send
-                                  // yourself an email
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        } catch (\Stripe\Error\Authentication $e) {
+                          // Authentication with Stripe's API failed
+                          // (maybe you changed API keys recently)
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
 
-                                } catch (Exception $e) {
-                                  // Something else happened, completely unrelated to Stripe
-                                  $body = $e->getJsonBody();
-                                  $err  = $body['error'];
+                        } catch (\Stripe\Error\ApiConnection $e) {
+                          // Network communication with Stripe failed
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                  $stripe_error = array(
-                                      'msg'=> $err['message'],
-                                      'error'=> true
-                                  );
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
 
-                                }
+                        } catch (\Stripe\Error\Base $e) {
+                          // Display a very generic error to the user, and maybe send
+                          // yourself an email
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
 
-                                // stripe customer address from order
-                                $to_address = array(
-                                    "name"=> $order['shipping']['name'],
-                                    "street1" => $order['shipping']['address']['line1'],
-                                    "street2" => $order['shipping']['address']['line2'],
-                                    "city"    => $order['shipping']['address']['city'],
-                                    "state"   => "GB",
-                                    "zip"     => $order['shipping']['address']['postal_code'],
-                                    "country" => $order['shipping']['address']['country'],
-                                    "phone"   => $order['shipping']['phone']
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
+
+                        } catch (Exception $e) {
+                          // Something else happened, completely unrelated to Stripe
+                          $body = $e->getJsonBody();
+                          $err  = $body['error'];
+
+                          $stripe_error = array(
+                              'msg'=> $err['message'],
+                              'error'=> true
+                          );
+
+                        }
+
+                        // stripe customer address from order
+                        $to_address = array(
+                            "name"=> $order['shipping']['name'],
+                            "street1" => $order['shipping']['address']['line1'],
+                            "street2" => $order['shipping']['address']['line2'],
+                            "city"    => $order['shipping']['address']['city'],
+                            "state"   => "GB",
+                            "zip"     => $order['shipping']['address']['postal_code'],
+                            "country" => $order['shipping']['address']['country'],
+                            "phone"   => $order['shipping']['phone']
+                        );
+
+                        // from address is declared in dbconnect.php
+                        $company_address = $from_address;
+
+                        // create an easy post order
+                        \EasyPost\EasyPost::setApiKey("GApzToQ5BwOn9YlJ05H8iQ");
+
+                        try {
+                            $easypost_order_parcels = array();
+                            //
+                            for ($parcel=0; $parcel < count($sku_items); $parcel++) {
+
+                                $parcel_array = array(
+                                    'weight'=>$sku_items[$parcel]['package_dimensions']['weight'],
+                                    'width'=>$sku_items[$parcel]['package_dimensions']['width'],
+                                    'length'=>$sku_items[$parcel]['package_dimensions']['length'],
+                                    'height'=>$sku_items[$parcel]['package_dimensions']['height']
                                 );
 
-                                // from address is declared in dbconnect.php
-                                $company_address = $from_address;
+                                array_push($easypost_order_parcels, array('parcel'=> $parcel_array, 'options'=>array('currency' => 'gbp')));
+                            }
 
-                                // create an easy post order
-                                \EasyPost\EasyPost::setApiKey("GApzToQ5BwOn9YlJ05H8iQ");
+                            $easypost_order = \EasyPost\Order::create(array(
+                                "to_address"=> $to_address,
+                                "from_address"=>$company_address,
+                                "options"=>array(
+                                    'currency'=>"gbp"
+                                ),
+                                "shipments"=> $easypost_order_parcels
+                            ));
 
-                                try {
-                                    $easypost_order_parcels = array();
-                                    //
-                                    for ($parcel=0; $parcel < count($sku_items); $parcel++) {
+                            if (count($easypost_order['rates']) < 1) {
 
-                                        $parcel_array = array(
-                                            'weight'=>$sku_items[$parcel]['package_dimensions']['weight'],
-                                            'width'=>$sku_items[$parcel]['package_dimensions']['width'],
-                                            'length'=>$sku_items[$parcel]['package_dimensions']['length'],
-                                            'height'=>$sku_items[$parcel]['package_dimensions']['height']
-                                        );
+                                echo "<div class=\"\">
+                                    <h3 class=\"text-center\">UNFORTUNATELY SHIPPING RATES CANT BE DISPLAYED FOR THIS ORDER. MAKE THE PURCAHSE AND WE WILL HANDLE THE SHIPPING MANUALLY AND SEND YOU AN EMAIL WITH ALL REQUIRED DETAILS</h3>
+                                </div>";
 
-                                        array_push($easypost_order_parcels, array('parcel'=> $parcel_array, 'options'=>array('currency' => 'gbp')));
-                                    }
+                            }else {
 
-                                    $easypost_order = \EasyPost\Order::create(array(
-                                        "to_address"=> $to_address,
-                                        "from_address"=>$company_address,
-                                        "options"=>array(
-                                            'currency'=>"gbp"
-                                        ),
-                                        "shipments"=> $easypost_order_parcels
-                                    ));
+                                // update order metadata with service detials
+                                $order->metadata['chosen_carrier'] = $easypost_order['rates'][0]['carrier'];
+                                $order->metadata['chosen_service'] = $easypost_order['rates'][0]['service'];
 
-                                    if (count($easypost_order['rates']) < 1) {
+                                $order->save();
 
-                                        echo "<div class=\"\">
-                                            <h3 class=\"text-center\">UNFORTUNATELY SHIPPING RATES CANT BE DISPLAYED FOR THIS ORDER. MAKE THE PURCAHSE AND WE WILL HANDLE THE SHIPPING MANUALLY AND SEND YOU AN EMAIL WITH ALL REQUIRED DETAILS</h3>
-                                        </div>";
+                                // shipping methods from order created using
+                                $template = $twig->load('shipping-options.html.twig');
+                                echo $template->render(array(
+                                    'order'=>$order,
+                                    'easypost_order'=>$easypost_order,
+                                    'ep_shipping_methods'=>$easypost_order['rates'],
+                                    'shipping_methods'=>$order['shipping_methods'],
+                                    'default_shipping'=>$order['selected_shipping_method']
+                                ));
 
-                                    }else {
-
-                                        // update order metadata with service detials
-                                        $order->metadata['chosen_carrier'] = $easypost_order['rates'][0]['carrier'];
-                                        $order->metadata['chosen_service'] = $easypost_order['rates'][0]['service'];
-
-                                        $order->save();
-
-                                        // shipping methods from order created using
-                                        $template = $twig->load('shipping-options.html.twig');
-                                        echo $template->render(array(
-                                            'order'=>$order,
-                                            'easypost_order'=>$easypost_order,
-                                            'ep_shipping_methods'=>$easypost_order['rates'],
-                                            'shipping_methods'=>$order['shipping_methods'],
-                                            'default_shipping'=>$order['selected_shipping_method']
-                                        ));
-
-                                    }
+                            }
 
 
-                                } catch (\EasyPost\Error $e) {
-                                     $easypost_error = $e->ecode;
+                        } catch (\EasyPost\Error $e) {
+                             $easypost_error = $e->ecode;
 
-                                     echo "<div class=\"row\">
-                                         <h3 class=\"text-center\">".$easypost_error."</h3>
-                                     </div>";
-                                }
+                             echo "<div class=\"row\">
+                                 <h3 class=\"text-center\">".$easypost_error."</h3>
+                             </div>";
+                        }
 
 
 
-                             ?>
-
-                    <?php endif; ?>
+                     ?>
 
                     <div class="row" id="basket">
                         <div class="col-12" style="text-align: center">
