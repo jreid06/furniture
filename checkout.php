@@ -1,6 +1,5 @@
 <?php
 
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
     include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
 
     // transaction token. only lasts for 1 hour

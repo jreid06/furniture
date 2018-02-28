@@ -1,5 +1,5 @@
 <?php
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // define('ROOT_PATH', dirname(__DIR__).'/furniture/');
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
@@ -7,8 +7,8 @@
     // turn query paremeters into an assosiative array
     parse_str($_SERVER['QUERY_STRING'], $output);
 
-    // check whart paremeters have been added to determine what product data to get
-    if (!isset($_GET['cat']) || !$_GET['cat'] || $_GET['cat'] === 'gifts') {
+    // check what paremeters have been added to determine what product data to get
+    if (!isset($_GET['cat']) || $_GET['cat'] === 'gifts') {
         $data = 'show all products';
         $category = 'all';
 

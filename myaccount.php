@@ -1,6 +1,6 @@
 <?php
 
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     $page = '';
     // check to make sure that the user is logged in
     if(!isset($_SESSION['idyl_tkn']) && !isset($_COOKIE['idyl_tkn']) ) {

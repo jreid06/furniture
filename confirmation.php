@@ -1,5 +1,5 @@
 <?php
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
 
     if (isset($_GET['orderid'])) {
 

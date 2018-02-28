@@ -1,5 +1,5 @@
 <?php
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
 ?>
 <!-- && isset($_GET['cat']) && $_GET['prod_slug'] -->
 <?php if (isset($_GET['id']) && isset($_GET['cat']) && $_GET['prodtype'] && $_GET['slug']): ?>

@@ -1,6 +1,6 @@
 <?php
 
-    include dirname(__DIR__).'/furniture/scripts/dbconnect.php';
+    include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
 
     if (isset($_COOKIE['idyl_tkn']) || isset($_SESSION['idyl_tkn'])) {
         header('location: /');
