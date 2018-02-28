@@ -155,10 +155,54 @@ footer{
 	}
 }
 
-
-
-
 // BRANDS END
+
+//  GUEST ADD DELIVERY DETAILS SCSS Code
+
+.details-add-home{
+	margin-bottom: 50px;
+
+	@include respond-to($lg-break){
+		top: 105px !important;
+	};
+}
+
+.personal-details-guest{
+	position: relative;
+	border: 1px solid green;
+	padding-bottom: 50px;
+}
+
+.shipping-details-guest{
+	position: relative;
+	border: 1px solid blue;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+.disabled-details{
+	opacity: 0;
+	z-index: -1;
+}
+
+.disabled-shipping{
+	opacity: 0.6;
+	z-index: 10;
+}
+
+.disabled-layer{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #e5e5e5;
+
+	transition: all .5s;
+}
+
+
+//  GUEST ADD DELIVERY DETAILS SCSS Code
 
 .active-nav-link{
     border-bottom: 2px solid;
@@ -414,6 +458,7 @@ nav{
         // border: 1px solid black;
         display: flex;
         justify-content: center;
+		align-items: center;
 
         li{
             display: inline-block;

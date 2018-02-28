@@ -81,7 +81,7 @@ class __TwigTemplate_23af4b8ea8993aea80ead4e76c763591f90f092094903549355e40cbc2d
                         <td>
                             £ ";
             // line 35
-            echo twig_escape_filter($this->env, ($this->getAttribute($context["item"], "amount", array()) / twig_number_format_filter($this->env, 100, 2)), "html", null, true);
+            echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($context["item"], "amount", array()) / 100), 2), "html", null, true);
             echo "
                         </td>
                     </tr>
@@ -103,64 +103,86 @@ class __TwigTemplate_23af4b8ea8993aea80ead4e76c763591f90f092094903549355e40cbc2d
             <div class=\"col-12 col-md-6\">
                 <h4 class=\"text-right\">Total: £ ";
         // line 49
-        echo twig_escape_filter($this->env, ($this->getAttribute(($context["order"] ?? null), "amount", array()) / twig_number_format_filter($this->env, 100, 2)), "html", null, true);
+        echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute(($context["order"] ?? null), "amount", array()) / 100), 2), "html", null, true);
         echo "</h4>
             </div>
         </div>
     </div>
-    <div class=\"col-12\">
-        <h4>DELIVERY ORDER ID: #";
+
+    ";
         // line 54
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), "easypost-order-id", array(), "array"), "html", null, true);
-        echo "<span class=\"badge badge-success\"></span></h4>
-        <br>
-    </div>
-    <div class=\"col-12 col-lg-12\">
-        <table class=\"table confirm-order-table\">
-            <thead class=\"thead-dark\">
-                <tr>
-                  <th scope=\"col\">Shipment ID</th>
-                  <th scope=\"col\">Tracking Code</th>
-                  <th scope=\"col\">Carrier</th>
-                  <th scope=\"col\">Item Associated</th>
-                </tr>
-            </thead>
-            <tbody>
-                ";
-        // line 68
-        $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(($context["metadata_details"] ?? null));
-        foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
-            // line 69
-            echo "                <tr>
-                    <th scope=\"row\" style=\"vertical-align: middle;\">";
-            // line 70
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), $this->getAttribute($context["item"], "shipment_id", array()), array(), "array"), "html", null, true);
-            echo "</th>
-                    <td>";
-            // line 71
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), $this->getAttribute($context["item"], "tracker_code", array()), array(), "array"), "html", null, true);
-            echo "</td>
-                    <td>";
-            // line 72
-            echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "carrier", array()), "html", null, true);
-            echo "</td>
-                    <td>";
-            // line 73
-            echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "name", array()), "html", null, true);
-            echo "</td>
-                </tr>
-                ";
+        if ((($context["metadata_length"] ?? null) < 3)) {
+            // line 55
+            echo "        <div class=\"col-12\">
+            <br>
+            <h4 class=\"text-danger\">UNFORTUNATELY THERE WAS AN ERROR RETRIEVING YOUR SHIPPING DETAILS. PLEASE CONTACT SUPPORT FOR MORE INFORMATION REFERENCING YOUR IDYL ORDER ID NUMBER</h4>
+            <br>
+            <hr>
+            <h4>IDYL ORDER ID: #";
+            // line 60
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["order"] ?? null), "id", array()), "html", null, true);
+            echo "</h4>
+            <br>
+        </div>
+    ";
+        } else {
+            // line 64
+            echo "        <div class=\"col-12\">
+            <h4>DELIVERY ORDER ID: #";
+            // line 65
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), "easypost-order-id", array(), "array"), "html", null, true);
+            echo "<span class=\"badge badge-success\"></span></h4>
+            <br>
+        </div>
+        <div class=\"col-12 col-lg-12\">
+            <table class=\"table confirm-order-table\">
+                <thead class=\"thead-dark\">
+                    <tr>
+                      <th scope=\"col\">Shipment ID</th>
+                      <th scope=\"col\">Tracking Code</th>
+                      <th scope=\"col\">Carrier</th>
+                      <th scope=\"col\">Item Associated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ";
+            // line 79
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable(($context["metadata_details"] ?? null));
+            foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
+                // line 80
+                echo "                    <tr>
+                        <th scope=\"row\" style=\"vertical-align: middle;\">";
+                // line 81
+                echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), $this->getAttribute($context["item"], "shipment_id", array()), array(), "array"), "html", null, true);
+                echo "</th>
+                        <td>";
+                // line 82
+                echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["order"] ?? null), "metadata", array()), $this->getAttribute($context["item"], "tracker_code", array()), array(), "array"), "html", null, true);
+                echo "</td>
+                        <td>";
+                // line 83
+                echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "carrier", array()), "html", null, true);
+                echo "</td>
+                        <td>";
+                // line 84
+                echo twig_escape_filter($this->env, $this->getAttribute($context["item"], "name", array()), "html", null, true);
+                echo "</td>
+                    </tr>
+                    ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 87
+            echo "
+                </tbody>
+            </table>
+        </div>
+    ";
         }
-        $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
-        $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 76
-        echo "
-            </tbody>
-        </table>
-    </div>
-</div>
+        // line 92
+        echo "</div>
 ";
     }
 
@@ -176,7 +198,7 @@ class __TwigTemplate_23af4b8ea8993aea80ead4e76c763591f90f092094903549355e40cbc2d
 
     public function getDebugInfo()
     {
-        return array (  159 => 76,  150 => 73,  146 => 72,  142 => 71,  138 => 70,  135 => 69,  131 => 68,  114 => 54,  106 => 49,  94 => 39,  84 => 35,  79 => 32,  73 => 30,  69 => 28,  67 => 27,  62 => 24,  56 => 22,  52 => 20,  50 => 19,  45 => 17,  41 => 16,  38 => 15,  34 => 14,  19 => 1,);
+        return array (  185 => 92,  178 => 87,  169 => 84,  165 => 83,  161 => 82,  157 => 81,  154 => 80,  150 => 79,  133 => 65,  130 => 64,  123 => 60,  116 => 55,  114 => 54,  106 => 49,  94 => 39,  84 => 35,  79 => 32,  73 => 30,  69 => 28,  67 => 27,  62 => 24,  56 => 22,  52 => 20,  50 => 19,  45 => 17,  41 => 16,  38 => 15,  34 => 14,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -223,7 +245,7 @@ class __TwigTemplate_23af4b8ea8993aea80ead4e76c763591f90f092094903549355e40cbc2d
 
                         </td>
                         <td>
-                            £ {{item.amount / 100 | number_format(2)}}
+                            £ {{(item.amount / 100) | number_format(2)}}
                         </td>
                     </tr>
                 {% endfor %}
@@ -237,37 +259,49 @@ class __TwigTemplate_23af4b8ea8993aea80ead4e76c763591f90f092094903549355e40cbc2d
 
             </div>
             <div class=\"col-12 col-md-6\">
-                <h4 class=\"text-right\">Total: £ {{order.amount / 100 | number_format(2)}}</h4>
+                <h4 class=\"text-right\">Total: £ {{(order.amount / 100) | number_format(2)}}</h4>
             </div>
         </div>
     </div>
-    <div class=\"col-12\">
-        <h4>DELIVERY ORDER ID: #{{order.metadata['easypost-order-id']}}<span class=\"badge badge-success\"></span></h4>
-        <br>
-    </div>
-    <div class=\"col-12 col-lg-12\">
-        <table class=\"table confirm-order-table\">
-            <thead class=\"thead-dark\">
-                <tr>
-                  <th scope=\"col\">Shipment ID</th>
-                  <th scope=\"col\">Tracking Code</th>
-                  <th scope=\"col\">Carrier</th>
-                  <th scope=\"col\">Item Associated</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in metadata_details %}
-                <tr>
-                    <th scope=\"row\" style=\"vertical-align: middle;\">{{order.metadata[item.shipment_id]}}</th>
-                    <td>{{order.metadata[item.tracker_code]}}</td>
-                    <td>{{item.carrier}}</td>
-                    <td>{{item.name}}</td>
-                </tr>
-                {% endfor %}
 
-            </tbody>
-        </table>
-    </div>
+    {% if metadata_length < 3 %}
+        <div class=\"col-12\">
+            <br>
+            <h4 class=\"text-danger\">UNFORTUNATELY THERE WAS AN ERROR RETRIEVING YOUR SHIPPING DETAILS. PLEASE CONTACT SUPPORT FOR MORE INFORMATION REFERENCING YOUR IDYL ORDER ID NUMBER</h4>
+            <br>
+            <hr>
+            <h4>IDYL ORDER ID: #{{order.id}}</h4>
+            <br>
+        </div>
+    {% else %}
+        <div class=\"col-12\">
+            <h4>DELIVERY ORDER ID: #{{order.metadata['easypost-order-id']}}<span class=\"badge badge-success\"></span></h4>
+            <br>
+        </div>
+        <div class=\"col-12 col-lg-12\">
+            <table class=\"table confirm-order-table\">
+                <thead class=\"thead-dark\">
+                    <tr>
+                      <th scope=\"col\">Shipment ID</th>
+                      <th scope=\"col\">Tracking Code</th>
+                      <th scope=\"col\">Carrier</th>
+                      <th scope=\"col\">Item Associated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in metadata_details %}
+                    <tr>
+                        <th scope=\"row\" style=\"vertical-align: middle;\">{{order.metadata[item.shipment_id]}}</th>
+                        <td>{{order.metadata[item.tracker_code]}}</td>
+                        <td>{{item.carrier}}</td>
+                        <td>{{item.name}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 </div>
 ", "order-confirmation.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/order-confirmation.html.twig");
     }

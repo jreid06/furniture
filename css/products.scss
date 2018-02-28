@@ -144,6 +144,9 @@
     .fltr-inp{
         // border: 1px solid red;
         background-color: #fff !important;
+        p{
+            font-size: 0.8em;
+        }
 
         &:nth-child(1){
             width: 25% !important;
