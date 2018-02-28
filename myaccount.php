@@ -396,7 +396,6 @@
                     <div class="form-group">
                         <label for="inputAddress1">Address line 1 *</label>
                         <input type="text" class="form-control" id="inputAddress1" aria-describedby="emailHelp" placeholder="Enter email" required>
-                        <p><small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small></p>
 
                     </div>
                     <div class="form-group">
