@@ -92,6 +92,17 @@ class Address {
     }
 }
 
+class PaymentAddress {
+    constructor(address1, address2, city_town, post_code, country, phone_num) {
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city_town = city_town;
+        this.post_code = post_code;
+        this.country = country;
+        this.phone_num = phone_num;
+    }
+}
+
 class getPageContent {
     constructor(type, tbl, field, val) {
         this.type = type;
