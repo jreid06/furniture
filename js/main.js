@@ -1455,10 +1455,13 @@ $(document).ready(function() {
                     // console.log(val.data.shippment_details);
                     // console.log(JSON.parse(val.data.shippment_details));
                     // console.log(JSON.parse(val));
+                    let cookieLocation ='',
+                        orderID = '';
+
                     switch (val.status.code) {
                         case (101 || '101'):
                             $.notify(val.data.msg, val.status.code_status);
-                            let orderID = localStorage.getItem('idyl-order-id');
+                            orderID = localStorage.getItem('idyl-order-id');
 
                             // delete local storage order data
                             localStorage.removeItem('idyl-order-id');
@@ -1466,7 +1469,7 @@ $(document).ready(function() {
                             console.log('local storage order id removed');
 
                             // delete checkout cookie
-                            let cookieLocation = localStorage.getItem('checkout-cookie-location');
+                            cookieLocation = localStorage.getItem('checkout-cookie-location');
                             Cookies.remove('trans_local_token', {path: cookieLocation});
 
                             //delete basket data
@@ -1508,7 +1511,53 @@ $(document).ready(function() {
 
                             break;
                         case (404 || '404'):
-                            $.notify(val.status.type, 'error');
+                            $.notify(val.data.msg, 'error');
+                            orderID = localStorage.getItem('idyl-order-id');
+
+                            // delete local storage order data
+                            localStorage.removeItem('idyl-order-id');
+                            localStorage.removeItem('idyl-easypost-order-id');
+                            console.log('local storage order id removed');
+
+                            // delete checkout cookie
+                            cookieLocation = localStorage.getItem('checkout-cookie-location');
+                            Cookies.remove('trans_local_token');
+
+                            //delete basket data
+                            // (front end (NOTE: all users)
+                            // in database (NOTE:logged in users only))
+                            localStorage.removeItem('basket');
+                            $nav_vue.emptyBasket();
+
+                            if ($nav_vue.loggedInStatus) {
+                                $.ajax({
+                                    url: '/scripts/deletebasketdata.php',
+                                    type: 'post',
+                                    data: {
+                                        cusID: $nav_vue.loggedInUser.id
+                                    },
+                                    success: function(data){
+                                        let $data = JSON.parse(data);
+
+                                        console.log("---------------");
+                                        console.log("DELETE BASKET DATA BELOW");
+                                        console.log("---------------");
+                                        console.log($data);
+
+                                        setTimeout(function(){
+                                            window.location =  '/order/confirmation/'+orderID;
+                                        }, 2000);
+                                    },
+                                    error: function(){
+                                        console.log('error with DELETE BASKET DATA ajax');
+                                    }
+                                })
+                            }else {
+                                setTimeout(function(){
+                                    window.location =  '/order/confirmation/'+orderID;
+                                }, 2000);
+                            }
+
                             break;
                         case (401 || '401'):
                             $.notify(val.data.msg, 'warn');
@@ -1915,7 +1964,8 @@ $(document).ready(function() {
                                     }
 
                                     return;
-                                } else {
+                                }
+                                else {
                                     // create a class that represents address being added
                                     let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
@@ -2479,7 +2529,8 @@ $(document).ready(function() {
                 basketTotal: 0,
                 filterStatus: false,
                 checkoutValues: {
-                    savedDetails: false
+                    savedDetails: false,
+                    savedShipping: false,
                 },
                 basket: {
                     items: ''
@@ -3112,6 +3163,200 @@ $(document).ready(function() {
                 ]
             },
             methods: {
+                saveCustomerDetails: function(e){
+                    let targetButton = $(e.target)[0],
+                        targetType = $(targetButton).attr('data-save-type'),
+                        $title = $('.inputTitle')[0].children,
+                        $userTitleVal = '',
+                        $fname = $('#validationfname')[0].value,
+                        $lname = $('#validationlname')[0].value,
+                        $email = $('#validationDefaultEmail')[0].value,
+                        $dob = $('#userAge')[0].value;
+
+
+                    // get the selected option from list
+                    for (var i = 0; i < $title.length; i++) {
+                        if ($title[i].selected) {
+                            $userTitleVal = $title[i].value;
+                        }
+                    }
+
+                    let date = new Date();
+                        year = date.getFullYear();
+                        userBirthYear = Math.floor($dob.split('-')[0]),
+                        minBirthYear = year - 18;
+
+
+                    if (!$fname || !$lname || !$dob || $userTitleVal === 'default') {
+                        $('.save-p-details').notify('One or more fields are invalid or empty.', 'warn');
+
+                        return;
+                    }else if (userBirthYear > minBirthYear) {
+                        $('.age-error').notify('You must be older than 18');
+                        return;
+                    }else {
+                        // send ajax to update session for personal details
+                        let $user = new User($userTitleVal, $fname, $lname, $dob, $email, false);
+
+                        console.log($user);
+
+                        $.ajax({
+                            url: '/scripts/guestcheckoutsession.php',
+                            type: 'post',
+                            data: {
+                                type: targetType,
+                                user_details: $user
+                            },
+                            success: function(data){
+                                console.log(data);
+                                let $data = JSON.parse(data),
+                                    $vm = this;
+
+                                if ($data.status.code === (101 || '101')) {
+                                    $('.disabled-shipping').css({'opacity':'0', 'z-index': '-1'});
+                                    $('.disabled-details').css({'opacity':'0.6', 'z-index': '10'});
+
+                                    // $vm.checkoutValues.savedDetails = true;
+                                }else if($data.status.code === (404 || '404')) {
+                                    $.notify($data.data.msg, 'error');
+                                }
+                            },
+                            error: function(){
+                                $.notify('error with saving user details: CHECKOUT 404');
+                            }
+                        })
+
+                    }
+
+
+
+                },
+                saveShippingDetails: function(e){
+
+                    let targetButton = $(e.target)[0],
+                        targetType = $(targetButton).attr('data-save-type'),
+                        $address1 = $('#validationAddress1')[0].value,
+                        $address2 = $('#validationAddress2')[0].value,
+                        $city_town = $('#validationCity')[0].value,
+                        $post_code = $('#validationPostcode')[0].value.replace(/ /g, ''),
+                        $country = $('.validationCountry')[0].children[0].value,
+                        $phone_num = $('#validationNumber')[0].value.replace(/ /g, ''),
+                        //validate phone number
+                        phone_real = this.phonenumber($phone_num);
+
+                        // add default value to address 2 & 3 if they havent been entered;
+                        $address2 = (!$address2) ? 'false' : $address2;
+
+                        console.log($address1);
+                        console.log($address2);
+                        console.log($city_town);
+                        console.log($post_code);
+                        console.log($country);
+                        console.log($phone_num);
+                        console.log(targetType);
+
+                        let postCodeStatus = '',
+                            validatePostcode = new Promise(function(resolve, reject) {
+
+                            $.ajax({
+                                url: `https://api.postcodes.io/postcodes/${$post_code}/validate`,
+                                type: 'get',
+                                success: function(data) {
+                                    if (data.status === 200) {
+                                        resolve(data.result);
+                                    } else {
+                                        reject('post code is not valid');
+                                    }
+                                },
+                                error: function(){
+                                    reject('error with ajax function');
+                                }
+                            });
+
+
+                        });
+
+                        validatePostcode.then(function(val){
+                            console.log(val);
+                            postCodeStatus = val;
+
+                            if (!phone_real || !$address1 || !$address2 || !$city_town || !$country) {
+                                $('.save-ship-details').notify('One or more fields are invalid or empty.', 'warn');
+
+                                if(!phone_real){
+                                    $('#validationNumber').notify('Invalid phone number entered', 'error');
+                                    return;
+                                }
+
+                                return;
+                            }
+                            // address1, address2, city_town, post_code, country, phone_num
+                            let final_address = new PaymentAddress($address1, $address2, $city_town, $post_code, $country, $phone_num),
+                                locationURL = '/checkout/guest',
+                                inhour= new Date(new Date().getTime() + 60 * 60 * 1000);;
+
+                            console.log(final_address);
+
+                            // send the address to be saved in session variable
+                            $.ajax({
+                                url: '/scripts/guestcheckoutsession.php',
+                                type: 'post',
+                                data: {
+                                    type: targetType,
+                                    shipping_details: final_address,
+                                    basket_data: localStorage.getItem('basket')
+                                },
+                                success: function(data){
+                                    let $data = JSON.parse(data);
+
+                                    console.log($data);
+                                    switch ($data.status.code) {
+                                        case (101 || '101'):
+                                            if ($data.data.session.length < 3) {
+                                                $.notify('please resave both detail sections', 'warn');
+                                            }else {
+                                                // console.log('REDIRECT to /checkout/guest');
+                                                Cookies.set('trans_local_token', 'user-checkout',{expires: inhour});
+
+                                                localStorage.setItem('checkout-cookie-location', locationURL);
+
+                                                setTimeout(function(){
+                                                    console.log(Cookies.get('trans_local_token'));
+                                                    // window.location = '/checkout/guest';
+                                                }, 200)
+                                            }
+
+                                            break;
+                                        case (404 || '404'):
+                                            $.notify($data.data.msg, $data.status.code_status);
+
+                                            break;
+                                        default:
+
+                                    }
+                                },
+                                error: function(){
+
+                                }
+                            })
+
+                        }).catch((reason) => {
+                            $('#validationPostcode').notify(reason, 'error');
+                            // console.log(reason);
+                            postCodeStatus = false;
+                        });
+
+
+
+                },
+                phonenumber: function(inputtxt) {
+                    let phoneno = /^\d{11}$/;
+                    if (inputtxt.match(phoneno)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
                 payment: function(e) {
                     // get the total of the basket
                     let orderTotal = $(e.target).attr('data-total'),
