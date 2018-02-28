@@ -272,7 +272,26 @@ if (isset($_POST['token'])) {
 
 	try {
         $easypost_order = \EasyPost\Order::retrieve($ep_order_id);
+	}
+	catch(\EasyPost\Error $e) {
+		$easypost_error = $e->ecode;
+		$shipment = false;
+		$msg = array(
+			'status' => array(
+				'code' => 101,
+				'code_status' => 'warn'
+			) ,
+			'data' => array(
+				'msg' => 'order successfully paid. shipping details error',
+				'final_order' => $order,
+				'easy_post_error' => $easypost_error,
+				'shippment_details' => $shipment
+			)
+		);
+		exit(json_encode($msg));
+	}
 
+	try {
 		$easypost_order->buy(array('carrier' => $order['metadata']['chosen_carrier'], 'service' => $order['metadata']['chosen_service']));
 
 		// UPDATE order will tracking information
@@ -313,25 +332,21 @@ if (isset($_POST['token'])) {
 		);
 
 		exit(json_encode($msg));
-	}
-
-	catch(EasyPostError $e) {
+	} catch (\EasyPost\Error $e) {
 		$easypost_error = $e->ecode;
-		$shipment = false;
 		$msg = array(
 			'status' => array(
-				'code' => 101,
-				'code_status' => 'warn'
+				'code' => 404,
+				'code_status' => 'error'
 			) ,
 			'data' => array(
-				'msg' => 'order successfully paid. shipping details error',
-				'final_order' => $order,
-				'easy_post_error' => $easypost_error,
-				'shippment_details' => $shipment
+				'easy_post_error'=> $easypost_error = $e->ecode,
+				'msg' => 'error with supplying shipping confirmation. contact us for more help'
 			)
 		);
 		exit(json_encode($msg));
 	}
+
 }
 else {
 	$msg = array(
