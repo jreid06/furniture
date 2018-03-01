@@ -18,7 +18,7 @@
             <div class="col-12 text-center">
                 <div class="btn btn-primary">
                     <?php if (!isset($_SESSION['idyl_tkn']) && !isset($_COOKIE['idyl_tkn'])): ?>
-                        <a href="#" data-href="/details/add" @click.prevent="setPaymentCookie">checkout</a>
+                        <a href="#" data-href="/details/add" @click.prevent="directGuest">checkout</a>
                     <?php else: ?>
                         <a href="#" data-href="/checkout/user/<?=isset($_SESSION['idyl_str_id'])?$_SESSION['idyl_str_id']:$_COOKIE['idyl_str_id'];?>" @click.prevent="setPaymentCookie">Checkout</a>
                     <?php endif; ?>
@@ -46,7 +46,7 @@
                 <hr>
                 <div class="btn btn-primary">
                     <?php if (!isset($_SESSION['idyl_tkn']) && !isset($_COOKIE['idyl_tkn'])): ?>
-                        <a href="#" data-href="/checkout/guest" @click.prevent="setPaymentCookie">checkout</a>
+                        <a href="#" data-href="/details/add" @click.prevent="directGuest">checkout</a>
                     <?php else: ?>
                         <a href="#" data-href="/checkout/user/<?=isset($_SESSION['idyl_str_id'])?$_SESSION['idyl_str_id']:$_COOKIE['idyl_str_id'];?>" @click.prevent="setPaymentCookie">Checkout</a>
                     <?php endif; ?>
