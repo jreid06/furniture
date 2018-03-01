@@ -689,13 +689,18 @@ nav{
 		padding: 10px;
 		display: inline-flex;
 		background: url('/assets/main/e1-dark.jpeg');
-		background-size: cover;
-		background-position: center;
+		background-size: cover !important;
+		background-position: center !important;
 		margin-right: 15px;
+		margin-top: 30px;
 
 		&:nth-child(1){
 			margin-left: 12px;
 		}
+
+		@include respond-to($xl-break){
+			height: 250px;
+		};
 	}
 
 	.close-menu{

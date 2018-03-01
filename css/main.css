@@ -1437,11 +1437,15 @@ nav {
   padding: 10px;
   display: inline-flex;
   background: url("/assets/main/e1-dark.jpeg");
-  background-size: cover;
-  background-position: center;
-  margin-right: 15px; }
+  background-size: cover !important;
+  background-position: center !important;
+  margin-right: 15px;
+  margin-top: 30px; }
   .content-livingroom-nav .nav-box:nth-child(1) {
     margin-left: 12px; }
+  @media only screen and (min-width: 1200px) {
+    .content-livingroom-nav .nav-box {
+      height: 250px; } }
 .content-livingroom-nav .close-menu {
   position: absolute;
   right: 10px;
