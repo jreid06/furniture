@@ -1757,14 +1757,16 @@ nav {
   border-radius: 0px;
   border: 0px solid;
   color: #fff;
-  font-size: 1.1em;
-  text-shadow: 2px 0px #010101; }
+  font-size: 1.1em; }
   .category-card .card-img-bgrnd {
-    height: 163px;
+    height: 127px;
     width: 100%;
     margin: 0 auto;
     background-position: center !important;
     background-size: cover !important; }
+    @media only screen and (min-width: 360px) {
+      .category-card .card-img-bgrnd {
+        height: 135px; } }
     @media only screen and (min-width: 576px) {
       .category-card .card-img-bgrnd {
         height: 215px;
@@ -1774,6 +1776,10 @@ nav {
         height: 140px;
         width: 100%; } }
     @media only screen and (min-width: 992px) {
+      .category-card .card-img-bgrnd {
+        height: 182px;
+        width: 100%; } }
+    @media only screen and (min-width: 1200px) {
       .category-card .card-img-bgrnd {
         height: 230px;
         width: 100%; } }
