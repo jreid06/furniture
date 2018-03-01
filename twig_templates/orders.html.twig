@@ -17,7 +17,7 @@
                         <td>{{order.real_json.created |timestamp_format()['full_date']}}</td>
                         <td>{{order.real_json.status}}</td>
                         <td>{{order.real_json.status_transitions.paid |timestamp_format()['full_date']}}</td>
-                        <td>£{{order.real_json.amount / 100}}</td>
+                        <td>£{{(order.real_json.amount / 100) | number_format(2)}}</td>
                         <td class="text-center"><button class="btn btn-primary" @click.prevent>View</button> </td>
                     </tr>
                 {% endfor %}
