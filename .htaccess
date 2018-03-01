@@ -1,0 +1,66 @@
+AuthUserFile /Users/jasonreid/Sites/idyldev/.htpass
+AuthType Basic
+AuthName "Access to dev site"
+Require valid-user
+
+DirectoryIndex index.php
+
+Options -multiviews
+Options +FollowSymLinks
+
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^backend/auth/admin/?$  /backend/login.php    [NC,L]
+RewriteRule ^backend/auth/admin/edit/ourstory-edit/([A-Za-z0-9\-\_]+)?$  /backend/ourstory-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/shipping-edit/([A-Za-z0-9\-\_]+)?$  /backend/shipping-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/return-edit/([A-Za-z0-9\-\_]+)?$  /backend/returns-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/payment-edit/([A-Za-z0-9\-\_]+)?$  /backend/payments-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/order-edit/([A-Za-z0-9\-\_]+)?$  /backend/orders-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/termsconditions-edit/([A-Za-z0-9\-\_]+)?$  /backend/termsconditions-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/privacypolicy-edit/([A-Za-z0-9\-\_]+)?$  /backend/privacy-edit.php?pageid=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/home?$  /backend/home.php    [NC,L]
+
+RewriteRule ^products/([A-Za-z0-9\-\_]+)/?$   /products.php?cat=$1   [NC,L]
+RewriteRule ^products/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)?$   /products.php?cat=$1&prodtype=$2   [NC,L]
+RewriteRule ^product/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)/?$   /product.php?cat=$1&prodtype=$2&slug=$3&id=$4&skuid=$5   [NC,L]
+
+RewriteRule ^help/shipping/?$  /shipping.php [NC,L]
+RewriteRule ^help/returns/?$  /returns.php [NC,L]
+RewriteRule ^help/payments/?$  /payments.php [NC,L]
+RewriteRule ^help/orders/?$  /orders.php [NC,L]
+
+RewriteRule ^details/([A-Za-z0-9\-\_]+)/?$  /details.php?type=$1 [NC,L]
+
+RewriteRule ^order/confirmation/([A-Za-z0-9\-\_]+)/?$  /confirmation.php?orderid=$1 [NC,L]
+
+RewriteRule ^checkout/([A-Za-z0-9\-\_]+)/?$  /checkout.php?q=$1 [NC,L]
+RewriteRule ^checkout/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)?$  /checkout.php?q=$1&cus=$2 [NC,L]
+
+RewriteRule ^createaccount/([A-Za-z0-9-]+)/?$   /createaccount.php?q=$1   [NC,L]
+RewriteRule ^myaccount/([A-Za-z0-9-]+)/?$       /myaccount.php?q=$1    [NC,L]
+RewriteRule ^myaccount/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$       /myaccount.php?q=$1&addressid=$2  [NC,L]
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^([^\.]+)$ $1.php [NC,L]
+# RewriteCond %{REQUEST_FILENAME}.php -f
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
+
+ErrorDocument 404 /pagenotfound
+ErrorDocument 403 /index.php
+ErrorDocument 410 /index.php
+
+# AuthUserFile /.htpass
+# AuthType Basic
+# AuthName "My Secret Folder"
+# Require valid-user
