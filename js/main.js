@@ -3322,7 +3322,7 @@ $(document).ready(function() {
 
                                                 setTimeout(function(){
                                                     console.log(Cookies.get('trans_local_token'));
-                                                    // window.location = '/checkout/guest';
+                                                    window.location = '/checkout/guest';
                                                 }, 200)
                                             }
 
@@ -3388,6 +3388,14 @@ $(document).ready(function() {
                         window.location = locationURL;
                     },200);
 
+                },
+                directGuest: function(e){
+                    let targetEl = $(e.target)[0],
+                        locationURL = targetEl.attributes['data-href'].value;
+
+                        setTimeout(function(){
+                            window.location = locationURL;
+                        },200);
                 },
                 renderStoryContent: function(){
                     let id = '8f003a39e5',
