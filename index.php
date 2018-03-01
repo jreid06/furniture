@@ -1,4 +1,5 @@
 <?php
+    // echo dirname(__DIR__);
     include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include '/scripts/dbconnect.php';
@@ -67,6 +68,7 @@
                 <div class="custom-separate"></div>
                 <div class="col-12">
                     <h5 class="text-center">FEATURED PRODUCTS</h5>
+                    <br>
                 </div>
 
                 <?php
@@ -88,6 +90,7 @@
                 <div class="custom-separate"></div>
                 <div class="col-12">
                     <h5 class="text-center">STORIES</h5>
+                    <br>
                 </div>
                 <blog-post
                         v-for="(post, index) in blogStories"

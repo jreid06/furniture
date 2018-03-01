@@ -8,7 +8,7 @@
 <div class="container help-container">
     <div class="row">
         <div class="col-12">
-            <h2 class="text-center">HELP</h2>
+            <h1 class="text-center">HELP</h1>
             <h3><strong>Choose from topics listed below: </strong> </h3>
             <br>
         </div>

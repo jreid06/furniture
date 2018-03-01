@@ -8,7 +8,9 @@
 <div class="container help-container">
     <div class="row">
         <div class="col-12">
-            <h2 class="text-center">RETURNS</h2>
+            <h1 class="text-center">RETURNS</h1>
+            <br>
+            <br>
         </div>
 
         <div class="col-12 col-md-6 info-columns" id="return-content1">

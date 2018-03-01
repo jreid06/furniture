@@ -8,7 +8,7 @@
 
      <div class="row">
          <div class="col-12">
-             <h3 class="text-center">OUR STORY</h3>
+             <h1 class="text-center">OUR STORY</h1>
              <br>
          </div>
          <div class="col-12 story-content">

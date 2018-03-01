@@ -8,7 +8,9 @@
 <div class="container help-container">
     <div class="row">
         <div class="col-12">
-            <h2 class="text-center">TERMS &AMP; CONDITIONS</h2>
+            <h1 class="text-center">TERMS &AMP; CONDITIONS</h1>
+            <br>
+            <br>
         </div>
 
         <div class="col-12 info-columns" id="termscondition-content">
