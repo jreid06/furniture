@@ -291,15 +291,15 @@
 
                         <div class="p-2">
 
-                            <div class="nav-box box-1">
+                            <div class="nav-box box-1" style="background: url('/assets/category/alison-marras-361007.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-2">
+                            <div class="nav-box box-2" style="background: url('/assets/category/alison-marras-361007.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-3">
+                            <div class="nav-box box-3" style="background: url('/assets/category/alison-marras-361007.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
@@ -336,15 +336,15 @@
 
                         <div class="p-2">
 
-                            <div class="nav-box box-1">
+                            <div class="nav-box box-1" style="background: url('/assets/category/krista-mcphee-445060.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-2">
+                            <div class="nav-box box-2" style="background: url('/assets/category/krista-mcphee-445060.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-3">
+                            <div class="nav-box box-3" style="background: url('/assets/category/krista-mcphee-445060.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
@@ -381,15 +381,15 @@
 
                         <div class="p-2">
 
-                            <div class="nav-box box-1">
+                            <div class="nav-box box-1" style="background: url('/assets/category/david-cohen-127022.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-2">
+                            <div class="nav-box box-2" style="background: url('/assets/category/david-cohen-127022.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
-                            <div class="nav-box box-3">
+                            <div class="nav-box box-3" style="background: url('/assets/category/david-cohen-127022.jpg'); background-position: center; background-size: cover;">
 
                             </div>
 
