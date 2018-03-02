@@ -1,3 +1,30 @@
+// media queries
+// Media Query Breakpoints
+$xs: 0;
+$xs-large-break: '(min-width: 360px)';
+$sm-small-break: '(min-width: 568px)';
+$sm-break: '(min-width: 576px)';
+$md-break: '(min-width: 768px)';
+$md-break-plus: '(min-width: 850px)';
+$lg-break: '(min-width: 992px)';
+$xl-break: '(min-width: 1200px)';
+$xll-break: '(min-width: 1400px)';
+$sm-break-max: '(max-width: 576px)';
+$md-break-max: '(max-width: 767px)';
+$lg-break-max: '(max-width: 991px)';
+$xl-break-max: '(max-width: 1199px)';
+$largephones: '(min-width: 400px)';
+$bangers: "font-family: 'Bangers', cursive";
+$ranchers: "font-family: 'Ranchers', cursive";
+$barrio: "font-family: 'Barrio', cursive";
+
+@mixin respond-to($media) {
+	 @media only screen and #{$media}{
+		@content;
+	}
+}
+
+
 .content-controls{
     padding-bottom: 50px;
 }
@@ -13,4 +40,42 @@
     .CodeMirror{
 		height: 520px !important;
 	}
+}
+
+.upload-image-container{
+    padding-top: 30px;
+    padding-bottom: 100px;
+    @include respond-to($xl-break){
+        // border: 1px solid red;
+        width: 70%;
+        margin: auto;
+    };
+}
+
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+
+.pending-uploads{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+    .image{
+        width: calc(100%/2);
+        border: 1px solid red;
+        height: 180px;
+
+        @include respond-to($lg-break){
+            width: calc(100%/4);
+        };
+    }
+
 }

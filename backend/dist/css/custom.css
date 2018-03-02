@@ -7,4 +7,34 @@
 .md-long .CodeMirror {
   height: 520px !important; }
 
+.upload-image-container {
+  padding-top: 30px;
+  padding-bottom: 100px; }
+  @media only screen and (min-width: 1200px) {
+    .upload-image-container {
+      width: 70%;
+      margin: auto; } }
+
+.file {
+  visibility: hidden;
+  position: absolute; }
+
+.pending-uploads {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  .pending-uploads .image {
+    width: calc(100%/2);
+    border: 1px solid red;
+    height: 180px; }
+    @media only screen and (min-width: 992px) {
+      .pending-uploads .image {
+        width: calc(100%/4); } }
+
 /*# sourceMappingURL=custom.css.map */
