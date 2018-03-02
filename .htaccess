@@ -12,6 +12,9 @@ RewriteEngine On
 RewriteBase /
 
 RewriteRule ^backend/auth/admin/?$  /backend/login.php    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/upload-product-images?$  /backend/upload-product-images.php    [NC,L]
+
 RewriteRule ^backend/auth/admin/edit/ourstory-edit/([A-Za-z0-9\-\_]+)?$  /backend/ourstory-edit.php?pageid=$1    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/shipping-edit/([A-Za-z0-9\-\_]+)?$  /backend/shipping-edit.php?pageid=$1    [NC,L]
