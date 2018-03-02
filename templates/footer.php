@@ -43,7 +43,7 @@
 		    </div>
 	  	</div>
 	  	<div class="card">
-		    <div class="card-header ch-footer" role="tab" id="headingThree">
+		    <div class="card-header ch-footer" role="tab" id="headingThree" style="padding-bottom: 30px;">
 		      <h5 class="mb-0">
 		        <a class="collapsed collapse-link" data-toggle="collapse" href="#contact-info" aria-expanded="false" aria-controls="collapseThree" class="collapse-link">
 		          Contact Us
@@ -82,6 +82,23 @@
 
 	</div>
 </footer>
+
+<div class="email-subscribe-bar fixed-bottom subscribe-vue">
+	<div class="" style="color: #fff; font-size: 1.2em;">
+		<span class="fa fa-caret-up d-none" id="subscribeShow" @click="toggleSubscribeBar" data-action="up"></span>
+	</div>
+	<form class="d-flex flex-row flex-wrap">
+		<div class="p-2">
+			<span class="fa fa-caret-down" @click="toggleSubscribeBar" data-action="down"></span>
+		</div>
+		<div class="p-2">
+			<input type="email" name="" class="subscription-email" placeholder="Email Address">
+		</div>
+		<div class="p-2">
+			<button type="button" class="btn btn-primary" @click.prevent="subscribeUser">SUBSCRIBE</button>
+		</div>
+	</form>
+</div>
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.11/vue.js" charset="utf-8"></script> -->
 

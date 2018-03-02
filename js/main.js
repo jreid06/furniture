@@ -247,6 +247,61 @@ $(document).ready(function() {
         }
     })
 
+    let $subscribe_vue = new Vue({
+        el: '.subscribe-vue',
+        data: {
+            subscribe: true
+        },
+        methods: {
+            toggleSubscribeBar: function(e){
+                let targetElement = $(e.target)[0],
+                    action = targetElement.attributes['data-action'].value;
+
+                console.log(targetElement);
+                console.log(action);
+
+                if (action === 'down') {
+                    $('.email-subscribe-bar').css({'height':'35px'});
+                    $('#subscribeShow').removeClass('d-none');
+                }else {
+                    $('.email-subscribe-bar').css({'height':'60px'});
+                    $('#subscribeShow').addClass('d-none');
+                }
+            },
+            subscribeUser: function(){
+                let $email = $('.subscription-email')[0].value;
+                console.log($email);
+
+                $.ajax({
+                    url: '/scripts/subscribeuser.php',
+                    type: 'post',
+                    data: {
+                        type: 'subscribe',
+                        emailsub: $email
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+
+                        console.log($data);
+                        switch ($data.status.code) {
+                            case (101 || '101'):
+                                $('.email-subscribe-bar').notify($data.data.msg, { position:"top center", className: "success"});
+                                break;
+                            case (404 || 404):
+                                $('.email-subscribe-bar').notify($data.data.msg, { position:"top center", className: $data.status.code_status});
+                                break;
+                            default:
+
+                        }
+                    },
+                    error: function(){
+                        $('.email-subscribe-bar').notify('error submitting email. Contact help', { position:"top center", className: 'error'});
+                    }
+                })
+            }
+        }
+    })
+
     let $nav_vue = new Vue({
         el: '.nav-vue',
         components: {
