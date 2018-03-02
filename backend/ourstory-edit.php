@@ -9,7 +9,7 @@
  ?>
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" class="dash-vue">
         <?php include "../backend/templates/nav.php" ?>
 
         <div id="page-wrapper">
