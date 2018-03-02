@@ -10,7 +10,81 @@ $(document).ready(function() {
     let $dashboard_vue = new Vue({
         el: '.dash-vue',
         data:{
-            status: 'dashboard vue connected'
+            status: 'dashboard vue connected',
+            navigation: {
+                pages: [
+                    {
+                        title: 'Home Slide Content',
+                        link: "/backend/auth/admin/edit/homepage-edit",
+                        sublinks: false
+                    },
+                    {
+                        title: 'Our Story Content',
+                        link: "/backend/auth/admin/edit/ourstory-edit/8f003a39e5",
+                        sublinks: false
+                    },
+                    {
+                        title: 'Upload Product Images',
+                        link: "/backend/auth/admin/edit/upload-product-images",
+                        sublinks: false
+                    },
+                    {
+                        title: "Edit Product Images",
+                        sublinks: true,
+                        sublinks_list: [
+                            {
+                                title: "Livingroom Products",
+                                link: "/backend/auth/admin/edit/livingroom-products"
+                            },
+                            {
+                                title: 'Kitchen Products',
+                                link: "/backend/auth/admin/edit/kitchen-products"
+                            },
+                            {
+                                title: 'Bedroom Products',
+                                link: "/backend/auth/admin/edit/bedroom-products"
+                            },
+                            {
+                                title: 'Bath Products',
+                                link: "/backend/auth/admin/edit/bath-products"
+                            }
+                        ]
+                    },
+                    {
+                        title: "Help",
+                        sublinks: true,
+                        sublinks_list: [
+                            {
+                                title: "Shipping",
+                                link: "/backend/auth/admin/edit/shipping-edit/97cc350c5e"
+                            },
+                            {
+                                title: 'Returns',
+                                link: "/backend/auth/admin/edit/return-edit/ed8c8f347e"
+                            },
+                            {
+                                title: 'Payments',
+                                link: "/backend/auth/admin/edit/payment-edit/5d4b314e6d"
+                            },
+                            {
+                                title: 'Orders',
+                                link: "/backend/auth/admin/edit/order-edit/649b879831"
+                            },
+                            {
+                                title: 'Terms & Conditions',
+                                link: "/backend/auth/admin/edit/termsconditions-edit/e7b6d56e22"
+                            },
+                            {
+                                title: 'Privacy Policy',
+                                link: "/backend/auth/admin/edit/privacypolicy-edit/b77bf5106e"
+                            }
+                        ]
+                    }
+                ]
+            },
+            counter:{
+                uploadCounter: 0
+            }
         },
         watch: {
 
@@ -21,10 +95,40 @@ $(document).ready(function() {
         methods: {
             dashhome: function(){
                 window.location = '/';
+            },
+            showUploadBox: function(e){
+                let file = $('.file');
+                file.trigger('click');
+            },
+            fileUpload: function(){
+
             }
         },
         mounted: function(){
+            let $vm = this;
 
+            // upload functionality
+
+            $('#fileUpload').fileupload({
+                url: '/backend/scripts/uploadimages-test.php',
+                autoUpload: false,
+            }).on('fileuploadadd', function(e, data){
+                // makes sure file uploaded is an image
+                var filetypeallowed = /.\.(gif|jpg|png|jpeg)$/i,
+                    fileName = data.originalFiles;
+
+                // submit form data to server to be validated e.g file size & file exists
+                data.submit();
+
+            }).on('fileuploaddone', function(e,data){
+
+                console.log(data);
+                console.log(JSON.parse(data.result));
+            }).on('fileuploadprogressall', function(e,data){
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+
+                // console.log(data);
+            });
         }
     })
 
