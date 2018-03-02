@@ -7,6 +7,9 @@
 
     <!-- Simple MDE plugin -->
     <script src="/node_modules/simplemde/dist/simplemde.min.js" charset="utf-8"></script>
+    <script src="/js/plugins/fileupjs/vendor/jquery.ui.widget.js"></script>
+    <script src="/js/plugins/fileupjs/jquery.iframe-transport.js"></script>
+    <script src="/js/plugins/fileupjs/jquery.fileupload.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <!-- <script src="/backend/vendor/metisMenu/metisMenu.min.js"></script> -->
