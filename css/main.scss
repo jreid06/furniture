@@ -47,6 +47,57 @@ body, html{
 
 // footer scss code
 
+.email-subscribe-bar{
+	background-color: #222;
+	padding: 1px 10px 10px 10px;
+	transition: all .5s;
+	height: 60px;
+
+	form{
+		input{
+			margin-bottom: 0;
+		}
+		.p-2{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			&:nth-child(1){
+				width: 5%;
+				color: #f2f2f2;
+				cursor: pointer;
+				font-size: 1.2em;
+				// background-color: red;
+
+				@include respond-to($lg-break){
+					width: 5%
+				};
+			}
+
+			&:nth-child(2){
+				width: 60%;
+				// background-color: red;
+
+				@include respond-to($lg-break){
+					width: 85%
+				};
+			}
+
+			&:nth-child(3){
+				width: 30%;
+				// background-color: orange;
+				button{
+					font-size: 0.8em;
+				}
+
+				@include respond-to($lg-break){
+					width: 10%
+				};
+			}
+		}
+	}
+}
+
 footer{
 	position: relative;
 	text-align: center;

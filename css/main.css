@@ -1034,6 +1034,38 @@ body, html {
       .loader-generic .spinner {
         margin-top: 25%; } }
 
+.email-subscribe-bar {
+  background-color: #222;
+  padding: 1px 10px 10px 10px;
+  transition: all .5s;
+  height: 60px; }
+  .email-subscribe-bar form input {
+    margin-bottom: 0; }
+  .email-subscribe-bar form .p-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .email-subscribe-bar form .p-2:nth-child(1) {
+      width: 5%;
+      color: #f2f2f2;
+      cursor: pointer;
+      font-size: 1.2em; }
+      @media only screen and (min-width: 992px) {
+        .email-subscribe-bar form .p-2:nth-child(1) {
+          width: 5%; } }
+    .email-subscribe-bar form .p-2:nth-child(2) {
+      width: 60%; }
+      @media only screen and (min-width: 992px) {
+        .email-subscribe-bar form .p-2:nth-child(2) {
+          width: 85%; } }
+    .email-subscribe-bar form .p-2:nth-child(3) {
+      width: 30%; }
+      .email-subscribe-bar form .p-2:nth-child(3) button {
+        font-size: 0.8em; }
+      @media only screen and (min-width: 992px) {
+        .email-subscribe-bar form .p-2:nth-child(3) {
+          width: 10%; } }
+
 footer {
   position: relative;
   text-align: center;
