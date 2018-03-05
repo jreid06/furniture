@@ -123,6 +123,126 @@
 	    return $timeArray;
 	}
 
+	function validate_sku($id){
+		\Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+
+        try {
+            $sku = \Stripe\Sku::retrieve($id);
+
+            $msg = array(
+                'status'=> array(
+					'code'=>101,
+					'code_status'=>'success'
+				),
+                'sku_attributes'=> $sku['attributes'],
+				'sku_inventory'=>$sku['inventory']
+            );
+
+			return $msg;
+
+        } catch(Stripe_CardError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            $error1 = $body['error']['type'];
+
+
+            $msg = array(
+                'status'=> array(
+					'code'=>404,
+					'code_status'=>'error'
+				),
+                'error_type'=> $error1
+            );
+
+            return $msg;
+
+        } catch (Stripe_InvalidRequestError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+              // Invalid parameters were supplied to Stripe's API
+              $error2 = $body['error']['type'];
+
+              $msg = array(
+                  'status'=> array(
+  					'code'=>404,
+  					'code_status'=>'error'
+  				),
+                  'error_type'=> $error2
+              );
+
+              return $msg;
+
+        } catch (Stripe_AuthenticationError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Authentication with Stripe's API failed
+          $error3 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+				  'code'=>404,
+				  'code_status'=>'error'
+			  ),
+              'error_type'=> $error3
+          );
+
+          return $msg;
+
+        } catch (Stripe_ApiConnectionError $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Network communication with Stripe failed
+          $error4 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+				  'code'=>404,
+				  'code_status'=>'error'
+			  ),
+              'error_type'=> $error4
+          );
+
+          return $msg;
+
+        } catch (Stripe_Error $e) {
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+          // Display a very generic error to the user, and maybe send
+          // yourself an email
+          $error5 = $body['error']['type'];
+
+          $msg = array(
+              'status'=> array(
+				  'code'=>404,
+				  'code_status'=>'error'
+			  ),
+              'error_type'=> $error5
+          );
+
+          return $msg;
+
+
+        } catch (Exception $e) {
+            $body = $e->getJsonBody();
+            // var_dump($body);
+
+          // Something else happened, completely unrelated to Stripe
+          $error6 = $body;
+
+          $msg = array(
+              'status'=> array(
+				  'code'=>402,
+				  'code_status'=>'error'
+			  ),
+              'error_type'=> $error6['error']['message']
+          );
+
+          return $msg;
+
+      }
+	}
+
 	function get_products($amount){
 		// get products from stripe api
         \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
