@@ -44,6 +44,10 @@
 		return format_timestamp($input);
 	}));
 
+	$twig->addFilter(new Twig_SimpleFilter('decode', function ($input) {
+		return json_decode($input, true);
+	}));
+
 	// include necessary files
 
 	$includes = array(
