@@ -92,7 +92,7 @@ body {
 }
 .sidebar .nav-second-level li,
 .sidebar .nav-third-level li {
-  border-bottom: none !important;
+  /* border-bottom: none !important; */
 }
 .sidebar .nav-second-level li a {
   padding-left: 37px;
@@ -116,6 +116,7 @@ body {
 .btn-outline {
   color: inherit;
   background-color: transparent;
+  -webkit-transition: all .5s;
   transition: all .5s;
 }
 .btn-primary.btn-outline {
@@ -409,7 +410,6 @@ table.dataTable thead .sorting:after {
   }
   ul.timeline > li > .timeline-panel {
     width: calc(10%);
-    width: -moz-calc(10%);
     width: -webkit-calc(10%);
   }
   ul.timeline > li > .timeline-badge {

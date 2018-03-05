@@ -12,12 +12,37 @@
   padding-bottom: 100px; }
   @media only screen and (min-width: 1200px) {
     .upload-image-container {
-      width: 70%;
       margin: auto; } }
+  .upload-image-container .alert-total {
+    display: none; }
+  .upload-image-container .alert-sku {
+    display: none; }
+  .upload-image-container .alert-cat {
+    display: none; }
 
 .file {
   visibility: hidden;
   position: absolute; }
+
+.upload-form-group {
+  position: relative; }
+  .upload-form-group .header, .upload-form-group .input-group {
+    padding: 10px; }
+  .upload-form-group .form-control {
+    -webkit-transition: all .5s;
+    transition: all .5s; }
+
+.field-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: #e5e5e5;
+  opacity: 0.8;
+  padding: 20px;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  border-radius: 5px; }
 
 .pending-uploads {
   display: -webkit-box;
@@ -29,12 +54,43 @@
   flex-direction: row;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
+  .pending-uploads p {
+    width: 85%;
+    padding-bottom: 10px;
+    margin: auto;
+    overflow: scroll;
+    height: 45px; }
+  .pending-uploads .progress {
+    margin-top: 10px; }
   .pending-uploads .image {
     width: calc(100%/2);
-    border: 1px solid red;
-    height: 180px; }
+    text-align: center; }
+    .pending-uploads .image canvas {
+      width: 100%;
+      height: 100%; }
     @media only screen and (min-width: 992px) {
       .pending-uploads .image {
-        width: calc(100%/4); } }
+        width: calc(95%/4);
+        margin-left: 1%; } }
+
+.pending-uploads2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  .pending-uploads2 .image {
+    width: calc(100%/2);
+    border: 1px solid red;
+    text-align: center; }
+    @media only screen and (min-width: 992px) {
+      .pending-uploads2 .image {
+        width: calc(95%/4);
+        height: 180px;
+        margin-left: 1%; } }
 
 /*# sourceMappingURL=custom.css.map */
