@@ -1,39 +1,51 @@
 <?php
 
+    include '../../scripts/dbconnect.php';
     $output_dir = "../../assets/test/";
 
     if(isset($_FILES['img'])){
-        $ret = array();
 
-        if(!is_array($_FILES["img"]["name"])) //single file
-	{
- 	 	$fileName = $_FILES["img"]["name"];
- 		move_uploaded_file($_FILES["myfile"]["tmp_name"],$output_dir.$fileName);
-    	$ret[]= $fileName;
-	}
-	else  //Multiple files, file[]
-	{
-	  $fileCount = count($_FILES["img"]["name"]);
-	  for($i=0; $i < $fileCount; $i++)
-	  {
-	  	$fileName = $_FILES["img"]["name"][$i];
-		move_uploaded_file($_FILES["img"]["tmp_name"][$i],$output_dir.$fileName);
-	  	$ret[]= $fileName;
-	  }
+    	$fileCount = count($_FILES["img"]["name"]);
+        $res = 'multiple';
 
-	}
+      	$fileName = explode(' ',$_FILES["img"]["name"][0]);
+        $fileName = implode('-', $fileName);
 
-        $msg = array(
-            'status'=>array(
-                'code'=>101,
-                'code_status'=>'success'
-            ),
-            'data'=> array(
-                'msg'=>'test response',
-                'files'=>$_FILES,
-                'dir'=>sys_get_temp_dir()
-            )
-        );
+        $file_type_allowed = preg_match("/.\.(jpg|png|jpeg)$/i", $fileName);
+        if (!$file_type_allowed) {
+            $msg = array(
+                'status'=>array(
+                    'code'=>404,
+                    'code_status'=>'error'
+                ),
+                'data'=> array(
+                    'msg'=>'File type uploaded not allowed. Only (jpg | png | jpeg )'
+                )
+            );
+
+        }else {
+            move_uploaded_file($_FILES["img"]["tmp_name"][0],$output_dir.$fileName);
+
+
+            $msg = array(
+                'status'=>array(
+                    'code'=>101,
+                    'code_status'=>'success'
+                ),
+                'data'=> array(
+                    'msg'=>'successfull added to folder response',
+                    'files'=>$_FILES,
+                    'res'=>$res,
+                    'name'=>$fileName,
+                    'temp_name'=> $_FILES['img']['tmp_name'],
+                    'real_path'=> pathinfo($fileName),
+                    'dir'=>$root_dir.$fileName,
+                    'typeAllowed'=>$file_type_allowed
+                )
+            );
+        }
+
+
 
         exit(json_encode( $msg ));
     }else {
