@@ -33,6 +33,10 @@ $(document).ready(function() {
                         sublinks: true,
                         sublinks_list: [
                             {
+                                title: "All / Uncategorized Products",
+                                link: "/backend/auth/admin/edit/all-products"
+                            },
+                            {
                                 title: "Livingroom Products",
                                 link: "/backend/auth/admin/edit/livingroom-products"
                             },
@@ -83,8 +87,20 @@ $(document).ready(function() {
                 ]
             },
             counter:{
+                progressCounter: 0,
+                uploadtempCounter: 0,
                 uploadCounter: 0
-            }
+            },
+            upload:{
+                limit: 4,
+                files:{
+                    sku_parent: '',
+                    category: 'not-in-use',
+                    images: []
+                },
+                deletedNums:[]
+            },
+            showUpload: true
         },
         watch: {
 
@@ -96,40 +112,333 @@ $(document).ready(function() {
             dashhome: function(){
                 window.location = '/';
             },
-            showUploadBox: function(e){
-                let file = $('.file');
-                file.trigger('click');
+            validateSkuID: function(val){
+                let skuprefix = val.split('_')[0];
+                if (skuprefix === 'sku') {
+                    return true;
+                }else {
+                    return false;
+                }
             },
-            fileUpload: function(){
+            validateCategory: function(val){
+                let validCatgories = ['livingroom', 'kitchen', 'bedroom', 'bath'],
+                    nospaceCat = val.split(' ').join('');
+                for (var i = 0; i < validCatgories.length; i++) {
+                    if (validCatgories[i] === nospaceCat) {
+                        return [true, nospaceCat];
+                    }
 
+                    if (i === validCatgories.length) {
+                        return [false];
+                    }
+                }
+            },
+            showUploadBox: function(e){
+                let $vm = this;
+
+                if ($vm.showUpload) {
+                    let file = $('.file');
+                    file.trigger('click');
+                }else {
+                    return;
+                }
+            },
+            addSkuImages: function(){
+
+                let skuID_inp = this.upload.files.sku_parent,
+                    skuID_status = this.validateSkuID(skuID_inp),
+                    $vm = this;
+
+                // checks to see if entered sku starts with sku_
+                // ajax validates if sku actually exists
+                if (skuID_status) {
+                    //show processing data loader to keep user informed
+                    $.notify('data sent to server', 'success');
+
+                    // trim any white space off input sku
+                    $vm.upload.files.sku_parent = $vm.upload.files.sku_parent.trim();
+
+                    $.ajax({
+                        url: '/backend/scripts/add_sku_images_data.php',
+                        type: 'post',
+                        data:{
+                            data: JSON.stringify($vm.upload.files)
+                        },
+                        success: function(data){
+                            console.log(data);
+                            let $data = JSON.parse(data);
+
+                            console.log($data);
+                            switch ($data.status.code) {
+                                case (101 || '101'):
+                                    $.notify($data.data.msg, 'success');
+                                    console.log($data.status.sku_request_code);
+
+                                    for (var i = 0; i < $vm.upload.files.images.length; i++) {
+                                        $(`.img${i+1}`).css({"background": `url(${$vm.upload.files.images[i]})`, "background-position":'center', "background-size":"cover"});
+                                    }
+
+                                    // add success message to COOKIE
+
+                                    Cookies.set('idyl-image-add', `Images added successfully for ${skuID_inp}`);
+
+                                    // refresh page for next image add
+                                    // setTimeout(function(){
+                                    //     window.location.reload();
+                                    // }, 2000);
+
+                                    break;
+                                case (404 || '404'):
+
+                                    // sku warning
+                                    if ($data.status.sku_request_code === 402) {
+                                        $('.image-sku-input').css({'box-shadow': '0 0 4px #f7eeca'});
+                                        $('.alert-sku').fadeIn().removeClass('alert-danger').addClass('alert-warning');;
+                                        $('#alert-sku-msg').html($data.data.sku_data.error_type);
+
+                                        setTimeout(function(){
+                                            $('.alert-sku').fadeOut();
+                                        }, 3500);
+
+                                        console.log($data.status.sku_request_code);
+                                        console.log($data.data.sku_data.error_type);
+                                        return;
+                                    }
+
+                                    if ($data.status.sku_request_code === 101) {
+                                        $('.image-sku-input').css({'box-shadow': '0 0 4px #f7eeca'});
+                                        $('.alert-sku').fadeIn().removeClass('alert-danger').addClass('alert-warning');;
+                                        $('#alert-sku-msg').html($data.data.msg);
+
+                                        setTimeout(function(){
+                                            $('.alert-sku').fadeOut();
+                                        }, 3500);
+                                    }
+
+                                    // $.notify($data.data.msg, 'error');
+                                    console.log('404 ERROR');
+                                    console.log($data.data.msg);
+
+
+                                    break;
+                                default:
+
+                            }
+                        },
+                        error: function(){
+
+                        }
+
+                    })
+                }else {
+                    $.notify('Incorrect sku id entered', 'error');
+
+                    $('.image-sku-input').css({'box-shadow': '0 0 4px red'});
+                    $('.alert-sku').fadeIn().removeClass('alert-warning').addClass('alert-danger');
+                    $('#alert-sku-msg').html('Incorrect sku id entered');
+
+                    setTimeout(function(){
+                        $('.alert-sku').fadeOut();
+                    }, 3500);
+                }
+
+            },
+            cleanImagePath: function(path) {
+                let url = path,
+                    splitURL = url.split('/');
+
+                for(let i=0; i < splitURL.length; i++){
+                    if(splitURL[i] === 'idyldev'){
+                        splitURL.splice(0, i+1);
+                    }
+                }
+
+                return "/"+splitURL.join('/');
             }
+
         },
         mounted: function(){
             let $vm = this;
 
-            // upload functionality
+
+            // upload product images functionality
+
+            uploadButton = $('<button/>')
+            .addClass('btn btn-primary upload-button')
+            .text('Upload Image')
+            .on('click', function () {
+                var $this = $(this),
+                    data = $this.data();
+
+                data.submit().always(function () {
+
+                });
+            });
 
             $('#fileUpload').fileupload({
                 url: '/backend/scripts/uploadimages-test.php',
                 autoUpload: false,
+                disableImageResize: /Android(?!.*Chrome)|Opera/
+                    .test(window.navigator && navigator.userAgent),
+                imageMaxWidth: 1200,
+                imageCrop: true, // Force cropped images
+                previewMaxWidth: 200,
+                previewMaxHeight: 200
             }).on('fileuploadadd', function(e, data){
                 // makes sure file uploaded is an image
-                var filetypeallowed = /.\.(gif|jpg|png|jpeg)$/i,
-                    fileName = data.originalFiles;
+                var filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    fileName = data.originalFiles,
+                    counter = 0;
+
+                console.log(data);
+
+                // console.log("MATCH: " + $match);
+
+                let $match = data.files[0].name.match(filetypeallowed);
+                console.log("MATCH: " + $match);
+                if (!$match) {
+                    console.log('no match');
+                    $.notify(`${data.files[0].name} does not match valid file types`, 'error');
+                    return;
+                }else {
+                    console.log('match');
+                }
+
+                $vm.counter.uploadtempCounter += 1;
+                counter = $vm.counter.uploadtempCounter;
+
+
+                if (counter === $vm.upload.limit) {
+                    // disable browse files button
+                    $('.browse').addClass('disabled');
+                    $vm.showUpload =  false;
+
+                    // show alert with message as to why button is disabled
+                    $('.alert-total').fadeIn();
+                    $('#alert-msg').html('Maximum amount of images reached');
+                }
+
+                console.log("upload Counter: " + counter);
+
+                // add correct ID's to progress bar and button
+                $(uploadButton).attr('id', `p-button${counter}`);
+
+                let $progress = `<br><div class="progress progress-${counter}">
+                  <div class="progress-bar progress-bar-striped p-bar" id="p-bar${counter}" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%">
+                    <span class="sr-only">2% Complete</span>
+                  </div>
+                </div>`;
+
+                    data.context = $('<div class="image"/>').appendTo('.pending-uploads');
+                    localStorage.setItem(`upload-progressID-${counter}`,`#p-bar${counter}`);
+                    localStorage.setItem(`upload-buttonID-${counter}`,`#p-button${counter}`);
+
+                   $.each(data.files, function (index, file) {
+                       var node = $('<div/>')
+                               .append($('<p/>').text(file.name));
+                       if (!index) {
+                           node
+                               .append(uploadButton.clone(true).data(data))
+                               .append($progress);
+                       }
+                       node.appendTo(data.context);
+                   });
 
                 // submit form data to server to be validated e.g file size & file exists
-                data.submit();
+                // data.submit();
+
+            }).on('fileuploadprocessalways', function(e, data){
+
+                let filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    $match = data.files[0].name.match(filetypeallowed);
+
+                if (!$match) {
+                    return;
+                }
+
+                var index = data.index,
+                    file = data.files[index];
+
+                console.log(file.preview);
+                node = $(data.context.children()[index]);
+                  if (file.preview) {
+                      node
+                          .prepend('<br>')
+                          .prepend(file.preview);
+                  }
+                  if (file.error) {
+                      node
+                          .append('<br>')
+                          .append($('<span class="text-danger"/>').text(file.error));
+                  }
+                // $('.img1').css({'background':`url(${file.preview})`});
 
             }).on('fileuploaddone', function(e,data){
 
+                $('.upload-button').on('click', function(e){
+                    console.log(e);
+                })
+
+                console.log(e);
                 console.log(data);
                 console.log(JSON.parse(data.result));
-            }).on('fileuploadprogressall', function(e,data){
-                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $result = JSON.parse(data.result);
+                switch ($result.status.code) {
+                    case (101 || '101'):
+                        // add one to upload counter
+                        // NOTE: this will be used to determine whether to show
+                        $vm.counter.uploadCounter += 1;
 
+                        let path = $vm.cleanImagePath($result.data.dir);
+
+                        // add the returned directory to array
+                        $vm.upload.files.images.push(path);
+
+                        break;
+                    case (404 || '404'):
+                        $.notify($result.data.msg, 'error');
+
+                        break;
+                    default:
+
+                }
+            }).on('fileuploadprogressall', function(e,data){
+                $vm.counter.progressCounter += 1;
+
+                let progress = parseInt(data.loaded / data.total * 100, 10),
+                    pgressCount = $vm.counter.progressCounter,
+                    progressID = localStorage.getItem(`upload-progressID-${pgressCount}`),
+                    buttonID = localStorage.getItem(`upload-buttonID-${pgressCount}`);
+
+                $(progressID).css({'width': `${progress}%`});
+
+                if (progress === 100) {
+                    $(buttonID).removeClass('btn-primary').addClass('btn-success disabled');
+                    $(buttonID).text('Successfully Uploaded');
+                }
                 // console.log(data);
             });
         }
+    })
+
+    // custom watchers
+
+    $dashboard_vue.$watch('counter.uploadCounter', function(newVal, oldVal){
+        console.log(newVal);
+        if (newVal === 4) {
+            $('.field-cover').css({"opacity":"0"});
+            $('#submitImages').removeClass('disabled');
+
+            setTimeout(function(){
+                $('.field-cover').css({"z-index":"-1"});
+            }, 550);
+        }else {
+
+        }
+    })
+
+    $dashboard_vue.$watch('counter.progressCounter', function(newVal, oldVal){
+        console.log(newVal);
     })
 
     /* //////////////////////////////////////////////////////// */
