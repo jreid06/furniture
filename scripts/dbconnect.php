@@ -2,6 +2,8 @@
 	session_start();
     define('ROOT_PATH', dirname(__DIR__).'/');
 
+	$root_dir = dirname(__DIR__).'/assets/test/';
+
 	require_once "random_compat-2.0.10/lib/random.php";
 	require_once "easypost-php/lib/easypost.php";
 	// require_once "shippo-php-client/lib/Shippo.php";
