@@ -386,6 +386,30 @@
 
         }
 
+        public static function addSkuImages($tbl, $fields, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8)
+        {
+            parent::checkConnection();
+
+            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?,?,?,?,?)");
+            $errorlist = parent::returnConnection()->error;
+
+            if ($query) {
+                $query->bind_param('ssssssss',$value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8);
+
+                $query->execute();
+
+                $query->close();
+
+                parent::returnConnection()->close();
+
+                return array(true);
+            }else {
+                return array(false, $query, $errorlist);
+            }
+
+
+        }
+
         public static function addToMailingList($fields, $value1, $value2, $value3)
         {
             parent::checkConnection();
