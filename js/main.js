@@ -3215,9 +3215,30 @@ $(document).ready(function() {
                         }
 
                     }
-                ]
+                ],
+                mainImage: {
+                    previousClick: '#p-img-1'
+                }
             },
             methods: {
+                toggleMainImage: function(e){
+                    let targetImage = $(e.target)[0],
+                        mainImageID = $('#main'),
+                        targetImage_ID = '#'+targetImage.attributes.id.value,
+                        targetImage_src = targetImage.attributes.src.value,
+                        $vm = this;
+
+                    if ($vm.mainImage.previousClick === targetImage_ID) {
+                        return;
+                    }else {
+                        $($vm.mainImage.previousClick).removeClass('active-img');
+                        $(targetImage_ID).addClass('active-img');
+
+                        mainImageID.attr('src', targetImage_src);
+                        $vm.mainImage.previousClick = targetImage_ID;
+                    }
+
+                },
                 saveCustomerDetails: function(e){
                     let targetButton = $(e.target)[0],
                         targetType = $(targetButton).attr('data-save-type'),
