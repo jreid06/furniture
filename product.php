@@ -19,8 +19,7 @@
 
         include ROOT_PATH.'templates/header.php';
 
-
-        // product has been found
+        // products has been found
         $product = $products_all['skus']['data'];
         // loop through sku and get correct product using $sku_id
         $match = false;
@@ -49,6 +48,14 @@
             $selected_sku_product['attributes']['detail_bullets'] = array_map('trim', explode(',', $selected_sku_product['attributes']['detail_bullets']));
         }
 
+        // get product imagedata from database
+        $table_name = 'images_'.$category;
+        $image_data = DatabaseFunctions::getData('images', $table_name, 'sku_id', $selected_sku_product['id']);
+
+
+        // $image_data[1] = json_decode( $image_data[1], true );
+
+
 
         // echo "<pre style='position: absolute; z-index: 100000; background-color: #f2f2f2'>";
         //     // var_dump($selected_sku_product);
@@ -62,6 +69,7 @@
             'skuprod'=> $selected_sku_product,
             'category'=> $category,
             'type'=> $type,
+            'images'=>isset($image_data[1])? json_decode( $image_data[1]['images'], true ):false
         ));
 
 
