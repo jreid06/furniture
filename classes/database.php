@@ -386,15 +386,15 @@
 
         }
 
-        public static function addSkuImages($tbl, $fields, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8)
+        public static function addSkuImages($tbl, $fields, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9)
         {
             parent::checkConnection();
 
-            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?,?,?,?,?)");
+            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?,?,?,?,?,?)");
             $errorlist = parent::returnConnection()->error;
 
             if ($query) {
-                $query->bind_param('ssssssss',$value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8);
+                $query->bind_param('sssssssss',$value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9);
 
                 $query->execute();
 
