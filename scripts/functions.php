@@ -135,7 +135,8 @@
 					'code_status'=>'success'
 				),
                 'sku_attributes'=> $sku['attributes'],
-				'sku_inventory'=>$sku['inventory']
+				'sku_inventory'=>$sku['inventory'],
+				'sku_image'=> $sku['image']
             );
 
 			return $msg;
@@ -224,18 +225,15 @@
 
 
         } catch (Exception $e) {
-            $body = $e->getJsonBody();
             // var_dump($body);
 
           // Something else happened, completely unrelated to Stripe
-          $error6 = $body;
-
           $msg = array(
               'status'=> array(
 				  'code'=>402,
 				  'code_status'=>'error'
 			  ),
-              'error_type'=> $error6['error']['message']
+              'error_type'=> 'error with request made. Check SKU'
           );
 
           return $msg;
