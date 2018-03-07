@@ -53,33 +53,52 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             <!-- <pre>
                 ";
         // line 17
-        echo twig_escape_filter($this->env, twig_var_dump($this->env, $context, ($context["skuprod"] ?? null)), "html", null, true);
+        echo twig_escape_filter($this->env, twig_var_dump($this->env, $context, ($context["test"] ?? null)), "html", null, true);
         echo "
             </pre> -->
-            <div class=\"p-2 product-image-main\">
-                <img src=\"";
+
+            ";
         // line 20
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
-        echo "\" id=\"main\" alt=\"product image 1\">
-            </div>
-            <div class=\"p-2 prodimg-box\">
-                <img src=\"";
-        // line 23
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
-        echo "\" alt=\"product image 2\">
-                <img src=\"";
-        // line 24
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
-        echo "\" alt=\"product image 2\">
-                <img src=\"";
-        // line 25
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
-        echo "\" alt=\"product image 2\">
-                <img src=\"";
-        // line 26
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
-        echo "\" alt=\"product image 2\">
-            </div>
+        if (($context["images"] ?? null)) {
+            // line 21
+            echo "                <div class=\"p-2 product-image-main\">
+                    <img src=\"";
+            // line 22
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["images"] ?? null), 0, array(), "array"), "html", null, true);
+            echo "\" id=\"main\" alt=\"product image 1\">
+                </div>
+                <div class=\"p-2 prodimg-box\">
+                    <img src=\"";
+            // line 25
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["images"] ?? null), 0, array(), "array"), "html", null, true);
+            echo "\" id=\"p-img-1\" class=\"active-img\" alt=\"product image 1\" @click=\"toggleMainImage\">
+                    <img src=\"";
+            // line 26
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["images"] ?? null), 1, array(), "array"), "html", null, true);
+            echo "\" id=\"p-img-2\" alt=\"product image 2\" @click=\"toggleMainImage\">
+                    <img src=\"";
+            // line 27
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["images"] ?? null), 2, array(), "array"), "html", null, true);
+            echo "\" id=\"p-img-3\" alt=\"product image 3\" @click=\"toggleMainImage\">
+                    <img src=\"";
+            // line 28
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["images"] ?? null), 3, array(), "array"), "html", null, true);
+            echo "\" id=\"p-img-4\" alt=\"product image 4\" @click=\"toggleMainImage\">
+                </div>
+            ";
+        } else {
+            // line 31
+            echo "                <div class=\"p-2 product-image-main\">
+                    <img src=\"";
+            // line 32
+            echo twig_escape_filter($this->env, $this->getAttribute(($context["skuprod"] ?? null), "image", array()), "html", null, true);
+            echo "\" id=\"main\" alt=\"product image 1\">
+                </div>
+
+            ";
+        }
+        // line 36
+        echo "
 
 
         </div>
@@ -90,7 +109,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                     <ul>
                         <li><h4>";
-        // line 37
+        // line 46
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute(($context["product"] ?? null), "name", array()))), "html", null, true);
         echo " - ";
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "color", array()))), "html", null, true);
@@ -98,7 +117,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
         echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('start_case')->getCallable(), array($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "size", array()))), "html", null, true);
         echo "</h4></li>
                         <li>£&nbsp;";
-        // line 38
+        // line 47
         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute(($context["skuprod"] ?? null), "price", array()) / 100), 2), "html", null, true);
         echo "</li>
 
@@ -112,14 +131,14 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                                     <p @click=\"minustoQuant\"><span class=\"fa fa-minus\" ></span></p>
                                 </div>
                                 <div class=\"box\" data-product-info=\"";
-        // line 49
+        // line 58
         echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
         echo "\" v-on:click=\"addToBasket\">
                                     &plus;&nbsp;Add to Bag
                                 </div>
                                 <div class=\"box\">
                                     <p id=\"wishlist-heart\" data-product-info=\"";
-        // line 53
+        // line 62
         echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
         echo "\" v-on:click=\"addToWishlist\"><span data-product-info=\"";
         echo twig_escape_filter($this->env, twig_jsonencode_filter(($context["skuprod"] ?? null)), "html", null, true);
@@ -159,21 +178,21 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
                         <div id=\"prod-description\" class=\"collapse show\" role=\"tabpanel\" aria-labelledby=\"description\" data-parent=\"#accordion\">
                             <div class=\"card-body\">
                                 <strong>";
-        // line 88
+        // line 97
         echo twig_escape_filter($this->env, $this->getAttribute(($context["product"] ?? null), "description", array()), "html", null, true);
         echo "</strong>
 
                                 ";
-        // line 90
+        // line 99
         if ($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array(), "any", false, true), "detail_bullets", array(), "any", true, true)) {
-            // line 91
+            // line 100
             echo "                                    <ul>
                                         ";
-            // line 92
+            // line 101
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "detail_bullets", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["bullet"]) {
-                // line 93
+                // line 102
                 echo "                                            <li>&nbsp;";
                 echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($context["bullet"])), "html", null, true);
                 echo "</li>
@@ -182,11 +201,11 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['bullet'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 95
+            // line 104
             echo "                                    </ul>
                                 ";
         }
-        // line 97
+        // line 106
         echo "
                             </div>
                         </div>
@@ -208,7 +227,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
                                 <pre>
                                     ";
-        // line 117
+        // line 126
         echo twig_escape_filter($this->env, ($context["basket"] ?? null), "html", null, true);
         echo "
                                 </pre>
@@ -256,9 +275,9 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
             <div class=\"row related-products-row\">
                 ";
-        // line 162
-        $this->loadTemplate("featured.html.twig", "product.html.twig", 162)->display($context);
-        // line 163
+        // line 171
+        $this->loadTemplate("featured.html.twig", "product.html.twig", 171)->display($context);
+        // line 172
         echo "            </div>
         </div>
     </div>
@@ -278,7 +297,7 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
 
     public function getDebugInfo()
     {
-        return array (  262 => 163,  260 => 162,  212 => 117,  190 => 97,  186 => 95,  177 => 93,  173 => 92,  170 => 91,  168 => 90,  163 => 88,  123 => 53,  116 => 49,  102 => 38,  94 => 37,  80 => 26,  76 => 25,  72 => 24,  68 => 23,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
+        return array (  281 => 172,  279 => 171,  231 => 126,  209 => 106,  205 => 104,  196 => 102,  192 => 101,  189 => 100,  187 => 99,  182 => 97,  142 => 62,  135 => 58,  121 => 47,  113 => 46,  101 => 36,  94 => 32,  91 => 31,  85 => 28,  81 => 27,  77 => 26,  73 => 25,  67 => 22,  64 => 21,  62 => 20,  56 => 17,  42 => 10,  34 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -307,17 +326,26 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
         </div>
         <div class=\"col-12 col-md-6 d-flex flex-row flex-wrap\" id=\"product-page-image\">
             <!-- <pre>
-                {{dump(skuprod)}}
+                {{dump(test)}}
             </pre> -->
-            <div class=\"p-2 product-image-main\">
-                <img src=\"{{skuprod.image}}\" id=\"main\" alt=\"product image 1\">
-            </div>
-            <div class=\"p-2 prodimg-box\">
-                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
-                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
-                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
-                <img src=\"{{skuprod.image}}\" alt=\"product image 2\">
-            </div>
+
+            {% if images %}
+                <div class=\"p-2 product-image-main\">
+                    <img src=\"{{images[0]}}\" id=\"main\" alt=\"product image 1\">
+                </div>
+                <div class=\"p-2 prodimg-box\">
+                    <img src=\"{{images[0]}}\" id=\"p-img-1\" class=\"active-img\" alt=\"product image 1\" @click=\"toggleMainImage\">
+                    <img src=\"{{images[1]}}\" id=\"p-img-2\" alt=\"product image 2\" @click=\"toggleMainImage\">
+                    <img src=\"{{images[2]}}\" id=\"p-img-3\" alt=\"product image 3\" @click=\"toggleMainImage\">
+                    <img src=\"{{images[3]}}\" id=\"p-img-4\" alt=\"product image 4\" @click=\"toggleMainImage\">
+                </div>
+            {% else %}
+                <div class=\"p-2 product-image-main\">
+                    <img src=\"{{skuprod.image}}\" id=\"main\" alt=\"product image 1\">
+                </div>
+
+            {% endif %}
+
 
 
         </div>
@@ -457,6 +485,6 @@ class __TwigTemplate_c601bbd2fd4ac8951510c856b8e6e526a0b825de33fd9015c1fe673b1d6
         </div>
     </div>
 </div>
-", "product.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/product.html.twig");
+", "product.html.twig", "/Users/jasonreid/Sites/idyldev/twig_templates/product.html.twig");
     }
 }
