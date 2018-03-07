@@ -14,17 +14,26 @@
         </div>
         <div class="col-12 col-md-6 d-flex flex-row flex-wrap" id="product-page-image">
             <!-- <pre>
-                {{dump(skuprod)}}
+                {{dump(test)}}
             </pre> -->
-            <div class="p-2 product-image-main">
-                <img src="{{skuprod.image}}" id="main" alt="product image 1">
-            </div>
-            <div class="p-2 prodimg-box">
-                <img src="{{skuprod.image}}" class="active" alt="product image 1">
-                <img src="{{skuprod.image}}" alt="product image 2">
-                <img src="{{skuprod.image}}" alt="product image 3">
-                <img src="{{skuprod.image}}" alt="product image 4">
-            </div>
+
+            {% if images %}
+                <div class="p-2 product-image-main">
+                    <img src="{{images[0]}}" id="main" alt="product image 1">
+                </div>
+                <div class="p-2 prodimg-box">
+                    <img src="{{images[0]}}" id="p-img-1" class="active-img" alt="product image 1" @click="toggleMainImage">
+                    <img src="{{images[1]}}" id="p-img-2" alt="product image 2" @click="toggleMainImage">
+                    <img src="{{images[2]}}" id="p-img-3" alt="product image 3" @click="toggleMainImage">
+                    <img src="{{images[3]}}" id="p-img-4" alt="product image 4" @click="toggleMainImage">
+                </div>
+            {% else %}
+                <div class="p-2 product-image-main">
+                    <img src="{{skuprod.image}}" id="main" alt="product image 1">
+                </div>
+
+            {% endif %}
+
 
 
         </div>
