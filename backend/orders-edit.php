@@ -15,8 +15,8 @@
  ?>
 <body>
 
-    <div id="wrapper" class="dash-vue">
-        <?php include "../backend/templates/nav.php" ?>
+    <div id="wrapper">
+        <?php include "../backend/templates/nav-vue.php" ?>
 
         <div id="page-wrapper">
             <div class="row">
