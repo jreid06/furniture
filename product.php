@@ -9,6 +9,18 @@
     $type = $_GET['prodtype'];
     $slug = $_GET['slug'];
     $category = $_GET['cat'];
+    $categories_arr = array('livingroom','bedroom', 'bath', 'kitchen');
+    $real_cat = false;
+
+    for ($i=0; $i < count($categories_arr); $i++) {
+        if ($category === $categories_arr[$i]) {
+            $real_cat = true;
+        }
+    }
+
+    if (!$real_cat) {
+        header('location: /products');
+    }
 
     $featured_products = get_products(6);
 
