@@ -1,14 +1,14 @@
 <?php
     include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // define('ROOT_PATH', dirname(__DIR__).'/furniture/');
-	include ROOT_PATH.'templates/header.php';
-    include ROOT_PATH.'templates/nav.php';
+    include ROOT_PATH.'templates/header.php';
 
     // turn query paremeters into an assosiative array
     parse_str($_SERVER['QUERY_STRING'], $output);
 
     // check what paremeters have been added to determine what product data to get
     if (!isset($_GET['cat']) || $_GET['cat'] === 'gifts') {
+        include ROOT_PATH.'templates/nav.php';
         $data = 'show all products';
         $category = 'all';
 
@@ -36,7 +36,21 @@
     elseif ($output['cat'] && isset($output['prodtype']) && !empty($output['prodtype'])) {
         $data = 'show specific type of product in a certain category e.g all cushions';
         $category = $output['cat'];
+        $categories_arr = array('livingroom','bedroom', 'bath', 'kitchen');
+        $real_cat = false;
+
+        for ($i=0; $i < count($categories_arr); $i++) {
+            if ($category === $categories_arr[$i]) {
+                $real_cat = true;
+            }
+        }
         $prod_type = $output['prodtype'];
+
+        if (!$real_cat) {
+            header('location: /products');
+        }else {
+            include ROOT_PATH.'templates/nav.php';
+        }
 
         \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
         $stripe_products = \Stripe\Product::all(array(
@@ -59,6 +73,21 @@
     else if ($output['cat']) {
         $data = 'show all products in category';
         $category = $output['cat'];
+
+        $categories_arr = array('livingroom','bedroom', 'bath', 'kitchen');
+        $real_cat = false;
+
+        for ($i=0; $i < count($categories_arr); $i++) {
+            if ($category === $categories_arr[$i]) {
+                $real_cat = true;
+            }
+        }
+
+        if (!$real_cat) {
+            header('location: /products');
+        }else {
+            include ROOT_PATH.'templates/nav.php';
+        }
 
         \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
         $stripe_products = \Stripe\Product::all(array(
