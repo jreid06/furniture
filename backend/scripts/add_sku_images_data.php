@@ -40,9 +40,10 @@
                 $sku_type = $sku_exists['sku_attributes']['type'];
                 $sku_size = $sku_exists['sku_attributes']['size'];
                 $sku_color = $sku_exists['sku_attributes']['color'];
+                $sku_main_image = $sku_exists['sku_image'];
 
 
-                $database_result = DatabaseFunctions::addSkuImages($table_name, '(sku_id, category, images, inventory, sku_type, sku_size, sku_color, sku_stripe_cat)', $sku_id, $category, $images, $inventory, $sku_type, $sku_size, $sku_color, $sku_stripe_cat);
+                $database_result = DatabaseFunctions::addSkuImages($table_name, '(sku_id, category, images, inventory, sku_type, sku_size, sku_color, sku_stripe_cat, sku_main_image)', $sku_id, $category, $images, $inventory, $sku_type, $sku_size, $sku_color, $sku_stripe_cat, $sku_main_image);
 
                 if ($database_result[0]) {
                     $msg = array(
