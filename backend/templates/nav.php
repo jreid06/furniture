@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-default navbar-static-top admin-nav" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -8,7 +8,8 @@
             <span class="icon-bar"></span>
         </button>
 
-        <img src="/assets/general/idyl_original_logo.png" alt="idyl logo" width="80" height="45" style="margin-top:2px; padding-left: 15px;" @click="dashhome">
+        <!-- <img src="/assets/general/idyl_original_logo.png" alt="idyl logo" width="80" height="45" style="margin-top:2px; padding-left: 15px;" @click="dashhome"> -->
+        <p class="text-center"> <span class="fa fa-home" @click="dashhome"></span></p>
 
     </div>
     <!-- /.navbar-header -->
@@ -34,7 +35,7 @@
     </ul>
     <!-- /.navbar-top-links -->
 
-    <div class="navbar-default sidebar" role="navigation">
+    <div class="navbar-default sidebar admin-nav" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <!-- <li class="sidebar-search">
@@ -56,11 +57,11 @@
                     <ul class="nav nav-second-level">
 
                         <template v-for="(nav,index) in navigation.pages">
-                            <li>
+                            <li class="nav-list-li">
                                 <template v-if="nav.sublinks">
                                     <a :href="nav.link">{{nav.title}}</a>
                                     <ul class="nav nav-third-level">
-                                        <li v-for="(sublink, index) in nav.sublinks_list">
+                                        <li class="nav-list-li" v-for="(sublink, index) in nav.sublinks_list">
                                             <a :href="sublink.link">{{sublink.title}}</a>
                                         </li>
                                     </ul>
