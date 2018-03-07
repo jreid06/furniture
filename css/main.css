@@ -933,9 +933,11 @@ input:focus {
       margin-bottom: 20px;
       text-transform: uppercase; }
 
-@media only screen and (min-width: 992px) {
-  .checkout-home {
-    top: 91px !important; } }
+.checkout-home {
+  margin-bottom: 50px; }
+  @media only screen and (min-width: 992px) {
+    .checkout-home {
+      top: 91px !important; } }
 
 .form-details-column {
   height: auto;
@@ -978,15 +980,27 @@ input:focus {
     width: 70%; }
 .basket-item-checkout .item-details {
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center; }
   .basket-item-checkout .item-details h6 {
     font-weight: 300;
     font-size: 12px; }
 .basket-item-checkout .item-total-price {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   font-weight: 100; }
 

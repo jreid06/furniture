@@ -54,7 +54,7 @@ class __TwigTemplate_c755b30d12b6d35804a09eb46afd537efa3629c2e339c219dc58cd73da1
             echo "</td>
                         <td>£";
             // line 20
-            echo twig_escape_filter($this->env, ($this->getAttribute($this->getAttribute($context["order"], "real_json", array()), "amount", array()) / 100), "html", null, true);
+            echo twig_escape_filter($this->env, twig_number_format_filter($this->env, ($this->getAttribute($this->getAttribute($context["order"], "real_json", array()), "amount", array()) / 100), 2), "html", null, true);
             echo "</td>
                         <td class=\"text-center\"><button class=\"btn btn-primary\" @click.prevent>View</button> </td>
                     </tr>
@@ -124,7 +124,7 @@ class __TwigTemplate_c755b30d12b6d35804a09eb46afd537efa3629c2e339c219dc58cd73da1
                         <td>{{order.real_json.created |timestamp_format()['full_date']}}</td>
                         <td>{{order.real_json.status}}</td>
                         <td>{{order.real_json.status_transitions.paid |timestamp_format()['full_date']}}</td>
-                        <td>£{{order.real_json.amount / 100}}</td>
+                        <td>£{{(order.real_json.amount / 100) | number_format(2)}}</td>
                         <td class=\"text-center\"><button class=\"btn btn-primary\" @click.prevent>View</button> </td>
                     </tr>
                 {% endfor %}
@@ -138,6 +138,6 @@ class __TwigTemplate_c755b30d12b6d35804a09eb46afd537efa3629c2e339c219dc58cd73da1
         {{dump(orderSQL)}}
     </pre> -->
 </div>
-", "orders.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/orders.html.twig");
+", "orders.html.twig", "/Users/jasonreid/Sites/idyldev/twig_templates/orders.html.twig");
     }
 }
