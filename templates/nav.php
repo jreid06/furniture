@@ -105,14 +105,57 @@
             <form id="search-form" @submit.prevent>
                 <div class="d-flex flex-row flex-wrap justify-content-start justify-content-sm-end align-items-center">
                     <div class="p-2">
-                        <input class="inpField" type="text" name="search-inp" value="" placeholder="search products here ...">
-                    </div>
-                    <div class="p-2">
-                        <span class="fa fa-search" style="cursor: pointer"></span>
+                        <input class="inpField" type="text" name="search-inp" value="" placeholder="search product types here ..." v-on:keyup="searchFilter" id="searchInput">
                     </div>
                 </div>
 
             </form>
+        </div>
+        <div class="search-listings">
+            <ul class="list-group list-group-flush search-listing-values">
+                <template v-for="(type, index) in products.livingroom">
+                    <template v-if="type.slug == ''">
+
+                    </template>
+                    <template v-else>
+                        <li class="list-group-item">
+                            <a :href="'/products/'+type.cat+'/'+type.slug">{{capitalizeFirstLetter(type.name)}}</a>
+                        </li>
+                    </template>
+
+                </template>
+                <template v-for="(type, index) in products.kitchen">
+                    <template v-if="type.slug == ''">
+
+                    </template>
+                    <template v-else>
+                        <li class="list-group-item">
+                            <a :href="'/products/'+type.cat+'/'+type.slug">{{capitalizeFirstLetter(type.name)}}</a>
+                        </li>
+                    </template>
+                </template>
+                <template v-for="(type, index) in products.bedroom">
+                    <template v-if="type.slug == ''">
+
+                    </template>
+                    <template v-else>
+                        <li class="list-group-item">
+                            <a :href="'/products/'+type.cat+'/'+type.slug">{{capitalizeFirstLetter(type.name)}}</a>
+                        </li>
+                    </template>
+                </template>
+                <template v-for="(type, index) in products.bath">
+                    <template v-if="type.slug == ''">
+
+                    </template>
+                    <template v-else>
+                        <li class="list-group-item">
+                            <a :href="'/products/'+type.cat+'/'+type.slug">{{capitalizeFirstLetter(type.name)}}</a>
+                        </li>
+                    </template>
+                </template>
+
+            </ul>
         </div>
     </div>
     <div class="basket-box basket-closed">
