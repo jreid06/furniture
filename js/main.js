@@ -6,16 +6,16 @@
 
 $(document).ready(function() {
 
-    $('#test-btn').on('click', function(){
+    $('#test-btn').on('click', function() {
 
         $.ajax({
             url: '/scripts/testscript.php',
             type: 'post',
-            data:{
+            data: {
                 order: 'or_1Bz1CvL06dWivKUTHhNXzn1G',
                 email: 'info@jbreid.co.uk'
             },
-            success: function(data){
+            success: function(data) {
                 // let $data = JSON.parse(data);
 
                 // console.log($data);
@@ -253,7 +253,7 @@ $(document).ready(function() {
             subscribe: true
         },
         methods: {
-            toggleSubscribeBar: function(e){
+            toggleSubscribeBar: function(e) {
                 let targetElement = $(e.target)[0],
                     action = targetElement.attributes['data-action'].value;
 
@@ -261,14 +261,18 @@ $(document).ready(function() {
                 console.log(action);
 
                 if (action === 'down') {
-                    $('.email-subscribe-bar').css({'height':'35px'});
+                    $('.email-subscribe-bar').css({
+                        'height': '35px'
+                    });
                     $('#subscribeShow').removeClass('d-none');
-                }else {
-                    $('.email-subscribe-bar').css({'height':'60px'});
+                } else {
+                    $('.email-subscribe-bar').css({
+                        'height': '60px'
+                    });
                     $('#subscribeShow').addClass('d-none');
                 }
             },
-            subscribeUser: function(){
+            subscribeUser: function() {
                 let $email = $('.subscription-email')[0].value;
                 console.log($email);
 
@@ -279,23 +283,32 @@ $(document).ready(function() {
                         type: 'subscribe',
                         emailsub: $email
                     },
-                    success: function(data){
+                    success: function(data) {
                         let $data = JSON.parse(data);
 
                         console.log($data);
                         switch ($data.status.code) {
                             case (101 || '101'):
-                                $('.email-subscribe-bar').notify($data.data.msg, { position:"top center", className: "success"});
+                                $('.email-subscribe-bar').notify($data.data.msg, {
+                                    position: "top center",
+                                    className: "success"
+                                });
                                 break;
                             case (404 || 404):
-                                $('.email-subscribe-bar').notify($data.data.msg, { position:"top center", className: $data.status.code_status});
+                                $('.email-subscribe-bar').notify($data.data.msg, {
+                                    position: "top center",
+                                    className: $data.status.code_status
+                                });
                                 break;
                             default:
 
                         }
                     },
-                    error: function(){
-                        $('.email-subscribe-bar').notify('error submitting email. Contact help', { position:"top center", className: 'error'});
+                    error: function() {
+                        $('.email-subscribe-bar').notify('error submitting email. Contact help', {
+                            position: "top center",
+                            className: 'error'
+                        });
                     }
                 })
             }
@@ -395,7 +408,7 @@ $(document).ready(function() {
                         image: '/assets/main/dust_scratches.png'
                     },
                     {
-                        name: 'lamps',
+                        name: 'Livingroom lamps',
                         slug: 'lamps',
                         cat: 'livingroom',
                         image: '/assets/main/dust_scratches.png'
@@ -467,7 +480,7 @@ $(document).ready(function() {
                         image: ''
                     },
                     {
-                        name: 'lamps',
+                        name: 'Bedroom lamps',
                         slug: 'lamp',
                         cat: 'bedroom',
                         image: ''
@@ -528,9 +541,11 @@ $(document).ready(function() {
                 });
             }
 
-            setTimeout(function(){
+            setTimeout(function() {
                 $('.loader-generic').fadeOut();
-                $('body').css({'overflow-y':'scroll'});
+                $('body').css({
+                    'overflow-y': 'scroll'
+                });
             }, 1500)
 
 
@@ -571,18 +586,26 @@ $(document).ready(function() {
             searchStatus: function(value) {
                 if (!value) {
                     $('.search-bar').removeClass('search-open').addClass('search-hidden');
-                    $('.fa-search').removeClass('f-active');
+                    $('.fa-close').removeClass('fa-close f-active').addClass('fa-search').css({'font-size':'1em'});
 
                     $('.search-input').animate({
                         opacity: 0
                     }, 300);
+
+                    // fade out search results container
+                    $('.search-listings').fadeOut();
+
                 } else if (value) {
                     $('.search-input').animate({
                         opacity: 1
                     }, 1000);
 
                     $('.search-bar').removeClass('search-hidden').addClass('search-open');
-                    $('.fa-search').addClass('f-active');
+                    $('.fa-search').removeClass('fa-search').addClass('fa-close f-active').css({'transition':'all .3s'});
+
+                    if ($('.search-listing-values')[0].scrollTop > 0) {
+                        $('.search-listing-values')[0].scrollTop = 0
+                    }
 
                 }
             },
@@ -627,6 +650,28 @@ $(document).ready(function() {
 
         },
         methods: {
+            searchFilter: function(e) {
+
+                // fade in search results container
+                $('.search-listings').fadeIn();
+
+                let input = $(e.target)[0],
+                    filter = input.value.toLowerCase(),
+                    ul = $('.search-listing-values')[0];
+                    li = ul.children;
+
+                // console.log(input.value);
+                // console.log(ul);
+
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].children[0];
+                    if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            },
             goHome: function() {
                 window.location = '/';
             },
@@ -993,8 +1038,7 @@ $(document).ready(function() {
 
                             }
                         })
-                    }
-                    else {
+                    } else {
                         console.log("User logged in status: " + this.loggedInStatus);
 
                         let itemsExist = (localStorage.getItem('basket')) ? true : false;
@@ -1444,7 +1488,7 @@ $(document).ready(function() {
             key: 'pk_test_o1lkn4I74t5tIEB8rdzKbCtp',
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
-            opened: function(){
+            opened: function() {
                 console.log('checkout opened');
                 let orderID = $('.payOrder').attr('data-order-id'),
                     easypostOrderID = $('.payOrder').attr('data-easypost-order-id');
@@ -1510,7 +1554,7 @@ $(document).ready(function() {
                     // console.log(val.data.shippment_details);
                     // console.log(JSON.parse(val.data.shippment_details));
                     // console.log(JSON.parse(val));
-                    let cookieLocation ='',
+                    let cookieLocation = '',
                         orderID = '';
 
                     switch (val.status.code) {
@@ -1525,7 +1569,9 @@ $(document).ready(function() {
 
                             // delete checkout cookie
                             cookieLocation = localStorage.getItem('checkout-cookie-location');
-                            Cookies.remove('trans_local_token', {path: cookieLocation});
+                            Cookies.remove('trans_local_token', {
+                                path: cookieLocation
+                            });
 
                             //delete basket data
                             // (front end (NOTE: all users)
@@ -1541,7 +1587,7 @@ $(document).ready(function() {
                                     data: {
                                         cusID: $nav_vue.loggedInUser.id
                                     },
-                                    success: function(data){
+                                    success: function(data) {
                                         let $data = JSON.parse(data);
 
                                         console.log("---------------");
@@ -1549,17 +1595,17 @@ $(document).ready(function() {
                                         console.log("---------------");
                                         console.log($data);
 
-                                        setTimeout(function(){
-                                            window.location =  '/order/confirmation/'+orderID;
+                                        setTimeout(function() {
+                                            window.location = '/order/confirmation/' + orderID;
                                         }, 2000);
                                     },
-                                    error: function(){
+                                    error: function() {
                                         console.log('error with DELETE BASKET DATA ajax');
                                     }
                                 })
-                            }else {
-                                setTimeout(function(){
-                                    window.location =  '/order/confirmation/'+orderID;
+                            } else {
+                                setTimeout(function() {
+                                    window.location = '/order/confirmation/' + orderID;
                                 }, 2000);
                             }
 
@@ -1591,7 +1637,7 @@ $(document).ready(function() {
                                     data: {
                                         cusID: $nav_vue.loggedInUser.id
                                     },
-                                    success: function(data){
+                                    success: function(data) {
                                         let $data = JSON.parse(data);
 
                                         console.log("---------------");
@@ -1599,17 +1645,17 @@ $(document).ready(function() {
                                         console.log("---------------");
                                         console.log($data);
 
-                                        setTimeout(function(){
-                                            window.location =  '/order/confirmation/'+orderID;
+                                        setTimeout(function() {
+                                            window.location = '/order/confirmation/' + orderID;
                                         }, 2000);
                                     },
-                                    error: function(){
+                                    error: function() {
                                         console.log('error with DELETE BASKET DATA ajax');
                                     }
                                 })
-                            }else {
-                                setTimeout(function(){
-                                    window.location =  '/order/confirmation/'+orderID;
+                            } else {
+                                setTimeout(function() {
+                                    window.location = '/order/confirmation/' + orderID;
                                 }, 2000);
                             }
 
@@ -2019,8 +2065,7 @@ $(document).ready(function() {
                                     }
 
                                     return;
-                                }
-                                else {
+                                } else {
                                     // create a class that represents address being added
                                     let address = new Address($userTitleVal, $userFname, $userLname, $phone_num, $address1, $address2, $address3, $city_town, $post_code, $country, $status_selected);
 
@@ -2516,7 +2561,7 @@ $(document).ready(function() {
                     $('.loader-filter').css({
                         'z-index': '20',
                         'visibility': 'visible',
-                        'display':'block'
+                        'display': 'block'
                     });
 
                     // send ajax over with the selected values array
@@ -2818,341 +2863,348 @@ $(document).ready(function() {
                         }
                     ]
                 },
-                brands: [
-                    {
+                brands: [{
                         id: 1,
                         letter: 'a',
-                        brand_array: [
-                        {
-                            name: 'Alexander and James',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                        brand_array: [{
+                                name: 'Alexander and James',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
-                        },
-                        {
-                            name: 'ALF Italia',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'ALF Italia',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
-                        }]
+                            }
+                        ]
                     },
                     {
                         id: 2,
                         letter: 'b',
                         brand_array: [{
-                            name: 'Bernh. Pedersen & Son',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Bernh. Pedersen & Son',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
 
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
+                            },
+                            {
+                                name: 'Bestlite',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                       },
-                       {
-                           name: 'Bestlite',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
-
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 3,
                         letter: 'c',
-                        brand_array: [
-                            {
-                            name: 'Calligaris',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                        brand_array: [{
+                                name: 'Calligaris',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Collins & Hayes',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Collins & Hayes',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 5,
                         letter: 'e',
                         brand_array: [{
-                            name: 'Ercol',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Ercol',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Erik Jorgensen',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Erik Jorgensen',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 7,
                         letter: 'g',
                         brand_array: [{
-                            name: 'Gubi',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Gubi',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Getama',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Getama',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 14,
                         letter: 'n',
                         brand_array: [{
-                            name: 'Natuzzi',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Natuzzi',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Naver Collection',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Naver Collection',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                      },
-                      {
-                          name: 'Normann Copenhagen',
-                          slug: '',
-                          createSlug: function(){
-                              let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Normann Copenhagen',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                              for(let i = 0; i < splitToLower.length; i++){
-                                splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                              }
-                              this.slug = splitToLower.join('-');
-                              return this.slug;
-                         }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                      }]
+                            }
+                        ]
                     },
                     {
                         id: 16,
                         letter: 'p',
                         brand_array: [{
-                            name: 'Parker Knoll',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Parker Knoll',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Pandul',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Pandul',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                      }]
+                            }
+                        ]
                     },
                     {
                         id: 18,
                         letter: 'r',
                         brand_array: [{
-                            name: 'Ranch',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Ranch',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Rosendahl',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Rosendahl',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 19,
                         letter: 's',
                         brand_array: [{
-                            name: 'Skagerak Denmark',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Skagerak Denmark',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name:'SOFTLINE',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'SOFTLINE',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     },
                     {
                         id: 22,
                         letter: 'v',
                         brand_array: [{
-                            name: 'Verpan',
-                            slug: '',
-                            createSlug: function(){
-                                let splitToLower = this.name.split(' ');
+                                name: 'Verpan',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                                for(let i = 0; i < splitToLower.length; i++){
-                                  splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
                                 }
-                                this.slug = splitToLower.join('-');
-                                return this.slug;
-                           }
 
-                       },
-                       {
-                           name: 'Versus',
-                           slug: '',
-                           createSlug: function(){
-                               let splitToLower = this.name.split(' ');
+                            },
+                            {
+                                name: 'Versus',
+                                slug: '',
+                                createSlug: function() {
+                                    let splitToLower = this.name.split(' ');
 
-                               for(let i = 0; i < splitToLower.length; i++){
-                                 splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                               }
-                               this.slug = splitToLower.join('-');
-                               return this.slug;
-                          }
+                                    for (let i = 0; i < splitToLower.length; i++) {
+                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+                                    }
+                                    this.slug = splitToLower.join('-');
+                                    return this.slug;
+                                }
 
-                       }]
+                            }
+                        ]
                     }
                 ],
                 blogStories: [{
@@ -3221,16 +3273,16 @@ $(document).ready(function() {
                 }
             },
             methods: {
-                toggleMainImage: function(e){
+                toggleMainImage: function(e) {
                     let targetImage = $(e.target)[0],
                         mainImageID = $('#main'),
-                        targetImage_ID = '#'+targetImage.attributes.id.value,
+                        targetImage_ID = '#' + targetImage.attributes.id.value,
                         targetImage_src = targetImage.attributes.src.value,
                         $vm = this;
 
                     if ($vm.mainImage.previousClick === targetImage_ID) {
                         return;
-                    }else {
+                    } else {
                         $($vm.mainImage.previousClick).removeClass('active-img');
                         $(targetImage_ID).addClass('active-img');
 
@@ -3239,7 +3291,7 @@ $(document).ready(function() {
                     }
 
                 },
-                saveCustomerDetails: function(e){
+                saveCustomerDetails: function(e) {
                     let targetButton = $(e.target)[0],
                         targetType = $(targetButton).attr('data-save-type'),
                         $title = $('.inputTitle')[0].children,
@@ -3258,8 +3310,8 @@ $(document).ready(function() {
                     }
 
                     let date = new Date();
-                        year = date.getFullYear();
-                        userBirthYear = Math.floor($dob.split('-')[0]),
+                    year = date.getFullYear();
+                    userBirthYear = Math.floor($dob.split('-')[0]),
                         minBirthYear = year - 18;
 
 
@@ -3267,10 +3319,10 @@ $(document).ready(function() {
                         $('.save-p-details').notify('One or more fields are invalid or empty.', 'warn');
 
                         return;
-                    }else if (userBirthYear > minBirthYear) {
+                    } else if (userBirthYear > minBirthYear) {
                         $('.age-error').notify('You must be older than 18');
                         return;
-                    }else {
+                    } else {
                         // send ajax to update session for personal details
                         let $user = new User($userTitleVal, $fname, $lname, $dob, $email, false);
 
@@ -3283,21 +3335,27 @@ $(document).ready(function() {
                                 type: targetType,
                                 user_details: $user
                             },
-                            success: function(data){
+                            success: function(data) {
                                 console.log(data);
                                 let $data = JSON.parse(data),
                                     $vm = this;
 
                                 if ($data.status.code === (101 || '101')) {
-                                    $('.disabled-shipping').css({'opacity':'0', 'z-index': '-1'});
-                                    $('.disabled-details').css({'opacity':'0.6', 'z-index': '10'});
+                                    $('.disabled-shipping').css({
+                                        'opacity': '0',
+                                        'z-index': '-1'
+                                    });
+                                    $('.disabled-details').css({
+                                        'opacity': '0.6',
+                                        'z-index': '10'
+                                    });
 
                                     // $vm.checkoutValues.savedDetails = true;
-                                }else if($data.status.code === (404 || '404')) {
+                                } else if ($data.status.code === (404 || '404')) {
                                     $.notify($data.data.msg, 'error');
                                 }
                             },
-                            error: function(){
+                            error: function() {
                                 $.notify('error with saving user details: CHECKOUT 404');
                             }
                         })
@@ -3307,7 +3365,7 @@ $(document).ready(function() {
 
 
                 },
-                saveShippingDetails: function(e){
+                saveShippingDetails: function(e) {
 
                     let targetButton = $(e.target)[0],
                         targetType = $(targetButton).attr('data-save-type'),
@@ -3320,19 +3378,19 @@ $(document).ready(function() {
                         //validate phone number
                         phone_real = this.phonenumber($phone_num);
 
-                        // add default value to address 2 & 3 if they havent been entered;
-                        $address2 = (!$address2) ? 'false' : $address2;
+                    // add default value to address 2 & 3 if they havent been entered;
+                    $address2 = (!$address2) ? 'false' : $address2;
 
-                        console.log($address1);
-                        console.log($address2);
-                        console.log($city_town);
-                        console.log($post_code);
-                        console.log($country);
-                        console.log($phone_num);
-                        console.log(targetType);
+                    console.log($address1);
+                    console.log($address2);
+                    console.log($city_town);
+                    console.log($post_code);
+                    console.log($country);
+                    console.log($phone_num);
+                    console.log(targetType);
 
-                        let postCodeStatus = '',
-                            validatePostcode = new Promise(function(resolve, reject) {
+                    let postCodeStatus = '',
+                        validatePostcode = new Promise(function(resolve, reject) {
 
                             $.ajax({
                                 url: `https://api.postcodes.io/postcodes/${$post_code}/validate`,
@@ -3344,7 +3402,7 @@ $(document).ready(function() {
                                         reject('post code is not valid');
                                     }
                                 },
-                                error: function(){
+                                error: function() {
                                     reject('error with ajax function');
                                 }
                             });
@@ -3352,75 +3410,77 @@ $(document).ready(function() {
 
                         });
 
-                        validatePostcode.then(function(val){
-                            console.log(val);
-                            postCodeStatus = val;
+                    validatePostcode.then(function(val) {
+                        console.log(val);
+                        postCodeStatus = val;
 
-                            if (!phone_real || !$address1 || !$address2 || !$city_town || !$country) {
-                                $('.save-ship-details').notify('One or more fields are invalid or empty.', 'warn');
+                        if (!phone_real || !$address1 || !$address2 || !$city_town || !$country) {
+                            $('.save-ship-details').notify('One or more fields are invalid or empty.', 'warn');
 
-                                if(!phone_real){
-                                    $('#validationNumber').notify('Invalid phone number entered', 'error');
-                                    return;
-                                }
-
+                            if (!phone_real) {
+                                $('#validationNumber').notify('Invalid phone number entered', 'error');
                                 return;
                             }
-                            // address1, address2, city_town, post_code, country, phone_num
-                            let final_address = new PaymentAddress($address1, $address2, $city_town, $post_code, $country, $phone_num),
-                                locationURL = '/checkout/guest',
-                                inhour= new Date(new Date().getTime() + 60 * 60 * 1000);;
 
-                            console.log(final_address);
+                            return;
+                        }
+                        // address1, address2, city_town, post_code, country, phone_num
+                        let final_address = new PaymentAddress($address1, $address2, $city_town, $post_code, $country, $phone_num),
+                            locationURL = '/checkout/guest',
+                            inhour = new Date(new Date().getTime() + 60 * 60 * 1000);;
 
-                            // send the address to be saved in session variable
-                            $.ajax({
-                                url: '/scripts/guestcheckoutsession.php',
-                                type: 'post',
-                                data: {
-                                    type: targetType,
-                                    shipping_details: final_address,
-                                    basket_data: localStorage.getItem('basket')
-                                },
-                                success: function(data){
-                                    let $data = JSON.parse(data);
+                        console.log(final_address);
 
-                                    console.log($data);
-                                    switch ($data.status.code) {
-                                        case (101 || '101'):
-                                            if ($data.data.session.length < 3) {
-                                                $.notify('please resave both detail sections', 'warn');
-                                            }else {
-                                                // console.log('REDIRECT to /checkout/guest');
-                                                Cookies.set('trans_local_token', 'user-checkout',{expires: inhour});
+                        // send the address to be saved in session variable
+                        $.ajax({
+                            url: '/scripts/guestcheckoutsession.php',
+                            type: 'post',
+                            data: {
+                                type: targetType,
+                                shipping_details: final_address,
+                                basket_data: localStorage.getItem('basket')
+                            },
+                            success: function(data) {
+                                let $data = JSON.parse(data);
 
-                                                localStorage.setItem('checkout-cookie-location', locationURL);
+                                console.log($data);
+                                switch ($data.status.code) {
+                                    case (101 || '101'):
+                                        if ($data.data.session.length < 3) {
+                                            $.notify('please resave both detail sections', 'warn');
+                                        } else {
+                                            // console.log('REDIRECT to /checkout/guest');
+                                            Cookies.set('trans_local_token', 'user-checkout', {
+                                                expires: inhour
+                                            });
 
-                                                setTimeout(function(){
-                                                    console.log(Cookies.get('trans_local_token'));
-                                                    window.location = '/checkout/guest';
-                                                }, 200)
-                                            }
+                                            localStorage.setItem('checkout-cookie-location', locationURL);
 
-                                            break;
-                                        case (404 || '404'):
-                                            $.notify($data.data.msg, $data.status.code_status);
+                                            setTimeout(function() {
+                                                console.log(Cookies.get('trans_local_token'));
+                                                window.location = '/checkout/guest';
+                                            }, 200)
+                                        }
 
-                                            break;
-                                        default:
+                                        break;
+                                    case (404 || '404'):
+                                        $.notify($data.data.msg, $data.status.code_status);
 
-                                    }
-                                },
-                                error: function(){
+                                        break;
+                                    default:
 
                                 }
-                            })
+                            },
+                            error: function() {
 
-                        }).catch((reason) => {
-                            $('#validationPostcode').notify(reason, 'error');
-                            // console.log(reason);
-                            postCodeStatus = false;
-                        });
+                            }
+                        })
+
+                    }).catch((reason) => {
+                        $('#validationPostcode').notify(reason, 'error');
+                        // console.log(reason);
+                        postCodeStatus = false;
+                    });
 
 
 
@@ -3452,31 +3512,34 @@ $(document).ready(function() {
 
                     });
                 },
-                setPaymentCookie: function(e){
+                setPaymentCookie: function(e) {
                     let targetEl = $(e.target)[0],
                         locationURL = targetEl.attributes['data-href'].value,
-                        inhour= new Date(new Date().getTime() + 60 * 60 * 1000);
+                        inhour = new Date(new Date().getTime() + 60 * 60 * 1000);
 
-                    Cookies.set('trans_local_token', 'user-checkout',{expires: inhour, path: locationURL});
+                    Cookies.set('trans_local_token', 'user-checkout', {
+                        expires: inhour,
+                        path: locationURL
+                    });
                     localStorage.setItem('checkout-cookie-location', locationURL);
 
-                    setTimeout(function(){
+                    setTimeout(function() {
                         window.location = locationURL;
-                    },200);
+                    }, 200);
 
                 },
-                directGuest: function(e){
+                directGuest: function(e) {
                     let targetEl = $(e.target)[0],
                         locationURL = targetEl.attributes['data-href'].value;
 
-                        setTimeout(function(){
-                            window.location = locationURL;
-                        },200);
+                    setTimeout(function() {
+                        window.location = locationURL;
+                    }, 200);
                 },
-                renderStoryContent: function(){
+                renderStoryContent: function() {
                     let id = '8f003a39e5',
                         table = 'pages',
-                        type ='retrieve',
+                        type = 'retrieve',
                         field = 'page_id';
 
                     let content = new getPageContent(type, table, field, id),
@@ -3629,8 +3692,10 @@ $(document).ready(function() {
                             $vm.basketHasItems = false;
                             $('.basket-home').addClass('empty-basket');
 
-                            if($('.loader-screen').hasClass('visible')){
-                                $('.loader-screen').css({'display':'none'});
+                            if ($('.loader-screen').hasClass('visible')) {
+                                $('.loader-screen').css({
+                                    'display': 'none'
+                                });
                                 if (!$vm.basketHasItems) {
                                     $('.basket-alert').fadeIn();
                                 }
@@ -3669,7 +3734,7 @@ $(document).ready(function() {
                     // // check if basket exist in local Storage
                     $nav_vue.checkBasketSession();
 
-                    setTimeout(function(){
+                    setTimeout(function() {
                         let exists = $vm.checkItemExists($nav_vue.basket.items, item);
                         console.log(exists);
 
@@ -3959,7 +4024,7 @@ $(document).ready(function() {
                     $('#signup-message').html(value);
 
                 },
-                basketHasItems: function(value){
+                basketHasItems: function(value) {
                     if (!value) {
 
                     }
@@ -4008,7 +4073,7 @@ $(document).ready(function() {
 
                 // click event for shipping choice radio buttons
 
-                $('.rate-radio').on('click', function(e){
+                $('.rate-radio').on('click', function(e) {
                     let targetElement = $(e.target)[0],
                         allRateRadios = $('#shipping-method-radios').find('.rate-radio'),
                         targetRate = $(targetElement).attr('data-rate-id'),
@@ -4033,22 +4098,22 @@ $(document).ready(function() {
                     $.ajax({
                         url: '/scripts/order_functions.php',
                         type: 'post',
-                        data:{
+                        data: {
                             rate: targetRate,
                             order: orderID,
                             carrier: $carrier,
                             service: carrierService
                         },
-                        success: function(data){
+                        success: function(data) {
                             let $data = JSON.parse(data),
-                                newAmount = ($data.data.new_amount/100).toFixed(2);
+                                newAmount = ($data.data.new_amount / 100).toFixed(2);
 
                             // update span total with new order amount
                             $('#total-order-price').html(newAmount);
                             $('.payOrder').attr('data-total', $data.data.new_amount);
 
                         },
-                        error: function(){
+                        error: function() {
                             console.log('error with ajax request');
                         }
                     })
@@ -4068,18 +4133,18 @@ $(document).ready(function() {
                 if (window.location.pathname.split('/')[1] === 'checkout') {
                     console.log('chcekout');
                     window.addEventListener('load', function() {
-                      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                      var forms = document.getElementsByClassName('needs-validation');
-                      // Loop over them and prevent submission
-                      var validation = Array.prototype.filter.call(forms, function(form) {
-                        form.addEventListener('submit', function(event) {
-                          if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                          }
-                          form.classList.add('was-validated');
-                        }, false);
-                      });
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function(form) {
+                            form.addEventListener('submit', function(event) {
+                                if (form.checkValidity() === false) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                form.classList.add('was-validated');
+                            }, false);
+                        });
                     }, false);
                 }
 
@@ -4090,12 +4155,14 @@ $(document).ready(function() {
 
         })
 
-        $home_vue.$watch('basket.items', function(newVal, oldVal){
+        $home_vue.$watch('basket.items', function(newVal, oldVal) {
             if (newVal.length < 1) {
                 $home_vue.basketHasItems = false;
-                $('.loader-screen').css({'display':'none'});
+                $('.loader-screen').css({
+                    'display': 'none'
+                });
                 $home_vue.basketTotal = 0;
-            }else if(newVal.length > oldVal.length){
+            } else if (newVal.length > oldVal.length) {
                 //add to the total price when item is added to basket
                 for (var i = 0; i < newVal.length; i++) {
                     $home_vue.basketTotal += (newVal[i].price * newVal[i].quantity);
@@ -4115,10 +4182,10 @@ $(document).ready(function() {
         console.log('home hidden');
     }
 
-    function renderShippingContent(){
+    function renderShippingContent() {
         let id = '97cc350c5e',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
@@ -4128,10 +4195,10 @@ $(document).ready(function() {
 
     }
 
-    function renderReturnContent(){
+    function renderReturnContent() {
         let id = 'ed8c8f347e',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
@@ -4141,10 +4208,10 @@ $(document).ready(function() {
 
     }
 
-    function renderPaymentContent(){
+    function renderPaymentContent() {
         let id = '5d4b314e6d',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
@@ -4154,10 +4221,10 @@ $(document).ready(function() {
 
     }
 
-    function renderOrderContent(){
+    function renderOrderContent() {
         let id = '649b879831',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
@@ -4167,10 +4234,10 @@ $(document).ready(function() {
 
     }
 
-    function renderTermscondContent(){
+    function renderTermscondContent() {
         let id = 'e7b6d56e22',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
@@ -4180,10 +4247,10 @@ $(document).ready(function() {
 
     }
 
-    function renderPrivacypolContent(){
+    function renderPrivacypolContent() {
         let id = 'b77bf5106e',
             table = 'pages',
-            type ='retrieve',
+            type = 'retrieve',
             field = 'page_id';
 
         let content = new getPageContent(type, table, field, id),
