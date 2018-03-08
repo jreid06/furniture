@@ -270,6 +270,9 @@ footer{
     border-bottom: 2px solid;
 }
 
+#searchInput{
+	margin-bottom: 0px !important;
+}
 
 .dropdown-user-account{
 	width: 85px;
@@ -590,6 +593,13 @@ nav{
         // border: 1px solid pink;
 
     }
+}
+
+.search-listing-values{
+	height: 220px;
+	// border: 1px solid red;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 .menu-nav{
@@ -928,7 +938,7 @@ nav{
 }
 
 .search-open{
-    height: 51px;
+    height: 48px;
     -webkit-transition: all .3s;
     transition: all .3s;
 }
@@ -937,12 +947,19 @@ nav{
 
 .search-bar{
     border-top: 1px solid #222;
-    background-color: #EFEFEF;
+    background-color: #222;
     position: relative;
+	width: 100%;
+	float: right;
     // z-index: 101;
 
 	@include respond-to($md-break){
 		border-top: 1px solid #D2D2D2;
+	};
+
+	@include respond-to($lg-break){
+		border-top: 1px solid #D2D2D2;
+		width: 330px;
 	};
 }
 
@@ -951,10 +968,39 @@ nav{
     opacity: 0;
 }
 
+.search-listings{
+	display: none;
+}
+
+.search-listing-values{
+	li{
+		background-color: #e5e5e5;
+		// border-top: 0px;
+
+
+		&:first-child{
+			border-top-left-radius: 0rem;
+			border-top-right-radius: 0rem;
+		}
+
+		a{
+			color: #222;
+		}
+
+		&:hover{
+			background-color: #222;
+			cursor: pointer;
+			> a{
+				color: #f2f2f2;
+			}
+		}
+	}
+}
+
 #search-form{
     .p-2{
         &:nth-child(1){
-            width: 90%;
+            width: 100%;
 
             @include respond-to($sm-break){
                 // width: 70%
@@ -991,17 +1037,17 @@ nav{
         width:100%;
     };
 
-    @include respond-to($md-break-plus){
-        width: 60%;
-    };
-
-    @include respond-to($lg-break){
-        width: 50%;
-    };
-
-    @include respond-to($xl-break){
-        width: 50%;
-    };
+    // @include respond-to($md-break-plus){
+    //     width: 0%;
+    // };
+	//
+    // @include respond-to($lg-break){
+    //     width: 50%;
+    // };
+	//
+    // @include respond-to($xl-break){
+    //     width: 50%;
+    // };
 
 }
 

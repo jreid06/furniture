@@ -1194,6 +1194,9 @@ footer {
 .active-nav-link {
   border-bottom: 2px solid; }
 
+#searchInput {
+  margin-bottom: 0px !important; }
+
 .dropdown-user-account {
   width: 85px;
   max-width: 105px; }
@@ -1401,6 +1404,11 @@ nav {
     @media only screen and (max-width: 767px) {
       .links-nav .search-basket-nav {
         color: #fff; } }
+
+.search-listing-values {
+  height: 220px;
+  overflow-x: hidden;
+  overflow-y: scroll; }
 
 .menu-nav {
   -webkit-box-ordinal-group: 2;
@@ -1628,23 +1636,45 @@ nav {
   transition: all .3s; }
 
 .search-open {
-  height: 51px;
+  height: 48px;
   -webkit-transition: all .3s;
   transition: all .3s; }
 
 .search-bar {
   border-top: 1px solid #222;
-  background-color: #EFEFEF;
-  position: relative; }
+  background-color: #222;
+  position: relative;
+  width: 100%;
+  float: right; }
   @media only screen and (min-width: 768px) {
     .search-bar {
       border-top: 1px solid #D2D2D2; } }
+  @media only screen and (min-width: 992px) {
+    .search-bar {
+      border-top: 1px solid #D2D2D2;
+      width: 330px; } }
 
 .search-input {
   opacity: 0; }
 
+.search-listings {
+  display: none; }
+
+.search-listing-values li {
+  background-color: #e5e5e5; }
+  .search-listing-values li:first-child {
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem; }
+  .search-listing-values li a {
+    color: #222; }
+  .search-listing-values li:hover {
+    background-color: #222;
+    cursor: pointer; }
+    .search-listing-values li:hover > a {
+      color: #f2f2f2; }
+
 #search-form .p-2:nth-child(1) {
-  width: 90%; }
+  width: 100%; }
 #search-form .p-2:nth-child(2) {
   width: 10%; }
   #search-form .p-2:nth-child(2) span {
@@ -1666,15 +1696,6 @@ nav {
   @media only screen and (min-width: 576px) {
     .inpField {
       width: 100%; } }
-  @media only screen and (min-width: 850px) {
-    .inpField {
-      width: 60%; } }
-  @media only screen and (min-width: 992px) {
-    .inpField {
-      width: 50%; } }
-  @media only screen and (min-width: 1200px) {
-    .inpField {
-      width: 50%; } }
 
 .search-basket-nav {
   -webkit-box-ordinal-group: 4;
