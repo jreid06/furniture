@@ -16,7 +16,7 @@ $(document).ready(function() {
                 pages: [
                     {
                         title: 'Home Slide Content',
-                        link: "/backend/auth/admin/edit/homepage-edit",
+                        link: "/backend/auth/admin/edit/homepage-edit/e9be46f22c",
                         sublinks: false
                     },
                     {
@@ -108,6 +108,18 @@ $(document).ready(function() {
             },
             showUpload: false,
             singleUploadStatus: false,
+            slideshowUpload: {
+                counter: {
+                    counterTemp: 0,
+                    uploadCounter: 0
+                },
+                upload:{
+                    limit: 1,
+                    allImages: '',
+                    oldimage_address: '',
+                    newimage_address: ''
+                }
+            },
             selectedImage:{
                 images: [],
                 position: '',
@@ -120,7 +132,7 @@ $(document).ready(function() {
                         id: 'home',
                         title: 'Edit Home slideshow content',
                         multiple_links: false,
-                        link: ''
+                        link: '/backend/auth/admin/edit/homepage-edit/e9be46f22c'
                     },
                     {
                         id: 'our-story',
@@ -398,6 +410,12 @@ $(document).ready(function() {
                     return;
                 }
             },
+            slideShowImageUpload: function(){
+                let $vm = this,
+                    upload = $('#slideImageUpload');
+
+                upload.trigger('click');
+            },
             addSkuImages: function(){
                 let $vm = this;
 
@@ -523,8 +541,6 @@ $(document).ready(function() {
                     }
                 }
 
-
-
             },
             cleanImagePath: function(path) {
                 let url = path,
@@ -549,12 +565,189 @@ $(document).ready(function() {
                 </div>`;
 
                 return markup;
+            },
+            changeSlideData: function(e){
+
+                if ($(e.target).hasClass('disabled')) {
+                    console.log('please upload the added image');
+                }else {
+                    let $vm = this,
+                        imageData = $vm.slideshowUpload.upload.allImages,
+                        newImage = $vm.slideshowUpload.upload.newimage_address,
+                        delete_image = $vm.slideshowUpload.upload.oldimage_address,
+                        slideTitle = $('#slide-title')[0].value,
+                        slideContent = $('#slide-content')[0].value,
+                        btnText = $('#slide-btn-txt')[0].value,
+                        btnLink = $('#slide-btn-link')[0].value,
+                        pos = $('#slideModal').attr('data-index');
+
+                    // console.log(slideTitle);
+                    // console.log($('#slide-title'));
+
+                    if ($vm.slideshowUpload.counter.uploadCounter > 0) {
+                        // edit the imageData array image value & all text data
+                        imageData[pos-1].image = newImage;
+                        imageData[pos-1].title = slideTitle;
+                        imageData[pos-1].content = slideContent;
+                        imageData[pos-1].cta.text = btnText
+                        imageData[pos-1].cta.link = btnLink;
+
+                        console.log('UPDATE ALL DATA FOR SLIDE');
+                        console.log(imageData[pos-1].image);
+                        console.log(imageData[pos-1].title);
+                    }else {
+                        // edit the imageData array text data only as image was not uploaded
+                        imageData[pos-1].title = slideTitle;
+                        imageData[pos-1].content = slideContent;
+                        imageData[pos-1].cta.text = btnText
+                        imageData[pos-1].cta.link = btnLink;
+
+                        console.log('UPDATE TEXT NOT IMAGE');
+                        console.log(imageData[pos-1].title);
+                        console.log(imageData[pos-1].image);
+                    }
+
+                    $.ajax({
+                        url: '/backend/scripts/edit_slide_data.php',
+                        type: 'post',
+                        data: {
+                            slideData: JSON.stringify(imageData)
+                        },
+                        success: function(data){
+                            let $data = JSON.parse(data);
+
+                            console.log($data);
+
+                            // if success update all values on trigger element
+                            switch ($data.status.code) {
+                                case (101 || '101'):
+                                    if ($vm.slideshowUpload.counter.uploadCounter < 1) {
+                                        console.log('CHANGE ONLY TEXT VALUES');
+                                        // only update the text values
+                                        let ids = [`#title-slide-${pos}`, `#content-slide-${pos}`, `#btntxt-slide-${pos}`, `#btnlink-slide-${pos}`],
+                                            values = [slideTitle, slideContent, btnText, btnLink];
+
+                                        for (var i = 0; i < ids.length; i++) {
+                                            $(ids[i]).html(values[i]);
+                                        }
+
+                                    }else {
+                                        console.log('CHANGE ALL VALUES. IMAGE SHOULD CHANGE');
+                                        // update all values e.g image included
+                                        let ids = [`#title-slide-${pos}`, `#content-slide-${pos}`, `#btntxt-slide-${pos}`, `#btnlink-slide-${pos}`],
+                                            values = [slideTitle, slideContent, btnText, btnLink];
+
+                                        for (var i = 0; i < ids.length; i++) {
+                                            $(ids[i]).html(values[i]);
+                                        }
+
+                                        $(`#image-slide-${pos}`).css({'background':`url(${newImage})`});
+
+                                        let buttonID = $('#slideModal').attr('data-trigger-id');
+                                        $(buttonID).attr('data-current-image', newImage);
+
+                                    }
+
+                                    // alert successful change for slide on card/panel
+                                    $(`.alert-slide-update-${pos}`).css({'background-color':'#dff0d8'});
+                                    $(`.alert-slide-update-${pos}`).fadeIn();
+                                    $(`#alert-slide-update-msg-${pos}`).html('slide data updated successfully');
+
+                                    setTimeout(function(){
+                                        $(`.alert-slide-update-${pos}`).css({'background-color':'darkgray', 'transition':'all .4s'});
+                                    }, 10000)
+
+                                    // close modal
+                                    $('#slideModal').modal('hide');
+
+                                    break;
+                                case (404 || '404'):
+                                    // alert successful change for slide on card/panel
+                                    $('.alert-save-error').fadeIn();
+                                    $('.alert-save-error-msg').html($data.data.msg);
+                                    break;
+                                default:
+
+                            }
+
+                        },
+                        error: function(){
+
+                        }
+                    })
+
+                    console.log('save can be processed');
+                }
+
             }
         },
         mounted: function(){
             let $vm = this;
 
             // trigger modal functions
+
+            $('.slide-modal-trigger').on('click', function(e){
+                let button = $(e.target)[0],
+                    buttonID = $(button).attr('id'),
+                    slideCurrentImage = $(button).attr('data-current-image'),
+                    allSlidesData = JSON.parse($(button).attr('data-slide-data')),
+                    pos = $(button).attr('data-index'),
+                    slideTitle = $(button).attr('data-title'),
+                    slideContent = $(button).attr('data-content'),
+                    slideBtnTxt = $(button).attr('data-cta-text'),
+                    slideBtnLink = $(button).attr('data-cta-link');
+
+                // elements
+                let el_currentImage = $('.curr-image'),
+                    el_slideTitle = $('#slide-title'),
+                    el_slideContent = $('#slide-content'),
+                    el_buttonText = $('#slide-btn-txt'),
+                    el_buttonLink = $('#slide-btn-link');
+
+
+                // add data from triggered button to modal elements
+                el_currentImage.attr('src', slideCurrentImage);
+                el_slideTitle.attr('value', slideTitle);
+                el_slideContent.attr('value', slideContent);
+                el_buttonText.attr('value', slideBtnTxt);
+                el_buttonLink.attr('value', slideBtnLink);
+
+                // update vue data for images
+                $vm.slideshowUpload.upload.allImages = allSlidesData;
+                $vm.slideshowUpload.upload.oldimage_address = slideCurrentImage;
+
+                // show modal
+                $('#slideModal').modal('show');
+
+
+                // add attributes to modal
+                $('#slideModal').attr('data-index', pos);
+                $('#slideModal').attr('data-trigger-id', '#'+buttonID);
+
+            })
+
+            $('#slideModal').on('hide.bs.modal', function(){
+
+                // reset slide upload values
+                $vm.slideshowUpload.upload.allImages = '';
+                $vm.slideshowUpload.upload.oldimage_address = '';
+                $vm.slideshowUpload.upload.newimage_address = '';
+
+                // reset single counter values
+                $vm.slideshowUpload.counter.counterTemp = 0;
+                $vm.slideshowUpload.counter.uploadCounter = 0;
+
+                //clear modal content
+                $('.slide-preview').html('');
+
+                // hide alert if it was shown
+                $('.alert-single').fadeOut();
+                $('.alert-success-upload').fadeOut();
+
+                // reset progress
+                $('#p-bar-slide').css({"width":"2%"});
+            });
+
 
             $('.modal-trigger').on('click', function(e){
                 let sku_id = $(e.target).attr('data-sku'),
@@ -623,6 +816,184 @@ $(document).ready(function() {
 
 
 
+            // *******************************************//
+            // change a slideshow image upload functionality
+            // *******************************************//
+
+            let uploadSlideImage = $('<button/>')
+            .addClass('btn btn-primary changeImage-btn')
+            .text('Change Image')
+            .on('click', function () {
+                var $this = $(this),
+                    data = $this.data();
+
+                data.submit().always(function () {
+
+                });
+            });
+
+            $('#slideImageUpload').fileupload({
+                url: '/backend/scripts/uploadslideimages.php',
+                autoUpload: false,
+                disableImageResize: /Android(?!.*Chrome)|Opera/
+                    .test(window.navigator && navigator.userAgent),
+                imageMaxWidth: 1200,
+                imageMaxHeight: 1200,
+                imageCrop: false, // Force cropped images
+                previewMaxWidth: 200,
+                previewMaxHeight: 200
+            }).on('fileuploadadd', function(e, data){
+                // makes sure file uploaded is an image
+                var filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    fileName = data.originalFiles,
+                    counter = 0;
+
+                console.log(data);
+
+                // console.log("MATCH: " + $match);
+
+                let $match = data.files[0].name.match(filetypeallowed);
+                console.log("MATCH: " + $match);
+                if (!$match) {
+                    console.log('no match');
+                    $('.alert-file-error').fadeIn();
+                    $('#alert-file-error-msg').html(`${data.files[0].name} does not match valid file types`);
+
+                    setTimeout(function(){
+                        $('.alert-file-error').fadeOut();
+                    }, 5500);
+
+                    return;
+                }else {
+                    console.log('match');
+                }
+
+                $vm.slideshowUpload.counter.counterTemp += 1;
+                counter = $vm.slideshowUpload.counter.counterTemp;
+
+
+                if (counter === $vm.slideshowUpload.upload.limit) {
+                    // disable browse files button
+                    // $('.browse').addClass('disabled');
+                    // $vm.showUpload = false;
+
+                    // show alert with message as to why button is disabled
+                    $('.alert-single').fadeIn();
+                    $('#alert-single-msg').html('Maximum amount of images reached');
+                }
+
+                if (counter > 0) {
+                    $('.save-slide-changes').addClass('disabled');
+                }
+
+                console.log("upload Counter: " + counter);
+
+                // add correct ID's to progress bar and button
+                // $(uploadSingle).attr('id', `p-button${counter}`);
+
+                let $progress = `<br><div class="progress progress-slide">
+                  <div class="progress-bar progress-bar-striped p-bar" id="p-bar-slide" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%">
+                    <span class="sr-only">2% Complete</span>
+                  </div>
+                </div>`;
+
+                data.context = $('<div class="image"/>').appendTo('.slide-preview');
+
+
+                $.each(data.files, function (index, file) {
+                   var node = $('<div/>')
+                           .append($('<p/>').text(file.name));
+                   if (!index) {
+                       node
+                           .append(uploadSlideImage.clone(true).data(data))
+                           .append('<br>')
+                           .append($progress);
+                   }
+                   node.appendTo(data.context);
+               });
+
+                // submit form data to server to be validated e.g file size & file exists
+                // data.submit();
+
+            }).on('fileuploadprocessalways', function(e, data){
+
+                let filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    $match = data.files[0].name.match(filetypeallowed);
+
+                if (!$match) {
+                    return;
+                }
+
+                var index = data.index,
+                    file = data.files[index];
+
+                console.log(file.preview);
+                node = $(data.context.children()[index]);
+                  if (file.preview) {
+                      node
+                          .prepend('<br>')
+                          .prepend(file.preview);
+                  }
+                  if (file.error) {
+                      node
+                          .append('<br>')
+                          .append($('<span class="text-danger"/>').text(file.error));
+                  }
+
+            }).on('fileuploaddone', function(e,data){
+
+                console.log(data);
+                console.log(JSON.parse(data.result));
+                $result = JSON.parse(data.result);
+
+                switch ($result.status.code) {
+                    case (101 || '101'):
+                        // add one to upload counter
+                        // NOTE: this will be used to determine whether to show
+                        $vm.slideshowUpload.counter.uploadCounter += 1;
+
+                        let path = $vm.cleanImagePath($result.data.dir);
+
+                        // add the returned directory to array
+                        $vm.slideshowUpload.upload.newimage_address = path;
+
+                        // remove the button
+                        setTimeout(function(){
+                            $('.changeImage-btn').fadeOut();
+                        }, 600);
+
+                        // un-disable save button
+                        $('.save-slide-changes').removeClass('disabled');
+
+                        // show alert success message
+                        $('.alert-success-upload').fadeIn();
+                        $('#alert-success-upload-msg').html('Image uploaded successfully. Please click save to confirm changes');
+
+                        break;
+                    case (404 || '404'):
+                        $.notify($result.data.msg, 'error');
+
+                        break;
+                    default:
+
+                }
+
+
+            }).on('fileuploadprogressall', function(e,data){
+
+                let progress = parseInt(data.loaded / data.total * 100, 10),
+                    pgressCount = $vm.counter.progressCounter,
+                    progressID = '#p-bar-slide',
+                    buttonID = '.changeImage-btn';
+
+                $(progressID).css({'width': `${progress}%`});
+
+                if (progress === 100) {
+                    $(buttonID).removeClass('btn-primary').addClass('btn-success disabled');
+                    $(buttonID).text('Successfully Uploaded');
+                }
+                // console.log(data);
+            });
 
 
 
