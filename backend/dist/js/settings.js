@@ -25,9 +25,18 @@ $(document).ready(function() {
                         sublinks: false
                     },
                     {
-                        title: 'Add Blog Images',
-                        link: "/backend/auth/admin/edit/add-blog-images",
-                        sublinks: false
+                        title: 'Blog Images',
+                        sublinks: true,
+                        sublinks_list:[
+                            {
+                                title: 'Add Blog images',
+                                link: "/backend/auth/admin/edit/add-blog-images"
+                            },
+                            {
+                                title: 'View/Delete blog images',
+                                link: "/backend/auth/admin/edit/view-blog-images"
+                            }
+                        ]
                     },
                     {
                         title: 'Create Blog Posts',
