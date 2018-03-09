@@ -261,6 +261,39 @@ $(document).ready(function() {
             dashhome: function(){
                 window.location = '/';
             },
+            blogUploadBox: function(){
+                let $vm = this,
+                    file = $('#blogUpload');
+
+                if ($vm.blogimagesUpload.counter.counterTemp === $vm.blogimagesUpload.limit) {
+                    return;
+                }else {
+                    file.trigger('click');
+                }
+
+            },
+            resetUploadValues: function(){
+                let $vm = this,
+                    alertMsg = confirm('this will clear all uploads. Are you sure you want to continue?');
+
+                if (alertMsg) {
+                    // reset all upload values
+                    $vm.blogimagesUpload.counter.counterTemp = 0;
+                    $vm.blogimagesUpload.counter.uploadCounter = 0;
+                    $vm.blogimagesUpload.counter.progressCounter = 0;
+
+                    // clear pending-uploads container
+                    $('.pending-uploads').html('');
+
+                    // remove error/warning messages
+                    $('.alert-limit').fadeOut();
+                    $('.alert-file-error').fadeOut();
+
+                }else {
+                    return;
+                }
+
+            },
             saveImageChange: function(){
                 let $vm = this;
                 if ($vm.singleUploadStatus && $vm.counter.singleCounter.counter > 0) {
