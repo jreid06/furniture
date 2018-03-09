@@ -68,6 +68,9 @@ body {
 .alert-success-upload {
   display: none; }
 
+.alert-limit {
+  display: none; }
+
 .file {
   visibility: hidden;
   position: absolute; }
@@ -77,6 +80,10 @@ body {
   position: absolute; }
 
 #slideImageUpload {
+  visibility: hidden;
+  position: absolute; }
+
+#blogUpload {
   visibility: hidden;
   position: absolute; }
 
