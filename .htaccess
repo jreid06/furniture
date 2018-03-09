@@ -19,6 +19,8 @@ RewriteRule ^backend/auth/admin/edit/upload-product-images?$  /backend/upload-pr
 
 RewriteRule ^backend/auth/admin/edit/ourstory-edit/([A-Za-z0-9\-\_]+)?$  /backend/ourstory-edit.php?pageid=$1    [NC,L]
 
+RewriteRule ^backend/auth/admin/edit/homepage-edit/([A-Za-z0-9\-\_]+)?$  /backend/homepage-edit.php?pageid=$1    [NC,L]
+
 RewriteRule ^backend/auth/admin/edit/shipping-edit/([A-Za-z0-9\-\_]+)?$  /backend/shipping-edit.php?pageid=$1    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/return-edit/([A-Za-z0-9\-\_]+)?$  /backend/returns-edit.php?pageid=$1    [NC,L]
