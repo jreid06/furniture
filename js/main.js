@@ -42,10 +42,10 @@ $(document).ready(function() {
         },
         template: `<div class="slideshow-div justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
 
-            <h1>HOME ESSENTIALS</h1>
-            <h4>RECLAIM YOUR HOME</h4>
-            <a class="btn btn-primary" href="/products">SHOP NOW</a> </div>`,
-        props: ['image']
+            <h1>{{title.toUpperCase()}}</h1>
+            <h4>{{content.toUpperCase()}}</h4>
+            <a class="btn btn-primary" :href="btnlink">{{btntext}}</a> </div>`,
+        props: ['image', 'title', 'content', 'btntext', 'btnlink']
     });
 
     Vue.component('category', {
@@ -2635,19 +2635,7 @@ $(document).ready(function() {
                 basket: {
                     items: ''
                 },
-                slides: [{
-                        id: 1,
-                        image: '/assets/main/davide-cantelli-240809.jpg'
-                    },
-                    {
-                        id: 2,
-                        image: '/assets/main/breather-196135.jpg'
-                    },
-                    {
-                        id: 3,
-                        image: '/assets/main/mitch-moondae-321409.jpg'
-                    }
-                ],
+                slides: '',
                 categories: [{
                         name: 'living room',
                         image: '/assets/category/christelle-bourgeois-97314.jpg',
@@ -3273,6 +3261,34 @@ $(document).ready(function() {
                 }
             },
             methods: {
+                getSlideData: function() {
+                    let $vm = this;
+                    $.ajax({
+                        url: '/scripts/get_slide_data.php',
+                        type: 'get',
+                        success: function(data){
+                            let $data = JSON.parse(data);
+                            console.log($data);
+                            switch ($data.status.code) {
+                                case (101 || '101'):
+                                    let slideData = JSON.parse($data.data.slides.slides_json);
+
+                                    console.log(slideData);
+                                    $vm.slides = slideData;
+                                    break;
+                                case (404 || '404'):
+                                    $.notify('error getting slide data', 'error');
+                                    break;
+                                default:
+
+                            }
+
+                        },
+                        error: function(){
+
+                        }
+                    })
+                },
                 toggleMainImage: function(e) {
                     let targetImage = $(e.target)[0],
                         mainImageID = $('#main'),
@@ -3784,9 +3800,6 @@ $(document).ready(function() {
 
 
                 },
-                getSlideData: function() {
-
-                },
                 createUser: function(e) {
                     console.log('user created');
                     let eventTrigger = $(e.target).parent(),
@@ -4034,15 +4047,35 @@ $(document).ready(function() {
 
             },
             mounted: function() {
-                // intialize the slick slideshow
-                $('.home-slide').slick({
-                    lazyLoad: 'ondemand',
-                    autoplay: true,
-                    autoplaySpeed: 3000,
-                    arrows: false,
-                    appendDots: $('.home-slide'),
-                    dots: true
+                let $vm = this;
+
+                // render slides dynamically
+                let initslide = new Promise(function(resolve, reject) {
+
+                    $vm.getSlideData();
+                    if (true) {
+                        resolve(true);
+                    }
+                });
+
+                initslide.then(function(val){
+                    console.log('then run');
+                    // intialize the slick slideshow
+                    setTimeout(function(){
+                        $('.home-slide').slick({
+                            lazyLoad: 'ondemand',
+                            autoplay: true,
+                            autoplaySpeed: 3000,
+                            arrows: false,
+                            appendDots: $('.home-slide'),
+                            dots: true
+                        })
+                    }, 1300);
+
                 })
+
+
+
 
                 $('.pr-info-link').on('click', function(e) {
                     console.log($(e.target));
