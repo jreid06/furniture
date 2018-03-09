@@ -1,0 +1,28 @@
+[{
+    "id": 1,
+    "image": "/assets/main/davide-cantelli-240809.jpg",
+    "title": "HOME ESSENTIALS",
+    "content": "reclaim your home",
+    "cta": {
+        "text": "SHOP NOW",
+        "link": "/products/livingroom/cushions"
+    }
+}, {
+    "id": 2,
+    "image": "/assets/main/breather-196135.jpg",
+    "title": "BATH ACCESSORIES",
+    "content": "spice up wash time",
+    "cta": {
+        "text": "SHOP NOW",
+        "link": "/products/livingroom/cushions"
+    }
+}, {
+    "id": 3,
+    "image": "/assets/main/mitch-moondae-321409.jpg",
+    "title": "COMFORT FOR DAYS",
+    "content": "new livingroom cushions available",
+    "cta": {
+        "text": "SHOP CUSHIONS",
+        "link": "/products/livingroom/cushions"
+    }
+}]
