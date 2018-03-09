@@ -4,6 +4,7 @@
 
 	$root_dir = dirname(__DIR__).'/assets/test/';
 	$root_dir_slide = dirname(__DIR__).'/assets/slideshow/';
+	$root_dir_blog = dirname(__DIR__).'/assets/blogimages/';
 
 	require_once "random_compat-2.0.10/lib/random.php";
 	require_once "easypost-php/lib/easypost.php";
