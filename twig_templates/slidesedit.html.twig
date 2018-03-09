@@ -1,0 +1,138 @@
+<div class="row" id="twig">
+    <br>
+    <br>
+    {% if not error %}
+
+        {% for slide in slides.slides_json %}
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default panel-products">
+                    <div class="panel-heading panel-image slide-panel-img" style="background: url({{slide.image}}); background-size: cover !important; background-position: center !important" id="image-slide-{{loop.index}}">
+
+                    </div>
+                    <div class="panel-body text-center">
+                        <h3>SLIDE {{slide.id}}</h3>
+                        <hr>
+                        <h4><span class="">Title: </span><span id="title-slide-{{loop.index}}">{{slide.title}} </span></h4>
+                        <h5><span class="">Content: </span><span id="content-slide-{{loop.index}}">{{slide.content}}</span></h5>
+                        <h5><span class="">Button Text: </span><span id="btntxt-slide-{{loop.index}}">{{slide.cta.text}}</span></h5>
+                        <h5><span class="">Button Link: </span><span id="btnlink-slide-{{loop.index}}">{{slide.cta.link}}</span></h5>
+
+                        <button type="button" class="btn btn-primary slide-modal-trigger" id="button-{{loop.index}}" data-index="{{loop.index}}" name="button" data-slide-data="{{slides.slides_json | json_encode()}}" data-current-image="{{slide.image}}" data-title="{{slide.title}}" data-content="{{slide.content}}" data-cta-text="{{slide.cta.text}}" data-cta-link="{{slide.cta.link}}">Change Slide Content</button>
+
+                        <!-- success alert message -->
+
+                        <div class="alert alert-success alert-dismissible alert-slide-update alert-slide-update-{{loop.index}}" role="alert" style="margin-top: 10px;">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <span id="alert-slide-update-msg-{{loop.index}}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- <br>
+        <br>
+        <pre>
+            {{dump(slides)}}
+        </pre> -->
+
+        <div class="modal fade" id="slideModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Slide Content</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <!-- current image -->
+                                <div class="current-img">
+                                    <img src="" alt="" class="img-responsive curr-image">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+
+                                <!-- warning message -->
+                                <div class="alert alert-warning alert-dismissible alert-single" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <strong>ALERT!</strong> <span id="alert-single-msg"></span>
+                                </div>
+
+                                <!-- successfull image upload message -->
+                                <div class="alert alert-success alert-dismissible alert-success-upload" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <strong>SUCCESS!</strong> <span id="alert-success-upload-msg"></span>
+                                </div>
+
+
+                                <!-- wrong file type error -->
+                                <div class="alert alert-danger alert-dismissible alert-file-error" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <strong>ERROR!</strong> <span id="alert-file-error-msg"></span>
+                                </div>
+
+                                <!-- upload field -->
+                                <input type="file" id="slideImageUpload" name="img[]">
+                                <div class="input-group col-xs-12">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                                    <input type="text" class="form-control input-lg" placeholder="Upload Images" disabled>
+                                    <span class="input-group-btn">
+                                        <button class="browse2 btn btn-primary input-lg" type="button" @click="slideShowImageUpload"><i class="glyphicon glyphicon-search"></i> Browse</button>
+                                  </span>
+                                </div>
+
+                                <!-- upload image -->
+                                <div class="slide-preview text-center">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 edit-slide-info-col">
+                                <!-- edit text content -->
+                                <hr>
+                                <h4>Edit/Change Slide Content</h4>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="slide-title-span">@</span>
+                                    <input type="text" class="form-control" placeholder="Slide Title" aria-describedby="slide-title-span" id="slide-title">
+                                </div>
+                                <hr>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="slide-content-span">@</span>
+                                    <input type="text" class="form-control" placeholder="Slide content" aria-describedby="slide-content-span" id="slide-content">
+                                </div>
+                                <hr>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="slide-btn-txt-span">@</span>
+                                    <input type="text" class="form-control" placeholder="Slide Tilte" aria-describedby="slide-btn-txt-span" id="slide-btn-txt">
+                                </div>
+                                <hr>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="slide-btn-link-span">@</span>
+                                    <input type="text" class="form-control" placeholder="Slide Link" aria-describedby="slide-btn-link-span" id="slide-btn-link">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save-slide-changes" @click="changeSlideData">Save changes</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+    <!-- ERROR MESSAGE -->
+    <div class="alert alert-error alert-dismissible alert-sku" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>ERROR! </strong> <span id="alert-sku-msg">Error display slide data. Please refresh page or contact developer</span>
+    </div>
+
+    {% endif %}
+
+</div>
