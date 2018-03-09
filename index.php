@@ -19,6 +19,8 @@
     // echo $session_not_set."<br>";
     // echo $cookie_not_set."<br>";
 
+    // $slide_data = DatabaseFunctions::getData('slides_json', 'homeslides', 'table_name', 'slides');
+
 ?>
 <div class="loader-screen loader-generic">
     <div class="spinner">
@@ -35,7 +37,11 @@
                     <slideshow
                         v-for="(slide, index) in slides"
                         v-bind:key="slide.id"
-                        v-bind:image="slide.image">
+                        v-bind:image="slide.image"
+                        v-bind:title="slide.title"
+                        v-bind:content="slide.content"
+                        v-bind:btntext="slide.cta.text"
+                        v-bind:btnlink="slide.cta.link">
                     </slideshow>
                 </div>
             </template>
