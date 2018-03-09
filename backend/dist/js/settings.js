@@ -25,6 +25,21 @@ $(document).ready(function() {
                         sublinks: false
                     },
                     {
+                        title: 'Add Blog Images',
+                        link: "/backend/auth/admin/edit/add-blog-images",
+                        sublinks: false
+                    },
+                    {
+                        title: 'Create Blog Posts',
+                        link: "/backend/auth/admin/edit/create-blog-posts",
+                        sublinks: false
+                    },
+                    {
+                        title: 'Edit Blog Posts',
+                        link: "/backend/auth/admin/edit/all-blog-posts",
+                        sublinks: false
+                    },
+                    {
                         title: 'Upload Product Images',
                         link: "/backend/auth/admin/edit/upload-product-images",
                         sublinks: false
