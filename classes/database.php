@@ -452,6 +452,25 @@
 
         }
 
+        public static function storeBlogImages($tbl, $fields, $value1, $value2, $value3)
+        {
+            Connect::checkConnection();
+
+            $query = parent::returnConnection()->prepare("INSERT INTO $tbl $fields VALUES (?,?,?)");
+
+            $query->bind_param('sss',$value1, $value2, $value3);
+            if($query->execute()){
+                $query->close();
+
+                parent::returnConnection()->close();
+
+                return true;
+            }else {
+                return false;
+            }
+
+        }
+
 
         // $values = array();
         // ** must be equal
