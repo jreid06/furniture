@@ -3,6 +3,7 @@
     define('ROOT_PATH', dirname(__DIR__).'/');
 
 	$root_dir = dirname(__DIR__).'/assets/test/';
+	$root_dir_slide = dirname(__DIR__).'/assets/slideshow/';
 
 	require_once "random_compat-2.0.10/lib/random.php";
 	require_once "easypost-php/lib/easypost.php";
