@@ -144,6 +144,14 @@ $(document).ready(function() {
                     newimage_address: ''
                 }
             },
+            blogimagesUpload: {
+                limit: 10,
+                counter:{
+                    counterTemp: 0,
+                    uploadCounter: 0,
+                    progressCounter: 0
+                }
+            },
             selectedImage:{
                 images: [],
                 position: '',
