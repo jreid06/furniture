@@ -880,6 +880,201 @@ $(document).ready(function() {
             })
 
 
+            // *******************************************//
+            // add blog images upload functionality
+            // *******************************************//
+
+            let uploadBlogImagesBtn = $('<button/>')
+            .addClass('btn btn-primary changeImage-btn')
+            .text('Add Image')
+            .on('click', function () {
+                console.log('BLOG IMAGE BUTTON');
+                var $this = $(this),
+                    data = $this.data();
+
+                data.submit().always(function () {
+
+                });
+            });
+
+            $('#blogUpload').fileupload({
+                url: '/backend/scripts/uploadblogimages.php',
+                autoUpload: false,
+                disableImageResize: /Android(?!.*Chrome)|Opera/
+                    .test(window.navigator && navigator.userAgent),
+                imageMaxWidth: 1200,
+                imageMaxHeight: 1200,
+                imageCrop: false, // Force cropped images
+                previewMaxWidth: 200,
+                previewMaxHeight: 200
+            }).on('fileuploadadd', function(e, data){
+                // makes sure file uploaded is an image
+                var filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    fileName = data.originalFiles,
+                    counter = 0;
+
+                console.log(data);
+
+                // console.log("MATCH: " + $match);
+
+                let $match = data.files[0].name.match(filetypeallowed);
+                console.log("MATCH: " + $match);
+                if (!$match) {
+                    console.log('no match');
+                    $('.alert-file-error').fadeIn();
+                    $('#alert-file-error-msg').html(`${data.files[0].name} does not match valid file types`);
+
+                    setTimeout(function(){
+                        $('.alert-file-error').fadeOut();
+                    }, 5500);
+
+                    return;
+                }else {
+                    console.log('match');
+                }
+
+                $vm.blogimagesUpload.counter.counterTemp += 1;
+                counter = $vm.blogimagesUpload.counter.counterTemp;
+
+
+                if (counter === $vm.blogimagesUpload.limit) {
+                    // show alert with message as to why button is disabled
+                    $('.alert-limit').fadeIn();
+                    $('#alert-limit-msg').html('Maximum amount of images reached');
+                }
+
+                console.log("upload Counter: " + counter);
+
+                // add correct ID's to progress bar and button
+                $(uploadBlogImagesBtn).attr('id', `p-button${counter}`);
+                console.log($(uploadBlogImagesBtn));
+
+                let $progress = `<br><div class="progress progress-${counter}">
+                  <div class="progress-bar progress-bar-striped p-bar" id="p-bar${counter}" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%">
+                    <span class="sr-only">2% Complete</span>
+                  </div>
+                </div>`;
+
+                data.context = $('<div class="image"/>').appendTo('.pending-uploads');
+
+                localStorage.setItem(`blogupload-buttonID-${counter}`,`#p-button${counter}`);
+                localStorage.setItem(`blogupload-progressID-${counter}`,`#p-bar${counter}`);
+
+
+
+                $.each(data.files, function (index, file) {
+                   var node = $('<div/>')
+                           .append($('<p/>').text(file.name));
+                   if (!index) {
+                       node
+                           .append(uploadBlogImagesBtn.clone(true).data(data))
+                           .append('<br>')
+                           .append($progress);
+                   }
+                   node.appendTo(data.context);
+               });
+
+                // submit form data to server to be validated e.g file size & file exists
+                // data.submit();
+
+            }).on('fileuploadprocessalways', function(e, data){
+
+                let filetypeallowed = /.\.(jpg|png|jpeg)$/i,
+                    $match = data.files[0].name.match(filetypeallowed);
+
+                if (!$match) {
+                    return;
+                }
+
+                var index = data.index,
+                    file = data.files[index];
+
+                console.log(file.preview);
+                node = $(data.context.children()[index]);
+                  if (file.preview) {
+                      node
+                          .prepend('<br>')
+                          .prepend(file.preview);
+                  }
+                  if (file.error) {
+                      node
+                          .append('<br>')
+                          .append($('<span class="text-danger"/>').text(file.error));
+                  }
+
+            })
+            .on('fileuploaddone', function(e,data){
+
+                console.log(data);
+                console.log(JSON.parse(data.result));
+                $result = JSON.parse(data.result);
+
+                switch ($result.status.code) {
+                    case (101 || '101'):
+                        // add one to upload counter
+                        // NOTE: this will be used to determine whether to show
+                        $vm.blogimagesUpload.counter.uploadCounter += 1;
+
+                        let path = $vm.cleanImagePath($result.data.dir);
+
+                        // let user know that reset button must be pressed by changing its colour
+                        if ($vm.blogimagesUpload.counter.uploadCounter === $vm.blogimagesUpload.limit) {
+                            $('.reset-btn').css({'background-color':'darkred', 'transition':'all .4s'});
+                        }
+
+                        // remove the button
+                        setTimeout(function(){
+                            let pgressCount = $vm.blogimagesUpload.counter.progressCounter,
+                                btnID = '#p-button'+pgressCount;
+
+                            $(btnID).fadeOut();
+                        }, 600);
+
+
+                        break;
+                    case (404 || '404'):
+                        $.notify($result.data.msg, 'error');
+
+                        let pgressCount = $vm.blogimagesUpload.counter.progressCounter,
+                            btnID = '#p-button'+pgressCount;
+
+                        $(btnID).removeClass('btn-success disabled').addClass('btn-danger');
+                        $(btnID).text('Error saving image');
+
+                        break;
+                    default:
+
+                }
+
+
+            })
+            .on('fileuploadprogressall', function(e,data){
+                $vm.blogimagesUpload.counter.progressCounter +=1;
+
+                let progress = parseInt(data.loaded / data.total * 100, 10),
+                    pgressCount = $vm.blogimagesUpload.counter.progressCounter,
+                    progressID = localStorage.getItem(`blogupload-progressID-${pgressCount}`),
+                    buttonID = localStorage.getItem(`blogupload-buttonID-${pgressCount}`);
+
+                console.log(progressID);
+                console.log(buttonID);
+
+                $(progressID).css({'width': `${progress}%`});
+
+                if (progress === 100) {
+                    $(buttonID).removeClass('btn-primary').addClass('btn-success disabled');
+                    $(buttonID).text('Successfully Uploaded');
+                }
+                // console.log(data);
+            });
+
+
+
+
+
+
+
+
 
             // *******************************************//
             // change a slideshow image upload functionality
@@ -907,7 +1102,8 @@ $(document).ready(function() {
                 imageCrop: false, // Force cropped images
                 previewMaxWidth: 200,
                 previewMaxHeight: 200
-            }).on('fileuploadadd', function(e, data){
+            })
+            .on('fileuploadadd', function(e, data){
                 // makes sure file uploaded is an image
                 var filetypeallowed = /.\.(jpg|png|jpeg)$/i,
                     fileName = data.originalFiles,
@@ -980,7 +1176,8 @@ $(document).ready(function() {
                 // submit form data to server to be validated e.g file size & file exists
                 // data.submit();
 
-            }).on('fileuploadprocessalways', function(e, data){
+            })
+            .on('fileuploadprocessalways', function(e, data){
 
                 let filetypeallowed = /.\.(jpg|png|jpeg)$/i,
                     $match = data.files[0].name.match(filetypeallowed);
@@ -1005,7 +1202,8 @@ $(document).ready(function() {
                           .append($('<span class="text-danger"/>').text(file.error));
                   }
 
-            }).on('fileuploaddone', function(e,data){
+            })
+            .on('fileuploaddone', function(e,data){
 
                 console.log(data);
                 console.log(JSON.parse(data.result));
@@ -1044,7 +1242,8 @@ $(document).ready(function() {
                 }
 
 
-            }).on('fileuploadprogressall', function(e,data){
+            })
+            .on('fileuploadprogressall', function(e,data){
 
                 let progress = parseInt(data.loaded / data.total * 100, 10),
                     pgressCount = $vm.counter.progressCounter,
@@ -1093,7 +1292,8 @@ $(document).ready(function() {
                 imageCrop: true, // Force cropped images
                 previewMaxWidth: 200,
                 previewMaxHeight: 200
-            }).on('fileuploadadd', function(e, data){
+            })
+            .on('fileuploadadd', function(e, data){
                 // makes sure file uploaded is an image
                 var filetypeallowed = /.\.(jpg|png|jpeg)$/i,
                     fileName = data.originalFiles,
@@ -1162,7 +1362,8 @@ $(document).ready(function() {
                 // submit form data to server to be validated e.g file size & file exists
                 // data.submit();
 
-            }).on('fileuploadprocessalways', function(e, data){
+            })
+            .on('fileuploadprocessalways', function(e, data){
 
                 let filetypeallowed = /.\.(jpg|png|jpeg)$/i,
                     $match = data.files[0].name.match(filetypeallowed);
@@ -1187,7 +1388,8 @@ $(document).ready(function() {
                           .append($('<span class="text-danger"/>').text(file.error));
                   }
 
-            }).on('fileuploaddone', function(e,data){
+            })
+            .on('fileuploaddone', function(e,data){
 
                 console.log(data);
                 console.log(JSON.parse(data.result));
@@ -1219,7 +1421,8 @@ $(document).ready(function() {
                 }
 
 
-            }).on('fileuploadprogressall', function(e,data){
+            })
+            .on('fileuploadprogressall', function(e,data){
 
                 let progress = parseInt(data.loaded / data.total * 100, 10),
                     pgressCount = $vm.counter.progressCounter,
@@ -1496,8 +1699,14 @@ $(document).ready(function() {
         }
     })
 
-    $dashboard_vue.$watch('counter.progressCounter', function(newVal, oldVal){
-        console.log(newVal);
+    $dashboard_vue.$watch('blogimagesUpload.counter.counterTemp', function(newVal, oldVal){
+        if (newVal === $dashboard_vue.blogimagesUpload.limit) {
+            $('.browse').addClass('disabled');
+        }else if(newVal < $dashboard_vue.blogimagesUpload.limit) {
+            if ($('.browse').hasClass('disabled')) {
+                $('.browse').removeClass('disabled');
+            }
+        }
     })
 
 
