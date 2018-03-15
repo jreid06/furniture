@@ -118,18 +118,27 @@ class getPageContent {
 
         console.log('---------');
         console.log('populateEditor');
-        console.log($markdown);
-        $markdown = JSON.parse($markdown);
-        console.log($markdown);
+        // console.log($markdown);
+        console.log(typeof $markdown);
+        try {
+            $markdown = JSON.parse($markdown);
 
-        for (var i = 0; i < editor.length; i++) {
-            editor[i].value($markdown[i]);
+            for (var i = 0; i < editor.length; i++) {
+                editor[i].value($markdown[i]);
+            }
+        } catch (e) {
+            // if error parsing it means that we are rendering blog post content
+            let error = 'markdown hasnt been stringifyied';
+            $markdown = $markdown;
+
+            for (var i = 0; i < editor.length; i++) {
+                editor[i].value($markdown);
+            }
         }
-        console.log('---------');
 
     }
 
-    markdown(el){
+    markdown(el, getField){
         // el is for element
         // mulitple is an array
 
@@ -147,7 +156,8 @@ class getPageContent {
                 type: $type,
                 table: $tbl,
                 field: $field,
-                id: $val
+                id: $val,
+                get_field: getField
             },
             success: function(data){
                 let $data = JSON.parse(data);
@@ -155,8 +165,15 @@ class getPageContent {
                 console.log($data);
                 // only populate editor if user is on edit page
                 if (window.location.pathname.split('/')[4] === 'edit') {
-                    $this.populateEditor($data.data.markdown.page_markdown, $editor);
-                    return;
+                    if (window.location.pathname.split('/')[5] === 'blogpost') {
+                        $this.populateEditor($data.data.markdown.blog_body, $editor);
+                        console.log($data.data.markdown.blog_body);
+                        return;
+                    }else {
+                        $this.populateEditor($data.data.markdown.page_markdown, $editor);
+                        return;
+                    }
+
                 }else {
                     // render content on customer facing pages parsing markdown
                     if (el.length < 2) {
