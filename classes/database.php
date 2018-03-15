@@ -109,6 +109,23 @@
             }
         }
 
+        public static function deleteInfoDynamic($tbl, $field, $value)
+        {
+            parent::checkConnection();
+
+            $query = "DELETE FROM `$tbl` WHERE $field='$value'";
+
+            if (parent::returnConnection()->query($query)) {
+                $result = true;
+
+                return $result;
+            } else {
+                $result = false;
+
+                return $result;
+            }
+        }
+
         public static function deleteFile($filename)
         {
             if (unlink(dirname(__DIR__).'/'.$filename)) {
