@@ -1,0 +1,22 @@
+<div class="jumbotron blog-main-image" style="background: url({{post.main_img_path}})">
+    <div class="overlay">
+
+    </div>
+    <h2 class="text-center heading">{{post.title | capitalize}}</h2>
+    {% set month_num = (post.date.month | round) - 1 %}
+    <h4 class="text-center brief">{{months[month_num] | capitalize }}  {{post.date.full}}</h4>
+</div>
+<div class="container home blog-post-body">
+    <div class="row">
+        <div class="col-12">
+            <p class="text-justify brief"><strong>BRIEF:</strong> {{post.brief_desc}} </p>
+            <br>
+            <br>
+        </div>
+        <div class="col-12 text-center">
+            {% autoescape 'html' %}
+                {{post_body | raw}}
+            {% endautoescape %}
+        </div>
+    </div>
+</div>
