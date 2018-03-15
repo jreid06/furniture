@@ -15,8 +15,8 @@
                 $query = "SELECT $fields FROM $tbl";
 
                 $result = parent::returnConnection()->query($query);
-                if (!$result) {
-                    return false;
+                if ($result->num_rows <= 0) {
+                    return array(false, false);
                 }
                 while ($row = $result->fetch_assoc()) {
                     $data[] = $row;
