@@ -6,7 +6,10 @@
 	$root_dir_slide = dirname(__DIR__).'/assets/slideshow/';
 	$root_dir_blog = dirname(__DIR__).'/assets/blogimages/';
 
+	$months = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december');
+
 	require_once "random_compat-2.0.10/lib/random.php";
+	require_once "parsedown/Parsedown.php";
 	require_once "easypost-php/lib/easypost.php";
 	// require_once "shippo-php-client/lib/Shippo.php";
 	require_once 'functions.php';
