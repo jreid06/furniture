@@ -471,6 +471,26 @@
 
         }
 
+        public static function saveBlogPost($tbl, $fields, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9, $value10)
+        {
+            parent::checkConnection();
+
+            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?,?,?,?,?,?,?)");
+
+            $query->bind_param('ssssssssss', $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9, $value10);
+
+            if($query->execute()){
+                $query->close();
+
+                parent::returnConnection()->close();
+
+                return array(true, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9, $value10);
+            }else {
+                return array(false, $fields, $value1, $value2, $value3, $value4, $value5, $value6, $value7, $value8, $value9, $value10);
+            }
+
+        }
+
 
         // $values = array();
         // ** must be equal
