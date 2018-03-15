@@ -58,10 +58,6 @@ $(document).ready(function() {
                         sublinks: true,
                         sublinks_list: [
                             {
-                                title: "All / Uncategorized Products",
-                                link: "/backend/auth/admin/edit/products/all"
-                            },
-                            {
                                 title: "Livingroom Products",
                                 link: "/backend/auth/admin/edit/products/livingroom"
                             },
