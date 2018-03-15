@@ -56,6 +56,7 @@
                     v-bind:key="category.name"
                     v-bind:categoryname="category.name"
                     v-bind:image="category.image"
+                    v-bind:categorylink="category.categoryLink"
                     v-bind:num="index">
                 </category>
             </div>
@@ -83,7 +84,6 @@
 
                 $template = $twig->load('featured.html.twig');
                 echo $template->render(array(
-                    'data'=>'test value',
                     'featured_products'=>$featured_products
                 ));
 
@@ -98,7 +98,42 @@
                     <h5 class="text-center">STORIES</h5>
                     <br>
                 </div>
-                <blog-post
+
+                <?php
+
+                    $blog_posts = get_limited_blog_posts('*', 'blog', 'status', 'published', 3);
+
+                    if ($blog_posts[0]) {
+                        $blog_posts = $blog_posts[1];
+                        $error = false;
+
+                        // adding formatted date information to each post before rendering
+                        for ($i=0; $i < count($blog_posts); $i++) {
+                            $timestamp = $blog_posts[$i]['date_published'];
+                            $formatted_ts = format_timestamp($timestamp);
+
+                            $blog_posts[$i]['date'] = array(
+                                'time' => $formatted_ts['time'],
+                                'day' => $formatted_ts['day'],
+                                'month' => $formatted_ts['month'],
+                                'year' => $formatted_ts['year'],
+                                'full' => $formatted_ts['full_date']
+                            );
+                        }
+
+                    }else {
+                        $error = true;
+                    }
+
+                    $template = $twig->load('blog-post-home.html.twig');
+                    echo $template->render(array(
+                        'error'=> $error,
+                        'months'=> $months,
+                        'posts'=>$blog_posts
+                    ));
+
+                 ?>
+                <!-- <blog-post
                         v-for="(post, index) in blogStories"
                         v-bind:key="post.id"
                         v-bind:postid="post.id"
@@ -106,12 +141,12 @@
                         v-bind:posttitle="post.title"
                         v-bind:postbrief="post.brief_desc"
                         v-bind:postdate="post.published + ' ' + post.date.time">
-                </blog-post>
+                </blog-post> -->
             </div>
 
             <div class="row">
                 <div class="col-12 d-flex justify-content-center align-items-center">
-                    <a href="https://google.co.uk" class="btn btn-primary">
+                    <a href="/blog/all" class="btn btn-primary">
                         VIEW ALL POSTS
                     </a>
                     <hr>
