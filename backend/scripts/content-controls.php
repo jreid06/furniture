@@ -6,10 +6,11 @@
         $setting_type = $_POST['type'];
         $table = $_POST['table'];
         $id = $_POST['id'];
+        $field = $_POST['field'];
 
 
         // check whether id exists in database first
-        $page_exists = DatabaseFunctions::checkDataExists($table, 'page_id', $id);
+        $page_exists = DatabaseFunctions::checkDataExists($table, $field, $id);
 
         if ($page_exists) {
             switch ($setting_type) {
@@ -59,7 +60,6 @@
                 case 'publish':
                     # save content to table [livepages,pages]. keep same id
 
-
                     $markdown = $_POST['markdown'];
 
                     $msg = array(
@@ -79,12 +79,12 @@
                     break;
                 case 'retrieve':
 
-                    $field = $_POST['field'];
+                    $get_field = $_POST['get_field'];
                     # get content from the pages table for the current active page
                     /*
                         1. select fields, 2. table, 3. where field, 4. value field
                     */
-                    $data = DatabaseFunctions::getData('page_markdown', $table, $field, $id);
+                    $data = DatabaseFunctions::getData($get_field, $table, $field, $id);
 
                     if ($data[0]) {
 
