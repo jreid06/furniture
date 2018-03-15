@@ -1807,8 +1807,7 @@ nav {
 .checkout-info {
   height: 190px !important; }
   .checkout-info .total-box {
-    background-color: #010101;
-    color: #fff;
+    font-weight: bold;
     text-align: center;
     padding: 10px; }
 
@@ -1908,6 +1907,11 @@ nav {
     width: 95%;
     margin: 0 auto; } }
 
+.cat-home-box {
+  cursor: pointer; }
+  .cat-home-box a:hover {
+    color: #f2f2f2; }
+
 .category-card {
   width: 100%;
   margin: 10px auto;
@@ -1940,6 +1944,10 @@ nav {
       .category-card .card-img-bgrnd {
         height: 230px;
         width: 100%; } }
+
+.blog-date {
+  margin-top: 10px;
+  font-weight: bold; }
 
 .button-box {
   padding-top: 15px; }
@@ -2243,6 +2251,68 @@ nav {
     height: 140px; } }
 .related-products .card-title {
   font-size: 1em; }
+
+.blog-main-image {
+  margin-top: 88px;
+  background-position: center !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0;
+  position: relative;
+  height: 250px; }
+  .blog-main-image .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #030708;
+    opacity: 0.6;
+    z-index: 1; }
+  .blog-main-image .heading {
+    color: #f2f2f2;
+    position: relative;
+    z-index: 10;
+    -webkit-transform: translate(0, 40px);
+    transform: translate(0, 40px); }
+  .blog-main-image .brief {
+    position: relative;
+    z-index: 10;
+    color: #f2f2f2;
+    -webkit-transform: translate(0, 50px);
+    transform: translate(0, 50px); }
+  @media only screen and (min-width: 768px) {
+    .blog-main-image {
+      height: 350px; } }
+  @media only screen and (min-width: 992px) {
+    .blog-main-image {
+      height: 400px; } }
+
+.blog-post-body {
+  top: 0 !important; }
+  .blog-post-body h1, .blog-post-body h2, .blog-post-body h3, .blog-post-body h4, .blog-post-body h5, .blog-post-body h6 {
+    margin-bottom: 20px; }
+  .blog-post-body p {
+    padding-bottom: 15px;
+    text-align: justify !important; }
+    @media only screen and (min-width: 768px) {
+      .blog-post-body p {
+        width: 80%;
+        margin: auto; } }
+  .blog-post-body img {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+  @media only screen and (min-width: 768px) {
+    .blog-post-body {
+      margin-bottom: -50px; } }
+
+.post-col {
+  padding-top: 10px; }
+
+@media only screen and (min-width: 992px) {
+  .all-blog-posts {
+    top: 110px; } }
 
 .StripeElement {
   background-color: white;

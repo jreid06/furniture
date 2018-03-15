@@ -1231,8 +1231,9 @@ nav{
 	height: 190px !important;
 
 	.total-box{
-		background-color: #010101;
-		color: #fff;
+		// background-color: #010101;
+		// color: #fff;
+		font-weight: bold;
 		text-align: center;
 		padding: 10px;
 
@@ -1381,6 +1382,16 @@ nav{
 	}
 }
 
+.cat-home-box{
+	cursor: pointer;
+
+	a{
+		&:hover{
+			color: #f2f2f2;
+		}
+	}
+}
+
 .category-card{
     width: 100%;
     margin: 10px auto;
@@ -1422,6 +1433,11 @@ nav{
 		};
 	}
 
+}
+
+.blog-date{
+	margin-top: 10px;
+	font-weight: bold;
 }
 
 .button-box{
@@ -1903,7 +1919,113 @@ nav{
 
 	.card-title{
 		font-size: 1em;
+		// overflow:
 	}
+}
+
+
+.image-container{
+	// border: 1px solid red;
+}
+
+
+
+.blog-main-image{
+	margin-top: 88px;
+	// border: 1px solid red;
+	background-position: center !important;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 0;
+	position: relative;
+	height: 250px;
+
+	.overlay{
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: #030708;
+		opacity: 0.6;
+		z-index: 1;
+	}
+
+	.heading{
+		color: #f2f2f2;
+		position: relative;
+		z-index: 10;
+		-webkit-transform: translate(0, 40px);
+		        transform: translate(0, 40px);
+
+	}
+
+	.brief{
+	    position: relative;
+	    z-index: 10;
+	    color: #f2f2f2;
+	    -webkit-transform: translate(0, 50px);
+	            transform: translate(0, 50px);
+	}
+
+
+	@include respond-to($md-break){
+		height: 350px;
+	};
+
+	@include respond-to($lg-break){
+		height: 400px;
+		// margin-top: 118px;
+	};
+
+	@include respond-to($xl-break){
+
+	};
+}
+
+.blog-post-body{
+	// border: 1px solid green;
+	top: 0 !important;
+
+	h1,h2,h3,h4,h5,h6{
+		margin-bottom: 20px;
+	}
+
+	p{
+		padding-bottom: 15px;
+		text-align: justify !important;
+
+		@include respond-to($md-break){
+			width: 80%;
+			margin: auto;
+		};
+
+		@include respond-to($lg-break){
+
+		};
+	}
+
+	img{
+		width: 100%;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+
+	@include respond-to($md-break){
+		margin-bottom: -50px;
+	};
+}
+
+.post-col{
+	padding-top: 10px;
+}
+
+.all-blog-posts{
+
+	@include respond-to($lg-break){
+		top: 110px;
+	};
 }
 
 
