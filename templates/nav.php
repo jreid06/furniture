@@ -33,7 +33,7 @@
                     <a class="dsktp-a" href="/login">signup/login</a>
                 </template>
                 <template v-else>
-                    <a class="dsktp-a" href="#">help</a>
+                    <a class="dsktp-a" href="/help">help</a>
                     <a class="dsktp-a" href="#" v-on:mouseover="toggleAccountMenu">my account&nbsp;<span class="fa fa-user-o"></span>&nbsp; <span class="fa fa-caret-down"></span> </a>
 
                     <div class="custom-menu custom-menu-closed" aria-labelledby="dropdownMenuLink" v-on:mouseleave="toggleAccountMenu">
