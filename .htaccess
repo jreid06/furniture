@@ -11,11 +11,23 @@ Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^blogimage/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)?$  /blogimage.php?image=$1&ext=$2    [NC,L]
+
+RewriteRule ^blog/([A-Za-z0-9\-\_]+)/([A-Za-z0-9\-\_]+)/?$  /blog-post.php?month=$1&postid=$2    [NC,L]
+
 RewriteRule ^backend/auth/admin/edit/products/([A-Za-z0-9\-\_]+)/?$  /backend/edit-products.php?q=$1    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/create-blog-posts?$  /backend/create_blog_posts.php?   [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/blogpost/([A-Za-z0-9\-\_]+)?$  /backend/edit_blog_post.php?postid=$1   [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/all-blog-posts?$  /backend/show_all_posts.php?   [NC,L]
 
 RewriteRule ^backend/auth/admin/?$  /backend/login.php    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/add-blog-images?$  /backend/add_blog_images.php    [NC,L]
+
+RewriteRule ^backend/auth/admin/edit/view-blog-images?$  /backend/view_blog_images.php    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/upload-product-images?$  /backend/upload-product-images.php    [NC,L]
 
