@@ -158,6 +158,10 @@ $(document).ready(function() {
                 oldimage_address: '',
                 newimage_address: ''
             },
+            deleteImageModalTriggers: {
+                yes: false,
+                no: false
+            },
             dashboardhome:{
                 panels:[
                     {
@@ -258,6 +262,111 @@ $(document).ready(function() {
 
         },
         methods: {
+            triggerDelete: function(e){
+                let button = $(e.target)[0],
+                    val = $(button).attr('data-action'),
+                    image_name = $('#deletemodal').attr('data-image-name'),
+                    image_path = $('#deletemodal').attr('data-image-path'),
+                    imageID = $('#deletemodal').attr('data-img-id');
+
+                switch (val) {
+                    case 'yes':
+                        // send ajax request to delete image
+                        console.log('send ajax to delete image');
+                        console.log(image_name);
+                        console.log(image_path);
+                        console.log(imageID);
+
+                        $.ajax({
+                            url: '/backend/scripts/delete_blog_image.php',
+                            type: 'post',
+                            data: {
+                                img_name: image_name,
+                                imgID: imageID,
+                                path: image_path
+                            },
+                            success: function(data){
+                                console.log(data);
+                                let $data = JSON.parse(data);
+
+                                console.log($data);
+                                switch ($data.status.code) {
+                                    case (101 || '101'):
+                                        // close modal
+                                        $('#deletemodal').modal('hide');
+
+                                        // reset attributes
+                                        $('#deletemodal').attr('data-image-name', '');
+                                        $('#deletemodal').attr('data-image-path', '');
+                                        $('#deletemodal').attr('data-img-id', '');
+
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        }, 1500);
+
+                                        break;
+                                    case (404 || '404'):
+
+                                        $('.alert-delete-error').fadeIn();
+                                        $('#alert-delete-error-msg').html($data.data.msg);
+
+                                        break;
+                                    default:
+
+                                }
+                            },
+                            error: function(){
+
+                            }
+                        })
+
+
+
+                        // page refresh
+                        break;
+                    case 'no':
+                        console.log('close modal');
+
+                        // close modal
+                        $('#deletemodal').modal('hide');
+
+                        // reset attributes
+                        $('#deletemodal').attr('data-image-name', '');
+                        $('#deletemodal').attr('data-image-path', '');
+                        $('#deletemodal').attr('data-img-id', '');
+                        break;
+                    default:
+
+                }
+
+            },
+            deleteImage: function(e){
+                let button = $(e.target)[0],
+                    image_path = $(button).attr('data-image-path'),
+                    image_name = $(button).attr('data-image-name'),
+                    imageID = $(button).attr('data-img-id');
+
+                // trigger modal and get response
+                $('#deletemodal').modal('show');
+
+                // add data to modal attributes
+                $('#deletemodal').attr('data-image-name', image_name);
+                $('#deletemodal').attr('data-image-path', image_path);
+                $('#deletemodal').attr('data-img-id', imageID);
+
+            },
+            viewImage: function(e){
+                let button = $(e.target)[0],
+                    image_path = $(button).attr('data-image-path'),
+                    image_name = $(button).attr('data-image-name'),
+                    name_split = image_name.split('.');
+
+                console.log(image_path);
+                console.log(image_name);
+
+                window.open('/blogimage/'+name_split[0]+'/'+name_split[1], '_blank');
+
+            },
             dashhome: function(){
                 window.location = '/';
             },
@@ -1711,7 +1820,475 @@ $(document).ready(function() {
 
 
 
+    Vue.component('category-list-item', {
+        data: function(){
+            return{
+                status: 'components works'
+            }
+        },
+        template: `<li></li>`,
+        props: [],
+        methods: {
 
+        }
+
+    })
+
+
+
+
+
+    // create posts vue instance
+
+    if (window.location.pathname.split('/')[5] === 'create-blog-posts' || window.location.pathname.split('/')[5] === 'blogpost') {
+
+
+        let $blog_vue = new Vue({
+            el: '.blog-vue',
+            data:{
+                status: 'create post vue connected',
+                instance: createBlogPost
+            },
+            watch: {
+
+            },
+            methods: {
+                countCharacters: function (e) {
+                    let targetField = $(e.target)[0],
+                        fieldValue = targetField.value,
+                        fieldVal_count = fieldValue.split('').length;
+
+                    if (fieldVal_count <= 200) {
+                        $('#length-count').css({'color':'forestgreen'});
+                    }else {
+                        $('#length-count').css({'color':'darkred'});
+                    }
+
+                    $('#length-count').html(fieldVal_count);
+                },
+                selectCategory: function(e){
+                    let button = $(e.target)[0],
+                        catID = $(button).attr('data-cat-id'),
+                        inputBox = $('.cat-input-box');
+
+                    // console.log(button.innerHTML);
+                    inputBox.attr('value', button.innerHTML);
+                    inputBox.attr('data-cat-id', catID);
+
+                    // console.log(inputBox);
+
+                },
+                copyPath: function(e){
+                    let button = $(e.target)[0],
+                        labelID = $(button).attr('data-label-id'),
+                        index = $(button).attr('data-loop-index');
+
+
+
+
+                    var pathname = document.querySelector(`#path-${index}`);
+
+                    // console.log(emailLink);
+                      var range = document.createRange();
+                      range.selectNode(pathname);
+                      window.getSelection().addRange(range);
+
+                      try {
+                        // Now that we've selected the anchor text, execute the copy command
+                        var successful = document.execCommand('copy');
+
+                        $(labelID).fadeIn();
+                        setTimeout(function(){
+                            $(labelID).fadeOut();
+                        }, 2500)
+
+                      } catch(err) {
+                          $(labelID).html('error copying path');
+                          $(labelID).removeClass('btn-success').addClass('btn-danger');
+
+                          $(labelID).fadeIn();
+                          setTimeout(function(){
+                              $(labelID).fadeOut();
+                          }, 2500)
+                      }
+
+                },
+                saveDraft: function(e){
+                    // get all data that needs to be saved
+                    let catID = $('.cat-input-box').attr('data-cat-id'),
+                        postMainImage = $('.main-image-inp')[0].value,
+                        postTitle = $('.post-title-inp')[0].value,
+                        postBrief = $('.post-brief-inp')[0].value,
+                        dateCreated = Date.now(),
+                        dateModified = Date.now(),
+                        datePublished = 'N/A',
+                        postBody = '',
+                        postStatus = "draft",
+                        postID = $(e.target).attr('data-post-id')?$(e.target).attr('data-post-id'):false;
+
+                        console.log(postID);
+
+                    if (!postID) {
+                        postBody = createBlogPost.value();
+                    }else {
+                        postBody = editBlogPost.value();
+                    }
+
+
+                    if (!catID || !postMainImage || !postTitle || !postBrief) {
+
+                        if (!catID) {
+                            $('.cat-input-box').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.cat-input-box').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postMainImage) {
+                            $('.main-image-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.main-image-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postTitle) {
+                            $('.post-title-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.post-title-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postBrief) {
+                            $('.post-brief-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.post-brief-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        // notify generic error
+                        $.notify('Some required fields are empty. Please fill with required information', 'error');
+
+                        return;
+                    }
+                    else {
+
+                        // use data to construct a blog post using BlogPost class
+                        let post = new BlogPost(catID, postMainImage, postTitle, postBrief, postBody, postStatus, dateCreated, dateModified, datePublished);
+
+                        console.log(post);
+
+                        if (!postID) {
+                            // post ID will be generated on server side
+                            // send request to save blog post
+                            $.ajax({
+                                url: '/backend/scripts/save_blog_post.php',
+                                type: 'post',
+                                data: {
+                                    type: 'draft',
+                                    blogpost: post
+                                },
+                                success: function(data){
+                                    let $data = JSON.parse(data);
+
+                                    switch ($data.status.code) {
+                                        case (101 || '101'):
+                                            // remove local storage data for simple mde field
+                                            localStorage.removeItem('smde_createnewPost');
+
+                                            // refresh page so all data is reset.
+                                            window.location.reload();
+                                            break;
+                                        case (404 || '404'):
+                                            $.notify($data.data.msg, 'error');
+                                            break;
+                                        default:
+
+                                    }
+                                },
+                                error: function(){
+                                    $.notify('error saving post', 'error');
+                                }
+                            })
+                        }
+                        else {
+                            // send request to save & update blog post
+                            $.ajax({
+                                url: '/backend/scripts/save_blog_post.php',
+                                type: 'post',
+                                data: {
+                                    type: 'draft',
+                                    blogpost_id: postID,
+                                    blogpost: post
+                                },
+                                success: function(data){
+                                    let $data = JSON.parse(data);
+
+                                    switch ($data.status.code) {
+                                        case (101 || '101'):
+                                            // remove local storage data for simple mde field
+                                            localStorage.removeItem('smde_editcurrentPost');
+
+                                            // refresh page so all data is reset.
+                                            window.location.reload();
+                                            break;
+                                        case (404 || '404'):
+                                            $.notify($data.data.msg, 'error');
+                                            break;
+                                        default:
+
+                                    }
+                                },
+                                error: function(){
+                                    $.notify('error saving post', 'error');
+                                }
+                            })
+                        }
+
+
+                    }
+
+                },
+                savePublish: function(e){
+                    // get all data that needs to be saved
+                    let catID = $('.cat-input-box').attr('data-cat-id'),
+                        postMainImage = $('.main-image-inp')[0].value,
+                        postTitle = $('.post-title-inp')[0].value,
+                        postBrief = $('.post-brief-inp')[0].value,
+                        postBody = '',
+                        dateCreated = Date.now(),
+                        dateModified = Date.now(),
+                        datePublished = Date.now(),
+                        postStatus = "published",
+                        postID = $(e.target).attr('data-post-id')?$(e.target).attr('data-post-id'):false;
+
+                        console.log(postID);
+
+                    if (!postID) {
+                        postBody = createBlogPost.value();
+                    }else {
+                        postBody = editBlogPost.value();
+                    }
+
+
+                    if (!catID || !postMainImage || !postTitle || !postBrief) {
+
+                        if (!catID) {
+                            $('.cat-input-box').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.cat-input-box').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postMainImage) {
+                            $('.main-image-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.main-image-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postTitle) {
+                            $('.post-title-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.post-title-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        if (!postBrief) {
+                            $('.post-brief-inp').css({'box-shadow':'0 0 5px red', 'transition':'all .5s'});
+
+                            setTimeout(function(){
+                                $('.post-brief-inp').css({'box-shadow':'0 0 0px red'});
+                            }, 3000);
+                        }
+
+                        // notify generic error
+                        $.notify('Some required fields are empty. Please fill with required information', 'error');
+
+                        return;
+                    }else {
+
+                        // use data to construct a blog post using BlogPost class
+                        let post = new BlogPost(catID, postMainImage, postTitle, postBrief, postBody, postStatus, dateCreated, dateModified, datePublished);
+
+                        console.log(post);
+
+                        if (!postID) {
+                            // post ID will be generated on server side
+                            // send request to save blog post
+                            $.ajax({
+                                url: '/backend/scripts/save_blog_post.php',
+                                type: 'post',
+                                data: {
+                                    type: 'publish',
+                                    blogpost: post
+                                },
+                                success: function(data){
+                                    let $data = JSON.parse(data);
+
+                                    switch ($data.status.code) {
+                                        case (101 || '101'):
+                                            // remove local storage data for simple mde field
+                                            localStorage.removeItem('smde_createnewPost');
+
+                                            // refresh page so all data is reset.
+                                            window.location.reload();
+                                            break;
+                                        case (404 || '404'):
+                                            $.notify($data.data.msg, 'error');
+                                            break;
+                                        default:
+
+                                    }
+                                },
+                                error: function(){
+                                    $.notify('error saving post', 'error');
+                                }
+                            })
+                        }else {
+                            // send request to save & update blog post
+                            $.ajax({
+                                url: '/backend/scripts/save_blog_post.php',
+                                type: 'post',
+                                data: {
+                                    type: 'publish',
+                                    blogpost_id: postID,
+                                    blogpost: post
+                                },
+                                success: function(data){
+                                    let $data = JSON.parse(data);
+
+                                    switch ($data.status.code) {
+                                        case (101 || '101'):
+                                            // remove local storage data for simple mde field
+                                            localStorage.removeItem('smde_editcurrentPost');
+
+                                            // refresh page so all data is reset.
+                                            window.location.reload();
+                                            break;
+                                        case (404 || '404'):
+                                            $.notify($data.data.msg, 'error');
+                                            break;
+                                        default:
+
+                                    }
+                                },
+                                error: function(){
+                                    $.notify('error saving post', 'error');
+                                }
+                            })
+                        }
+
+
+                    }
+                }
+
+            },
+            mounted: function(){
+
+
+            }
+
+
+        });
+    }
+
+
+
+    /* //////////////////////////////////////////////////////// */
+    /* //////////////////////////////////////////////////////// */
+
+    // CREATE BLOG POST MARKDOWN EDITOR
+
+    /* //////////////////////////////////////////////////////// */
+    /* //////////////////////////////////////////////////////// */
+
+    if (window.location.pathname.split('/')[5] === 'create-blog-posts') {
+        var createBlogPost = new SimpleMDE({
+            autofocus: true,
+            element: document.getElementById("createPost"),
+            spellChecker: false,
+            hideIcons: ["guide"],
+            placeholder: "Blog post content here..",
+            autosave: {
+                enabled: true,
+                uniqueId: "createnewPost",
+                delay: 2000,
+            },
+            insertTexts: {
+                horizontalRule: ["", "\n\n-----\n\n"],
+                image: ["![](http://", ")"],
+                link: ["[", "](http://)"],
+                table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            renderingConfig: {
+                singleLineBreaks: true,
+                codeSyntaxHighlighting: true,
+            }
+        });
+
+        // console.log(createBlogPost.value());
+    }
+
+
+    /* //////////////////////////////////////////////////////// */
+    /* //////////////////////////////////////////////////////// */
+
+    // EDIT BLOG POST MARKDOWN EDITOR
+
+    /* //////////////////////////////////////////////////////// */
+    /* //////////////////////////////////////////////////////// */
+
+
+
+    if (window.location.pathname.split('/')[5] === 'blogpost') {
+        var editBlogPost = new SimpleMDE({
+            autofocus: true,
+            element: document.getElementById("editPost"),
+            spellChecker: false,
+            hideIcons: ["guide"],
+            placeholder: "Blog post content here..",
+            autosave: {
+                enabled: true,
+                uniqueId: "editcurrentPost",
+                delay: 2000,
+            },
+            insertTexts: {
+                horizontalRule: ["", "\n\n-----\n\n"],
+                image: ["![](http://", ")"],
+                link: ["[", "](http://)"],
+                table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+            },
+            renderingConfig: {
+                singleLineBreaks: true,
+                codeSyntaxHighlighting: true,
+            }
+        });
+
+        const getBlogPostContent = ()=>{
+            let id = window.location.pathname.split('/')[6].trim(),
+                tbl = 'blog',
+                field = 'post_id',
+                type = 'retrieve',
+                content = new getPageContent(type, tbl, field, id),
+                editors = [editBlogPost];
+
+            console.log(id);
+            content.configEditorVar(editors);
+            content.markdown(false, 'blog_body');
+        }
+
+
+        getBlogPostContent();
+
+        // console.log(createBlogPost.value());
+    }
 
 
 
@@ -1732,6 +2309,7 @@ $(document).ready(function() {
     // SINGLE PAGE EDITORS
     /* //////////////////////////////////////////////////////// */
 
+
     const getStoryContent = ()=>{
         let id = window.location.pathname.split('/')[6],
             tbl = 'pages',
@@ -1742,7 +2320,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     const getTermscondContent = ()=>{
@@ -1755,7 +2333,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     const getPrivacypolContent = ()=>{
@@ -1768,7 +2346,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     /* //////////////////////////////////////////////////////// */
@@ -1785,7 +2363,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     const getReturnsContent = ()=>{
@@ -1798,7 +2376,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     const getPaymentsContent = ()=>{
@@ -1811,7 +2389,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     const getOrdersContent = ()=>{
@@ -1824,7 +2402,7 @@ $(document).ready(function() {
 
 
         content.configEditorVar(editors);
-        content.markdown();
+        content.markdown(false, 'page_markdown');
     }
 
     /* //////////////////////////////////////////////////////// */
@@ -1855,12 +2433,49 @@ $(document).ready(function() {
                 type: buttonType,
                 table: 'pages',
                 id: $id,
+                field: 'page_id',
                 markdown: JSON.stringify(markdownArray)
             },
             success: function(data){
                 let $results = JSON.parse(data);
 
-                console.log($results);
+                switch ($results.status.code) {
+                    case (101 || '101'):
+                        $.notify('Content has been saved and updated successfully', 'success');
+
+                        // style the button to reflect save success
+                        $(targetButton).removeClass('btn-primary').addClass('btn-success');
+                        $(targetButton).css({'box-shadow':'0 0 5px forestgreen'});
+                        $(targetButton).html('Content saved successfully');
+
+                        //timeout to reset button styling
+                        setTimeout(function(){
+                            $(targetButton).removeClass('btn-success').addClass('btn-primary');
+                            $(targetButton).css({'box-shadow':'0 0 0 forestgreen'});
+                            $(targetButton).html('Save');
+
+                        }, 2000);
+
+                        break;
+                    case (404 || '404'):
+                        $.notify('Content not saved. Try again or contact help', 'error');
+
+                        // style the button to reflect error
+                        $(targetButton).removeClass('btn-primary').addClass('btn-danger');
+                        $(targetButton).css({'box-shadow':'0 0 5px darkred'});
+                        $(targetButton).html('Error saving content');
+
+                        //timeout to reset button styling
+                        setTimeout(function(){
+                            $(targetButton).removeClass('btn-danger').addClass('btn-primary');
+                            $(targetButton).css({'box-shadow':'0 0 0 darkred'});
+                            $(targetButton).html('Save');
+
+                        }, 2000);
+                        break;
+                    default:
+
+                }
             },
             error: function(){
 
@@ -1897,12 +2512,48 @@ $(document).ready(function() {
                 type: buttonType,
                 table: 'pages',
                 id: $id,
+                field: 'page_id',
                 markdown: JSON.stringify(markdownArray)
             },
             success: function(data){
                 let $results = JSON.parse(data);
 
-                console.log($results);
+                switch ($results.status.code) {
+                    case (101 || '101'):
+                        $.notify('Content has been saved and updated successfully', 'success');
+
+                        // style the button to reflect save success
+                        $(targetButton).removeClass('btn-primary').addClass('btn-success');
+                        $(targetButton).css({'box-shadow':'0 0 5px forestgreen'});
+                        $(targetButton).html('Content saved successfully');
+
+                        //timeout to reset button styling
+                        setTimeout(function(){
+                            $(targetButton).removeClass('btn-success').addClass('btn-primary');
+                            $(targetButton).css({'box-shadow':'0 0 0 forestgreen'});
+                            $(targetButton).html('Save');
+
+                        }, 2000);
+                        break;
+                    case (404 || '404'):
+                        $.notify('Content not saved. Try again or contact help', 'error');
+
+                        // style the button to reflect error
+                        $(targetButton).removeClass('btn-primary').addClass('btn-danger');
+                        $(targetButton).css({'box-shadow':'0 0 5px darkred'});
+                        $(targetButton).html('Error saving content');
+
+                        //timeout to reset button styling
+                        setTimeout(function(){
+                            $(targetButton).removeClass('btn-danger').addClass('btn-primary');
+                            $(targetButton).css({'box-shadow':'0 0 0 darkred'});
+                            $(targetButton).html('Save');
+
+                        }, 2000);
+                        break;
+                    default:
+
+                }
             },
             error: function(){
 
