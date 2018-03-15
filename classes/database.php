@@ -42,6 +42,35 @@
             }
         }
 
+        public static function getDataLimit($fields, $tbl, $field2, $value, $limit=true, $limit_val)
+        {
+            if ($limit) {
+                $query = "SELECT `$fields` FROM `$tbl` WHERE $field2='$value' LIMIT $limit_val";
+
+                $result = parent::returnConnection()->query($query);
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+            }else {
+                $query = "SELECT `$fields` FROM `$tbl` WHERE $field2='$value'";
+
+                $result = parent::returnConnection()->query($query);
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+            }
+
+
+            if ($result->num_rows > 0) {
+                $result = $result->fetch_assoc();
+                return array(true,$data);
+            } else {
+                return array(false);
+            }
+        }
+
 
         public static function getProductData($tbl1, $tbl2, $field, $value, $one=false)
         {
