@@ -14,6 +14,19 @@
         return (array) $object;
     }
 
+	function get_limited_blog_posts($fields, $tbl, $field2, $arg, $limit){
+
+		Connect::checkConnection();
+
+		$posts = DatabaseFunctions::getDataLimit($fields, $tbl, $field2, $arg, true, $limit);
+
+		if ($posts[0]) {
+			return array(true, $posts[1]);
+		}else {
+			return array(false);
+		}
+	}
+
     function generate_current_date()
     {
         $current_date = getdate();
@@ -26,7 +39,7 @@
         $month = $current_date['month'];
         $weekday = $current_date['weekday'];
 
-        return array($readable_date, $time, $date_now, $month, $weekday, $month_digit);
+        return array($readable_date, $time, $date_now, $month, $weekday, $month_digit, $timestamp);
     }
 
     function add_size_suffix($size_length, $img_size)
