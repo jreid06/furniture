@@ -54,7 +54,7 @@ $(document).ready(function() {
                 status: 'component works'
             }
         },
-        template: `<div class="col-6 col-md-3 col-lg-3">
+        template: `<div class="col-6 col-md-3 col-lg-3 cat-home-box">
             <a v-bind:href="categorylink">
             <div class="card category-card" v-bind:id="'cat-'+num">
             <div class="card-img-bgrnd d-flex justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
@@ -2639,7 +2639,7 @@ $(document).ready(function() {
                 categories: [{
                         name: 'living room',
                         image: '/assets/category/christelle-bourgeois-97314.jpg',
-                        categoryLink: '#',
+                        categoryLink: '/products/livingroom',
                         key: 'LIV',
                         slug: 'livingroom',
                         currentPage: window.location.pathname.split('/')[2] === 'livingroom' ? window.location.pathname.split('/')[2] : 'all'
@@ -2647,7 +2647,7 @@ $(document).ready(function() {
                     {
                         name: 'kitchen',
                         image: '/assets/category/alison-marras-361007.jpg',
-                        categoryLink: '#',
+                        categoryLink: '/products/kitchen',
                         key: 'KIT',
                         slug: 'kitchen',
                         currentPage: window.location.pathname.split('/')[2] === 'kitchen' ? window.location.pathname.split('/')[2] : 'all'
@@ -2655,7 +2655,7 @@ $(document).ready(function() {
                     {
                         name: 'bedroom',
                         image: '/assets/category/krista-mcphee-445060.jpg',
-                        categoryLink: '#',
+                        categoryLink: '/products/bedroom',
                         key: 'BED',
                         slug: 'bedroom',
                         currentPage: window.location.pathname.split('/')[2] === 'bedroom' ? window.location.pathname.split('/')[2] : 'all'
@@ -2663,7 +2663,7 @@ $(document).ready(function() {
                     {
                         name: 'bath',
                         image: '/assets/category/david-cohen-127022.jpg',
-                        categoryLink: '#',
+                        categoryLink: '/products/bath',
                         key: 'BTH',
                         slug: 'bath',
                         currentPage: window.location.pathname.split('/')[2] === 'bath' ? window.location.pathname.split('/')[2] : 'all'
