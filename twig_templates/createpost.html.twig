@@ -1,0 +1,148 @@
+{% if not error %}
+<div class="row blog-vue">
+    <div class="col-xs-12 col-md-7">
+        {% if type == 'create' %}
+
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="post-title">Blog Title *</span>
+                <input type="text" class="form-control post-title-inp" placeholder="Title ..." aria-describedby="post-title" required>
+            </div>
+            <hr>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Category * <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        {% for cat in blog_categories %}
+                            <li @click="selectCategory"><a href="#" data-cat-id="{{cat.cat_id}}">{{cat.cat_name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div><!-- /btn-group -->
+                <input type="text" class="form-control cat-input-box" aria-label="..." disabled value="">
+            </div><!-- /input-group -->
+            <hr>
+            <div class="input-group input-group">
+                <span class="input-group-addon" id="main-post-image">Main Image *</span>
+                <input type="text" class="form-control main-image-inp" placeholder="Link to main blog image ..." aria-describedby="main-post-image" required>
+            </div>
+            <hr>
+            <div class="input-group input-group">
+                <span class="input-group-addon" id="post-brief">Post Brief Intro *</span>
+                <input type="text" class="form-control post-brief-inp" placeholder="Brief Intro ..." aria-describedby="post-brief" required>
+            </div>
+            <hr>
+        {% elseif type == 'update' %}
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="post-title">Blog Title *</span>
+                <input type="text" class="form-control post-title-inp" placeholder="Title ..." aria-describedby="post-title" value="{{post.title}}">
+            </div>
+            <hr>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Category * <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        {% for cat in blog_categories %}
+                            <li @click="selectCategory"><a href="#" data-cat-id="{{cat.cat_id}}">{{cat.cat_name}}</a></li>
+
+                            {% if cat.cat_id == post.cat_id %}
+                                {% set cat_name = cat.cat_name %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div><!-- /btn-group -->
+
+                <input type="text" class="form-control cat-input-box" aria-label="..." disabled value="{{cat_name}}">
+            </div><!-- /input-group -->
+            <hr>
+            <div class="input-group input-group">
+                <span class="input-group-addon" id="main-post-image">Main Image *</span>
+                <input type="text" class="form-control main-image-inp" placeholder="Link to main blog image ..." aria-describedby="main-post-image" value="{{post.main_img_path}}">
+            </div>
+            <hr>
+            <p style="width: 100%"class="text-muted">
+                Maximum 200 characters long:
+                <span id="length-count" style="color: forestgreen">{{(post.brief_desc | split('') ) | length }}</span>
+            </p>
+            <div class="input-group input-group">
+                <span class="input-group-addon" id="post-brief">Post Brief Intro *</span>
+                <input type="text" class="form-control post-brief-inp" placeholder="Brief Intro ..." aria-describedby="post-brief" value="{{post.brief_desc}}" @keyup="countCharacters">
+            </div>
+            <hr>
+        {% endif %}
+
+
+        <h4>Blog Post Content *</h4>
+        <div class="markdown-edit-container md-long">
+
+            {% if type == 'create' %}
+                <textarea name="name" id="createPost"></textarea>
+            {% else %}
+                <textarea name="name" id="editPost"></textarea>
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+    <div class="col-xs-12 col-md-5">
+
+        <div class="list-group lg-save">
+            <div class="list-group-item {% if type == 'update' and post.status == 'published'%} active-published {% else %} active-draft {% endif %}">
+
+                {% if type == 'create' %}
+                    <strong>STATUS:&nbsp;&nbsp;&nbsp;</strong><span id="blog-status">DRAFT</span>
+                {% else %}
+                    <strong>STATUS:&nbsp;&nbsp;&nbsp;</strong><span id="blog-status">{{post.status | upper }}</span>
+                {% endif %}
+
+            </div>
+            <div class="list-group-item text-center">
+                <button type="button" class="btn btn-default" @click="saveDraft" data-post-id="{{post.post_id}}">Save Draft</button>
+            </div>
+            <div class="list-group-item text-center">
+                <button type="button" class="btn btn-default" @click="savePublish" data-post-id="{{post.post_id}}">Save & Publish</button>
+            </div>
+        </div>
+
+        <br>
+
+        <h5>All Available images are listed here. Click copy icon to use in a post</h5>
+        <div class="list-group lg-custom">
+            {% for image in blog_images %}
+                <div class="list-group-item text-center"><span id="path-{{loop.index}}" class="path">{{image.path}}</span> &nbsp; <span class="fa fa-copy" @click="copyPath" data-loop-index="{{loop.index}}" data-image-path="{{image.path}}" data-label-id=".label-image-{{loop.index}}"></span> <span class="label label-success label-image-{{loop.index}}">copied</span></div>
+            {% endfor %}
+        </div>
+
+        <hr>
+
+        <div class="list-group lg-add-cat">
+            <h5>Add Catgegories</h5>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon2">New Category</span>
+                            <input type="text" class="form-control" placeholder="Add category here ..." aria-describedby="sizing-addon2">
+                        </div>
+                    </div>
+                    <div class="col-xs-3 text-center">
+                        <div class="btn-group text-center" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong></strong> <span id="alert-danger-msg">Error retrieving data needed. refresh page or contact your developer for help</span>
+
+        </div>
+    </div>
+{% endif %}
