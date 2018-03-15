@@ -93,7 +93,7 @@ class __TwigTemplate_56e832bf05e6427e6387e2d05649b1602f0097dc2b8f2e12b6311abefb4
                 echo " - ";
                 echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($this->getAttribute($this->getAttribute($context["featured_sku"], "attributes", array()), "color", array()))), "html", null, true);
                 echo " - ";
-                echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($this->getAttribute($this->getAttribute($context["featured_sku"], "attributes", array()), "color", array()))), "html", null, true);
+                echo twig_escape_filter($this->env, call_user_func_array($this->env->getFilter('camel_case')->getCallable(), array($this->getAttribute($this->getAttribute($context["featured_sku"], "attributes", array()), "size", array()))), "html", null, true);
                 echo "</a></h6>
                         <p class=\"product-price-p\"><strong>£";
                 // line 13
@@ -159,7 +159,7 @@ class __TwigTemplate_56e832bf05e6427e6387e2d05649b1602f0097dc2b8f2e12b6311abefb4
                         <img class=\"card-img-top\" src=\"{{ featured_sku.image }}\" alt=\"{{featured.caption}}\">
                     </div>
                     <div class=\"card-body\">
-                        <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{featured_sku.attributes.category}}/{{featured_sku.attributes.type}}/{{featured.metadata.slug}}-{{featured_sku.attributes.color}}-{{featured_sku.attributes.size}}/{{featured_sku.product}}/{{featured_sku.id}}\">{{featured.name}} - {{featured_sku.attributes.color | camel_case()}} - {{ featured_sku.attributes.color | camel_case() }}</a></h6>
+                        <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{featured_sku.attributes.category}}/{{featured_sku.attributes.type}}/{{featured.metadata.slug}}-{{featured_sku.attributes.color}}-{{featured_sku.attributes.size}}/{{featured_sku.product}}/{{featured_sku.id}}\">{{featured.name}} - {{featured_sku.attributes.color | camel_case()}} - {{ featured_sku.attributes.size | camel_case() }}</a></h6>
                         <p class=\"product-price-p\"><strong>£{{(featured_sku.price / 100) | number_format(2) }} </strong></p>
                     </div>
 
@@ -168,6 +168,6 @@ class __TwigTemplate_56e832bf05e6427e6387e2d05649b1602f0097dc2b8f2e12b6311abefb4
         </div>
     {% endfor %}
 {% endfor %}
-", "featured.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/featured.html.twig");
+", "featured.html.twig", "/Users/jasonreid/Sites/idyldev/twig_templates/featured.html.twig");
     }
 }

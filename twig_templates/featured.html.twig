@@ -9,7 +9,7 @@
                         <img class="card-img-top" src="{{ featured_sku.image }}" alt="{{featured.caption}}">
                     </div>
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2"><a href="/product/{{featured_sku.attributes.category}}/{{featured_sku.attributes.type}}/{{featured.metadata.slug}}-{{featured_sku.attributes.color}}-{{featured_sku.attributes.size}}/{{featured_sku.product}}/{{featured_sku.id}}">{{featured.name}} - {{featured_sku.attributes.color | camel_case()}} - {{ featured_sku.attributes.color | camel_case() }}</a></h6>
+                        <h6 class="card-subtitle mb-2"><a href="/product/{{featured_sku.attributes.category}}/{{featured_sku.attributes.type}}/{{featured.metadata.slug}}-{{featured_sku.attributes.color}}-{{featured_sku.attributes.size}}/{{featured_sku.product}}/{{featured_sku.id}}">{{featured.name}} - {{featured_sku.attributes.color | camel_case()}} - {{ featured_sku.attributes.size | camel_case() }}</a></h6>
                         <p class="product-price-p"><strong>£{{(featured_sku.price / 100) | number_format(2) }} </strong></p>
                     </div>
 
