@@ -3561,7 +3561,7 @@ $(document).ready(function() {
                     let content = new getPageContent(type, table, field, id),
                         element = ['.story-content'];
 
-                    content.markdown(element);
+                    content.markdown(element, 'page_markdown');
 
                 },
                 toggleFilter: function(e) {
@@ -4224,7 +4224,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#ship-content1', '#ship-content2', '#ship-content3', '#ship-content4', '#ship-content5'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
@@ -4237,7 +4237,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#return-content1', '#return-content2', '#return-content3', '#return-content4'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
@@ -4250,7 +4250,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#payment-content1', '#payment-content2', '#payment-content3', '#payment-content4'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
@@ -4263,7 +4263,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#order-content1', '#order-content2', '#order-content3', '#order-content4'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
@@ -4276,7 +4276,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#termscondition-content'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
@@ -4289,7 +4289,7 @@ $(document).ready(function() {
         let content = new getPageContent(type, table, field, id),
             element = ['#privacypol-content'];
 
-        content.markdown(element);
+        content.markdown(element, 'page_markdown');
 
     }
 
