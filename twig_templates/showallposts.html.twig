@@ -1,0 +1,111 @@
+{% if not error %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#all-posts" aria-controls="all-posts" role="tab" data-toggle="tab">All Posts</a></li>
+                    <li role="presentation"><a href="#drafts" aria-controls="drafts" role="tab" data-toggle="tab">Drafts</a></li>
+                    <li role="presentation"><a href="#published" aria-controls="published" role="tab" data-toggle="tab">Published</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="all-posts">
+                        <br>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover">
+                              <thead>
+                                  <td>Post ID</td>
+                                  <td>Title</td>
+                                  <td>Created</td>
+                                  <td>Modified</td>
+                                  <td>Published</td>
+                                  <td><span></span> </td>
+                              </thead>
+
+                              {% for post in blogposts.all %}
+                                  <tr>
+                                      <td>{{post.post_id}}</td>
+                                      <td>{{post.title}}</td>
+                                      <td>{{post.date_created}}</td>
+                                      <td>{{post.date_modified}}</td>
+                                      <td>{{post.date_published}}</td>
+                                      <td class="text-center">
+                                          <a href="/backend/auth/admin/edit/blogpost/{{post.post_id}}" class="btn btn-primary">Edit Post</a>
+                                      </td>
+                                  </tr>
+                              {% endfor %}
+
+                          </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="drafts">
+                        <br>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover">
+                              <thead>
+                                  <td>Post ID</td>
+                                  <td>Title</td>
+                                  <td>Created</td>
+                                  <td>Modified</td>
+                                  <td>Published</td>
+                                  <td><span></span> </td>
+                              </thead>
+
+                              {% for post in blogposts.drafts %}
+                                  <tr>
+                                      <td>{{post.post_id}}</td>
+                                      <td>{{post.title}}</td>
+                                      <td>{{post.date_created}}</td>
+                                      <td>{{post.date_modified}}</td>
+                                      <td>{{post.date_published}}</td>
+                                      <td class="text-center">
+                                          <a href="/backend/auth/admin/edit/blogpost/{{post.post_id}}" class="btn btn-primary">Edit Post</a>
+                                      </td>
+                                  </tr>
+                              {% endfor %}
+
+                          </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="published">
+                        <br>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-hover">
+                              <thead>
+                                  <td>Post ID</td>
+                                  <td>Title</td>
+                                  <td>Created</td>
+                                  <td>Modified</td>
+                                  <td>Published</td>
+                                  <td><span></span> </td>
+                              </thead>
+
+                              {% for post in blogposts.published %}
+                                  <tr>
+                                      <td>{{post.post_id}}</td>
+                                      <td>{{post.title}}</td>
+                                      <td>{{post.date_created}}</td>
+                                      <td>{{post.date_modified}}</td>
+                                      <td>{{post.date_published}}</td>
+                                      <td class="text-center">
+                                          <a href="/backend/auth/admin/edit/blogpost/{{post.post_id}}" class="btn btn-primary">Edit Post</a>
+                                      </td>
+                                  </tr>
+                              {% endfor %}
+
+                          </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    <div class="">
+        <h3>ERROR</h3>
+    </div>
+{% endif %}
