@@ -215,17 +215,22 @@ class getPageContent {
 
 $(document).ready(function(){
     console.log('connected but separate from main.js');
+    console.log(window.location.pathname);
 
-    var _originalSize = $(window).width() + $(window).height()
-      $(window).resize(function(){
-        if($(window).width() + $(window).height() != _originalSize){
-          console.log("keyboard show up");
-          $('footer').css("visibility", "hidden");
-        }else{
-          console.log("keyboard closed");
-           $('footer').css("visibility", "visible");
-        }
-      });
+    var _originalSize = $(window).width() + $(window).height();
+
+    if (window.location.pathname === '/login') {
+        $(window).resize(function(){
+          if($(window).width() + $(window).height() != _originalSize){
+            console.log("keyboard show up");
+            $('footer').css("visibility", "hidden");
+          }else{
+            console.log("keyboard closed");
+             $('footer').css("visibility", "visible");
+          }
+        });
+    }
+
 
     // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     //
