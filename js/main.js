@@ -367,6 +367,10 @@ $(document).ready(function() {
                 {
                     address: '/our-story',
                     title: 'our story'
+                },
+                {
+                    address: '/blog',
+                    title: 'blog'
                 }
             ],
             loggedInStatus: false,
