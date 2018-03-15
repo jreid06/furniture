@@ -40,7 +40,7 @@
                     <div class="content-controls">
                         <button class="btn btn-primary control-content" name="button" data-action="save" data-instance="privacypolContent">Save</button>
 
-                        <button class="btn btn-info control-content" name="button" data-action="publish">Save & publish</button>
+                        <!-- <button class="btn btn-info control-content" name="button" data-action="publish">Save & publish</button> -->
 
                     </div>
 

@@ -63,7 +63,7 @@
                     <div class="content-controls">
                         <button class="btn btn-primary control-content-multi" name="button" data-action="save">Save</button>
 
-                        <button class="btn btn-info control-content-multi" name="button" data-action="publish">Save & publish</button>
+                        <!-- <button class="btn btn-info control-content-multi" name="button" data-action="publish">Save & publish</button> -->
 
                     </div>
 
