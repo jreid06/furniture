@@ -1,8 +1,37 @@
 <div class="row">
-    <hr>
-    <h3>View All blog images</h3>
     <!-- place in twig template to render all current added images -->
+    <!-- RENDER A TABLE LISTING ALL images in blog_images database -->
     <div class="col-xs-12">
-        <p>{{data}}</p>
+        <!-- <pre>
+            {{dump(blog_images)}}
+        </pre> -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+              <thead>
+                  <td>Image</td>
+                  <td>ID</td>
+                  <td>Name</td>
+                  <td>Controls</td>
+              </thead>
+
+              {% for image in blog_images %}
+                  <tr>
+                      <td>{{image.path}}</td>
+                      <td>{{image.custom_img_id}}</td>
+                      <td>{{image.image_name}}</td>
+                      <td class="blog-image-ctrls">
+                          <div @click="viewImage" data-image-path="{{image.path}}" data-image-name="{{image.image_name}}">
+                              <span class="fa fa-info" data-image-path="{{image.path}}" data-image-name="{{image.image_name}}"@click="viewImage"></span>
+                          </div>
+                          <div @click="deleteImage" data-image-path="{{image.path}}" data-image-name="{{image.image_name}}" data-img-id="{{image.custom_img_id}}">
+                              <span class="fa fa-trash-o" @click="deleteImage" data-image-path="{{image.path}}" data-image-name="{{image.image_name}}" data-img-id="{{image.custom_img_id}}"></span>
+                          </div>
+                      </td>
+                  </tr>
+              {% endfor %}
+
+          </table>
+        </div>
+
     </div>
 </div>
