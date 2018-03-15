@@ -14,7 +14,7 @@
             include ROOT_PATH.'templates/nav.php';
         }else {
             # redirect user to main blog page showing all blog posts
-            header('location: /blog/all');
+            header('location: /blog');
         }
     }
 
