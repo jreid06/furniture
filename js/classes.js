@@ -4,6 +4,22 @@
 }());
 
 
+class BlogPost {
+    constructor(cat_id, main_img, post_title, post_brief, post_body, post_status, date_created, date_modified, date_published) {
+        this.cat_id = cat_id;
+        this.main_img = main_img;
+        this.post_title = post_title;
+        this.post_brief = post_brief;
+        this.post_body = post_body;
+        this.post_status = post_status;
+        this.date_created = date_created;
+        this.date_modified = date_modified;
+        this.date_published = date_published;
+    }
+
+}
+
+
 
 class BasketItem {
     constructor(product_id, stripesku_id, prod_name, prod_size, prod_color, name_slug, prod_desc, price, prod_image, quantity, category, prod_type) {
