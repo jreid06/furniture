@@ -1,0 +1,33 @@
+<!-- <pre>
+    {{posts[0]['date']['month'] | round }}
+    {{dump(posts[0]['date'])}}
+</pre> -->
+
+{% if not error %}
+
+    {% for post in posts %}
+
+        <div class="post-col col-12 col-sm-6 col-lg-4 {% if loop.index > 2 %}d-none d-lg-block{% endif %}">
+            <div class="card blog-post-card" data-post-id="{{post.post_id}}">
+            <div class="card-img-bgrnd" style="background: url({{post.main_img_path}})"></div>
+              <div class="card-body">
+                 {% set month_num = (post.date.month | round) - 1 %}
+                <h4 class="card-title">{{post.title | capitalize}}</h4>
+                <p class="card-text">{{post.brief_desc | capitalize}}</p>
+                <p class="card-text blog-date">{{months[month_num] | capitalize }}  {{post.date.full}} - {{post.date.time}}</p>
+                <a href="/blog/{{months[month_num]}}/{{post.post_id}}">
+                    READ MORE >
+                </a>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% else %}
+
+    <div class="col-12">
+        <h3 class="text-center">ERROR RETRIEVING BLOG POSTS. REFRESH PAGE</h3>
+    </div>
+
+{% endif %}
