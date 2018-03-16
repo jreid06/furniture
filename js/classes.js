@@ -13,19 +13,19 @@ class Brand {
 }
 
 class Brand_details {
-    constructor(brand_name, brand_slug) {
+    constructor(brand_name) {
         this.brand_name = brand_name;
-        this.brand_slug = brand_slug;
+        this.brand_slug = '';
     }
 
     createSlug(){
-        let splitToLower = this.name.split(' ');
+        let splitToLower = this.brand_name.split(' ');
 
         for (let i = 0; i < splitToLower.length; i++) {
             splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
         }
-        this.slug = splitToLower.join('-');
-        return this.slug;
+        this.brand_slug = splitToLower.join('-');
+        return this.brand_slug;
     }
 }
 
