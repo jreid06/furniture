@@ -45,6 +45,13 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
             <span class=\"input-group-addon\" id=\"brand-names\">Add brand name</span>
             <input type=\"text\" class=\"form-control brand-names-inp\" placeholder=\"Please enter brand name (e.g brand1, brand2, brand3 etc ..)\" aria-describedby=\"brand-names\">
         </div>
+        <br>
+        <!-- error alert for invalid name entered -->
+        <div class=\"alert alert-danger alert-dismissible alert-name-error\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-name-error-msg\"></span>
+
+        </div>
 
     </div>
 
@@ -113,6 +120,13 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
         <div class=\"input-group input-group-lg\">
             <span class=\"input-group-addon\" id=\"brand-names\">Add brand name</span>
             <input type=\"text\" class=\"form-control brand-names-inp\" placeholder=\"Please enter brand name (e.g brand1, brand2, brand3 etc ..)\" aria-describedby=\"brand-names\">
+        </div>
+        <br>
+        <!-- error alert for invalid name entered -->
+        <div class=\"alert alert-danger alert-dismissible alert-name-error\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-name-error-msg\"></span>
+
         </div>
 
     </div>
