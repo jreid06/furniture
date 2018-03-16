@@ -25,6 +25,20 @@ $(document).ready(function() {
                         sublinks: false
                     },
                     {
+                        title: 'Brands',
+                        sublinks: true,
+                        sublinks_list:[
+                            {
+                                title: 'Add Brands',
+                                link: "/backend/auth/admin/edit/brands/add"
+                            },
+                            {
+                                title: 'View/Delete blog brands',
+                                link: "/backend/auth/admin/edit/brands/edit"
+                            }
+                        ]
+                    },
+                    {
                         title: 'Blog Images',
                         sublinks: true,
                         sublinks_list:[
