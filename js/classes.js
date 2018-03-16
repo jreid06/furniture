@@ -4,6 +4,32 @@
 }());
 
 
+class Brand {
+    constructor(brand_id, brand_letter) {
+        this.brand_id = brand_id;
+        this.brand_letter = brand_letter;
+        this.brand_array = [];
+    }
+}
+
+class Brand_details {
+    constructor(brand_name, brand_slug) {
+        this.brand_name = brand_name;
+        this.brand_slug = brand_slug;
+    }
+
+    createSlug(){
+        let splitToLower = this.name.split(' ');
+
+        for (let i = 0; i < splitToLower.length; i++) {
+            splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+        }
+        this.slug = splitToLower.join('-');
+        return this.slug;
+    }
+}
+
+
 class BlogPost {
     constructor(cat_id, main_img, post_title, post_brief, post_body, post_status, date_created, date_modified, date_published) {
         this.cat_id = cat_id;
