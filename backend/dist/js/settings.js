@@ -249,6 +249,9 @@ $(document).ready(function() {
                         ]
                     }
                 ]
+            },
+            addBrands:{
+                status: false
             }
         },
         watch: {
@@ -272,6 +275,41 @@ $(document).ready(function() {
 
         },
         methods: {
+            checkLength: function(e){
+                let field = $(e.target)[0],
+                    textLength = $(e.target)[0].value.length,
+                    $vm = this;
+
+                if (textLength > 1 || textLength < 1) {
+                    $('.alert-field-limit').fadeIn();
+                    $vm.addBrands.status = false;
+                }
+
+                if (textLength === 1) {
+                    $('.alert-field-limit').fadeOut();
+                    $vm.addBrands.status = true;
+                }
+            },
+            saveBrandInfo: function(e){
+                let brandLetter = $('.brand-initial-inp')[0].value,
+                    brandNames = $('.brand-names-inp')[0].value,
+                    $vm = this;
+
+                if ($vm.addBrands.status && brandNames.length > 1) {
+                    console.log('process values');
+
+                    // process brandNames
+                    let b_names = brandNames.split(','),
+                        lettercharCode = (brandLetter.toLowerCase().charCodeAt(0))-96;
+
+                    console.log(b_names);
+                    console.log(lettercharCode);
+
+                }else {
+                    $.notify('Cant add brands as fields are filled in incorrectly', 'error');
+                }
+
+            },
             triggerDelete: function(e){
                 let button = $(e.target)[0],
                     val = $(button).attr('data-action'),
