@@ -46,6 +46,8 @@
         $user_addresses = json_decode($user_addresses, true);
 
         $user_basket_info = DatabaseFunctions::getData('products', 'basket', 'customer_id', $user_details['cus_id'])[1];
+
+        // var_dump($user_basket_info);
         $user_basket_info = json_decode( $user_basket_info['products'], true);
 
         // create session with basket info
@@ -185,6 +187,7 @@
                                     </div>
                                 </div>
                             </template>
+                            <a class="btn btn-primary checkout-edit-btn" href="/basket">Edit Basket</a>
                         </div>
                     </div>
 
@@ -417,7 +420,6 @@
 
                     <div class="row" id="basket">
                         <div class="col-12" style="text-align: center">
-                            <a class="btn btn-primary checkout-edit-btn" href="/basket">Edit Basket</a>
                             <div class="table-responsive">
                               <table class="table loggedin-checkout-table">
                                  <tbody>
