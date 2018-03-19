@@ -4,7 +4,7 @@
     </div>
     <h1 class="text-center heading">{{post.title | capitalize}}</h1>
     {% set month_num = (post.date.month | round) - 1 %}
-    <h5 class="text-center brief">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
+    <h5 class="text-center date">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
 </div>
 <div class="container home blog-post-body">
     <div class="row">
