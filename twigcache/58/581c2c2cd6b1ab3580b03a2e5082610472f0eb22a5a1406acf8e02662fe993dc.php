@@ -22,19 +22,19 @@ class __TwigTemplate_46c56ea30c7e3482fc66d252a0d01bee630c021418c852716a3c090aa42
     <div class=\"overlay\">
 
     </div>
-    <h2 class=\"text-center heading\">";
+    <h1 class=\"text-center heading\">";
         // line 5
         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute(($context["post"] ?? null), "title", array())), "html", null, true);
-        echo "</h2>
+        echo "</h1>
     ";
         // line 6
         $context["month_num"] = (twig_round($this->getAttribute($this->getAttribute(($context["post"] ?? null), "date", array()), "month", array())) - 1);
         // line 7
-        echo "    <h4 class=\"text-center brief\">";
+        echo "    <h5 class=\"text-center brief\">";
         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute(($context["months"] ?? null), ($context["month_num"] ?? null), array(), "array")), "html", null, true);
         echo "  ";
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["post"] ?? null), "date", array()), "full", array()), "html", null, true);
-        echo "</h4>
+        echo "</h5>
 </div>
 <div class=\"container home blog-post-body\">
     <div class=\"row\">
@@ -89,9 +89,9 @@ class __TwigTemplate_46c56ea30c7e3482fc66d252a0d01bee630c021418c852716a3c090aa42
     <div class=\"overlay\">
 
     </div>
-    <h2 class=\"text-center heading\">{{post.title | capitalize}}</h2>
+    <h1 class=\"text-center heading\">{{post.title | capitalize}}</h1>
     {% set month_num = (post.date.month | round) - 1 %}
-    <h4 class=\"text-center brief\">{{months[month_num] | capitalize }}  {{post.date.full}}</h4>
+    <h5 class=\"text-center brief\">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
 </div>
 <div class=\"container home blog-post-body\">
     <div class=\"row\">

@@ -2,9 +2,9 @@
     <div class="overlay">
 
     </div>
-    <h2 class="text-center heading">{{post.title | capitalize}}</h2>
+    <h1 class="text-center heading">{{post.title | capitalize}}</h1>
     {% set month_num = (post.date.month | round) - 1 %}
-    <h4 class="text-center brief">{{months[month_num] | capitalize }}  {{post.date.full}}</h4>
+    <h5 class="text-center brief">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
 </div>
 <div class="container home blog-post-body">
     <div class="row">

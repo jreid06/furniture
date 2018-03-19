@@ -21,6 +21,21 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
         <h1 class=\"page-header\">Add brands</h1>
     </div>
     <!-- /.col-lg-12 -->
+    <div class=\"col-xs-12\">
+        <!-- success alert for updates or successful brand category addition -->
+        <div class=\"alert alert-success alert-dismissible alert-brand-add-success\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-brand-success-msg\"></span>
+
+        </div>
+
+        <!-- error alert for to many characters -->
+        <div class=\"alert alert-danger alert-dismissible alert-brand-add-error\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-brand-add-error-msg\"></span>
+
+        </div>
+    </div>
 
     <div class=\"col-xs-12 col-md-8\">
         <!-- brand initial -->
@@ -32,7 +47,7 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
         <!-- error alert for to many characters -->
         <div class=\"alert alert-danger alert-dismissible alert-field-limit\" style=\"display: none;\"role=\"alert\">
           <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
-          <strong></strong> <span id=\"alert-limit-msg\">Too many or enough characters. Only One letter is allowed in this field e.g 'A'</span>
+          <strong></strong> <span id=\"alert-limit-msg\"></span>
 
         </div>
 
@@ -97,6 +112,21 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
         <h1 class=\"page-header\">Add brands</h1>
     </div>
     <!-- /.col-lg-12 -->
+    <div class=\"col-xs-12\">
+        <!-- success alert for updates or successful brand category addition -->
+        <div class=\"alert alert-success alert-dismissible alert-brand-add-success\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-brand-success-msg\"></span>
+
+        </div>
+
+        <!-- error alert for to many characters -->
+        <div class=\"alert alert-danger alert-dismissible alert-brand-add-error\" style=\"display: none;\"role=\"alert\">
+          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+          <strong></strong> <span id=\"alert-brand-add-error-msg\"></span>
+
+        </div>
+    </div>
 
     <div class=\"col-xs-12 col-md-8\">
         <!-- brand initial -->
@@ -108,7 +138,7 @@ class __TwigTemplate_3e1b021298a9b2aa44a7244fa6f015a2d7c235ae0b6c7fd41b7e4606e55
         <!-- error alert for to many characters -->
         <div class=\"alert alert-danger alert-dismissible alert-field-limit\" style=\"display: none;\"role=\"alert\">
           <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
-          <strong></strong> <span id=\"alert-limit-msg\">Too many or enough characters. Only One letter is allowed in this field e.g 'A'</span>
+          <strong></strong> <span id=\"alert-limit-msg\"></span>
 
         </div>
 
