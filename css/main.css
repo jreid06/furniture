@@ -110,6 +110,7 @@
 
 .fa-close {
   cursor: pointer;
+  -webkit-transition: all .3s;
   transition: all .3s; }
   .fa-close:hover {
     color: #9f0000; }
@@ -148,29 +149,36 @@
     border: 2px solid #f2f2f2; }
 
 .btn-info {
-  background-color: #384E5B;
+  background-color: #222;
   border: 2px solid #f2f2f2; }
   .btn-info:hover {
     cursor: pointer;
     background-color: #fff;
-    color: #384E5B;
-    border: 2px solid #384E5B; }
+    color: #222;
+    border: 2px solid #222; }
     .btn-info:hover a {
-      color: #384E5B; }
+      color: #222; }
   .btn-info a {
     color: #fff; }
     .btn-info a:hover {
-      color: #384E5B; }
+      color: #222; }
 
 #products-row .loader-screen {
   width: 100%;
+  -webkit-transition: all .7s;
   transition: all .7s;
   height: 30%;
   position: absolute;
   z-index: 0;
   visibility: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center; }
   @media only screen and (min-width: 992px) {
     #products-row .loader-screen {
@@ -1028,6 +1036,11 @@ body, html {
   min-width: 320px;
   background-color: #fff; }
 
+.section-heading {
+  font-size: 1.6em;
+  font-weight: bold;
+  letter-spacing: 1px; }
+
 .loader-generic {
   position: absolute;
   left: 0;
@@ -1195,7 +1208,11 @@ footer {
   border-bottom: 2px solid; }
 
 #searchInput {
-  margin-bottom: 0px !important; }
+  margin-bottom: 0px !important;
+  border: 0px;
+  background-color: #222;
+  -webkit-box-shadow: 0px 0px 0px !important;
+  box-shadow: 0px 0px 0px !important; }
 
 .dropdown-user-account {
   width: 85px;
@@ -1226,9 +1243,9 @@ footer {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-pack: end;
-      -ms-flex-pack: end;
-      justify-content: end; }
+      -webkit-box-pack: flex-end;
+      -ms-flex-pack: flex-end;
+      justify-content: flex-end; }
 
 .loggedin-btns .lg-box {
   width: 50% !important; }
@@ -1588,6 +1605,7 @@ nav {
     width: 100%;
     border: 1px solid #d2d2d2;
     background-color: #c8c8c8;
+    font-weight: bold;
     padding: 25px 0 25px 0;
     text-transform: uppercase; }
     .mobile-collection-links .btn-menu-link:nth-child(1n+2) {
@@ -1810,6 +1828,10 @@ nav {
     font-weight: bold;
     text-align: center;
     padding: 10px; }
+  .checkout-info .btn {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase; }
 
 .basket-closed {
   -webkit-transform: translate(103%, 0%);
@@ -1942,8 +1964,15 @@ nav {
         width: 100%; } }
     @media only screen and (min-width: 1200px) {
       .category-card .card-img-bgrnd {
-        height: 230px;
+        height: 270px;
         width: 100%; } }
+  .category-card .card-text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold; }
+    @media only screen and (min-width: 992px) {
+      .category-card .card-text {
+        font-size: 1.3em; } }
 
 .blog-date {
   margin-top: 10px;
@@ -1954,7 +1983,7 @@ nav {
 
 .custom-separate {
   margin: 30px auto;
-  width: 80%;
+  width: 100%;
   height: 2px;
   background-color: #f2f2f2;
   border: 1px solid #e5e5e5; }
@@ -1978,7 +2007,9 @@ nav {
       font-size: 12px;
       font-weight: 300; }
     .featured-prod-card .card-body a {
-      color: #222; }
+      color: #222;
+      font-size: 1.2em;
+      font-weight: bold; }
 
 .blog-post-card {
   width: 100%;
@@ -1992,6 +2023,9 @@ nav {
     @media only screen and (min-width: 768px) {
       .blog-post-card .card-img-bgrnd {
         height: 520px; } }
+  .blog-post-card .card-title {
+    font-size: 1.3em;
+    font-weight: bold; }
   .blog-post-card .card-body {
     padding: 10px 0 10px 0; }
   .blog-post-card .post-details {
@@ -2273,12 +2307,16 @@ nav {
     color: #f2f2f2;
     position: relative;
     z-index: 10;
+    font-size: 4em;
+    padding-bottom: 5px;
     -webkit-transform: translate(0, 40px);
     transform: translate(0, 40px); }
-  .blog-main-image .brief {
+  .blog-main-image .date {
     position: relative;
     z-index: 10;
     color: #f2f2f2;
+    font-size: 0.9em;
+    font-weight: 400;
     -webkit-transform: translate(0, 50px);
     transform: translate(0, 50px); }
   @media only screen and (min-width: 768px) {
@@ -2286,7 +2324,7 @@ nav {
       height: 350px; } }
   @media only screen and (min-width: 992px) {
     .blog-main-image {
-      height: 400px; } }
+      height: 450px; } }
 
 .blog-post-body {
   top: 0 !important; }
