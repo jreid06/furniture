@@ -17,6 +17,12 @@ body, html{
 	background-color: #fff;
 }
 
+.section-heading{
+	font-size: 1.6em;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
 .loader-generic{
 	position: absolute;
 	left: 0;
@@ -272,6 +278,10 @@ footer{
 
 #searchInput{
 	margin-bottom: 0px !important;
+	border: 0px;
+	background-color: #222;
+	-webkit-box-shadow: 0px 0px 0px !important;
+	        box-shadow: 0px 0px 0px !important;
 }
 
 .dropdown-user-account{
@@ -325,9 +335,9 @@ footer{
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
-			-webkit-box-pack: end;
-			    -ms-flex-pack: end;
-			        justify-content: end;
+			-webkit-box-pack: flex-end;
+			    -ms-flex-pack: flex-end;
+			        justify-content:flex-end;
 		}
 
 	}
@@ -866,6 +876,7 @@ nav{
 		width: 100%;
 		border: 1px solid #d2d2d2;
 		background-color: darken(#d2d2d2, 4%);
+		font-weight: bold;
 		// background-color: red;
 
 		padding: 25px 0 25px 0;
@@ -1238,6 +1249,12 @@ nav{
 		padding: 10px;
 
 	}
+
+	.btn{
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+	}
 }
 
 .basket-closed{
@@ -1428,8 +1445,18 @@ nav{
 		};
 
 		@include respond-to($xl-break){
-			height: 230px;
+			height: 270px;
 			width: 100%;
+		};
+	}
+
+	.card-text{
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: bold;
+
+		@include respond-to($lg-break){
+			font-size: 1.3em;
 		};
 	}
 
@@ -1446,7 +1473,7 @@ nav{
 
 .custom-separate{
 	margin: 30px auto;
-	width: 80%;
+	width: 100%;
 	height: 2px;
 	background-color: #f2f2f2;
 	border: 1px solid darken(#f2f2f2, 5%);
@@ -1479,6 +1506,8 @@ nav{
 
 		a{
 			color: #222;
+			font-size: 1.2em;
+			font-weight: bold;
 		}
 	}
 }
@@ -1497,6 +1526,11 @@ nav{
 		@include respond-to($md-break){
 			height: 520px;
 		};
+	}
+
+	.card-title{
+		font-size: 1.3em;
+		font-weight: bold;
 	}
 
 	.card-body{
@@ -1919,15 +1953,8 @@ nav{
 
 	.card-title{
 		font-size: 1em;
-		// overflow:
 	}
 }
-
-
-.image-container{
-	// border: 1px solid red;
-}
-
 
 
 .blog-main-image{
@@ -1955,15 +1982,19 @@ nav{
 		color: #f2f2f2;
 		position: relative;
 		z-index: 10;
+		font-size: 4em;
+		padding-bottom: 5px;
 		-webkit-transform: translate(0, 40px);
 		        transform: translate(0, 40px);
 
 	}
 
-	.brief{
+	.date{
 	    position: relative;
 	    z-index: 10;
 	    color: #f2f2f2;
+		font-size: 0.9em;
+		font-weight: 400;
 	    -webkit-transform: translate(0, 50px);
 	            transform: translate(0, 50px);
 	}
@@ -1974,7 +2005,7 @@ nav{
 	};
 
 	@include respond-to($lg-break){
-		height: 400px;
+		height: 450px;
 		// margin-top: 118px;
 	};
 
