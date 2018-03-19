@@ -41,10 +41,42 @@
                         ));
 
                     }elseif($type === 'edit') {
+                        // get all brand categories
+                        $brand_data = DatabaseFunctions::getData('*', 'brands', false, false, true);
+
+                        // var_dump($brand_data[1]);
+                        $brand_parsed_data = array();
+
+                        foreach ($brand_data[1][0] as $key => $value) {
+                            if(explode('_',$key)[0] === 'ALPH'){
+
+                                if (json_decode( $value, true )) {
+                                    array_push($brand_parsed_data, json_decode( $value, true ));
+                                }
+
+                            }
+                        }
+
+                        // check if alert sessions are set
+                        $alert_success = isset($_SESSION['brand_edit_success'])?$_SESSION['brand_edit_success']:false;
+                        $alert_error = isset($_SESSION['brand_edit_error'])?$_SESSION['brand_edit_error']:false;
+
                         $template = $twig->load('editbrands.html.twig');
                         echo $template->render(array(
-
+                            'brands'=>$brand_parsed_data,
+                            'session'=>array(
+                                'success'=>$alert_success,
+                                'error'=>$alert_error
+                            )
                         ));
+
+                        if ($alert_success) {
+                            unset($_SESSION['brand_edit_success']);
+                        }
+
+                        if ($alert_error) {
+                            unset($_SESSION['brand_edit_error']);
+                        }
                     }
               ?>
 
