@@ -8,19 +8,6 @@
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
-    // Connect::checkConnection();
-    // var_dump($_SESSION);
-    //
-    // echo "<br>";
-    // echo "<br>";
-    // echo "<br>";
-    // echo "<br>";
-    //
-    // echo $session_not_set."<br>";
-    // echo $cookie_not_set."<br>";
-
-    // $slide_data = DatabaseFunctions::getData('slides_json', 'homeslides', 'table_name', 'slides');
-
 ?>
 <div class="loader-screen loader-generic">
     <div class="spinner">
@@ -60,16 +47,6 @@
                     v-bind:num="index">
                 </category>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-12 button-box d-flex justify-content-center align-items-center">
-                    <a href="/products" class="btn btn-primary">
-                        SHOP NOW
-                    </a>
-                    <hr>
-                </div>
-            </div> -->
-            <!--  -->
 
             <div class="row">
                 <div class="custom-separate"></div>
