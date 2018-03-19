@@ -473,3 +473,32 @@ body {
 	}
 
 }
+
+.brand-columns{
+	// border: 1px solid red;
+	height: 300px;
+	overflow-y: scroll;
+
+}
+
+.brand-list{
+	position: relative;
+	&:hover{
+		background-color: #e5e5e5;
+	}
+}
+
+.brand-controls{
+	position: absolute;
+	right: 5%;
+	top: 10px;
+
+	span{
+		padding: 0 10px 0 10px;
+		font-size: 1.2em;
+		&:hover{
+			cursor: pointer;
+		}
+	}
+	// float: right;
+}

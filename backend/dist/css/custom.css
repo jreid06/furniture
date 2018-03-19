@@ -298,4 +298,23 @@ body {
     background-color: #134e13;
     color: #f2f2f2; }
 
+.brand-columns {
+  height: 300px;
+  overflow-y: scroll; }
+
+.brand-list {
+  position: relative; }
+  .brand-list:hover {
+    background-color: #e5e5e5; }
+
+.brand-controls {
+  position: absolute;
+  right: 5%;
+  top: 10px; }
+  .brand-controls span {
+    padding: 0 10px 0 10px;
+    font-size: 1.2em; }
+    .brand-controls span:hover {
+      cursor: pointer; }
+
 /*# sourceMappingURL=custom.css.map */
