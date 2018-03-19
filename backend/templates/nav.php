@@ -59,7 +59,7 @@
                         <template v-for="(nav,index) in navigation.pages">
                             <li class="nav-list-li">
                                 <template v-if="nav.sublinks">
-                                    <a :href="nav.link">{{nav.title}}</a>
+                                    <a :href="nav.link" style="background-color: darkgray; font-weight: bold; color: #222">{{nav.title}}</a>
                                     <ul class="nav nav-third-level">
                                         <li class="nav-list-li" v-for="(sublink, index) in nav.sublinks_list">
                                             <a :href="sublink.link">{{sublink.title}}</a>
@@ -75,7 +75,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -85,8 +85,8 @@
                             <a href="/backend/pages/login.html">Login Page</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
-                </li>
+                    /.nav-second-level
+                </li> -->
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
