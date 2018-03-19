@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="custom-separate"></div>
                 <div class="col-12">
-                    <h5 class="text-center">FEATURED PRODUCTS</h5>
+                    <h5 class="text-center section-heading">FEATURED PRODUCTS</h5>
                     <br>
                 </div>
 
@@ -95,7 +95,7 @@
             <div class="row" id="stories-blog">
                 <div class="custom-separate"></div>
                 <div class="col-12">
-                    <h5 class="text-center">STORIES</h5>
+                    <h5 class="text-center section-heading">STORIES</h5>
                     <br>
                 </div>
 
