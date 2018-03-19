@@ -201,6 +201,7 @@ $barrio: "font-family: 'Barrio', cursive";
 
 .fa-close{
 	cursor: pointer;
+	-webkit-transition: all .3s;
 	transition: all .3s;
 	&:hover{
 		color: lighten(darkred, 4%);
@@ -267,22 +268,22 @@ $freshblue: #8CA1A4;
 }
 
 .btn-info{
-	background-color: #384E5B;
+	background-color: #222;
 	border: 2px solid #f2f2f2;
 	&:hover{
         cursor: pointer;
 		background-color: #fff;
-		color: #384E5B;
-		border: 2px solid #384E5B;
+		color: #222;
+		border: 2px solid #222;
         a{
-            color: #384E5B;
+            color: #222;
         }
 	}
 
     a{
         color: #fff;
     	&:hover{
-    		color: #384E5B;
+    		color: #222;
     	}
     }
 }
@@ -290,14 +291,21 @@ $freshblue: #8CA1A4;
 	.loader-screen{
 		width: 100%;
 		// border: 1px solid gold;
+		-webkit-transition: all .7s;
 		transition: all .7s;
 		height: 30%;
 		position: absolute;
 		z-index: 0;
 		visibility: hidden;
+		display: -webkit-box;
+		display: -ms-flexbox;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		-webkit-box-pack: center;
+		    -ms-flex-pack: center;
+		        justify-content: center;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
 
 		@include respond-to($lg-break){
 			width: 80%;
