@@ -211,7 +211,7 @@
     <div class="menu-box d-flex flex-row flex-wrap menu-closed">
 
         <div class="p-2 main-menu">
-            <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;" class="d-md-none">
+            <!-- <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;" class="d-md-none"> -->
 
             <div class="mobile-collection-links d-lg-none">
                 <h4 class="d-md-none text-center">COLLECTIONS</h4>
@@ -231,8 +231,8 @@
                     bath
                 </a>
 
-                <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;">
-                <h4 class="d-md-none text-center">MORE</h4>
+                <!-- <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;"> -->
+                <!-- <h4 class="d-md-none text-center">MORE</h4> -->
 
                 <a href="/brands" class="btn btn-menu-link">
                     brands
@@ -246,7 +246,7 @@
                     our story
                 </a>
 
-                <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                <!-- <hr style="color: #222; width: 70%; margin-left: auto; margin-right: auto; margin-top: 20px;"> -->
 
                 <h4 class="d-md-none text-center">INFO</h4>
                 <div class="d-flex flex-wrap flex-row">
