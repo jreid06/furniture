@@ -17,7 +17,7 @@ class __TwigTemplate_4f5667c7ee3f90d52d13a899eddd99f3a868f388f2fd759f75de9eda517
     {
         // line 1
         echo "<div class=\"row\">
-    <p><span class=\"font-weight-cold\">NOTE: </span><span class=\"text-muted\">All items will be dispatched within 2 working days. Delivery days are from when order has been dispatched</span> </p>
+    <p><span class=\"font-weight-bold\">NOTE: </span><span class=\"text-muted\">All items will be dispatched within 2 working days. Delivery days are from when order has been dispatched</span> </p>
     <br>
     <form id=\"shipping-method-radios\">
         ";
@@ -149,7 +149,7 @@ class __TwigTemplate_4f5667c7ee3f90d52d13a899eddd99f3a868f388f2fd759f75de9eda517
     public function getSourceContext()
     {
         return new Twig_Source("<div class=\"row\">
-    <p><span class=\"font-weight-cold\">NOTE: </span><span class=\"text-muted\">All items will be dispatched within 2 working days. Delivery days are from when order has been dispatched</span> </p>
+    <p><span class=\"font-weight-bold\">NOTE: </span><span class=\"text-muted\">All items will be dispatched within 2 working days. Delivery days are from when order has been dispatched</span> </p>
     <br>
     <form id=\"shipping-method-radios\">
         {% for rates in shipping_methods %}
@@ -189,6 +189,6 @@ class __TwigTemplate_4f5667c7ee3f90d52d13a899eddd99f3a868f388f2fd759f75de9eda517
         </pre>
     </div> -->
 </div>
-", "shipping-options.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/shipping-options.html.twig");
+", "shipping-options.html.twig", "/Users/jasonreid/Sites/idyldev/twig_templates/shipping-options.html.twig");
     }
 }

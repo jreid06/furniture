@@ -30,7 +30,7 @@ class __TwigTemplate_46c56ea30c7e3482fc66d252a0d01bee630c021418c852716a3c090aa42
         // line 6
         $context["month_num"] = (twig_round($this->getAttribute($this->getAttribute(($context["post"] ?? null), "date", array()), "month", array())) - 1);
         // line 7
-        echo "    <h5 class=\"text-center brief\">";
+        echo "    <h5 class=\"text-center date\">";
         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute(($context["months"] ?? null), ($context["month_num"] ?? null), array(), "array")), "html", null, true);
         echo "  ";
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute(($context["post"] ?? null), "date", array()), "full", array()), "html", null, true);
@@ -91,7 +91,7 @@ class __TwigTemplate_46c56ea30c7e3482fc66d252a0d01bee630c021418c852716a3c090aa42
     </div>
     <h1 class=\"text-center heading\">{{post.title | capitalize}}</h1>
     {% set month_num = (post.date.month | round) - 1 %}
-    <h5 class=\"text-center brief\">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
+    <h5 class=\"text-center date\">{{months[month_num] | capitalize }}  {{post.date.full}}</h5>
 </div>
 <div class=\"container home blog-post-body\">
     <div class=\"row\">
