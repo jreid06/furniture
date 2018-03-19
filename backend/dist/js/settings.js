@@ -33,7 +33,7 @@ $(document).ready(function() {
                                 link: "/backend/auth/admin/edit/brands/add"
                             },
                             {
-                                title: 'View/Delete blog brands',
+                                title: 'View/Edit Brands',
                                 link: "/backend/auth/admin/edit/brands/edit"
                             }
                         ]
@@ -275,6 +275,49 @@ $(document).ready(function() {
 
         },
         methods: {
+            deleteBrand: function(e){
+                let targetBrand = $(e.target)[0],
+                    brandID = targetBrand.attributes['data-brand-cat-id'].value,
+                    brandName =targetBrand.attributes['data-brand'].value,
+                    brandCat = targetBrand.attributes['data-brand-category'].value
+                    dataObj = {
+                        cat: brandCat,
+                        id: brandID,
+                        name: brandName
+                    };
+
+
+                console.log(dataObj);
+                $.ajax({
+                    url: '/backend/scripts/deletebrand.php',
+                    type: 'post',
+                    data:{
+                        params: dataObj
+                    },
+                    success: function (data) {
+                        let $data = JSON.parse(data);
+
+                        switch ($data.status.code) {
+                            case (101 || '101'):
+
+                                window.location.reload();
+
+                                break;
+                            case (404 || '404'):
+
+                                window.location.reload();
+
+                                break;
+                            default:
+
+                        }
+                    },
+                    error: function(){
+                        $.notify('Error with connection. Reload page or try again later', 'error');
+                    }
+                })
+
+            },
             checkLength: function(e){
                 let field = $(e.target)[0],
                     textLength = $(e.target)[0].value.length,
@@ -282,6 +325,7 @@ $(document).ready(function() {
 
                 if (textLength > 1 || textLength < 1) {
                     $('.alert-field-limit').fadeIn();
+                    $('#alert-limit-msg').html('Too many or not enough characters have been entered. Field must be filled and only one character is allowed in this field e.g \'A\'');
                     $vm.addBrands.status = false;
                 }
 
@@ -292,8 +336,17 @@ $(document).ready(function() {
             },
             saveBrandInfo: function(e){
                 let brandLetter = $('.brand-initial-inp')[0].value,
-                    brandNames = $('.brand-names-inp')[0].value,
+                    brandNames = $('.brand-names-inp')[0].value.toLowerCase(),
                     $vm = this;
+
+                console.log(Math.floor(brandLetter));
+                if (!isNaN(Math.floor(brandLetter))) {
+
+                    $('.alert-field-limit').fadeIn();
+                    $('#alert-limit-msg').html('Character entered is not a letter. Please fix before continuing');
+                    return;
+                }
+
 
                 if ($vm.addBrands.status && brandNames.length > 1) {
                     console.log('process values');
@@ -302,8 +355,84 @@ $(document).ready(function() {
                     let b_names = brandNames.split(','),
                         lettercharCode = (brandLetter.toLowerCase().charCodeAt(0))-96;
 
+                    // trim white space from names & check if first letter begins with a
+                    for (var i = 0; i < b_names.length; i++) {
+                        b_names[i] = b_names[i].trim();
+
+                        let first_letter = b_names[i].split('');
+                        if (first_letter[0] !== brandLetter.toLowerCase()) {
+                            $('.alert-name-error').fadeIn();
+                            $('#alert-name-error-msg').html('<strong>' +b_names[i] + '</strong> doesnt begin with specified brand letter. Please fix');
+
+                            setTimeout(function(){
+                                $('.alert-name-error').fadeOut();
+                            }, 4000);
+
+                            return;
+                        }
+                    }
+
                     console.log(b_names);
                     console.log(lettercharCode);
+
+                    // instantiate brand category
+                    let brandClass = new Brand(lettercharCode, brandLetter);
+
+                    for (var i = 0; i < b_names.length; i++) {
+                        // instantiate brand details
+                        let brandDetails = new Brand_details(b_names[i]);
+
+                        // generate slug for brand
+                        brandDetails.createSlug();
+
+                        // add brand to Brand class array
+                        brandClass.brand_array.push(brandDetails);
+
+                    }
+
+                    console.log(brandClass);
+
+                    $.ajax({
+                        url: '/backend/scripts/addbrands.php',
+                        type: 'post',
+                        data:{
+                            brandData: brandClass
+                        },
+                        success: function(data){
+                            let $data = JSON.parse(data);
+
+                            console.log($data);
+
+                            switch ($data.status.code) {
+                                case (101 || '101'):
+                                    $('.alert-brand-add-success').fadeIn();
+                                    $('#alert-brand-success-msg').html($data.data.msg);
+
+                                    // reset the fields
+                                    $('.brand-initial-inp')[0].value = '';
+                                    $('.brand-names-inp')[0].value = '';
+
+                                    setTimeout(function(){
+                                        $('.alert-brand-add-success').fadeOut();
+                                    }, 7000);
+                                    break;
+                                case (404 || '404'):
+
+                                    $('.alert-brand-add-error').fadeIn();
+                                    $('#alert-brand-add-error-msg').html($data.data.msg);
+
+                                    setTimeout(function(){
+                                        $('.alert-brand-add-error').fadeOut();
+                                    }, 7000);
+
+                                    break;
+                                default:
+
+                            }
+                        }
+                    })
+
+
 
                 }else {
                     $.notify('Cant add brands as fields are filled in incorrectly', 'error');
