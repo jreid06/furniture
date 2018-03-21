@@ -59,7 +59,7 @@
                         <template v-for="(nav,index) in navigation.pages">
                             <li class="nav-list-li">
                                 <template v-if="nav.sublinks">
-                                    <a :href="nav.link">{{nav.title}}</a>
+                                    <a :href="nav.link" style="background-color: darkgray; font-weight: bold; color: #222">{{nav.title}}</a>
                                     <ul class="nav nav-third-level">
                                         <li class="nav-list-li" v-for="(sublink, index) in nav.sublinks_list">
                                             <a :href="sublink.link">{{sublink.title}}</a>
