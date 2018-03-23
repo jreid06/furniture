@@ -3,6 +3,94 @@
     // this function is strict...
 }());
 
+class NavigationLink {
+    constructor(link_id, title) {
+        this.link_id = link_id;
+        this.address = '';
+        this.title = title;
+        this.showlink = false;
+        this.cta_boxes = this.createBoxes(3);
+        this.slug = this.createSlug();
+        this.submenu = false;
+        this.submenu_categories = [];
+    }
+
+    createBoxes(val){
+        let boxes = [];
+
+        for (var i = 0; i < val; i++) {
+            let menuctabox = new MenuctaBoxes('MB'+i, 'default', '/', '/assets/main/dust_scratches.png');
+
+            boxes.push(menuctabox);
+        }
+
+        return boxes;
+    }
+
+    createSlug(){
+        let splitToLower = this.title.split(' ');
+
+        for (let i = 0; i < splitToLower.length; i++) {
+            splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+        }
+
+        this.address = '/'+splitToLower.join('-');
+
+        return splitToLower.join('-');
+    }
+
+    logStuff(){
+        console.log('i work now and forever');
+    }
+}
+
+// // NOTE: WHEN RENDERING THE NAV IN DASHBOARD INSTANTIATE A NEW NAVLINK CLASS AND FILL IT WITH PARSED DATA FROM DATABASE
+
+
+class MenuCategories {
+    constructor(title) {
+        this.title = title;
+        this.slug = this.createSlug();
+        this.cat = this.createCat();
+    }
+
+    createSlug(){
+        let splitToLower = this.title.split(' ');
+
+        for (let i = 0; i < splitToLower.length; i++) {
+            splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+        }
+
+        return splitToLower.join('-');
+    }
+
+    createCat(){
+        let splitToLower = this.title.split(' ');
+
+        for (let i = 0; i < splitToLower.length; i++) {
+            splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
+        }
+
+        return splitToLower.join('');
+    }
+
+    lograndom(){
+        console.log('i am a function attached to the object: '+this.title);
+    }
+}
+
+class MenuctaBoxes {
+    constructor(id, title, link, image) {
+        this.id = id;
+        this.title = title;
+        this.message = '',
+        this.link = link;
+        this.image = image;
+    }
+}
+
+let test_navlink = new NavigationLink('about-1', 'about us');
+
 
 class Brand {
     constructor(brand_id, brand_letter) {
