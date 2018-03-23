@@ -19,6 +19,8 @@ RewriteRule ^backend/auth/admin/edit/brands/([A-Za-z0-9\-\_]+)/?$  /backend/bran
 
 RewriteRule ^backend/auth/admin/edit/products/([A-Za-z0-9\-\_]+)/?$  /backend/edit-products.php?q=$1    [NC,L]
 
+RewriteRule ^backend/auth/admin/edit/navigation/?$  /backend/navigation.php    [NC,L]
+
 RewriteRule ^backend/auth/admin/edit/create-blog-posts?$  /backend/create_blog_posts.php?   [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/blogpost/([A-Za-z0-9\-\_]+)?$  /backend/edit_blog_post.php?postid=$1   [NC,L]
