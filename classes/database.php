@@ -537,6 +537,26 @@
 
         }
 
+        public static function saveNavigationLink($tbl, $fields, $value1, $value2, $value3, $value4)
+        {
+            parent::checkConnection();
+
+            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?)");
+
+            $query->bind_param('ssss', $value1, $value2, $value3, $value4);
+
+            if($query->execute()){
+                $query->close();
+
+                parent::returnConnection()->close();
+
+                return array(true, $value1, $value2, $value3, $value4);
+            }else {
+                return array(false, $fields, $value1, $value2, $value3, $value4);
+            }
+
+        }
+
 
         // $values = array();
         // ** must be equal
