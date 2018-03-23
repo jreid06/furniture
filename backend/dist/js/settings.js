@@ -13,6 +13,12 @@ $(document).ready(function() {
         data:{
             status: 'dashboard vue connected',
             navigation: {
+                edit:{
+                    instance: '',
+                    showlink: false,
+                    sublinks: false,
+                    subcategories: []
+                },
                 pages: [
                     {
                         title: 'Home Slide Content',
@@ -22,6 +28,11 @@ $(document).ready(function() {
                     {
                         title: 'Our Story Content',
                         link: "/backend/auth/admin/edit/ourstory-edit/8f003a39e5",
+                        sublinks: false
+                    },
+                    {
+                        title: 'Navigation',
+                        link: "/backend/auth/admin/edit/navigation",
                         sublinks: false
                     },
                     {
@@ -275,6 +286,347 @@ $(document).ready(function() {
 
         },
         methods: {
+            ctaUpload: function(){
+                let $vm = this,
+                    upload = $('#ctaimageUpload');
+
+
+                upload.trigger('click');
+
+            },
+            savelinkdata: function(e){
+                // NOTE:  used to save and keep link OFFLINE
+                let oldLinkID = $('#nav-modal').attr('data-link-id'),
+                    newLinkTitle = $('.link-title-update')[0].value.toLowerCase().trim(),
+                    newLinkID = newLinkTitle.replace(/[^\w\s]/gi, '').replace(/ /g,''),
+                    dataaction = $(e.target)[0].attributes['data-action'].value;
+                    $vm = this;
+
+                // check if title has changed
+                if ($vm.navigation.edit.instance.title !== newLinkTitle) {
+
+                    // change the ID of the instance
+                    $vm.navigation.edit.instance.link_id = "NAV_"+newLinkID;
+
+                    // change title in instance
+                    $vm.navigation.edit.instance.title = newLinkTitle;
+
+                    // create slug & address with new title
+                    $vm.navigation.edit.instance.slug = $vm.navigation.edit.instance.createSlug();
+
+                }
+
+                // check if link has a submenu
+                if ($vm.navigation.edit.sublinks) {
+                    // update the submenu status
+                    // update submenu categories array
+
+                    // NOTE: equals to "TRUE"
+                    $vm.navigation.edit.instance.submenu = $vm.navigation.edit.sublinks;
+
+                    // replace empty array with newly added subcategories array
+                    $vm.navigation.edit.instance.submenu_categories = $vm.navigation.edit.subcategories
+                }else {
+                    // NOTE: equals to "FALSE"
+                    $vm.navigation.edit.instance.submenu = $vm.navigation.edit.sublinks;
+
+                    // replace array with empty subcategories array
+                    $vm.navigation.edit.instance.submenu_categories = [];
+                }
+
+
+                // check which action is being executed SAVE OR SAVE & LIVE
+
+                if (dataaction === 'save-live') {
+                    $vm.navigation.edit.instance.showlink = true;
+                }else {
+                    $vm.navigation.edit.instance.showlink = false;
+                }
+
+                // update the navlink data in database
+
+                console.log(JSON.stringify($vm.navigation.edit.instance));
+                console.log(oldLinkID);
+
+                $.ajax({
+                    url: '/backend/scripts/savenav_link_data.php',
+                    type: 'post',
+                    data: {
+                        action: dataaction,
+                        navjson: JSON.stringify($vm.navigation.edit.instance),
+                        navTitle: $vm.navigation.edit.instance.title,
+                        navOldID: oldLinkID,
+                        navNewID: $vm.navigation.edit.instance.link_id,
+                        linkStatus: $vm.navigation.edit.instance.showlink
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+
+                        console.log($data);
+
+                        switch ($data.status.code) {
+                            case (101 || '101'):
+
+                                // reload window
+                                window.location.reload();
+                                break;
+                            case (404 || '404'):
+
+                                break;
+                            default:
+
+                        }
+                    },
+                    error: function(){
+                        $.notify('error with request. Try again or contact help', 'error');
+                    }
+                })
+            },
+            resetNavEdit: function(){
+                // reset nav edit values when modal is closed
+                this.navigation.edit.showlink = false;
+                this.navigation.edit.sublinks = false;
+                this.navigation.edit.subcategories = [];
+                this.navigation.edit.instance = '';
+
+                $('#link-status').html('');
+
+                // clear modal attributes values
+                $('#nav-modal').attr('data-link-id', '');
+
+                // reset button color
+                $('.save-offline').css({'background-color':'#Fff'});
+
+            },
+            toggleSubmenu: function(e){
+                let toggleControl = $(e.target)[0],
+                    toggleValue = $(toggleControl).attr('data-val'),
+                    $vm = this;
+
+                $('.modal-submenu-select').attr('value', toggleValue);
+
+                // update navigation edit submenu value
+                $vm.navigation.edit.sublinks = (toggleValue == 'true')?true:false;
+            },
+            addSubcats: function(e){
+                let inputVal = $('.subcat-inp')[0].value,
+                    $vm = this;
+
+                console.log(inputVal);
+                try {
+                    if (!inputVal) {
+                        throw 404
+                    }
+
+                    // add subcategory instance to array
+                    $vm.navigation.edit.subcategories.push(new MenuCategories(inputVal));
+
+                    // show success message to user
+                    $('.alert-subcat-add-success').fadeIn();
+                    $('#alert-subcat-add-success-msg').html('Sub-category <strong class="big-strong">'+inputVal+' </strong>created successfully');
+
+                    // show save changes warning message to user
+                    $('.alert-subcat-save-warn').fadeIn();
+                    $('#alert-subcat-save-warnmsg').html('Changes have been detected. Make sure to <strong>SAVE</strong> your changes!!');
+
+                    $('.save-offline').css({'background-color':'#FCF8E3'});
+
+                    // clear input field
+                    $('.subcat-inp')[0].value = '';
+
+                    setTimeout(function(){
+                        $('.alert-subcat-add-success').fadeOut();
+                    }, 5000);
+
+                } catch (e) {
+                    switch (e) {
+                        case (404 || '404'):
+                            $('.subcat-inp').css({"box-shadow":"0 0 4px darkred", "transition":"all .4s"});
+
+                            $('.alert-subcat-add-error').fadeIn();
+                            $('#alert-subcat-error-msg').html('Field is empty. Please fill with category');
+
+                            setTimeout(function(){
+                                $('.alert-subcat-add-error').fadeOut();
+
+                                $('.subcat-inp').css({"box-shadow":"inherit"});
+                            }, 6000);
+                            break;
+                        default:
+
+                    }
+                }
+            },
+            editNavlink: function(e){
+                let trigger = $(e.target)[0],
+                    navlink_data = $(trigger).attr('data-link-json'),
+                    navlink_instance = '',
+                    $vm = this;
+
+                console.log(navlink_data);
+                navlink_data = JSON.parse(navlink_data);
+                console.log(navlink_data);
+
+                // instantiate navigation link using parsed data
+                navlink_instance = new NavigationLink(navlink_data.link_id, navlink_data.title);
+
+                // update instance with current values
+                navlink_instance.cta_boxes = navlink_data.cta_boxes;
+                navlink_instance.showlink = navlink_data.showlink;
+                navlink_instance.submenu = navlink_data.submenu;
+                navlink_instance.submenu_categories = navlink_data.submenu_categories;
+
+                // initialize the modal with correct content by updating dash vue edit attributes with nav links data
+
+                $('#nav-modal').modal('show');
+
+
+                // modal show callback
+                $('#nav-modal').on('show.bs.modal', $vm.initializeNavlinkEdit(navlink_instance))
+
+                // save instance in data attrib
+                $vm.navigation.edit.instance = navlink_instance;
+
+            },
+            initializeNavlinkEdit: function(navinstance){
+                let $vm = this;
+
+                // update dashvue nav edit attributes
+                $vm.navigation.edit.showlink = navinstance.showlink;
+                console.log("RETRIEVED INSTANCE: "+ navinstance.showlink);
+                console.log("NEW INSTANCE: "+ $vm.navigation.edit.showlink);
+                $vm.navigation.edit.sublinks = navinstance.submenu;
+
+                //if there are subcategories we need to instantiate MenuCategories so we have access to its methods
+
+                if (navinstance.submenu_categories.length > 0) {
+                    let $nav_submencats_loop = navinstance.submenu_categories;
+                    // check the length of submenu_categories array
+                    for (var i = 0; i < navinstance.submenu_categories.length; i++) {
+                        $vm.navigation.edit.subcategories.push(new MenuCategories(navinstance.submenu_categories[i].title));
+                    }
+                }else {
+                    $vm.navigation.edit.subcategories = navinstance.submenu_categories;
+                }
+
+
+                // add value to fields in modal
+                $('.modal-submenu-select').attr('value', $vm.navigation.edit.sublinks);
+                $('.link-title-update').attr('value', navinstance.title);
+
+                // update modal attributes
+                $('#nav-modal').attr('data-link-id', navinstance.link_id);
+
+                // add link status to element
+                let status = !navinstance.showlink?'Not Active':'Active';
+                console.log("STATUS: " + status);
+                setTimeout(function(){
+                    if (status === 'Active') {
+                        $('.link-status-live').html(status);
+                        console.log($('.link-status-live'));
+                    }else {
+                        $('.link-status-offline').html(status);
+                    }
+
+                }, 300);
+
+
+
+            },
+            clearmodalValues: function(){
+
+            },
+            createNavLink: function(e){
+                let new_navlink_input = $('.add-navlink-input')[0].value.toLowerCase().trim(),
+                    new_linkID = new_navlink_input.replace(/[^\w\s]/gi, '').replace(/ /g,'');
+
+                try {
+                    if (!new_navlink_input) {
+                        throw 404
+                    }
+
+
+                    // generate our nav link object
+                    let newnav_link = new NavigationLink('NAV_'+new_linkID, new_navlink_input);
+
+                    console.log(newnav_link);
+
+                    $.ajax({
+                        url: '/backend/scripts/create_navlink.php',
+                        type: 'post',
+                        data: {
+                            navjson: JSON.stringify(newnav_link),
+                            navtitle: newnav_link.title,
+                            navid: newnav_link.link_id,
+                            navstatus: false
+                        },
+                        success: function(data){
+                            let $data = JSON.parse(data);
+
+                            switch ($data.status.code) {
+                                case (101 || '101'):
+
+                                    // refresh page to show success message via sessions
+                                    window.location.reload();
+                                    break;
+                                case (404 || '404'):
+
+                                    if ($data.status.code_status === 'warn') {
+                                        // show error container and add message
+                                        $('.alert-nav-add-error-warn').fadeIn();
+                                        $('#warn-nav-add-error-msg').html($data.info.msg);
+
+                                        console.log($data.info.msg);
+
+                                        setTimeout(function(){
+                                            // hide and clear html error container
+                                            $('.alert-nav-add-error-warn').fadeOut();
+                                            $('#warn-nav-add-error-msg').html('');
+
+                                        }, 5000);
+                                    }else {
+                                        // show error container and add message
+                                        $('.alert-nav-add-error').fadeIn();
+                                        $('#alert-nav-add-error-msg').html($data.info.msg);
+
+                                        setTimeout(function(){
+                                            // hide and clear html error container
+                                            $('.alert-nav-add-error').fadeOut();
+                                            $('#alert-nav-add-error-msg').html('');
+
+                                        }, 5000);
+                                    }
+
+
+                                    break;
+                                default:
+
+                            }
+                        }
+                    })
+
+
+                } catch (e) {
+                    switch (e) {
+                        case (404 || '404'):
+                            $('.add-navlink-input').css({"box-shadow":"0 0 4px darkred", "transition":"all .4s"});
+
+                            $('.alert-nav-add-error').fadeIn();
+                            $('#alert-nav-add-error-msg').html('Field is empty. Please a link before submitting');
+
+                            setTimeout(function(){
+                                $('.alert-nav-add-error').fadeOut();
+
+                                $('.add-navlink-input').css({"box-shadow":"0 0 4px blue"});
+                            }, 6000);
+                            break;
+                        default:
+
+                    }
+                }
+
+
+            },
             deleteBrand: function(e){
                 let targetBrand = $(e.target)[0],
                     brandID = targetBrand.attributes['data-brand-cat-id'].value,
@@ -1034,6 +1386,13 @@ $(document).ready(function() {
         },
         mounted: function(){
             let $vm = this;
+
+            // navedit modal functions
+
+            $('#nav-modal').on('hide.bs.modal', function(){
+                console.log('MODAL HIDE');
+                $vm.resetNavEdit();
+            });
 
             // trigger modal functions
 
@@ -1907,6 +2266,354 @@ $(document).ready(function() {
 
 
     // components
+
+    Vue.component('cta-box', {
+        data: function(){
+            return {
+                generic_images:'',
+                updateFields:{
+                    fields: [
+                        {
+                            type: 'html',
+                            element: '#selected-image-label-'
+                        },
+                        {
+                            type: 'src',
+                            element: '#selected-image-'
+                        }
+                    ]
+                }
+            }
+        },
+        props: ['ctaimage', 'ctatitle', 'ctamessage', 'ctalink', 'loopcount'],
+        template: `<div class="cta-box-flex">
+            <div class="cta-section current-image">
+                <h5>Current CTA image</h5>
+                <hr>
+                <img :src="ctaimage" alt="current cta image here">
+            </div>
+            <div class="cta-section selectimage-section">
+                <h5>Select New CTA image</h5>
+                <hr>
+
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <!-- Button and dropdown menu -->
+                        <button type="button" class="btn btn-default">Select image</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="refreshList"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li v-for="(image, index) in generic_images" @click="selectedImage"><a href="#" :data-component-num="loopcount">{{image.file}}</a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-group ds_image">
+                    <h4><span class="label label-info text-muted" :id="'selected-image-label-'+loopcount"> Select an image ...</span></h4>
+                    <img src="" alt="" :id="'selected-image-'+loopcount">
+                </div>
+
+            </div>
+
+            <div class="cta-section content-section">
+                <h5>CTA content</h5>
+                <hr>
+                <p class="text-muted"></p>
+                <div class="input-group">
+                    <span class="input-group-addon" :id="'cta-title-'+loopcount"><i class="fa fa-font"></i> </span>
+                    <input type="text" class="form-control" :id="'cta-inp-title-'+loopcount" placeholder="Call to action title" :aria-describedby="'cta-title-'+loopcount" :value="ctatitle">
+                </div>
+                <hr>
+
+                <p class="text-muted"></p>
+                <div class="input-group">
+                    <span class="input-group-addon" :id="'cta-message-'+loopcount"><i class="fa fa-envelope"></i></span>
+                    <input type="text" class="form-control" :id="'cta-inp-message-'+loopcount" placeholder="Call to action message" :aria-describedby="'cta-message-'+loopcount" :value="ctamessage">
+                </div>
+                <hr>
+
+                <p class="text-muted"></p>
+                <div class="input-group">
+                    <span class="input-group-addon" :id="'cta-link-'+loopcount"><i class="fa fa-link"></i></span>
+                    <input type="text" class="form-control" :id="'cta-inp-link-'+loopcount" placeholder="Call to action link path e.g /products/livingroom" :aria-describedby="'cta-link-'+loopcount" :value="ctalink">
+                </div>
+                <hr>
+
+                <div class="input-group">
+                    <button type="button" name="button" class="btn btn-primary" @click="updateCta" :data-component-num="loopcount">Update CTA Box</button>
+                </div>
+
+            </div>
+            <div class="cta-section alert-messages">
+                <!-- ERROR ALERT-->
+                <div class="alert alert-danger alert-dismissible" :id="'alert-cta-update-error-'+loopcount" style="display: none" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong></strong> <span :id="'alert-cta-update-error-msg-'+loopcount"></span>
+
+                </div>
+
+                <!-- SUCCESS ALERT-->
+                <div class="alert alert-success alert-dismissible" :id="'alert-cta-update-success-'+loopcount" style="display: none" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong></strong> <span :id="'alert-cta-update-success-msg-'+loopcount"></span>
+
+                </div>
+
+            </div>
+        </div>`,
+        methods: {
+            getimageList: function(){
+
+                console.log('IMAGE REQUEST SENT');
+
+                // initialize the request settings
+
+                let $request = {
+                        type: 'directory-listing',
+                        folder: 'generic'
+                    },
+                    $vc = this;
+
+                $.ajax({
+                    url:'/backend/scripts/directory_controls.php',
+                    type: 'post',
+                    data: {
+                        request: JSON.stringify($request)
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+
+                        $vc.generic_images = $data.info.imagelist;
+                    },
+                    error: function(){
+                        $.notify('error with request. Try again or contact help', 'error');
+                    }
+                })
+            },
+            selectedImage: function(e){
+                let selected_image = $(e.target)[0],
+                    component_count = parseInt(selected_image.attributes['data-component-num'].value),
+                    image_path = '/assets/generic/'+selected_image.innerHTML,
+                    $vm = this;
+
+                for (var i = 0; i < $vm.updateFields.fields.length; i++) {
+
+                    switch ($vm.updateFields.fields[i].type) {
+                        case 'src':
+
+                            $($vm.updateFields.fields[i].element+(component_count)).attr('src', image_path);
+
+                            break;
+                        case 'html':
+
+                            $($vm.updateFields.fields[i].element+(component_count))[0].innerHTML = image_path;
+
+                            break;
+                        default:
+
+                    }
+
+                }
+            },
+            refreshList: function(){
+                this.getimageList();
+            },
+            updateCta: function(e){
+                // update the correct cta in the instance
+                let targetCTA = $(e.target)[0],
+                    component_count = parseInt(targetCTA.attributes['data-component-num'].value),
+                    ctaPos = parseInt(targetCTA.attributes['data-component-num'].value)-1,
+                    $vm = this;
+
+                // get the newly entered data
+                let newImage = $('#selected-image-label-'+component_count).html(),
+                    newTitle = $('#cta-inp-title-'+component_count)[0].value,
+                    newMessage = $('#cta-inp-message-'+component_count)[0].value,
+                    newLink = $('#cta-inp-link-'+component_count)[0].value;
+
+                // update the cta with new data
+                try {
+                    if (newImage.split('/')[1] === 'assets') {
+                        // update all cta key=>values
+
+                        $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].image = newImage;
+                        $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].title = newTitle;
+                        $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].message = newMessage;
+                        $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].link = newLink;
+
+                        // show update success
+                        $('#alert-cta-update-success-'+component_count).fadeIn();
+                        $('#alert-cta-update-success-msg-'+component_count).html('Call-to-action menu box has been updated successfully');
+
+
+                        // reset image select box
+                        for (var i = 0; i < $vm.updateFields.fields.length; i++) {
+
+                            switch ($vm.updateFields.fields[i].type) {
+                                case 'src':
+                                    $($vm.updateFields.fields[i].element+(component_count)).attr('src', '');
+
+                                    break;
+                                case 'html':
+
+                                    $($vm.updateFields.fields[i].element+(component_count))[0].innerHTML = 'Select an image ...';
+
+                                    break;
+                                default:
+
+                            }
+
+                        }
+
+                        //
+                        // show save changes warning message to user
+                        $('.alert-subcat-save-warn').fadeIn();
+                        $('#alert-subcat-save-warnmsg').html('Changes have been detected. Make sure to <strong>SAVE</strong> your changes!!');
+
+
+                    }else {
+                        throw 404
+                    }
+                } catch (e) {
+                    switch (e) {
+                        case (404 || '404'):
+                            // image hasnt been changed update all other values
+
+                            $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].title = newTitle;
+                            $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].message = newMessage;
+                            $dashboard_vue.navigation.edit.instance.cta_boxes[ctaPos].link = newLink;
+
+                            // show update success
+                            $('#alert-cta-update-success-'+component_count).fadeIn();
+                            $('#alert-cta-update-success-msg-'+component_count).html('Call-to-action menu box has been updated successfully');
+                            break;
+                        default:
+
+                    }
+                }
+            }
+        },
+        mounted: function(){
+            this.getimageList();
+        }
+    })
+
+    Vue.component('subcat-box', {
+        data: function(){
+            return{
+                updated: false
+            }
+        },
+        props: ['subcattitle', 'subcatslug', 'subcatcat', 'indexcount'],
+        template: `<div class="subcat-box">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Sub category &nbsp;<span v-if="updated" class="label label-info">MODIFIED</span></h4>
+                    <hr>
+                    <!-- subcat title -->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="update-link-title">Title</span>
+                        <input type="text" :class="'form-control subcat-title-'+(indexcount-1)" placeholder="Link title" aria-describedby="update-link-title" :value="subcattitle">
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <!-- subcat slug -->
+                    <p class="text-muted">Generated Automatically</p>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="update-link-title">Slug</span>
+                        <input type="text" :class="'form-control subcat-slug-'+(indexcount-1)" placeholder="Link title" aria-describedby="update-link-title" :value="subcatslug" disabled>
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <!-- subcat category -->
+                    <p class="text-muted">Generated Automatically</p>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="update-link-title">Category</span>
+                        <input type="text" :class="'form-control subcat-cat-'+(indexcount-1)" placeholder="Link title" aria-describedby="update-link-title" :value="subcatcat" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr>
+                    <div class="input-group">
+                        <button class="btn btn-primary" type="button" name="button" :data-cat-index="(indexcount-1)" @click="updateSubCategory">Update sub category</button>
+                        <button class="btn btn-danger" type="button" name="button" :data-cat-index="(indexcount-1)" @click="deleteSubcategory">Delete sub category</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>`,
+        methods: {
+            updateSubCategory: function(e){
+                let targetCat = $(e.target)[0].attributes['data-cat-index'].value,
+                    submenu_categories = $dashboard_vue.navigation.edit.subcategories,
+                    // target input elements
+                    subcat_title = $('.subcat-title-'+targetCat),
+                    new_subcat_title = subcat_title[0].value.trim(),
+                    subcat_slug = $('.subcat-slug-'+targetCat),
+                    subcat_category = $('.subcat-cat-'+targetCat);
+
+                console.log("Cat index: " + targetCat);
+
+                if (submenu_categories[targetCat].title !== new_subcat_title) {
+                    console.log('title change has been made');
+                    // update the submenu category title with new title
+                    submenu_categories[targetCat].title = new_subcat_title;
+
+                    // create new slug and category
+                    submenu_categories[targetCat].slug = submenu_categories[targetCat].createSlug();
+                    submenu_categories[targetCat].cat = submenu_categories[targetCat].createCat();
+
+                    // update field values
+                    subcat_slug[0].value = submenu_categories[targetCat].slug;
+                    subcat_category[0].value = submenu_categories[targetCat].cat;
+
+                    // update dash vue nav edit subcategories array with new values
+                    $dashboard_vue.navigation.edit.subcategories[targetCat] = submenu_categories[targetCat];
+
+                    // update button to reflect temp success changes and show save warning message
+                    $(e.target).removeClass('btn-primary').addClass('btn-success');
+                    $(e.target)[0].innerHTML = 'Changes made';
+
+                    $('.alert-subcat-save-warn').fadeIn();
+                    $('#alert-subcat-save-warnmsg').html('Changes have been detected. Make sure to <strong>SAVE</strong> your changes!!');
+
+                    // show modified badge
+                    this.updated = true;
+
+                    setTimeout(function(){
+                        $(e.target).removeClass('btn-success').addClass('btn-primary');
+                        $(e.target)[0].innerHTML = 'Update sub category';
+                    }, 3000);
+
+                }else {
+
+                    $(e.target)[0].innerHTML = 'no changes made. Update not necessary';
+                    setTimeout(function(){
+                        $(e.target)[0].innerHTML = 'Update sub category';
+                    }, 3000);
+                }
+
+            },
+            deleteSubcategory: function(e){
+                let targetCat = parseInt($(e.target)[0].attributes['data-cat-index'].value);
+                    console.log('DELETE CAT');
+                    console.log("Cat index: " + targetCat);
+
+                    $dashboard_vue.navigation.edit.subcategories.splice(targetCat,1);
+
+                    // show save message
+                    $('.alert-subcat-save-warn').fadeIn();
+                    $('#alert-subcat-save-warnmsg').html('Changes have been detected. Make sure to <strong>SAVE</strong> your changes!!');
+            }
+        }
+    })
 
     Vue.component('select-image', {
         data: function() {
