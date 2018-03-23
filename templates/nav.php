@@ -274,7 +274,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY LIVING ROOM PRODUCTS</h4>
+                                    <h4>SHOP BY PRODUCT</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.livingroom">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -319,7 +319,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY KITCHEN PRODUCTS</h4>
+                                    <h4>SHOP BY PRODUCT</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.kitchen">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -364,7 +364,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY BEDROOM PRODUCTS</h4>
+                                    <h4>SHOP BY PRODUCT</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.bedroom">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
@@ -409,7 +409,7 @@
                         <div class="p-2">
                             <dl class="dl-box-nav">
                                 <div class="dl-box-content-nav">
-                                    <h4>SHOP BY BATH PRODUCTS</h4>
+                                    <h4>SHOP BY PRODUCT</h4>
                                     <ul>
                                         <template v-for="(product, index) in products.bath">
                                             <li class="nav-menu-link" :id="'link'+(index+1)">
