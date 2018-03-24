@@ -497,8 +497,8 @@ $(document).ready(function() {
                     }
                 ]
             },
-            temp_products: {
-
+            searchListing:{
+                categories:[]
             }
         },
         methods: {
@@ -2840,6 +2840,7 @@ $(document).ready(function() {
                                     // console.log(navlink_data);
 
                                     $vm.products[sublink_navs[i].nav_json_data.slug].push(navlink_data);
+                                    $nav_vue.searchListing.categories.push(navlink_data);
 
                                 }
 
