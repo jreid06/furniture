@@ -323,6 +323,12 @@ $(document).ready(function() {
         data: {
             window: window,
             menuStatus: {
+                selected: false,
+                selected_nav:{
+                    links: [],
+                    cta_boxes: []
+                },
+                navloaded: false,
                 open: false,
                 mobile: false,
                 livingroom: false,
@@ -336,43 +342,7 @@ $(document).ready(function() {
             basketHasItems: false,
             basketCount: 0,
             basketTotal: 0,
-            navHeader: [{
-                    address: '#',
-                    title: 'living room',
-                    slug: 'livingroom'
-                },
-                {
-                    address: '#',
-                    title: 'kitchen',
-                    slug: 'kitchen'
-                },
-                {
-                    address: '#',
-                    title: 'bedroom',
-                    slug: 'bedroom',
-                },
-                {
-                    address: '#',
-                    title: 'bath',
-                    slug: 'bath'
-                },
-                {
-                    address: '/brands',
-                    title: 'brands'
-                },
-                {
-                    address: '/products/gifts',
-                    title: 'gifts'
-                },
-                {
-                    address: '/our-story',
-                    title: 'our story'
-                },
-                {
-                    address: '/blog',
-                    title: 'blog'
-                }
-            ],
+            navHeader: '',
             loggedInStatus: false,
             loggedInUser: {
                 id: ''
@@ -526,134 +496,94 @@ $(document).ready(function() {
                         image: ''
                     }
                 ]
+            },
+            temp_products: {
+
             }
-        },
-        mounted: function() {
-            let $vm = this;
-            if ($(window).width < 768) {
-                $('.menu-link').each(function(i, item) {
-                    $item = $(item);
-                    // console.log(item);
-                    if ($item.attr('data-test')) {
-                        $item.css({
-                            "background": `url(${$item.attr('data-test')})`,
-                            "background-size": "cover",
-                            "background-position": "center"
-                        });
-                    }
-
-                });
-            }
-
-            setTimeout(function() {
-                $('.loader-generic').fadeOut();
-                $('body').css({
-                    'overflow-y': 'scroll'
-                });
-            }, 1500)
-
-
-            this.checkSigninCookies();
-            this.checkSigninSession();
-            this.checkBasketSession();
-        },
-        created: function() {
-
-
-        },
-        watch: {
-            accountMenu: function(value) {
-                if (value) {
-                    $('.custom-menu').removeClass('custom-menu-closed').addClass('custom-menu-open');
-                } else {
-                    $('.custom-menu').removeClass('custom-menu-open').addClass('custom-menu-closed');
-                }
-            },
-            loggedInStatus: function(value) {
-                if (value) {
-                    console.log('user logged in successfully');
-                }
-            },
-            basketCount: function(value) {
-                console.log('basket updated');
-                // $user_vue.basketCount = value;
-
-                if (value > 0) {
-                    this.basketHasItems = true;
-                    $('.fa-shopping-cart').removeClass('empty').addClass('hasItems');
-                } else {
-                    this.basketHasItems = false;
-                    $('.fa-shopping-cart').removeClass('hasItems').addClass('empty');
-                }
-
-            },
-            searchStatus: function(value) {
-                if (!value) {
-                    $('.search-bar').removeClass('search-open').addClass('search-hidden');
-                    $('.fa-close').removeClass('fa-close f-active').addClass('fa-search').css({'font-size':'1em'});
-
-                    $('.search-input').animate({
-                        opacity: 0
-                    }, 300);
-
-                    // fade out search results container
-                    $('.search-listings').fadeOut();
-
-                } else if (value) {
-                    $('.search-input').animate({
-                        opacity: 1
-                    }, 1000);
-
-                    $('.search-bar').removeClass('search-hidden').addClass('search-open');
-                    $('.fa-search').removeClass('fa-search').addClass('fa-close f-active').css({'transition':'all .3s'});
-
-                    if ($('.search-listing-values')[0].scrollTop > 0) {
-                        $('.search-listing-values')[0].scrollTop = 0
-                    }
-
-                }
-            },
-            basketStatus: function(value) {
-                let $vm = this;
-
-                if (!value) {
-                    $('.basket-box').removeClass('basket-open').addClass('basket-closed');
-                    $('.fa-shopping-cart').removeClass('f-bskt-active');
-
-                    $('#basket-container').animate({
-                        opacity: 0
-                    }, 300);
-                } else if (value) {
-                    $vm.checkBasketSession();
-                    $('#basket-container').animate({
-                        opacity: 1
-                    }, 1000);
-
-                    $('.basket-box').removeClass('basket-closed').addClass('basket-open');
-                    $('.fa-shopping-cart').addClass('f-bskt-active');
-
-                    console.log("Menu Status: " + this.menuStatus.open);
-                    let menuStatus = this.menuStatus.open;
-                    if (menuStatus) {
-                        this.menuStatus.open = !this.menuStatus.open;
-
-                        switch (this.menuStatus.menuName) {
-                            case 'mobile':
-                                this.menuStatus.mobile = !this.menuStatus.mobile
-                                break;
-                            default:
-
-                        }
-                        console.log("Current Menu Status: " + this.menuStatus.open);
-                        $('#nav-link-0').removeClass('active-nav-link');
-                    }
-                }
-            }
-        },
-        computed: {
-
         },
         methods: {
+            getNavdata: function(){
+                let $vm = this;
+
+                $.ajax({
+                    url: '/scripts/get_nav_data.php',
+                    type: 'post',
+                    data: {
+                        nav: true
+                    },
+                    success: function(data){
+                        let $data = JSON.parse(data);
+
+                        console.log('--------');
+                        console.log('--------');
+                        console.log('');
+
+                        console.log($data);
+
+                        console.log('');
+                        console.log('--------');
+                        console.log('--------');
+
+                        // format and structure data
+                        let sublink_navs = $data.info.link_types.submenu_navs;
+                            single_navs = $data.info.link_types.singlem_navs;
+                            navHeader_data = [],
+                            navSubcat_data = '';
+
+                        for (var i = 0; i < sublink_navs.length; i++) {
+                            let navlink_data = {
+                                address: '',
+                                title: '',
+                                slug: '',
+                                sublinks: ''
+                            };
+
+                            navlink_data.address = '#';
+                            navlink_data.title = sublink_navs[i].nav_title;
+                            navlink_data.slug = sublink_navs[i].nav_json_data.slug;
+                            navlink_data.sublinks = sublink_navs[i].nav_json_data.submenu;
+
+                            navHeader_data.push(navlink_data);
+
+                            // update products array with all categories and their sub-categories
+
+                            // add category to products array
+
+                            $vm.products[sublink_navs[i].nav_json_data.slug] = [];
+
+                            for (var j = 0; j < sublink_navs[i].nav_json_data.submenu_categories.length; j++) {
+                                sublink_navs[i].nav_json_data.submenu_categories[j].cat = sublink_navs[i].nav_title;
+                                $vm.products[sublink_navs[i].nav_json_data.slug].push(sublink_navs[i].nav_json_data.submenu_categories[j]);
+                            }
+
+                            $vm.products[sublink_navs[i].nav_json_data.slug].push(sublink_navs[i].nav_json_data.cta_boxes);
+                        }
+
+                        for (var k = 0; k < single_navs.length; k++) {
+                            let navlink_data = {
+                                address: '',
+                                title: '',
+                                slug: '',
+                                sublinks: ''
+                            };
+
+                            navlink_data.address = single_navs[k].nav_json_data.address;
+                            navlink_data.title = single_navs[k].nav_title;
+                            navlink_data.slug = single_navs[k].nav_json_data.slug;
+                            navlink_data.sublinks = single_navs[k].nav_json_data.submenu;
+
+                            navHeader_data.push(navlink_data);
+                        }
+
+                        // update nav header array with nav link objects
+                        $vm.navHeader = navHeader_data;
+
+                        // updated navloaded status
+                        $vm.menuStatus.navloaded = true;
+
+                    }
+                })
+            },
             searchFilter: function(e) {
 
                 // fade in search results container
@@ -1127,15 +1057,15 @@ $(document).ready(function() {
                     }
                 })
             },
-            capitalizeFirstLetter: function(string) {
-                let splitStr = string.split(' ');
+            capitalizeFirstLetter: function(stringinp) {
+                let splitStr = stringinp.split(' ');
                 if (splitStr.length > 1) {
                     for (var i = 0; i < splitStr.length; i++) {
                         splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
                     }
                     return splitStr.join(' ');
                 } else {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
+                    return stringinp.charAt(0).toUpperCase() + stringinp.slice(1);
                 }
 
             },
@@ -1143,6 +1073,7 @@ $(document).ready(function() {
                 let target = $(e.target)[0].attributes[0].nodeValue,
                     $vm = this;
 
+                console.log($(e.target)[0].attributes);
                 console.log(target);
                 switch (target) {
                     case 'livingroom':
@@ -1180,148 +1111,190 @@ $(document).ready(function() {
             menuToggle: function(e) {
                 let menuLinkClicked = $(e.target),
                     menuLinkName = menuLinkClicked[0].attributes['data-menu-target'].nodeValue,
+                    menuData = menuLinkClicked[0].attributes['data-nav-info'].nodeValue,
                     $vm = this;
 
                 console.log(menuLinkName);
                 this.menuStatus.menuName = menuLinkName;
-                switch (menuLinkName) {
-                    case 'mobile':
-                        if (!$vm.menuStatus.mobile) {
-                            // open menu
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
+                if (menuLinkName === 'mobile') {
+                    if (!$vm.menuStatus.mobile) {
+                        // open menu
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                            // set menu content to be mobile
-                            $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
+                        // set menu content to be mobile
+                        $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
 
 
-                            // open menu js
+                        // open menu js
 
-                        } else {
-                            // close menu
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
+                    } else {
+                        // close menu
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
 
-                            $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
+                        $vm.menuStatus.mobile = !$vm.menuStatus.mobile;
 
+                    }
+                }else {
+                    // NOTE: get nav data for menu dynamically
+
+                    // open menu if its not already open
+                    if (!$vm.menuStatus.open) {
+                        $vm.menuStatus.open = !$vm.menuStatus.open;
+                    }
+
+                    // get menu data and add it to selected_nav
+                    $links = [];
+                    $cta_boxes = [];
+
+                    $vm.products[menuLinkName].forEach(function(link, i){
+                        // if false is true
+                        if (!link[0]?true:false) {
+                             $links.push(link);
+                        }else {
+                            $cta_boxes.push(link);
                         }
+                    });
 
-                        break;
-                    case 'livingroom':
-                        console.log('livingroom toggled');
-                        // open menu if its not already open
-                        if (!$vm.menuStatus.open) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-                        }
+                    console.log($links);
+                    console.log($cta_boxes);
 
-                        // reset all other menu status values
-                        $vm.menuStatus.mobile = false;
-                        $vm.menuStatus.kitchen = false;
-                        $vm.menuStatus.bath = false;
-                        $vm.menuStatus.bedroom = false;
+                    $vm.menuStatus.selected_nav.links = $links;
+                    $vm.menuStatus.selected_nav.cta_boxes = $cta_boxes[0];
 
-                        // show living room menu information
-                        if ($vm.menuStatus.livingroom) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
+                    // show loaded nav data
+                    if (!$vm.menuStatus.selected) {
+                        $vm.menuStatus.selected = true;
+                    }
 
-                            // stops menu info disappearing before menu has closed fully
-                            setTimeout(function() {
-                                $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
-                            }, 500);
-                        } else {
-                            $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
-                        }
-
-
-                        break;
-                    case 'kitchen':
-
-                        console.log('kitchen toggled');
-                        // open menu if its not already open
-                        if (!$vm.menuStatus.open) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                        }
-
-                        // reset all other menu status values
-                        $vm.menuStatus.mobile = false;
-                        $vm.menuStatus.livingroom = false;
-                        $vm.menuStatus.bath = false;
-                        $vm.menuStatus.bedroom = false;
-
-                        // show living room menu information
-                        if ($vm.menuStatus.kitchen) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                            // stops menu info disappearing before menu has closed fully
-                            setTimeout(function() {
-                                $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
-                            }, 500);
-
-                        } else {
-                            $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
-                        }
-
-                        break;
-                    case 'bedroom':
-
-                        console.log('bedroom toggled');
-                        // open menu if its not already open
-                        if (!$vm.menuStatus.open) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                        }
-
-                        // reset all other menu status values
-                        $vm.menuStatus.mobile = false;
-                        $vm.menuStatus.livingroom = false;
-                        $vm.menuStatus.bath = false;
-                        $vm.menuStatus.kitchen = false;
-
-                        // show living room menu information
-                        if ($vm.menuStatus.bedroom) {
-
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                            // stops menu info disappearing before menu has closed fully
-                            setTimeout(function() {
-                                $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
-                            }, 500)
-
-                        } else {
-                            $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
-                        }
-
-                        break;
-                    case 'bath':
-                        console.log('bath toggled');
-                        // open menu if its not already open
-                        if (!$vm.menuStatus.open) {
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                        }
-
-                        // reset all other menu status values
-                        $vm.menuStatus.mobile = false;
-                        $vm.menuStatus.livingroom = false;
-                        $vm.menuStatus.kitchen = false;
-                        $vm.menuStatus.bedroom = false;
-
-                        // show living room menu information
-                        if ($vm.menuStatus.bath) {
-                            // closes menu if link is pressed again
-                            $vm.menuStatus.open = !$vm.menuStatus.open;
-
-                            // stops menu info disappearing before menu has closed fully
-                            setTimeout(function() {
-                                $vm.menuStatus.bath = !$vm.menuStatus.bath;
-                            }, 500)
-
-                        } else {
-                            $vm.menuStatus.bath = !$vm.menuStatus.bath;
-                        }
-                        break;
-                    default:
 
                 }
+
+                // switch (menuLinkName) {
+                //     case 'mobile':
+                //
+                //
+                //         break;
+                //     // case 'livingroom':
+                //     //     console.log('livingroom toggled');
+                //     //     // open menu if its not already open
+                //     //     if (!$vm.menuStatus.open) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //     }
+                //     //
+                //     //     // reset all other menu status values
+                //     //     $vm.menuStatus.mobile = false;
+                //     //     $vm.menuStatus.kitchen = false;
+                //     //     $vm.menuStatus.bath = false;
+                //     //     $vm.menuStatus.bedroom = false;
+                //     //
+                //     //     // show living room menu information
+                //     //     if ($vm.menuStatus.livingroom) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //         // stops menu info disappearing before menu has closed fully
+                //     //         setTimeout(function() {
+                //     //             $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
+                //     //         }, 500);
+                //     //     } else {
+                //     //         $vm.menuStatus.livingroom = !$vm.menuStatus.livingroom;
+                //     //     }
+                //     //
+                //     //
+                //     //     break;
+                //     // case 'kitchen':
+                //     //
+                //     //     console.log('kitchen toggled');
+                //     //     // open menu if its not already open
+                //     //     if (!$vm.menuStatus.open) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //     }
+                //     //
+                //     //     // reset all other menu status values
+                //     //     $vm.menuStatus.mobile = false;
+                //     //     $vm.menuStatus.livingroom = false;
+                //     //     $vm.menuStatus.bath = false;
+                //     //     $vm.menuStatus.bedroom = false;
+                //     //
+                //     //     // show living room menu information
+                //     //     if ($vm.menuStatus.kitchen) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //         // stops menu info disappearing before menu has closed fully
+                //     //         setTimeout(function() {
+                //     //             $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
+                //     //         }, 500);
+                //     //
+                //     //     } else {
+                //     //         $vm.menuStatus.kitchen = !$vm.menuStatus.kitchen;
+                //     //     }
+                //     //
+                //     //     break;
+                //     // case 'bedroom':
+                //     //
+                //     //     console.log('bedroom toggled');
+                //     //     // open menu if its not already open
+                //     //     if (!$vm.menuStatus.open) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //     }
+                //     //
+                //     //     // reset all other menu status values
+                //     //     $vm.menuStatus.mobile = false;
+                //     //     $vm.menuStatus.livingroom = false;
+                //     //     $vm.menuStatus.bath = false;
+                //     //     $vm.menuStatus.kitchen = false;
+                //     //
+                //     //     // show living room menu information
+                //     //     if ($vm.menuStatus.bedroom) {
+                //     //
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //         // stops menu info disappearing before menu has closed fully
+                //     //         setTimeout(function() {
+                //     //             $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
+                //     //         }, 500)
+                //     //
+                //     //     } else {
+                //     //         $vm.menuStatus.bedroom = !$vm.menuStatus.bedroom;
+                //     //     }
+                //     //
+                //     //     break;
+                //     // case 'bath':
+                //     //     console.log('bath toggled');
+                //     //     // open menu if its not already open
+                //     //     if (!$vm.menuStatus.open) {
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //     }
+                //     //
+                //     //     // reset all other menu status values
+                //     //     $vm.menuStatus.mobile = false;
+                //     //     $vm.menuStatus.livingroom = false;
+                //     //     $vm.menuStatus.kitchen = false;
+                //     //     $vm.menuStatus.bedroom = false;
+                //     //
+                //     //     // show living room menu information
+                //     //     if ($vm.menuStatus.bath) {
+                //     //         // closes menu if link is pressed again
+                //     //         $vm.menuStatus.open = !$vm.menuStatus.open;
+                //     //
+                //     //         // stops menu info disappearing before menu has closed fully
+                //     //         setTimeout(function() {
+                //     //             $vm.menuStatus.bath = !$vm.menuStatus.bath;
+                //     //         }, 500)
+                //     //
+                //     //     } else {
+                //     //         $vm.menuStatus.bath = !$vm.menuStatus.bath;
+                //     //     }
+                //     //     break;
+                //     default:
+                //
+                // }
+
+                // open menu
+
+
             },
             searchToggle: function(e) {
                 this.searchStatus = !this.searchStatus;
@@ -1412,7 +1385,134 @@ $(document).ready(function() {
                 })
             }
 
+        },
+        mounted: function() {
+            let $vm = this;
+            if ($(window).width < 768) {
+                $('.menu-link').each(function(i, item) {
+                    $item = $(item);
+                    // console.log(item);
+                    if ($item.attr('data-test')) {
+                        $item.css({
+                            "background": `url(${$item.attr('data-test')})`,
+                            "background-size": "cover",
+                            "background-position": "center"
+                        });
+                    }
+
+                });
+            }
+
+            setTimeout(function() {
+                $('.loader-generic').fadeOut();
+                $('body').css({
+                    'overflow-y': 'scroll'
+                });
+            }, 1500)
+
+
+            this.checkSigninCookies();
+            this.checkSigninSession();
+            this.checkBasketSession();
+            this.getNavdata();
+        },
+        created: function() {
+
+
+        },
+        watch: {
+            accountMenu: function(value) {
+                if (value) {
+                    $('.custom-menu').removeClass('custom-menu-closed').addClass('custom-menu-open');
+                } else {
+                    $('.custom-menu').removeClass('custom-menu-open').addClass('custom-menu-closed');
+                }
+            },
+            loggedInStatus: function(value) {
+                if (value) {
+                    console.log('user logged in successfully');
+                }
+            },
+            basketCount: function(value) {
+                console.log('basket updated');
+                // $user_vue.basketCount = value;
+
+                if (value > 0) {
+                    this.basketHasItems = true;
+                    $('.fa-shopping-cart').removeClass('empty').addClass('hasItems');
+                } else {
+                    this.basketHasItems = false;
+                    $('.fa-shopping-cart').removeClass('hasItems').addClass('empty');
+                }
+
+            },
+            searchStatus: function(value) {
+                if (!value) {
+                    $('.search-bar').removeClass('search-open').addClass('search-hidden');
+                    $('.fa-close').removeClass('fa-close f-active').addClass('fa-search').css({'font-size':'1em'});
+
+                    $('.search-input').animate({
+                        opacity: 0
+                    }, 300);
+
+                    // fade out search results container
+                    $('.search-listings').fadeOut();
+
+                } else if (value) {
+                    $('.search-input').animate({
+                        opacity: 1
+                    }, 1000);
+
+                    $('.search-bar').removeClass('search-hidden').addClass('search-open');
+                    $('.fa-search').removeClass('fa-search').addClass('fa-close f-active').css({'transition':'all .3s'});
+
+                    if ($('.search-listing-values')[0].scrollTop > 0) {
+                        $('.search-listing-values')[0].scrollTop = 0
+                    }
+
+                }
+            },
+            basketStatus: function(value) {
+                let $vm = this;
+
+                if (!value) {
+                    $('.basket-box').removeClass('basket-open').addClass('basket-closed');
+                    $('.fa-shopping-cart').removeClass('f-bskt-active');
+
+                    $('#basket-container').animate({
+                        opacity: 0
+                    }, 300);
+                } else if (value) {
+                    $vm.checkBasketSession();
+                    $('#basket-container').animate({
+                        opacity: 1
+                    }, 1000);
+
+                    $('.basket-box').removeClass('basket-closed').addClass('basket-open');
+                    $('.fa-shopping-cart').addClass('f-bskt-active');
+
+                    console.log("Menu Status: " + this.menuStatus.open);
+                    let menuStatus = this.menuStatus.open;
+                    if (menuStatus) {
+                        this.menuStatus.open = !this.menuStatus.open;
+
+                        switch (this.menuStatus.menuName) {
+                            case 'mobile':
+                                this.menuStatus.mobile = !this.menuStatus.mobile
+                                break;
+                            default:
+
+                        }
+                        console.log("Current Menu Status: " + this.menuStatus.open);
+                        $('#nav-link-0').removeClass('active-nav-link');
+                    }
+                }
+            }
+        },
+        computed: {
+
         }
+
     })
 
     $nav_vue.$watch('menuStatus.open', function(newVal, oldVal) {
@@ -1422,6 +1522,10 @@ $(document).ready(function() {
         } else {
             $('.menu-box').removeClass('menu-open').addClass('menu-closed');
         }
+    });
+
+    $nav_vue.$watch('menuStatus.selected_nav.links', function(newVal, oldVal) {
+
     });
 
     $nav_vue.$watch('menuStatus.mobile', function(newVal, oldVal) {
@@ -2855,411 +2959,6 @@ $(document).ready(function() {
                         }
                     ]
                 },
-                brands: [{
-                        id: 1,
-                        letter: 'a',
-                        brand_array: [{
-                                name: 'Alexander and James',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-                            },
-                            {
-                                name: 'ALF Italia',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        id: 2,
-                        letter: 'b',
-                        brand_array: [{
-                                name: 'Bernh. Pedersen & Son',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Bestlite',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 3,
-                        letter: 'c',
-                        brand_array: [{
-                                name: 'Calligaris',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Collins & Hayes',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 5,
-                        letter: 'e',
-                        brand_array: [{
-                                name: 'Ercol',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Erik Jorgensen',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 7,
-                        letter: 'g',
-                        brand_array: [{
-                                name: 'Gubi',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Getama',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 14,
-                        letter: 'n',
-                        brand_array: [{
-                                name: 'Natuzzi',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Naver Collection',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Normann Copenhagen',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 16,
-                        letter: 'p',
-                        brand_array: [{
-                                name: 'Parker Knoll',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Pandul',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 18,
-                        letter: 'r',
-                        brand_array: [{
-                                name: 'Ranch',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Rosendahl',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 19,
-                        letter: 's',
-                        brand_array: [{
-                                name: 'Skagerak Denmark',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'SOFTLINE',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    },
-                    {
-                        id: 22,
-                        letter: 'v',
-                        brand_array: [{
-                                name: 'Verpan',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            },
-                            {
-                                name: 'Versus',
-                                slug: '',
-                                createSlug: function() {
-                                    let splitToLower = this.name.split(' ');
-
-                                    for (let i = 0; i < splitToLower.length; i++) {
-                                        splitToLower[i] = splitToLower[i].replace('&', 'and').replace(/[^\w\s]/gi, '').toLowerCase();
-                                    }
-                                    this.slug = splitToLower.join('-');
-                                    return this.slug;
-                                }
-
-                            }
-                        ]
-                    }
-                ],
-                blogStories: [{
-                        id: 'BP0001',
-                        status: 'LIVE',
-                        // image_address: '/assets/main/Blog-intro.jpg',
-                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
-                        category: 'all',
-                        title: 'My First Blog Post',
-                        brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-                        content: `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>`,
-                        created: '20/12/17',
-                        modified: '20/12/17',
-                        published: '20/12/17',
-                        date: {
-                            month: 'December',
-                            day: 'Monday',
-                            time: '22:03:16',
-                            full: '20/12/17 22:03:16'
-                        }
-
-                    },
-                    {
-                        id: 'BP0002',
-                        status: 'LIVE',
-                        // image_address: '/assets/main/Blog-intro.jpg',
-                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
-                        category: 'all',
-                        title: 'My Second Blog Post',
-                        brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-                        content: `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>`,
-                        created: '20/12/17',
-                        modified: '20/12/17',
-                        published: '20/12/17',
-                        date: {
-                            month: 'December',
-                            day: 'Monday',
-                            time: '22:13:16',
-                            full: '20/12/17 22:03:16'
-                        }
-
-                    },
-                    {
-                        id: 'BP0003',
-                        status: 'LIVE',
-                        // image_address: '/assets/main/Blog-intro.jpg',
-                        image_address: 'https://www.fermliving.com/Admin/Public/GetImage.ashx?Image=/Files/Billeder/Stories/SS17/front-hush-living.jpg&Compression=100&width=373&height=498&crop=5',
-                        category: 'all',
-                        title: 'My Third Blog Post',
-                        brief_desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-                        content: `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>`,
-                        created: '20/12/17',
-                        modified: '20/12/17',
-                        published: '20/12/17',
-                        date: {
-                            month: 'December',
-                            day: 'Monday',
-                            time: '22:23:16',
-                            full: '20/12/17 22:03:16'
-                        }
-
-                    }
-                ],
                 mainImage: {
                     previousClick: '#p-img-1'
                 }
