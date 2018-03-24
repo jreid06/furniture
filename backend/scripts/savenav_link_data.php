@@ -9,6 +9,7 @@
         $old_nav_id = $_POST['navOldID'];
         $new_nav_id = $_POST['navNewID'];
         $nav_title = $_POST['navTitle'];
+        $is_cat = $_POST['isCat'];
 
         // check what action to do (save offline link, save & make LIVE)
         if ($action === 'save-offline') {
@@ -19,8 +20,8 @@
 
             if ($nav_link_exists) {
 
-                $fields = array('nav_custom_id', 'nav_title', 'nav_json_data', 'nav_status');
-                $values = array($new_nav_id, $nav_title, $nav_json, 'false');
+                $fields = array('nav_custom_id', 'nav_title', 'nav_json_data', 'nav_status', 'nav_is_cat');
+                $values = array($new_nav_id, $nav_title, $nav_json, 'false', $is_cat);
 
                 $nav_link_update = DatabaseFunctions::updateMultipleFields('navigation', $fields, $values, 'nav_custom_id', $old_nav_id);
 
@@ -81,8 +82,8 @@
 
             if ($nav_link_exists) {
 
-                $fields = array('nav_custom_id', 'nav_title', 'nav_json_data', 'nav_status');
-                $values = array($new_nav_id, $nav_title, $nav_json, $link_status);
+                $fields = array('nav_custom_id', 'nav_title', 'nav_json_data', 'nav_status', 'nav_is_cat');
+                $values = array($new_nav_id, $nav_title, $nav_json, $link_status, $is_cat);
 
                 $nav_link_update = DatabaseFunctions::updateMultipleFields('navigation', $fields, $values, 'nav_custom_id', $old_nav_id);
 
