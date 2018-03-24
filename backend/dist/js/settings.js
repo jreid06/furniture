@@ -300,7 +300,8 @@ $(document).ready(function() {
                     newLinkTitle = $('.link-title-update')[0].value.toLowerCase().trim(),
                     newLinkID = newLinkTitle.replace(/[^\w\s]/gi, '').replace(/ /g,''),
                     dataaction = $(e.target)[0].attributes['data-action'].value;
-                    $vm = this;
+                    $vm = this,
+                    is_cat = 'no';
 
                 // check if title has changed
                 if ($vm.navigation.edit.instance.title !== newLinkTitle) {
@@ -323,6 +324,8 @@ $(document).ready(function() {
 
                     // NOTE: equals to "TRUE"
                     $vm.navigation.edit.instance.submenu = $vm.navigation.edit.sublinks;
+
+                    is_cat = 'yes';
 
                     // replace empty array with newly added subcategories array
                     $vm.navigation.edit.instance.submenu_categories = $vm.navigation.edit.subcategories
@@ -357,7 +360,8 @@ $(document).ready(function() {
                         navTitle: $vm.navigation.edit.instance.title,
                         navOldID: oldLinkID,
                         navNewID: $vm.navigation.edit.instance.link_id,
-                        linkStatus: $vm.navigation.edit.instance.showlink
+                        linkStatus: $vm.navigation.edit.instance.showlink,
+                        isCat: is_cat
                     },
                     success: function(data){
                         let $data = JSON.parse(data);
