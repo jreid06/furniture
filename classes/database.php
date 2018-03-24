@@ -155,6 +155,24 @@
             }
         }
 
+        public static function createImageTable($tbl)
+        {
+            parent::checkConnection();
+
+            $query = "CREATE TABLE `furniture`.`$tbl` ( `id` INT(255) NOT NULL AUTO_INCREMENT , `sku_id` VARCHAR(1000) NOT NULL , `category` TEXT NOT NULL , `images` TEXT NOT NULL , `inventory` TEXT NOT NULL , `sku_type` TEXT NOT NULL , `sku_size` TEXT NOT NULL , `sku_color` TEXT NOT NULL , `sku_stripe_cat` TEXT NOT NULL , `sku_main_image` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB";
+
+            if (parent::returnConnection()->query($query)) {
+                $result = true;
+
+                return $result;
+            } else {
+                $result = false;
+
+                return $result;
+            }
+        }
+
+
         public static function deleteFile($filename)
         {
             if (unlink(dirname(__DIR__).'/'.$filename)) {
@@ -333,6 +351,26 @@
             }
         }
 
+        public static function checkTableExists($tbl)
+        {
+            // open connection to database
+            parent::checkConnection();
+
+            $query = "SELECT * FROM $tbl";
+
+            $result = parent::returnConnection()->query($query);
+
+            if ($result) {
+                parent::returnConnection()->close();
+                return true;
+
+            } else {
+                parent::returnConnection()->close();
+                return false;
+
+            }
+        }
+
 
 		// function is used when user logs out. it deletes cookie an/or session variables.
         public static function destroyLoggedInData()
@@ -448,7 +486,7 @@
 
                 parent::returnConnection()->close();
 
-                return array(true);
+                return array(true, $query);
             }else {
                 return array(false, $query, $errorlist);
             }
@@ -537,13 +575,13 @@
 
         }
 
-        public static function saveNavigationLink($tbl, $fields, $value1, $value2, $value3, $value4)
+        public static function saveNavigationLink($tbl, $fields, $value1, $value2, $value3, $value4, $value5)
         {
             parent::checkConnection();
 
-            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?)");
+            $query = parent::returnConnection()->prepare("INSERT INTO `$tbl` $fields VALUES (?,?,?,?,?)");
 
-            $query->bind_param('ssss', $value1, $value2, $value3, $value4);
+            $query->bind_param('sssss', $value1, $value2, $value3, $value4, $value5);
 
             if($query->execute()){
                 $query->close();
