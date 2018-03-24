@@ -1,5 +1,11 @@
 <div class="container-fluid products-page-main-container home">
 
+    <!-- <div class="display-box">
+        <pre>
+            {{dump(queryDetails.all_brands)}}
+        </pre>
+    </div> -->
+
     <div class="row">
         <div class="col-12 breadcrumb-container">
             <nav aria-label="breadcrumb" role="navigation">
@@ -69,8 +75,6 @@
         </div>
 
 
-
-
         <div class="col-12 d-flex flex-wrap flex-row products-page-content">
 
             {% if pagelocation == '/products/gifts' %}
@@ -84,6 +88,7 @@
                 <div class="p-2">
                     <div id="accordion">
 
+                             <!-- PRODUCT TYPE FILTERS -->
                           <div class="card filter-card">
                             <div class="card-header" id="headingOne">
                               <!-- <h5 class="mb-0">
@@ -109,12 +114,11 @@
                                         list all living room product types
                                     -->
 
-                                    {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
-                                        <template v-for="(prodtype, index) in products.livingroom">
-                                            <template v-if="prodtype.name == 'all products'">
+                                    {% if queryDetails.category == 'all' %}
 
-                                            </template>
-                                            <template v-else>
+                                        {% for cats in queryDetails.all_cats %}
+                                        <template v-if="loaded.filter_list">
+                                            <template v-for="(prodtype, index) in products['{{cats}}']">
                                                 <filter-item
                                                         v-bind:key="prodtype.key"
                                                         v-bind:filtername="prodtype.name"
@@ -122,64 +126,25 @@
                                                 </filter-item>
                                             </template>
                                         </template>
-                                    {% endif %}
 
-                                    <!--
-                                        list all kitchen product types
-                                    -->
+                                        {% endfor %}
 
-                                    {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
-                                    <template v-for="(prodtype, index) in products.kitchen">
-                                        <template v-if="prodtype.name == 'all products'">
+                                    {% else %}
 
+                                        <!--
+                                            list specific product types
+                                        -->
+
+                                        <template v-if="loaded.filter_list">
+                                            <template v-for="(prodtype, index) in products['{{queryDetails.category}}']">
+                                                <filter-item
+                                                        v-bind:key="prodtype.key"
+                                                        v-bind:filtername="prodtype.name"
+                                                        v-bind:activetype="prodtype.currentPage">
+                                                </filter-item>
+                                            </template>
                                         </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name"
-                                                    v-bind:activetype="prodtype.currentPage">
-                                            </filter-item>
-                                        </template>
-                                    </template>
-                                    {% endif %}
 
-
-                                    <!--
-                                        list all bedroom product types
-                                    -->
-
-                                    {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
-                                    <template v-for="(prodtype, index) in products.bedroom">
-                                        <template v-if="prodtype.name == 'all products'">
-
-                                        </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name"
-                                                    v-bind:activetype="prodtype.currentPage">
-                                            </filter-item>
-                                        </template>
-                                    </template>
-                                    {% endif %}
-
-                                    <!--
-                                        list all bathroom product types
-                                    -->
-
-                                    {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
-                                    <template v-for="(prodtype, index) in products.bath">
-                                        <template v-if="prodtype.name == 'all products'">
-
-                                        </template>
-                                        <template v-else>
-                                            <filter-item
-                                                    v-bind:key="prodtype.key"
-                                                    v-bind:filtername="prodtype.name"
-                                                    v-bind:activetype="prodtype.currentPage">
-                                            </filter-item>
-                                        </template>
-                                    </template>
                                     {% endif %}
 
                                 </ul>
@@ -187,7 +152,7 @@
                             </div>
                           </div>
 
-                          <!--  -->
+                             <!-- CATEGORY FILTERS -->
                           <div class="card filter-card">
                             <div class="card-header" id="headingTwo">
 
@@ -202,17 +167,39 @@
                               <div class="card-body">
                                   <ul>
 
-                                      {% if queryDetails.category == 'livingroom' or queryDetails.category == 'all' %}
+                                      {% if queryDetails.category == 'all' %}
+
+                                      {% for cats in queryDetails.all_cats %}
+                                          <li>
+                                              <div class="input-group mb-0 filter-input-group">
+                                                  <div class="input-group-prepend filter-input-box">
+                                                      <div class="input-group-text filter-input d-flex flex-row">
+                                                          <div class="p-2 fltr-inp">
+                                                              <input @click="toggleProducts" class="cat-checkbox" name="cat-{{cats}}" type="checkbox" data-category="{{cats}}" aria-label="Checkbox for following text input">
+                                                          </div>
+
+                                                          <div class="p-2 fltr-inp">
+                                                              <p>{{cats | capitalize }}</p>
+                                                          </div>
+
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      {% endfor %}
+
+                                      {% else %}
+
                                       <li>
                                           <div class="input-group mb-0 filter-input-group">
                                               <div class="input-group-prepend filter-input-box">
                                                   <div class="input-group-text filter-input d-flex flex-row">
                                                       <div class="p-2 fltr-inp">
-                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-livingroom" type="checkbox" data-category="livingroom" aria-label="Checkbox for following text input" {% if queryDetails.category == 'livingroom' %} checked {% endif %}>
+                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-{{queryDetails.category}}" type="checkbox" data-category="{{queryDetails.category}}" aria-label="Checkbox for following text input" checked>
                                                       </div>
 
                                                       <div class="p-2 fltr-inp">
-                                                          <p>Living Room</p>
+                                                          <p>{{ queryDetails.category | capitalize }}</p>
                                                       </div>
 
                                                   </div>
@@ -221,78 +208,17 @@
                                       </li>
 
                                       {% endif %}
-
-                                      {% if queryDetails.category == 'kitchen' or queryDetails.category == 'all' %}
-                                      <li>
-                                          <div class="input-group mb-0 filter-input-group">
-                                              <div class="input-group-prepend filter-input-box">
-                                                  <div class="input-group-text filter-input d-flex flex-row">
-                                                      <div class="p-2 fltr-inp">
-                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-kitchen" type="checkbox" data-category="kitchen" aria-label="Checkbox for following text input" {% if queryDetails.category == 'kitchen' %} checked {% endif %}>
-                                                      </div>
-
-                                                      <div class="p-2 fltr-inp">
-                                                          <p>Kitchen</p>
-                                                      </div>
-
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </li>
-
-                                      {% endif %}
-
-                                      {% if queryDetails.category == 'bedroom' or queryDetails.category == 'all' %}
-                                      <li>
-                                          <div class="input-group mb-0 filter-input-group">
-                                              <div class="input-group-prepend filter-input-box">
-                                                  <div class="input-group-text filter-input d-flex flex-row">
-                                                      <div class="p-2 fltr-inp">
-                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-bedroom" type="checkbox" data-category="bedroom" aria-label="Checkbox for following text input" {% if queryDetails.category == 'bedroom' %} checked {% endif %}>
-                                                      </div>
-
-                                                      <div class="p-2 fltr-inp">
-                                                          <p>Bedroom</p>
-                                                      </div>
-
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </li>
-
-                                      {% endif %}
-
-                                      {% if queryDetails.category == 'bath' or queryDetails.category == 'all' %}
-                                      <li>
-                                          <div class="input-group mb-0 filter-input-group">
-                                              <div class="input-group-prepend filter-input-box">
-                                                  <div class="input-group-text filter-input d-flex flex-row">
-                                                      <div class="p-2 fltr-inp">
-                                                          <input @click="toggleProducts" class="cat-checkbox" name="cat-bath" type="checkbox" data-category="bath" aria-label="Checkbox for following text input" {% if queryDetails.category == 'bath' %} checked {% endif %}>
-                                                      </div>
-
-                                                      <div class="p-2 fltr-inp">
-                                                          <p>Bath</p>
-                                                      </div>
-
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </li>
-
-                                      {% endif %}
-
                                   </ul>
                               </div>
                             </div>
                           </div>
 
-                          <!--  -->
+                            <!-- BRAND FILTERS -->
                           <div class="card filter-card">
                             <div class="card-header" id="headingThree">
                               <div v-on:click="toggleSign" class="btn btn-link collapsed btn-filter" data-toggle="collapse" data-target="#filter3" aria-expanded="false" aria-controls="filter3" data-filter-id="#filter3">
 
-                                    <div>Brand</div>
+                                    <div>Brands</div>
                                     <div class="fa fa-minus open-accordion" data-filter-id="#filter3"></div>
 
                               </div>
@@ -300,22 +226,34 @@
                            <div id="filter3" class="collapse show" aria-labelledby="headingThree" >
                               <div class="card-body">
                                   <ul>
-                                      <li>
-                                          <div class="input-group mb-3">
-                                              <div class="input-group-prepend">
-                                                  <div class="input-group-text">
-                                                      <input type="checkbox" aria-label="Checkbox for following text input">
+                                      {% for brands in queryDetails.all_brands %}
+
+                                      <!-- loop through brand_letter_array -->
+                                          {% for brand in brands.brand_array %}
+                                          <li>
+                                              <div class="input-group mb-0 filter-input-group">
+                                                  <div class="input-group-prepend filter-input-box">
+                                                      <div class="input-group-text filter-input d-flex flex-row">
+                                                          <div class="p-2 fltr-inp">
+                                                              <input @click="toggleProducts" class="cat-checkbox" name="brand-{{brand.slug}}" type="checkbox" data-category="{{brand.slug}}" aria-label="Checkbox for following text input">
+                                                          </div>
+
+                                                          <div class="p-2 fltr-inp">
+                                                              <p>{{ brand.brand_name | capitalize }}</p>
+                                                          </div>
+
+                                                      </div>
                                                   </div>
                                               </div>
-                                          </div>
-                                      </li>
+                                          </li>
+                                          {% endfor %}
+                                      {% endfor %}
                                   </ul>
                               </div>
                             </div>
-                         </div>
-                         <!--  -->
+                          </div>
 
-                         <!--  -->
+                            <!-- PRICE FILTERS -->
                          <div class="card filter-card">
                            <div class="card-header" id="headingThree">
 
@@ -367,8 +305,7 @@
                                  </ul>
                              </div>
                            </div>
-                        </div>
-                        <!--  -->
+                         </div>
 
                     </div>
                     <!-- end of accordion-->
@@ -397,7 +334,7 @@
 
                                 {% for sku in product.skus.data %}
 
-                                    {% if sku.attributes.gift %}
+                                    {% if sku.attributes.gift == 'true' %}
                                     <div class="col-6 col-md-4 col-lg-3 product-card-col">
                                         <div class="card product-card" style="">
                                             <div class="product-image">
