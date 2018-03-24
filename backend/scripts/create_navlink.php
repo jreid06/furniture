@@ -23,7 +23,7 @@
         }else {
 
             // store it in the database
-            $nav_create_status = DatabaseFunctions::saveNavigationLink('navigation', '(nav_custom_id, nav_title, nav_json_data, nav_status)', $nav_id, $nav_title, $nav_json, $nav_status);
+            $nav_create_status = DatabaseFunctions::saveNavigationLink('navigation', '(nav_custom_id, nav_title, nav_json_data, nav_status, nav_is_cat)', $nav_id, $nav_title, $nav_json, $nav_status, 'no');
 
             if ($nav_create_status[0]) {
                 $msg = array(
