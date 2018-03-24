@@ -2778,192 +2778,78 @@ $(document).ready(function() {
                     }
                 ],
                 products: {
-                    livingroom: [{
-                            key: '#L01',
-                            name: 'all products',
-                            slug: '',
-                            cat: 'livingroom'
-                        },
-                        {
-                            key: '#L02',
-                            name: 'candle holders',
-                            slug: 'candle-holders',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'candle-holders' ? true : false
-                        },
-                        {
-                            key: '#L03',
-                            name: 'plaids',
-                            slug: 'plaids',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'plaids' ? true : false
-                        },
-                        {
-                            key: '#L04',
-                            name: 'cushions',
-                            slug: 'cushions',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'cushions' ? true : false
-                        },
-                        {
-                            key: '#L05',
-                            name: 'lamps',
-                            slug: 'lamps',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'lamps' ? true : false
-                        },
-                        {
-                            key: '#L06',
-                            name: 'nips',
-                            slug: 'nips',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'nips' ? true : false
-                        },
-                        {
-                            key: '#L07',
-                            name: 'poster',
-                            slug: 'poster',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'posters' ? true : false
-                        },
-                        {
-                            key: '#L08',
-                            name: 'shelves',
-                            slug: 'shelves',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'shelves' ? true : false
-                        },
-                        {
-                            key: '#L09',
-                            name: 'pots',
-                            slug: 'pots',
-                            cat: 'livingroom',
-                            image: '/assets/main/dust_scratches.png',
-                            currentPage: window.location.pathname.split('/')[3] === 'pots' ? true : false
-                        }
-                    ],
-                    kitchen: [{
-                            key: '#K01',
-                            name: 'all products',
-                            slug: '',
-                            cat: 'kitchen'
-                        },
-                        {
-                            key: '#K02',
-                            name: 'kitchen textiles',
-                            slug: 'kitchen-textiles',
-                            cat: 'kitchen',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'kitchen-textiles' ? true : false
-                        },
-                        {
-                            key: '#K03',
-                            name: 'dining',
-                            slug: 'dining',
-                            cat: 'kitchen',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'dining' ? true : false
-                        },
-                        {
-                            key: '#K04',
-                            name: 'cook',
-                            slug: 'cook',
-                            cat: 'kitchen',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'cook' ? true : false
-                        }
-                    ],
-                    bedroom: [{
-                            key: '#BE01',
-                            name: 'all products',
-                            slug: '',
-                            cat: 'bedroom'
-                        },
-                        {
-                            key: '#BE02',
-                            name: 'bed linen',
-                            slug: 'linen',
-                            cat: 'bedroom',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'linen' ? true : false
-                        },
-                        {
-                            key: '#BE03',
-                            name: 'cushions',
-                            slug: 'cushions',
-                            cat: 'bedroom',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'cushions' ? true : false
-                        },
-                        {
-                            key: '#BE04',
-                            name: 'lamps',
-                            slug: 'lamp',
-                            cat: 'bedroom',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'lamps' ? true : false
-                        },
-                        {
-                            key: '#BE05',
-                            name: 'nips',
-                            slug: 'nips',
-                            cat: 'bedroom',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'nips' ? true : false
-                        },
-                        {
-                            key: '#BE06',
-                            name: 'poster',
-                            slug: 'posters',
-                            cat: 'bedroom',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'poster' ? true : false
-                        }
-                    ],
-                    bath: [{
-                            key: '#BA01',
-                            name: 'all products',
-                            slug: '',
-                            cat: 'bath'
-                        },
-                        {
-                            key: '#BA02',
-                            name: 'towel',
-                            slug: 'towel',
-                            cat: 'bath',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'towel' ? true : false
-                        },
-                        {
-                            key: '#BA03',
-                            name: 'shower curtains',
-                            slug: 'curtains',
-                            cat: 'bath',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'curtains' ? true : false
-                        },
-                        {
-                            key: '#BA04',
-                            name: 'accessories',
-                            slug: 'accessories',
-                            cat: 'bath',
-                            image: '',
-                            currentPage: window.location.pathname.split('/')[3] === 'accessories' ? true : false
-                        }
-                    ]
+
+                },
+                loaded:{
+                    filter_list: false
                 },
                 mainImage: {
                     previousClick: '#p-img-1'
                 }
             },
             methods: {
+                getCategoryData: function(){
+                    let $vm = this;
+
+                    $.ajax({
+                        url: '/scripts/get_nav_data.php',
+                        type: 'post',
+                        data: {
+                            nav: true
+                        },
+                        success: function(data){
+                            let $data = JSON.parse(data);
+
+                            console.log($data);
+
+                            // format and structure data
+                            let sublink_navs = $data.info.link_types.submenu_navs;
+                                single_navs = $data.info.link_types.singlem_navs;
+                                category_products_data = {};
+
+                            for (var i = 0; i < sublink_navs.length; i++) {
+
+                                let sublink_inner_cats = sublink_navs[i].nav_json_data.submenu_categories;
+
+                                // update products array with all categories and their sub-categories
+
+                                // add category to products array
+
+                                $vm.products[sublink_navs[i].nav_json_data.slug] = [];
+
+                                for (var j = 0; j < sublink_inner_cats.length; j++) {
+                                    let navlink_data = {
+                                        key: '',
+                                        cat: '',
+                                        slug: '',
+                                        name: '',
+                                        currentPage: '',
+                                        checkCurrentPage: function(){
+                                             window.location.pathname.split('/')[3] === this.slug ? this.currentPage = true : this.currentPage = false
+                                        }
+                                    }
+
+                                    navlink_data.key = '#filter-'+ sublink_inner_cats[j].slug+sublink_navs[i].id;
+                                    navlink_data.cat = sublink_navs[i].nav_json_data.slug;
+                                    navlink_data.slug = sublink_inner_cats[j].slug;
+                                    navlink_data.name = sublink_inner_cats[j].title;
+
+
+                                    navlink_data.checkCurrentPage();
+
+                                    // console.log(navlink_data);
+
+                                    $vm.products[sublink_navs[i].nav_json_data.slug].push(navlink_data);
+
+                                }
+
+                            }
+
+                            // show filters on products page
+                            $vm.loaded.filter_list = true;
+                        }
+                    })
+                },
                 getSlideData: function() {
                     let $vm = this;
                     $.ajax({
@@ -3278,7 +3164,7 @@ $(document).ready(function() {
                     console.log(targetCheckbox);
                     console.log(targetCheckbox[0].checked);
                     if (targetCheckbox[0].checked) {
-                        console.log('cat checkbox for ' + targetCheckbox[0].attributes[1].nodeValue + ' has been checked');
+                        console.log('cat checkbox for ' + targetCheckbox[0].attributes['data-category'].nodeValue + ' has been checked');
                         switch (targetCheckbox[0].attributes[1].nodeValue) {
                             case 'livingroom':
                                 window.location = '/products/livingroom'
@@ -3293,12 +3179,26 @@ $(document).ready(function() {
                                 window.location = '/products/bath'
                                 break;
                             default:
-
+                                window.location = '/products/'+targetCheckbox[0].attributes['data-category'].nodeValue;
+                            break;
                         }
                     } else {
                         window.location = "/products"
                     }
 
+                },
+                toggleBrand: function(e){
+                    let targetCheckbox = $(e.target);
+
+                    console.log(targetCheckbox);
+                    console.log(targetCheckbox[0].checked);
+                    if (targetCheckbox[0].checked) {
+                        console.log('cat checkbox for ' + targetCheckbox[0].attributes['data-brand-name'].nodeValue + ' has been checked');
+                        let brand = targetCheckbox[0].attributes['data-brand-name'].nodeValue;
+
+                        console.log('TARGET LOCATION: /products/brand/'+brand);
+                        // window.location = '/products/brand/'+brand;
+                    }
                 },
                 addToWishlist: function() {
                     $nav_vue.addToWishlist();
@@ -3751,6 +3651,8 @@ $(document).ready(function() {
             },
             mounted: function() {
                 let $vm = this;
+
+                this.getCategoryData();
 
                 // render slides dynamically
                 let initslide = new Promise(function(resolve, reject) {
