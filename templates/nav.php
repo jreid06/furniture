@@ -114,35 +114,11 @@
         <div class="search-listings">
             <template v-if="menuStatus.navloaded">
                 <ul class="list-group list-group-flush search-listing-values">
-                    <template v-for="(type, index) in products.livingroom">
-                        <template v-if="type.slug">
+                    <template v-for="(type, index) in searchListing.categories">
                             <li class="list-group-item">
-                                <a :href="'/products/'+type.cat+'/'+type.slug">{{type.title}} <span class="text-muted text-italic">({{type.cat}})({{type.slug}})</span></a>
+                                <a :href="'/products/'+type.cat+'/'+type.slug">{{type.name}} <span class="text-muted text-italic">({{type.cat}})</span></a>
                             </li>
-                        </template>
                     </template>
-                    <template v-for="(type, index) in products.kitchen">
-                        <template v-if="type.slug">
-                            <li class="list-group-item">
-                                <a :href="'/products/'+type.cat+'/'+type.slug">{{type.title}}  <span class="text-muted text-italic">({{type.cat}})({{type.slug}})</span> </a>
-                            </li>
-                        </template>
-                    </template>
-                    <template v-for="(type, index) in products.bedroom">
-                        <template v-if="type.slug">
-                            <li class="list-group-item">
-                                <a :href="'/products/'+type.cat+'/'+type.slug">{{type.title}} <span class="text-muted text-italic">({{type.cat}})({{type.slug}})</span></a>
-                            </li>
-                        </template>
-                    </template>
-                    <template v-for="(type, index) in products.bath">
-                        <template v-if="type.slug">
-                            <li class="list-group-item">
-                                <a :href="'/products/'+type.cat+'/'+type.slug">{{type.title}} <span class="text-muted text-italic">({{type.cat}})({{type.slug}})</span></a>
-                            </li>
-                        </template>
-                    </template>
-
                 </ul>
             </template>
 
