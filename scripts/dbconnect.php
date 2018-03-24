@@ -1,6 +1,7 @@
 <?php
 	session_start();
     define('ROOT_PATH', dirname(__DIR__).'/');
+	define('DOMAIN', 'http://furniture.local');
 
 	$root_dir = dirname(__DIR__).'/assets/test/';
 	$root_dir_slide = dirname(__DIR__).'/assets/slideshow/';
