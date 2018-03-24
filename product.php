@@ -12,8 +12,24 @@
     $categories_arr = array('livingroom','bedroom', 'bath', 'kitchen');
     $real_cat = false;
 
-    for ($i=0; $i < count($categories_arr); $i++) {
-        if ($category === $categories_arr[$i]) {
+    // get list of categories dynamically
+    Connect::checkConnection();
+    $dynamic_categories_data = DatabaseFunctions::getDataLimit('*', 'navigation', 'nav_is_cat', 'yes', false, false);
+    $dynamic_categories = array();
+
+    if ($dynamic_categories_data[0]) {
+        $dynamic_categories_data = $dynamic_categories_data[1];
+    }
+
+    for ($dy=0; $dy < count($dynamic_categories_data); $dy++) {
+        // check if link is active
+        if ($dynamic_categories_data[$dy]['nav_status'] === 'true') {
+            array_push($dynamic_categories, $dynamic_categories_data[$dy]['nav_title']);
+        }
+    }
+
+    for ($i=0; $i < count($dynamic_categories); $i++) {
+        if ($category === $dynamic_categories[$i]) {
             $real_cat = true;
         }
     }
