@@ -1451,6 +1451,6 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         </div>
     </div>
 </div>
-", "products.html.twig", "/Users/jasonreid/Sites/furniture/twig_templates/products.html.twig");
+", "products.html.twig", "/Users/jasonreid/Sites/idyldev/twig_templates/products.html.twig");
     }
 }
