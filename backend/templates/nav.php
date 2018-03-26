@@ -35,6 +35,7 @@
     </ul>
     <!-- /.navbar-top-links -->
 
+
     <div class="navbar-default sidebar admin-nav" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
@@ -61,9 +62,22 @@
                                 <template v-if="nav.sublinks">
                                     <a :href="nav.link" style="background-color: darkgray; font-weight: bold; color: #222">{{nav.title}}</a>
                                     <ul class="nav nav-third-level">
-                                        <li class="nav-list-li" v-for="(sublink, index) in nav.sublinks_list">
-                                            <a :href="sublink.link">{{sublink.title}}</a>
-                                        </li>
+                                        <template v-if="nav.title.toLowerCase() == 'edit product images'">
+                                            <?php
+
+                                                for ($i=0; $i < count($__DASHBOARD_product_categories); $i++) {
+                                                    echo "<li class=\"nav-list-li\">";
+                                                    echo "<a href='/backend/auth/admin/edit/products/".$__DASHBOARD_product_categories[$i]['slug']."'>".ucwords($__DASHBOARD_product_categories[$i]['title'])." Products</a>";
+                                                    echo "</li>";
+                                                }
+
+                                             ?>
+                                        </template>
+                                        <template v-else>
+                                            <li class="nav-list-li" v-for="(sublink, index) in nav.sublinks_list">
+                                                <a :href="sublink.link">{{sublink.title}}</a>
+                                            </li>
+                                        </template>
                                     </ul>
                                 </template>
                                 <template v-else>
