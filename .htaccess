@@ -31,6 +31,8 @@ RewriteRule ^backend/auth/admin/?$  /backend/login.php    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/add-blog-images?$  /backend/add_blog_images.php    [NC,L]
 
+RewriteRule ^backend/auth/admin/edit/generic-uploads?$  /backend/generic-uploads.php    [NC,L]
+
 RewriteRule ^backend/auth/admin/edit/view-blog-images?$  /backend/view_blog_images.php    [NC,L]
 
 RewriteRule ^backend/auth/admin/edit/upload-product-images?$  /backend/upload-product-images.php    [NC,L]
