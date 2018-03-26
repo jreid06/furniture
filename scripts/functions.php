@@ -524,19 +524,19 @@
 		$skus = array();
 		$names = array();
 
-		for ($i=0; $i < count($products['data']); $i++) {
-			for ($j=0; $j < count($products['data'][$i]['skus']['data']); $j++) {
-				if ($products['data'][$i]['id'] === $products['data'][$i]['skus']['data'][$j]['product']) {
+		for ($i=0; $i < count($products); $i++) {
+			for ($j=0; $j < count($products[$i]['skus']['data']); $j++) {
+				if ($products[$i]['id'] === $products[$i]['skus']['data'][$j]['product']) {
 					$connect_array = array(
-						'id'=> $products['data'][$i]['id'],
-						'name'=>$products['data'][$i]['name'],
-						'slug'=>$products['data'][$i]['metadata']['slug']
+						'id'=> $products[$i]['id'],
+						'name'=>$products[$i]['name'],
+						'slug'=>$products[$i]['metadata']['slug']
 					);
 
 					array_push($names, $connect_array);
 				}
 
-				array_push($skus, $products['data'][$i]['skus']['data'][$j]);
+				array_push($skus, $products[$i]['skus']['data'][$j]);
 			}
 		}
 
