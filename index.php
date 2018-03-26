@@ -3,8 +3,6 @@
     include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include '/scripts/dbconnect.php';
-
-    // define('ROOT_PATH', dirname(__DIR__).'/furniture/');
 	include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
@@ -108,17 +106,8 @@
                         'months'=> $months,
                         'posts'=>$blog_posts
                     ));
-
-                 ?>
-                <!-- <blog-post
-                        v-for="(post, index) in blogStories"
-                        v-bind:key="post.id"
-                        v-bind:postid="post.id"
-                        v-bind:postimage="post.image_address"
-                        v-bind:posttitle="post.title"
-                        v-bind:postbrief="post.brief_desc"
-                        v-bind:postdate="post.published + ' ' + post.date.time">
-                </blog-post> -->
+                 //
+                 // ?>
             </div>
 
             <div class="row">
