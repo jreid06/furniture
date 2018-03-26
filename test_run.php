@@ -1,5 +1,6 @@
 <?php
     include 'scripts/dbconnect.php';
+
     $id = bin2hex(random_bytes(20));
 
     $arr = array();
@@ -35,6 +36,12 @@
 
     $date=date_create();
     echo date_timestamp_get($date);
+
+    $skuv = validate_sku('sku_CDQ1lS8reaBLIy');
+
+    echo "<br><br><br>";
+
+    var_dump($skuv)
 
     // \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
     // try {
