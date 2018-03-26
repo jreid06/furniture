@@ -7,7 +7,7 @@
         <ul class="list-group list-group-flush">
         {% for name in brand.brand_array %}
             <li class="list-group-item brand-title-listing">
-                <a href="/products/brand/{{name.brand_slug | lower}}">{{name.brand_name | capitalize}}</a>
+                <a href="/products/brands/{{name.brand_slug | lower}}">{{name.brand_name | capitalize}}</a>
             </li>
         {% endfor %}
         </ul>
