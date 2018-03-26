@@ -117,6 +117,34 @@
 
 	}
 
+	function getProductNavCategories(){
+
+		Connect::checkConnection();
+
+		$dynamic_categories_data = DatabaseFunctions::getDataLimit('*', 'navigation', 'nav_is_cat', 'yes', false, false);
+	    $dynamic_categories = array();
+
+	    if ($dynamic_categories_data[0]) {
+	        $dynamic_categories_data = $dynamic_categories_data[1];
+	    }
+
+	    for ($dy=0; $dy < count($dynamic_categories_data); $dy++) {
+	        // check if link is active
+	        if ($dynamic_categories_data[$dy]['nav_status'] === 'true') {
+				$parsed_json = json_decode( $dynamic_categories_data[$dy]['nav_json_data'], true );
+
+				$send = array(
+					'title'=>$dynamic_categories_data[$dy]['nav_title'],
+					'slug'=> $parsed_json['slug']
+				);
+
+	            array_push($dynamic_categories, $send);
+	        }
+	    }
+
+		return $dynamic_categories;
+	}
+
 	function format_timestamp($timestamp){
 	    $ts = $timestamp;
 	    $date = new DateTime();
