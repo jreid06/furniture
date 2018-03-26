@@ -2661,6 +2661,12 @@ $(document).ready(function() {
 
 
                     console.log(checkBoxValues);
+                    console.log(category);
+
+                    if (window.location.pathname.split('/')[2] === 'brands') {
+                        console.log('BRANDS PAGE. FILTER BRANDS');
+                        category = 'brands';
+                    }
 
                     // clear the current selection
                     $('.product-card-col').remove();
@@ -2678,7 +2684,8 @@ $(document).ready(function() {
                         type: 'get',
                         data: {
                             filters: checkBoxValues,
-                            category: category
+                            category: category,
+                            selected_brand: window.location.pathname.split('/')[3]
                         },
                         success: function(data) {
                             let $data = JSON.parse(data);
