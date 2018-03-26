@@ -16,7 +16,7 @@
 
 	function get_limited_blog_posts($fields, $tbl, $field2, $arg, $limit){
 
-		Connect::checkConnection();
+		// Connect::checkConnection();
 
 		$posts = DatabaseFunctions::getDataLimit($fields, $tbl, $field2, $arg, true, $limit);
 
@@ -165,7 +165,8 @@
 	}
 
 	function validate_sku($id){
-		\Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
+
+		// \Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
 
         try {
             $sku = \Stripe\Sku::retrieve($id);
