@@ -13,9 +13,10 @@
 	require_once "parsedown/Parsedown.php";
 	require_once "easypost-php/lib/easypost.php";
 	// require_once "shippo-php-client/lib/Shippo.php";
-	require_once 'functions.php';
 
-	require_once ROOT_PATH.'vendor/autoload.php';
+	require_once '../vendor/stripe/stripe-php/init.php';
+
+	// require_once ROOT_PATH.'vendor/autoload.php';
 
 	$stripe = array(
 	  "secret_key"      => "sk_test_o3lzBtuNJXFJOnmzNUfNjpXW",
@@ -77,8 +78,10 @@
 		"phone"   => "415-123-4567"
 	);
 
-	$__DASHBOARD_product_categories = getProductNavCategories();
+	require_once 'functions.php';
 
+	$__DASHBOARD_product_categories = getProductNavCategories();
+	\Stripe\Stripe::setApiKey("sk_test_o3lzBtuNJXFJOnmzNUfNjpXW");
 	// $session_not_set = !isset($_SESSION['idyl_tkn'])?true:'session is set';
 	// $cookie_not_set = !isset($_COOKIE['idyl_tkn'])?true:'cookie is set';
     //
