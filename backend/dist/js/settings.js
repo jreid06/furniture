@@ -21,6 +21,11 @@ $(document).ready(function() {
                 },
                 pages: [
                     {
+                        title: 'GENERIC UPLOADS',
+                        link: "/backend/auth/admin/edit/generic-uploads",
+                        sublinks: false
+                    },
+                    {
                         title: 'Home Slide Content',
                         link: "/backend/auth/admin/edit/homepage-edit/e9be46f22c",
                         sublinks: false
@@ -1546,8 +1551,19 @@ $(document).ready(function() {
                 });
             });
 
+
+            // check what page user is on
+            let page_name = window.location.pathname,
+                blog_upload_url = '';
+
+            if (page_name === '/backend/auth/admin/edit/generic-uploads') {
+                blog_upload_url = '/backend/scripts/upload_generic_files.php';
+            }else if (page_name === '/backend/auth/admin/edit/add-blog-images') {
+                blog_upload_url = '/backend/scripts/uploadblogimages.php';
+            }
+
             $('#blogUpload').fileupload({
-                url: '/backend/scripts/uploadblogimages.php',
+                url: blog_upload_url,
                 autoUpload: false,
                 disableImageResize: /Android(?!.*Chrome)|Opera/
                     .test(window.navigator && navigator.userAgent),
