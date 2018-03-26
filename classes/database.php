@@ -42,33 +42,48 @@
             }
         }
 
-        public static function getDataLimit($fields, $tbl, $field2, $value, $limit=true, $limit_val)
+        public static function getDataLimit($fields, $tbl, $field2, $value, $limit, $limit_val)
         {
+            parent::checkConnection();
             if ($limit) {
-                $query = "SELECT `$fields` FROM `$tbl` WHERE $field2='$value' LIMIT $limit_val";
+                $query = "SELECT * FROM `$tbl` WHERE $field2='$value' LIMIT $limit_val";
 
                 $result = parent::returnConnection()->query($query);
 
-                while ($row = $result->fetch_assoc()) {
-                    $data[] = $row;
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $data[] = $row;
+                    }
+
+                    return array(true,$data);
+                }else {
+                    return array(false);
                 }
+
+
             }else {
-                $query = "SELECT `$fields` FROM `$tbl` WHERE $field2='$value'";
+                $query = "SELECT * FROM `$tbl` WHERE $field2='$value'";
 
                 $result = parent::returnConnection()->query($query);
+                //
+                if ($result->num_rows <= 0) {
+                    return array(false, 'my if', gettype($result));
+                }else {
+                    while ($row = $result->fetch_assoc()) {
+                        $data[] = $row;
+                    }
 
-                while ($row = $result->fetch_assoc()) {
-                    $data[] = $row;
+                    return array(true,$data);
                 }
             }
 
 
-            if ($result->num_rows > 0) {
-                $result = $result->fetch_assoc();
-                return array(true,$data);
-            } else {
-                return array(false);
-            }
+            // if ($result->num_rows > 0) {
+            //     $result = $result->fetch_assoc();
+            //
+            // } else {
+            //     return array(false);
+            // }
         }
 
 
