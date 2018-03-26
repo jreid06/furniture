@@ -1042,7 +1042,7 @@ $(document).ready(function() {
                 let $vm = this;
 
                 $.ajax({
-                    url: '/backend/scripts/validate_sku.php',
+                    url: '/scripts/validate_sku.php',
                     type: 'post',
                     data: {
                         sku_id: sku
