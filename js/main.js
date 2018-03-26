@@ -3197,8 +3197,10 @@ $(document).ready(function() {
                         console.log('cat checkbox for ' + targetCheckbox[0].attributes['data-brand-name'].nodeValue + ' has been checked');
                         let brand = targetCheckbox[0].attributes['data-brand-name'].nodeValue;
 
-                        console.log('TARGET LOCATION: /products/brand/'+brand);
-                        // window.location = '/products/brand/'+brand;
+                        // console.log('TARGET LOCATION: /products/brand/'+brand);
+                        window.location = '/products/brands/'+brand;
+                    }else {
+                        window.location = '/products/';
                     }
                 },
                 addToWishlist: function() {
