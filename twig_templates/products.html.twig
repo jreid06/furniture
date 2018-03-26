@@ -1,10 +1,10 @@
 <div class="container-fluid products-page-main-container home">
 
-    <!-- <div class="display-box">
-        <pre>
-            {{dump(queryDetails.all_brands)}}
-        </pre>
-    </div> -->
+    <!-- <div class="display-box"> -->
+        <!-- <pre>
+            {{dump(queryDetails.brands_page)}}
+        </pre> -->
+    <!-- </div> -->
 
     <div class="row">
         <div class="col-12 breadcrumb-container">
@@ -32,7 +32,12 @@
 
                     {% if breadcrumb.one is defined and breadcrumb.two is defined %}
                         <li class="breadcrumb-item ">
-                            <a href="/products/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
+                            {% if queryDetails.brands_page %}
+                                <a href="/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
+                            {% else %}
+                                <a href="/products/{{breadcrumb.one}}">{{breadcrumb.one}}</a>
+                            {% endif %}
+
                         </li>
                     {% endif %}
 
@@ -114,7 +119,7 @@
                                         list all living room product types
                                     -->
 
-                                    {% if queryDetails.category == 'all' %}
+                                    {% if queryDetails.category == 'all' or queryDetails.category == 'brands'%}
 
                                         {% for cats in queryDetails.all_cats %}
                                         <template v-if="loaded.filter_list">
@@ -230,12 +235,13 @@
 
                                       <!-- loop through brand_letter_array -->
                                           {% for brand in brands.brand_array %}
+
                                           <li>
                                               <div class="input-group mb-0 filter-input-group">
                                                   <div class="input-group-prepend filter-input-box">
                                                       <div class="input-group-text filter-input d-flex flex-row">
                                                           <div class="p-2 fltr-inp">
-                                                              <input @click="toggleProducts" class="cat-checkbox" name="brand-{{brand.slug}}" type="checkbox" data-category="{{brand.slug}}" aria-label="Checkbox for following text input">
+                                                              <input @click="toggleBrand" class="cat-checkbox" name="brand-{{brand.brand_slug}}" type="checkbox" data-brand-name="{{brand.brand_slug}}" aria-label="Checkbox for following text input" {% if brand.brand_slug == queryDetails.brand_slug %} checked {% endif %}>
                                                           </div>
 
                                                           <div class="p-2 fltr-inp">
@@ -420,6 +426,31 @@
                                     </div>
                                     {% endif %}
                                 {% endfor %}
+                            {% endfor %}
+
+
+                        {% endif %}
+
+                        {% if queryDetails.num_of_products == 'specific' and queryDetails.brands_page %}
+                            {% for product in queryDetails.products.data %}
+                                <!-- <p>{{queryDetails.brand_clean}}</p> -->
+                                <!-- <p>{{product.metadata.brand}}</p> -->
+                                {% if product.metadata.brand | lower == queryDetails.brand_clean | lower %}
+                                    {% for sku in product.skus.data %}
+                                        <div class="col-6 col-md-4 col-lg-3 product-card-col">
+                                            <div class="card product-card" style="">
+                                                <div class="product-image">
+                                                    <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
+                                                </div>
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                    <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                {% endif %}
                             {% endfor %}
 
 

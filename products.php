@@ -74,6 +74,17 @@
     elseif ($output['cat'] && isset($output['prodtype']) && !empty($output['prodtype'])) {
         $data = 'show specific type of product in a certain category e.g all cushions';
         $category = $output['cat'];
+        $brands = false;
+        $brand_formatted = false;
+
+        if ($output['cat'] === 'brands') {
+            $brands = true;
+
+            // format brands data to have spaces
+            $brand_formatted = explode('-', $output['prodtype']);
+            $brand_formatted = implode(' ', $brand_formatted);
+
+        }
 
         $real_cat = false;
 
@@ -84,7 +95,8 @@
         }
         $prod_type = $output['prodtype'];
 
-        if (!$real_cat) {
+        if (!$real_cat && !$brands) {
+            // var_dump($output['cat']);
             header('location: /products');
         }else {
             include ROOT_PATH.'templates/nav.php';
@@ -101,7 +113,10 @@
             'type' => $prod_type,
             'products'=>$stripe_products,
             'all_cats'=>$dynamic_categories,
-            'all_brands'=> $brand_parsed_data
+            'all_brands'=> $brand_parsed_data,
+            'brands_page'=> $brands,
+            'brand_clean'=>$brand_formatted,
+            'brand_slug'=>$output['prodtype']
         );
 
         $breadcrumbs = array(
@@ -123,7 +138,7 @@
         }
 
         if (!$real_cat) {
-            header('location: /products');
+            header('location: /pagenotfound');
         }else {
             include ROOT_PATH.'templates/nav.php';
         }

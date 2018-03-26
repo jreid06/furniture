@@ -13,10 +13,11 @@
                 "limit" => 100
             ));
 
-            $skus = getSkuData($stripe_products);
-            $final_arr = array();
+
 
             if ($category === 'all') {
+                $skus = getSkuData($stripe_products['data']);
+                $final_arr = array();
 
                 for ($i=0; $i < count($skus); $i++) {
                     for ($j=0; $j < count($filters); $j++) {
@@ -35,12 +36,62 @@
                         'msg'=> 'get filtered results. TYPE SPECIFIC ONLY. ALL CATEGORIES',
                         'data'=> $filters,
                         'res'=>$skus,
-                        'filtered_skus'=>$final_arr
+                        'filtered_skus'=>$final_arr,
+                        'cat'=>$category
                     )
                 );
 
                 exit(json_encode($msg));
-            }else {
+            }elseif ($category === 'brands') {
+                // $skus = getSkuData($stripe_products['data']);
+                $final_arr = array();
+                // format brands data to have spaces
+                $brand_formatted = explode('-', $_GET['selected_brand']);
+                $brand_formatted = implode(' ', $brand_formatted);
+
+                $brand_products = array();
+
+                for ($i=0; $i < count($stripe_products['data']); $i++) {
+                    if (strtolower($stripe_products['data'][$i]['metadata']['brand']) === strtolower($brand_formatted)) {
+                        array_push($brand_products, $stripe_products['data'][$i]);
+                    }
+                }
+
+                if (!$filters) {
+                    $final_arr = getSkuData($brand_products);
+                }else {
+                    $skus = getSkuData($brand_products);
+
+                    for ($k=0; $k < count($skus); $k++) {
+                        for ($j=0; $j < count($filters); $j++) {
+                            if ($skus[$k]['attributes']['type'] === $filters[$j]) {
+                                array_push($final_arr, $skus[$k]);
+                            }
+                        }
+                    }
+
+                }
+
+                $msg = array(
+                    'status'=>array(
+                        'code'=> 101,
+                        'code_status'=>'success'
+                    ),
+                    'data'=> array(
+                        'msg'=> 'get filtered results. TYPE SPECIFIC ONLY normal. ALL CATEGORIES',
+                        'data'=> $filters,
+                        'res'=>$skus,
+                        'filtered_skus'=>$final_arr,
+                        'cat'=>$category,
+                        'brand_formatted'=>$brand_formatted,
+                        'brand_prod'=>$brand_products,
+                        'spro'=>$stripe_products
+                    )
+                );
+
+                exit(json_encode($msg));
+            }
+            else {
                 // return products only in specific category and with specific type
                 for ($i=0; $i < count($skus); $i++) {
                     for ($j=0; $j < count($filters); $j++) {
@@ -60,7 +111,8 @@
                         'msg'=> 'get filtered results. CATEGORY SPECIIFC & TYPE SPECIIFC',
                         'data'=> $filters,
                         'filtered_skus'=>$final_arr,
-                        'type'=>gettype($stripe_products)
+                        'type'=>gettype($stripe_products),
+                        'cat'=>$category
                     )
                 );
 
@@ -68,7 +120,8 @@
             }
 
 
-        } catch(Stripe_CardError $e) {
+        }
+        catch(Stripe_CardError $e) {
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -86,7 +139,8 @@
             exit(json_encode($msg));
             // var_dump($msg);
 
-        } catch (Stripe_InvalidRequestError $e) {
+        }
+        catch (Stripe_InvalidRequestError $e) {
             $body = $e->getJsonBody();
             $err  = $body['error'];
               // Invalid parameters were supplied to Stripe's API
@@ -103,7 +157,8 @@
               exit(json_encode($msg));
               // var_dump($msg);
 
-        } catch (Stripe_AuthenticationError $e) {
+        }
+        catch (Stripe_AuthenticationError $e) {
             $body = $e->getJsonBody();
             $err  = $body['error'];
           // Authentication with Stripe's API failed
@@ -120,7 +175,8 @@
           exit(json_encode($msg));
           // var_dump($msg);
 
-        } catch (Stripe_ApiConnectionError $e) {
+        }
+        catch (Stripe_ApiConnectionError $e) {
             $body = $e->getJsonBody();
             $err  = $body['error'];
           // Network communication with Stripe failed
@@ -137,7 +193,8 @@
           exit(json_encode($msg));
           // var_dump($msg);
 
-        } catch (Stripe_Error $e) {
+        }
+        catch (Stripe_Error $e) {
             $body = $e->getJsonBody();
             $err  = $body['error'];
           // Display a very generic error to the user, and maybe send
@@ -155,7 +212,8 @@
           exit(json_encode($msg));
           // var_dump($msg);
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $body = $e->getJsonBody();
             // var_dump($body);
           // Something else happened, completely unrelated to Stripe
@@ -180,7 +238,8 @@
 
     }
     else {
-
+        $filters = false;
+        // $category = $_GET['category'];
         // return all products if category equals all else sort through and return all products for specific category
 
         $category = $_GET['category'];
@@ -191,7 +250,7 @@
             "limit" => 100
         ));
 
-        $skus = getSkuData($stripe_products);
+        $skus = getSkuData($stripe_products['data']);
 
         // user is on products page so return all products
         if ($category === 'all') {
@@ -210,6 +269,56 @@
             );
 
              exit(json_encode($msg));
+        }
+        elseif ($category === 'brands') {
+            // $skus = getSkuData($stripe_products['data']);
+            $final_arr = array();
+            // format brands data to have spaces
+            $brand_formatted = explode('-', $_GET['selected_brand']);
+            $brand_formatted = implode(' ', $brand_formatted);
+
+            $brand_products = array();
+
+            for ($i=0; $i < count($stripe_products['data']); $i++) {
+                if (strtolower($stripe_products['data'][$i]['metadata']['brand']) === strtolower($brand_formatted)) {
+                    array_push($brand_products, $stripe_products['data'][$i]);
+                }
+            }
+
+            if (!$filters) {
+                $final_arr = getSkuData($brand_products);
+
+            }else {
+
+                $skus = getSkuData($brand_products);
+
+                for ($k=0; $k < count($skus); $k++) {
+                    for ($j=0; $j < count($filters); $j++) {
+                        if ($skus[$k]['attributes']['type'] === $filters[$j]) {
+                            array_push($final_arr, $skus[$k]);
+                        }
+                    }
+                }
+            }
+
+            $msg = array(
+                'status'=>array(
+                    'code'=> 101,
+                    'code_status'=>'success'
+                ),
+                'data'=> array(
+                    'msg'=> 'get filtered results. TYPE SPECIFIC ONLYasas. ALL CATEGORIES',
+                    'data'=> $filters,
+                    'res'=>$skus,
+                    'filtered_skus'=>$final_arr,
+                    'cat'=>$category,
+                    'brand_formatted'=>$brand_formatted,
+                    'brand_prod'=>$brand_products,
+                    'spro'=>$stripe_products
+                )
+            );
+
+            exit(json_encode($msg));
         }
         else {
             // return all products that are of a specific category as no filter is selected

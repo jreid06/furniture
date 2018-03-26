@@ -38,7 +38,7 @@ class __TwigTemplate_bb1711c43e8a7d09583a121941f4d24893ba9bcd4a8683799b27256ed85
                 foreach ($context['_seq'] as $context["_key"] => $context["name"]) {
                     // line 9
                     echo "            <li class=\"list-group-item brand-title-listing\">
-                <a href=\"/products/brand/";
+                <a href=\"/products/brands/";
                     // line 10
                     echo twig_escape_filter($this->env, twig_lower_filter($this->env, $this->getAttribute($context["name"], "brand_slug", array())), "html", null, true);
                     echo "\">";
@@ -98,7 +98,7 @@ class __TwigTemplate_bb1711c43e8a7d09583a121941f4d24893ba9bcd4a8683799b27256ed85
         <ul class=\"list-group list-group-flush\">
         {% for name in brand.brand_array %}
             <li class=\"list-group-item brand-title-listing\">
-                <a href=\"/products/brand/{{name.brand_slug | lower}}\">{{name.brand_name | capitalize}}</a>
+                <a href=\"/products/brands/{{name.brand_slug | lower}}\">{{name.brand_name | capitalize}}</a>
             </li>
         {% endfor %}
         </ul>
