@@ -5,7 +5,7 @@
     if (isset($_POST['nav'])) {
 
         // get nav data from DB
-        Connect::checkConnection();
+        // Connect::checkConnection();
         $nav_data = DatabaseFunctions::getDataLimit('*', 'navigation', 'nav_status', 'true', false, false);
 
         if ($nav_data[0]) {
@@ -59,7 +59,9 @@
                 ),
                 'info'=> array(
                     'msg'=>'Reload page again. Error retrieving data',
-                    'error_type'=> 'nav error'
+                    'error_type'=> 'nav error',
+                    'post'=> $_POST,
+                    'nav_query'=>$nav_data
                 )
             );
         }
