@@ -24,7 +24,6 @@
 
 	// \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
-
 	require_once ROOT_PATH.'vendor/twig/twig/lib/Twig/Autoloader.php';
 	Twig_autoloader::register();
 	$loader = new Twig_Loader_Filesystem(ROOT_PATH.'/twig_templates');
@@ -77,6 +76,8 @@
 		"company" => "IDYL",
 		"phone"   => "415-123-4567"
 	);
+
+	$__DASHBOARD_product_categories = getProductNavCategories();
 
 	// $session_not_set = !isset($_SESSION['idyl_tkn'])?true:'session is set';
 	// $cookie_not_set = !isset($_COOKIE['idyl_tkn'])?true:'cookie is set';
