@@ -1,5 +1,5 @@
 {% for brand in brands %}
-    {% if (brand.brand_array|length) > 1 %}
+    {% if (brand.brand_array|length) >= 1 %}
     <div class="col-12 col-sm-6 col-lg-4">
         <br>
         <h4>{{brand.brand_letter | capitalize}}</h4>
