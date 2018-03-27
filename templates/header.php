@@ -50,6 +50,10 @@
 
         <!-- ONLINE SLICK -->
         <script src="/slick-1.8.0/slick/slick.min.js"></script>
+		
+		<!-- cdnjs -->
+	    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.6/jquery.lazy.min.js"></script>
+	    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.6/jquery.lazy.plugins.min.js"></script>
 
         <!-- NOTE: allow script to work in basket only -->
         <?php if (explode("/", $_SERVER['REQUEST_URI'])[1] === 'checkout' || explode("/", $_SERVER['REQUEST_URI'])[1] === 'basket' ): ?>

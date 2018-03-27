@@ -40,7 +40,7 @@ $(document).ready(function() {
                 status: 'component works'
             };
         },
-        template: `<div class="slideshow-div justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
+        template: `<div class="slideshow-div justify-content-center align-items-center lazy" v-bind:style="{background: 'url(' + image + ')'}">
 
             <h1>{{title.toUpperCase()}}</h1>
             <h4>{{content.toUpperCase()}}</h4>
@@ -3673,8 +3673,9 @@ $(document).ready(function() {
                 });
 
                 initslide.then(function(val){
-                    console.log('then run');
+
                     // intialize the slick slideshow
+                    console.log('then run. slide show init');
                     setTimeout(function(){
                         $('.home-slide').slick({
                             lazyLoad: 'ondemand',
@@ -3684,7 +3685,7 @@ $(document).ready(function() {
                             appendDots: $('.home-slide'),
                             dots: true
                         })
-                    }, 1300);
+                    }, 1700);
 
                 })
 
@@ -3797,6 +3798,7 @@ $(document).ready(function() {
 
 
                 this.getBasketInfo();
+                $('.lazy').Lazy();
                 // this.ajaxFunctions();
             },
 
