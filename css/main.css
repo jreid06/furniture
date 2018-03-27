@@ -1944,7 +1944,8 @@ nav {
 .generic-container-position {
   position: relative;
   top: 88px;
-  min-height: 50%; }
+  min-height: 50%;
+  margin-bottom: 90px; }
   @media only screen and (min-width: 992px) {
     .generic-container-position {
       top: 115px; } }
@@ -1958,11 +1959,14 @@ nav {
       margin-right: auto; } }
 .story-content img {
   position: relative;
-  top: 100px;
+  top: 50px;
   display: block;
   width: 45%;
   margin-left: auto;
   margin-right: auto; }
+  @media only screen and (min-width: 768px) {
+    .story-content img {
+      top: 100px; } }
 .story-content .story-logo {
   width: 50%;
   margin: 0 auto; }

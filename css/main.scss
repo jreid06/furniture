@@ -1406,6 +1406,7 @@ nav{
 	position: relative;
 	top: 88px;
 	min-height: 50%;
+	margin-bottom: 90px;
 
 	@include respond-to($lg-break){
 		top: 115px;
@@ -1426,11 +1427,15 @@ nav{
 	img{
 		// margin-top: 50px;
 		position: relative;
-		top: 100px;
+		top: 50px;
 		display: block;
 		width: 45%;
 		margin-left: auto;
 		margin-right: auto;
+
+		@include respond-to($md-break){
+			top: 100px;
+		};
 	}
 
 	.story-logo{
