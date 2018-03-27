@@ -41,7 +41,7 @@
      </div>
      <div class="row">
          <?php
-            $template = $twig->load('blog-post-home.html.twig');
+            $template = $twig->load('blog-post-main.html.twig');
             echo $template->render(array(
                 'error'=> $error,
                 'months'=> $months,
