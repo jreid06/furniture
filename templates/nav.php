@@ -182,9 +182,21 @@
             <div class="mobile-collection-links d-lg-none">
 
                 <h4 class="d-md-none text-center">COLLECTIONS</h4>
-                <a v-for="navlink in navHeader" :href="'/products/'+navlink.slug" class="btn btn-menu-link">
-                    {{navlink.title}}
-                </a>
+                <template v-for="navlink in navHeader">
+                    <template v-if="navlink.sublinks || navlink.slug === 'gifts'">
+                        <a :href="'/products/'+navlink.slug" class="btn btn-menu-link">
+                            {{navlink.title}}
+                        </a>
+                    </template>
+
+                    <template v-else>
+                        <a :href="'/'+navlink.slug" class="btn btn-menu-link">
+                            {{navlink.title}}
+                        </a>
+                    </template>
+
+                </template>
+
 
                 <br>
                 <h4 class="d-md-none text-center">INFO</h4>
