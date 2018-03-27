@@ -35,7 +35,9 @@
  <div class="container-fluid home all-blog-posts">
      <div class="row">
          <div class="col-12">
-             <h3 class="text-center">All Blog Posts</h3>
+             <br>
+             <br>
+             <h1 class="text-center">All Blog Posts</h1>
              <br>
          </div>
      </div>

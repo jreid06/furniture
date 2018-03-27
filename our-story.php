@@ -8,6 +8,8 @@
 
      <div class="row">
          <div class="col-12">
+             <br>
+             <br>
              <h1 class="text-center">OUR STORY</h1>
              <br>
          </div>
