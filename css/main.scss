@@ -2060,11 +2060,13 @@ nav{
 		color: #f2f2f2;
 		position: relative;
 		z-index: 10;
-		font-size: 4em;
 		padding-bottom: 5px;
 		-webkit-transform: translate(0, 40px);
 		        transform: translate(0, 40px);
 
+		@include respond-to($md-break){
+			font-size: 4em;
+		};
 	}
 
 	.date{
