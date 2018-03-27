@@ -2408,9 +2408,11 @@ nav {
 .post-col {
   padding-top: 10px; }
 
-@media only screen and (min-width: 992px) {
-  .all-blog-posts {
-    top: 110px; } }
+.all-blog-posts {
+  margin-bottom: 50px; }
+  @media only screen and (min-width: 992px) {
+    .all-blog-posts {
+      top: 110px; } }
 
 .StripeElement {
   background-color: white;

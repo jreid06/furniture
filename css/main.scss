@@ -2131,7 +2131,7 @@ nav{
 }
 
 .all-blog-posts{
-
+	margin-bottom: 50px;
 	@include respond-to($lg-break){
 		top: 110px;
 	};
