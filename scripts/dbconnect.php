@@ -14,7 +14,7 @@
 	require_once "easypost-php/lib/easypost.php";
 	// require_once "shippo-php-client/lib/Shippo.php";
 
-	require_once '../vendor/stripe/stripe-php/init.php';
+	require_once dirname(__DIR__).'/vendor/stripe/stripe-php/init.php';
 
 	// require_once ROOT_PATH.'vendor/autoload.php';
 
