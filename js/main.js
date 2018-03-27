@@ -1111,7 +1111,6 @@ $(document).ready(function() {
             menuToggle: function(e) {
                 let menuLinkClicked = $(e.target),
                     menuLinkName = menuLinkClicked[0].attributes['data-menu-target'].nodeValue,
-                    menuData = menuLinkClicked[0].attributes['data-nav-info'].nodeValue,
                     $vm = this;
 
                 console.log(menuLinkName);
