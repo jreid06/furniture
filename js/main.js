@@ -57,7 +57,7 @@ $(document).ready(function() {
         template: `<div class="col-6 col-md-3 col-lg-3 cat-home-box">
             <a v-bind:href="categorylink">
             <div class="card category-card" v-bind:id="'cat-'+num">
-            <div class="card-img-bgrnd d-flex justify-content-center align-items-center" v-bind:style="{background: 'url(' + image + ')'}">
+            <div class="card-img-bgrnd d-flex justify-content-center align-items-center lazy" v-bind:style="{background: 'url(' + image + ')'}">
                 <p class="card-text">{{capitalizeFirstLetter(categoryname)}}</p>
             </div>
             </div></a></div>`,
@@ -2452,7 +2452,7 @@ $(document).ready(function() {
                 }
             },
             props: ['itemid', 'itemname', 'productimage', 'quantity', 'price', 'index', 'prodcolor', 'prodsize'],
-            template: `<div class="card basket-card" :id="'basket-checkout-item-'+index"> <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <h5 class="card-title text-center">{{itemname}}<br>{{capitalizeFirstLetter(prodcolor)}} - {{capitalizeFirstLetter(prodsize)}}</h5> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span><strong>Size:</strong>{{capitalizeFirstLetter(prodsize)}}</span>&nbsp; <span><strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"><strong>Total: £{{price*quantity.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> <hr> </div> </div>`,
+            template: `<div class="card basket-card" :id="'basket-checkout-item-'+index"> <div class="card-body"> <div class="row"> <div class="col-12 basket-card-body d-flex flex-wrap flex-row"> <div class="p-2 d-flex flex-row justify-content-center align-items-center image-checkout-col"> <img :src="productimage" :alt="itemname"> </div> <div class="p-2"> <div class="info-checkout-container"> <p class="card-subtitle mb-2">£{{price.toFixed(2)}}</p> </div> <div class="info-checkout-container"> <h6 class="card-title">{{itemname}}<br>{{capitalizeFirstLetter(prodcolor)}} <span v-if="prodsize !== 'none'">- {{capitalizeFirstLetter(prodsize)}}</span></h6> </div> <div class="info-checkout-container"> <p class="card-subtitle mb-2 text-muted"> <span v-if="prodsize !== 'none'"> <strong>Size:</strong>{{capitalizeFirstLetter(prodsize)}}&nbsp; </span> <span> <strong>Qty:</strong>{{quantity}}</span> </p> </div> <div class="info-checkout-container"> <hr class="d-lg-none"> <p class="card-subtitle mb-2"> <strong>Total: £{{price*quantity.toFixed(2)}}</strong> </p> </div> </div> <div class="p-2 d-flex flex-row justify-content-center align-items-center" v-bind:data-position-id="index" v-bind:data-element-id="'basket-checkout-item-'+index"> <span class="fa fa-trash-o mb-2" v-bind:id="itemid" v-on:click="removeItem"></span> </div> </div> </div> </div> </div>`,
             methods: {
                 capitalizeFirstLetter: function(string) {
                     let splitStr = string.split(' ');
@@ -3798,7 +3798,11 @@ $(document).ready(function() {
 
 
                 this.getBasketInfo();
-                $('.lazy').Lazy();
+                // $('.lazy').Lazy({
+                //     delay: 5000
+                // });
+
+
                 // this.ajaxFunctions();
             },
 
@@ -3830,6 +3834,25 @@ $(document).ready(function() {
     } else {
         console.log('home hidden');
     }
+
+                    $(".lazy").Lazy({
+            beforeLoad: function(element) {
+                // called before an elements gets handled
+                console.log('before load');
+            },
+            afterLoad: function(element) {
+                // called after an element was successfully handled
+                console.log('after load');
+            },
+            onError: function(element) {
+                // called whenever an element could not be handled
+            },
+            onFinishedAll: function() {
+                // called once all elements was handled
+                console.log('ALL LOADED');
+            }
+        });
+
 
     function renderShippingContent() {
         let id = '97cc350c5e',

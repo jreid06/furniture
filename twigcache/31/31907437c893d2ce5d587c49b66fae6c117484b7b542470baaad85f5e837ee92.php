@@ -62,7 +62,7 @@ class __TwigTemplate_7ecee4724bfcaf194c27419d69b0896ff6599360c40be7fb0d77d87da3e
                 // line 11
                 echo twig_escape_filter($this->env, $this->getAttribute($context["post"], "post_id", array()), "html", null, true);
                 echo "\">
-            <div class=\"card-img-bgrnd\" style=\"background: url(";
+            <div class=\"card-img-bgrnd lazy\" style=\"background: url(";
                 // line 12
                 echo twig_escape_filter($this->env, $this->getAttribute($context["post"], "main_img_path", array()), "html", null, true);
                 echo ")\"></div>
@@ -161,7 +161,7 @@ class __TwigTemplate_7ecee4724bfcaf194c27419d69b0896ff6599360c40be7fb0d77d87da3e
 
         <div class=\"post-col col-12 col-sm-6 col-lg-4 {% if loop.index > 2 %}d-none d-lg-block{% endif %}\">
             <div class=\"card blog-post-card\" data-post-id=\"{{post.post_id}}\">
-            <div class=\"card-img-bgrnd\" style=\"background: url({{post.main_img_path}})\"></div>
+            <div class=\"card-img-bgrnd lazy\" style=\"background: url({{post.main_img_path}})\"></div>
               <div class=\"card-body\">
                  {% set month_num = (post.date.month | round) - 1 %}
                 <h4 class=\"card-title\">{{post.title | capitalize}}</h4>

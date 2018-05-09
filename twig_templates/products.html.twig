@@ -347,7 +347,7 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {% if skuprod.attributes.size != 'none'%} {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <h6 class="">{{sku.attributes.category | camel_case()}}</h6>
                                                 <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
@@ -373,7 +373,7 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <h6 class="">{{sku.attributes.category | camel_case()}}</h6>
                                                 <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
@@ -397,7 +397,7 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
@@ -419,7 +419,7 @@
                                                 <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                             </div>
                                             <div class="card-body">
-                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a> </h6>
                                                 <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
@@ -443,7 +443,7 @@
                                                     <img class="card-img-top" src="{{sku.image}}" alt="{{product.caption}}">
                                                 </div>
                                                 <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                    <h6 class="card-subtitle mb-2"><a href="/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a> </h6>
                                                     <p class="product-price-p"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                                 </div>
                                             </div>

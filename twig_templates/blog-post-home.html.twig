@@ -9,7 +9,7 @@
 
         <div class="post-col col-12 col-sm-6 col-lg-4 {% if loop.index > 2 %}d-none d-lg-block{% endif %}">
             <div class="card blog-post-card" data-post-id="{{post.post_id}}">
-            <div class="card-img-bgrnd" style="background: url({{post.main_img_path}})"></div>
+            <div class="card-img-bgrnd lazy" style="background: url({{post.main_img_path}})"></div>
               <div class="card-body">
                  {% set month_num = (post.date.month | round) - 1 %}
                 <h4 class="card-title">{{post.title | capitalize}}</h4>

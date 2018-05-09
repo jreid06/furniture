@@ -7,7 +7,8 @@
                 <li class="breadcrumb-item"><a href="/products">Products</a></li>
                 <li class="breadcrumb-item"><a href="/products/{{category}}">{{category}}</a></li>
                 <li class="breadcrumb-item"><a href="/products/{{category}}/{{type}}">{{type}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size}}</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                {{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} {% if skuprod.attributes.size != 'none' %}- {{skuprod.attributes.size}} {% endif %}</li>
               </ol>
               <!--  -->
             </nav>
@@ -43,7 +44,7 @@
                 <div class="p-2 product-info-sp">
 
                     <ul>
-                        <li><h4>{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} - {{skuprod.attributes.size |start_case()}}</h4></li>
+                        <li><h4>{{product.name |start_case}} - {{skuprod.attributes.color |start_case()}} {% if skuprod.attributes.size != 'none' %}- {{skuprod.attributes.size |start_case()}} {% endif %}</h4></li>
                         <li>£&nbsp;{{(skuprod.price/100)|number_format(2)}}</li>
 
                         <li>
@@ -94,7 +95,7 @@
 
                         <div id="prod-description" class="collapse show" role="tabpanel" aria-labelledby="description" data-parent="#accordion">
                             <div class="card-body">
-                                <strong>{{product.description}}</strong>
+                                {{product.description}}
 
                                 {% if skuprod.attributes.detail_bullets is defined %}
                                     <ul>

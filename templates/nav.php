@@ -1,7 +1,7 @@
 
 <?php $hidden = false; if ($_SERVER['REQUEST_URI'] === '/checkout'): $hidden = true; ?><?php endif; ?>
 
-<nav id="nav" class="nav-vue" style="<?php if($hidden): ?>visibility: hidden <?php endif; ?>">
+<nav id="nav" class="nav-vue" style="<?php if ($hidden): ?>visibility: hidden <?php endif; ?>">
     <div class="mobile-login-help d-lg-none">
         <a href="/help">help</a>
 
@@ -252,16 +252,15 @@
                         <div class="p-2">
 
                             <template v-for="(cta, index) in menuStatus.selected_nav.cta_boxes">
-                                <div :class="'nav-box box-'+index" :style="'background: url('+cta.image+')'">
-                                    <div class="cta-content">
-                                        <div class="cta-overlay">
+                                <a :href="cta.link" :class="'nav-box box-'+index" :style="'background: url('+cta.image+')'">
+                                        <div class="cta-content">
+                                            <div class="cta-overlay">
 
+                                            </div>
+                                            <h4 class="cta-item cta-title">{{cta.title}}</h4>
                                         </div>
-                                        <h4 class="cta-item cta-title">{{cta.title}}</h4>
-                                        <p class="cta-item cta-msg">{{cta.message}}</p>
-                                        <p class="cta-item cta-link"><a :href="cta.link" class="btn btn-cta">SHOP NOW</a> </p>
-                                    </div>
-                                </div>
+                                </a>
+
                             </template>
 
                             <div class="close-menu" data-menu-target="livingroom" v-on:click="closeMenu">

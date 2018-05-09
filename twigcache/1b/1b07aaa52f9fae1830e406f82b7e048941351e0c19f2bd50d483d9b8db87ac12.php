@@ -68,7 +68,7 @@ class __TwigTemplate_832c1d4cad2e51ded5a013fd3524ad3d501034d850606eb8600d3397294
             echo "
         ";
             // line 30
-            if ((twig_length_filter($this->env, $this->getAttribute($context["brand"], "brand_array", array())) > 1)) {
+            if ((twig_length_filter($this->env, $this->getAttribute($context["brand"], "brand_array", array())) >= 1)) {
                 // line 31
                 echo "        <div class=\"col-xs-12 col-md-4 col-lg-4 col-xl-4 brand-columns\">
             <ul class=\"list-group\">
@@ -183,7 +183,7 @@ class __TwigTemplate_832c1d4cad2e51ded5a013fd3524ad3d501034d850606eb8600d3397294
 
     {% for brand in brands %}
 
-        {% if (brand.brand_array|length) > 1 %}
+        {% if (brand.brand_array|length) >= 1 %}
         <div class=\"col-xs-12 col-md-4 col-lg-4 col-xl-4 brand-columns\">
             <ul class=\"list-group\">
                 <h3><strong>{{brand.brand_letter | capitalize}}</strong></h3>

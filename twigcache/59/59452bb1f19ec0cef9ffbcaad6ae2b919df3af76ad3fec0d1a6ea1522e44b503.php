@@ -597,7 +597,11 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo " - ";
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
                         echo " - ";
-                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        if (($this->getAttribute($this->getAttribute(($context["skuprod"] ?? null), "attributes", array()), "size", array()) != "none")) {
+                            echo " ";
+                            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                            echo " ";
+                        }
                         echo "</a></h6>
                                                 <h6 class=\"\">";
                         // line 351
@@ -681,8 +685,12 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                     echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
                     echo " - ";
                     echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
-                    echo " - ";
-                    echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                    echo " ";
+                    if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()) != "none")) {
+                        echo " - ";
+                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo " ";
+                    }
                     echo "</a></h6>
                                                 <h6 class=\"\">";
                     // line 377
@@ -766,8 +774,12 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
                         echo " - ";
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
-                        echo " - ";
-                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo " ";
+                        if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()) != "none")) {
+                            echo " - ";
+                            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                            echo " ";
+                        }
                         echo "</a></h6>
                                                 <p class=\"product-price-p\"><strong>£ ";
                         // line 401
@@ -847,8 +859,12 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
                         echo " - ";
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
-                        echo " - ";
-                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo " ";
+                        if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()) != "none")) {
+                            echo " - ";
+                            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                            echo " ";
+                        }
                         echo "</a> </h6>
                                                 <p class=\"product-price-p\"><strong>£ ";
                         // line 423
@@ -933,8 +949,12 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                         echo twig_escape_filter($this->env, $this->getAttribute($context["product"], "name", array()), "html", null, true);
                         echo " - ";
                         echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "color", array())), "html", null, true);
-                        echo " - ";
-                        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                        echo " ";
+                        if (($this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array()) != "none")) {
+                            echo " - ";
+                            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, $this->getAttribute($this->getAttribute($context["sku"], "attributes", array()), "size", array())), "html", null, true);
+                            echo " ";
+                        }
                         echo "</a> </h6>
                                                     <p class=\"product-price-p\"><strong>£ ";
                         // line 447
@@ -1002,7 +1022,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
 
     public function getDebugInfo()
     {
-        return array (  985 => 471,  976 => 464,  974 => 463,  967 => 458,  962 => 455,  956 => 454,  952 => 452,  941 => 447,  919 => 446,  911 => 443,  906 => 440,  901 => 439,  899 => 438,  895 => 437,  890 => 436,  885 => 435,  883 => 434,  880 => 433,  875 => 430,  869 => 429,  863 => 428,  855 => 423,  833 => 422,  825 => 419,  819 => 416,  816 => 415,  813 => 414,  808 => 413,  803 => 412,  801 => 411,  798 => 410,  794 => 408,  788 => 407,  782 => 406,  774 => 401,  752 => 400,  744 => 397,  738 => 394,  735 => 393,  732 => 392,  727 => 391,  723 => 390,  720 => 389,  718 => 388,  715 => 387,  711 => 385,  704 => 383,  693 => 378,  689 => 377,  667 => 376,  659 => 373,  654 => 370,  650 => 369,  647 => 368,  643 => 367,  640 => 366,  638 => 365,  634 => 363,  630 => 361,  623 => 359,  616 => 357,  608 => 352,  604 => 351,  582 => 350,  574 => 347,  569 => 344,  567 => 343,  564 => 342,  560 => 341,  557 => 340,  553 => 339,  550 => 338,  548 => 337,  533 => 327,  507 => 304,  486 => 286,  455 => 257,  449 => 256,  435 => 248,  422 => 244,  414 => 238,  410 => 237,  406 => 235,  402 => 234,  382 => 216,  370 => 207,  361 => 203,  353 => 197,  349 => 195,  335 => 187,  326 => 183,  319 => 178,  315 => 177,  312 => 176,  310 => 175,  287 => 154,  274 => 144,  266 => 138,  262 => 136,  246 => 126,  243 => 125,  239 => 124,  236 => 123,  234 => 122,  198 => 91,  195 => 90,  192 => 89,  189 => 88,  186 => 87,  183 => 86,  181 => 85,  172 => 78,  153 => 74,  149 => 73,  146 => 72,  139 => 67,  137 => 66,  118 => 49,  114 => 47,  108 => 45,  106 => 44,  103 => 43,  98 => 40,  90 => 38,  82 => 36,  80 => 35,  77 => 34,  75 => 33,  72 => 32,  66 => 30,  64 => 29,  61 => 28,  57 => 26,  53 => 24,  51 => 23,  48 => 22,  41 => 17,  39 => 16,  25 => 5,  19 => 1,);
+        return array (  1005 => 471,  996 => 464,  994 => 463,  987 => 458,  982 => 455,  976 => 454,  972 => 452,  961 => 447,  935 => 446,  927 => 443,  922 => 440,  917 => 439,  915 => 438,  911 => 437,  906 => 436,  901 => 435,  899 => 434,  896 => 433,  891 => 430,  885 => 429,  879 => 428,  871 => 423,  845 => 422,  837 => 419,  831 => 416,  828 => 415,  825 => 414,  820 => 413,  815 => 412,  813 => 411,  810 => 410,  806 => 408,  800 => 407,  794 => 406,  786 => 401,  760 => 400,  752 => 397,  746 => 394,  743 => 393,  740 => 392,  735 => 391,  731 => 390,  728 => 389,  726 => 388,  723 => 387,  719 => 385,  712 => 383,  701 => 378,  697 => 377,  671 => 376,  663 => 373,  658 => 370,  654 => 369,  651 => 368,  647 => 367,  644 => 366,  642 => 365,  638 => 363,  634 => 361,  627 => 359,  620 => 357,  612 => 352,  608 => 351,  582 => 350,  574 => 347,  569 => 344,  567 => 343,  564 => 342,  560 => 341,  557 => 340,  553 => 339,  550 => 338,  548 => 337,  533 => 327,  507 => 304,  486 => 286,  455 => 257,  449 => 256,  435 => 248,  422 => 244,  414 => 238,  410 => 237,  406 => 235,  402 => 234,  382 => 216,  370 => 207,  361 => 203,  353 => 197,  349 => 195,  335 => 187,  326 => 183,  319 => 178,  315 => 177,  312 => 176,  310 => 175,  287 => 154,  274 => 144,  266 => 138,  262 => 136,  246 => 126,  243 => 125,  239 => 124,  236 => 123,  234 => 122,  198 => 91,  195 => 90,  192 => 89,  189 => 88,  186 => 87,  183 => 86,  181 => 85,  172 => 78,  153 => 74,  149 => 73,  146 => 72,  139 => 67,  137 => 66,  118 => 49,  114 => 47,  108 => 45,  106 => 44,  103 => 43,  98 => 40,  90 => 38,  82 => 36,  80 => 35,  77 => 34,  75 => 33,  72 => 32,  66 => 30,  64 => 29,  61 => 28,  57 => 26,  53 => 24,  51 => 23,  48 => 22,  41 => 17,  39 => 16,  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -1364,7 +1384,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                 <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
                                             </div>
                                             <div class=\"card-body\">
-                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {% if skuprod.attributes.size != 'none'%} {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <h6 class=\"\">{{sku.attributes.category | camel_case()}}</h6>
                                                 <p class=\"product-price-p\"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
@@ -1390,7 +1410,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                 <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
                                             </div>
                                             <div class=\"card-body\">
-                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <h6 class=\"\">{{sku.attributes.category | camel_case()}}</h6>
                                                 <p class=\"product-price-p\"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
@@ -1414,7 +1434,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                 <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
                                             </div>
                                             <div class=\"card-body\">
-                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a></h6>
+                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a></h6>
                                                 <p class=\"product-price-p\"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
@@ -1436,7 +1456,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                 <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
                                             </div>
                                             <div class=\"card-body\">
-                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a> </h6>
                                                 <p class=\"product-price-p\"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                             </div>
                                         </div>
@@ -1460,7 +1480,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
                                                     <img class=\"card-img-top\" src=\"{{sku.image}}\" alt=\"{{product.caption}}\">
                                                 </div>
                                                 <div class=\"card-body\">
-                                                    <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} - {{sku.attributes.size | capitalize}}</a> </h6>
+                                                    <h6 class=\"card-subtitle mb-2\"><a href=\"/product/{{sku.attributes.category}}/{{sku.attributes.type}}/{{product.metadata.slug}}-{{sku.attributes.color}}-{{sku.attributes.size}}/{{product.id}}/{{sku.id}}\">{{product.name}} - {{sku.attributes.color | capitalize}} {% if sku.attributes.size != 'none'%} - {{sku.attributes.size | capitalize}} {% endif %}</a> </h6>
                                                     <p class=\"product-price-p\"><strong>£ {{(sku.price / 100) | number_format(2)}}</strong> </p>
                                                 </div>
                                             </div>

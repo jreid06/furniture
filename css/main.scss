@@ -840,7 +840,6 @@ nav{
 		display: -webkit-inline-box;
 		display: -ms-inline-flexbox;
 		display: inline-flex;
-		// background: url('/assets/main/e1-dark.jpeg');
 		background-size: cover !important;
 		background-position: center !important;
 		margin-right: 15px;
@@ -853,7 +852,7 @@ nav{
 		}
 
 		@include respond-to($xl-break){
-			height: 250px;
+			height: 280px;
 			//
 		};
 	}
@@ -888,7 +887,7 @@ nav{
 		width: 100%;
 		height: 100%;
 		background-color: #222;
-		opacity: 0.7;
+		opacity: 0.5;
 		// border: 2px solid pink;
 		z-index: -1;
 	}
@@ -1584,13 +1583,11 @@ nav{
 
 		h6{
 			font-size: 12px;
-			font-weight: 300;
+			font-weight: 400;
 		}
 
 		a{
 			color: #222;
-			font-size: 1.2em;
-			font-weight: bold;
 		}
 	}
 }
@@ -1708,7 +1705,8 @@ nav{
 
 	img{
 		width: 100%;
-		height: auto;
+		min-height: 130px;
+		// height: auto;
 	}
 
 
@@ -1808,7 +1806,7 @@ nav{
 }
 
 .product-info-sp{
-	width: 90%;
+	width: 97.5%;
 	margin: 0 auto;
 
 	ul{
@@ -1818,14 +1816,15 @@ nav{
 	li{
 		&:nth-child(1){
 			font-weight: bolder;
+			padding-bottom: 10px;
 		}
 
 		&:nth-child(2){
 			padding: 0 0 25px 0;
-			font-size: 1.1em;
+			font-size: 0.9em;
 
 			@include respond-to($lg-break){
-				font-size: 1.5em;
+				font-size: 1.3em;
 			};
 		}
 
@@ -1874,10 +1873,14 @@ nav{
 		}
 
 		&:nth-child(1){
-			width: 10%;
+			width: 11%;
+
+			@include respond-to($xl-break){
+				width: 7%;
+			};
 		}
 		&:nth-child(2){
-			width: 15%;
+			width: 11%;
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
@@ -1913,19 +1916,21 @@ nav{
 				}
 			}
 
-			@include respond-to($lg-break){
-				width: 10%;
+			@include respond-to($xl-break){
+				width: 7%;
 			};
 		}
 		&:nth-child(3){
-			width: 63%;
+			width: 66%;
 			cursor: pointer;
 			-webkit-box-pack: start;
 			    -ms-flex-pack: start;
 			        justify-content: flex-start;
-			padding-left: 5px;
+			padding-left: 13px;
 			background-color: #222;
 			color: #fff;
+			font-size: 14px;
+			font-weight: bold;
 			p{
 				position: relative;
 				top: 1px;
@@ -1935,10 +1940,14 @@ nav{
 			@include respond-to($lg-break){
 				width: 68%;
 			};
+
+			@include respond-to($xl-break){
+				width: 79%;
+			};
 		}
 		&:nth-child(4){
 			border: 0px;
-			width: 12%;
+			width: 10%;
 			span{
 				font-size: 1.3em;
 				position: relative;
@@ -1952,6 +1961,10 @@ nav{
 					        transform: scale(1.3);
 				}
 			}
+
+			@include respond-to($xl-break){
+				width: 7%;
+			};
 		}
 	}
 }
@@ -1967,7 +1980,7 @@ nav{
 }
 
 #prod-description{
-
+	// font-weight: normal;
 	ul{
 		margin-top: 10px;
 		li{
@@ -1992,7 +2005,8 @@ nav{
 		border-bottom: 0;
 
 		a{
-			font-size: 0.9em;
+			font-size: 14px;
+			font-weight: bold;
 			color: #222222;
 
 			&:hover{
@@ -2008,6 +2022,12 @@ nav{
 }
 
 .related-products{
+	padding-top: 40px;
+
+	hr{
+		margin-bottom: 35px;
+		background-color: #d2d2d2 !important;
+	}
 
 	@include respond-to($md-break){
 		margin-bottom: -120px;
@@ -2021,6 +2041,7 @@ nav{
 	h5{
 		text-transform: uppercase;
 		font-weight: bolder;
+		padding-bottom: 20px;
 	}
 
 	.card-img-bgrnd{

@@ -5,7 +5,7 @@
     if (isset($_COOKIE['idyl_tkn']) || isset($_SESSION['idyl_tkn'])) {
         header('location: /');
     }
-	include ROOT_PATH.'templates/header.php';
+    include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
 
@@ -32,12 +32,12 @@
                             <form id="userLogin">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
                                <div class="form-group">
                                    <label for="exampleInputPassword1">Password</label>
-                                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
                                </div>
                                <div class="form-check rememberme-div">
                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -59,7 +59,7 @@
                         <form id="newUser">
                             <div class="form-group">
                                 <label for="checkEmail1">Email address</label>
-                                <input type="email" class="form-control" id="checkEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <input type="email" class="form-control" id="checkEmail1" aria-describedby="emailHelp" placeholder="">
                                 <small id="error-message-email" class="form-text text-danger text-center"></small>
                                 <small id="emailHelp1" class="form-text text-muted text-center">We'll never share your email with anyone else.</small>
                             </div>
@@ -76,5 +76,5 @@
 </div>
 
 <?php
-	include ROOT_PATH.'templates/footer.php';
+    include ROOT_PATH.'templates/footer.php';
  ?>
