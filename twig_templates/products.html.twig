@@ -65,13 +65,13 @@
         <div class="col-12">
             {% if pagelocation == '/products/gifts' %}
                 <br>
-                <h4 class="text-center filter-title-display">Showing all Gift products</h4>
+                <h4 class="text-center section-heading" style="text-transform: uppercase">Showing all Gift products</h4>
                 <br>
 
             {% else %}
 
                 <p class="text-center"><small>{{msg}}</small></p>
-                <h4 class="text-center filter-title-display">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+                <h4 class="text-center section-heading" style="text-transform: uppercase">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
                 <br>
 
             {% endif %}

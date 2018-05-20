@@ -3,7 +3,7 @@
     include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include dirname(__DIR__).'/idyldev/scripts/dbconnect.php';
     // include '/scripts/dbconnect.php';
-	include ROOT_PATH.'templates/header.php';
+    include ROOT_PATH.'templates/header.php';
     include ROOT_PATH.'templates/nav.php';
 
 ?>
@@ -50,7 +50,7 @@
                 <div class="custom-separate"></div>
                 <div class="col-12">
                     <h5 class="text-center section-heading">FEATURED PRODUCTS</h5>
-                    <br>
+                    <!-- <br> -->
                 </div>
 
                 <?php
@@ -71,7 +71,7 @@
                 <div class="custom-separate"></div>
                 <div class="col-12">
                     <h5 class="text-center section-heading">STORIES</h5>
-                    <br>
+                    <!-- <br> -->
                 </div>
 
                 <?php
@@ -95,8 +95,7 @@
                                 'full' => $formatted_ts['full_date']
                             );
                         }
-
-                    }else {
+                    } else {
                         $error = true;
                     }
 
@@ -107,7 +106,7 @@
                         'posts'=>$blog_posts
                     ));
                  //
-                 // ?>
+                 //?>
             </div>
 
             <div class="row">
@@ -143,5 +142,5 @@
 </div> -->
 
 <?php
-	include ROOT_PATH.'templates/footer.php';
+    include ROOT_PATH.'templates/footer.php';
  ?>

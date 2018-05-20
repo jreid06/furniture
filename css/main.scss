@@ -32,7 +32,7 @@ body, html{
 }
 
 .section-heading{
-	font-size: 1.6em;
+	font-size: 1.25em;
 	font-weight: bold;
 	letter-spacing: 1px;
 }
@@ -176,8 +176,21 @@ footer{
 	}
 }
 
+#headingThree{
+	@include respond-to($md-break){
+		padding-bottom: 0px !important;
+	};
+}
+
 .footer-collapse{
 	background-color: #222;
+
+	.card-body{
+		@include respond-to($md-break){
+			padding: 10px 0 0 0 !important;
+		};
+	}
+
 
 	a{
 		cursor: pointer;
@@ -688,7 +701,7 @@ nav{
     padding: 0 !important;
 	width: 100%;
     h4{
-        font-size: 1.2em;
+        font-size: 1em;
         text-align: center;
         padding: 10px 0 10px 5px;
         font-weight: bold;
@@ -764,7 +777,7 @@ nav{
 	overflow-y: scroll;
 
 	@include respond-to($lg-break){
-		height: 330px;
+		height: 395px;
 		overflow-y: hidden;
 	};
 
@@ -836,7 +849,7 @@ nav{
 		height: 200px;
 		border: 1px solid #d2d2d2;
 		width: calc(96%/3);
-		padding: 10px;
+		// padding: 10px;
 		display: -webkit-inline-box;
 		display: -ms-inline-flexbox;
 		display: inline-flex;
@@ -887,7 +900,7 @@ nav{
 		width: 100%;
 		height: 100%;
 		background-color: #222;
-		opacity: 0.5;
+		opacity: 0.1;
 		// border: 2px solid pink;
 		z-index: -1;
 	}
@@ -900,6 +913,7 @@ nav{
 	.cta-title{
 		font-weight: bold;
 		text-transform: uppercase;
+		letter-spacing: 0.5px;
 	}
 
 	.cta-msg, .cta-link{
@@ -923,7 +937,7 @@ nav{
 
 .dl-box-content-nav{
 	width: 100%;
-	// padding-top: 30px;
+	padding-top: 15px;
 
 	ul{
 		// border: 1px solid black;
@@ -936,7 +950,8 @@ nav{
 	// padding: 10px 0 10px 0;
 	// background-color: gold;
 	margin: 5px auto;
-	// margin: 10px auto 10px auto;
+	font-size: .875em;
+	line-height: 2.14;
 
 	a{
 		text-transform: capitalize;
@@ -1380,7 +1395,7 @@ nav{
 
 	}
 	a{
-		margin-top: 30px;
+		margin-top: 15px;
 		width: 150px;
 		font-size: 0.8em;
 	}
@@ -1479,6 +1494,10 @@ nav{
 			margin: 0 auto;
 		};
 	}
+
+	.section-heading{
+		padding-bottom: 10px;
+	}
 }
 
 .cat-home-box{
@@ -1534,11 +1553,11 @@ nav{
 
 	.card-text{
 		text-transform: uppercase;
-		letter-spacing: 1px;
+		letter-spacing: 1.5px;
 		font-weight: bold;
 
 		@include respond-to($lg-break){
-			font-size: 1.3em;
+			font-size: 1.2em;
 		};
 	}
 
@@ -1555,7 +1574,7 @@ nav{
 
 .custom-separate{
 	margin: 30px auto;
-	width: 100%;
+	width: 97.7%;
 	height: 2px;
 	background-color: #f2f2f2;
 	border: 1px solid darken(#f2f2f2, 5%);
@@ -1665,6 +1684,7 @@ nav{
 		font-size: 0.8em;
 	};
 
+
 	a{
 		color: #010101;
 	}
@@ -1674,11 +1694,13 @@ nav{
 	background-color: #fff;
 	font-size: 0.7em;
 	padding-left: 1.4rem;
-	text-transform: uppercase;
+	text-transform: capitalize;
 
 	@include respond-to($md-break){
 		padding-left: 2.5rem;
-		font-size: 0.9em;
+		padding-top: 20px;
+		padding-bottom: 10px;
+		font-size: 12px
 	};
 	@include respond-to($lg-break){
 		// padding-left: 7rem;

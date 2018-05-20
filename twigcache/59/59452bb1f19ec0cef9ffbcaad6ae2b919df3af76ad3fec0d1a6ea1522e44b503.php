@@ -137,7 +137,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         if ((($context["pagelocation"] ?? null) == "/products/gifts")) {
             // line 67
             echo "                <br>
-                <h4 class=\"text-center filter-title-display\">Showing all Gift products</h4>
+                <h4 class=\"text-center section-heading\" style=\"text-transform: uppercase\">Showing all Gift products</h4>
                 <br>
 
             ";
@@ -148,7 +148,7 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
             // line 73
             echo twig_escape_filter($this->env, ($context["msg"] ?? null), "html", null, true);
             echo "</small></p>
-                <h4 class=\"text-center filter-title-display\">Showing ";
+                <h4 class=\"text-center section-heading\" style=\"text-transform: uppercase\">Showing ";
             // line 74
             if (($this->getAttribute(($context["queryDetails"] ?? null), "category", array(), "any", true, true) && $this->getAttribute(($context["queryDetails"] ?? null), "type", array(), "any", true, true))) {
                 echo " all ";
@@ -1102,13 +1102,13 @@ class __TwigTemplate_fd328bab2f89461b72ffc549f36899a4f9ce14f18be044c18ebe82bdeeb
         <div class=\"col-12\">
             {% if pagelocation == '/products/gifts' %}
                 <br>
-                <h4 class=\"text-center filter-title-display\">Showing all Gift products</h4>
+                <h4 class=\"text-center section-heading\" style=\"text-transform: uppercase\">Showing all Gift products</h4>
                 <br>
 
             {% else %}
 
                 <p class=\"text-center\"><small>{{msg}}</small></p>
-                <h4 class=\"text-center filter-title-display\">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
+                <h4 class=\"text-center section-heading\" style=\"text-transform: uppercase\">Showing {% if queryDetails.category is defined and queryDetails.type is defined %} all {{queryDetails.category}} {{queryDetails.type}} {% elseif queryDetails.category is defined and not queryDetails.type is defined %} {{queryDetails.category}} products {% else %} Products {% endif %}</h4>
                 <br>
 
             {% endif %}
